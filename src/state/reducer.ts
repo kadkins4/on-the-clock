@@ -4,7 +4,11 @@ import { reassignOverallRanks, moveAndRetier } from "../lib/ranking";
 export type Action =
   | { type: "setAll"; players: Player[] }
   | { type: "add"; player: Player }
-  | { type: "update"; id: string; patch: Partial<Player> }
+  | {
+      type: "update";
+      id: string;
+      patch: Partial<Omit<Player, "id" | "overallRank">>;
+    }
   | { type: "remove"; id: string }
   | { type: "toggleDrafted"; id: string }
   | { type: "move"; activeId: string; overId: string };
@@ -12,6 +16,7 @@ export type Action =
 export function rankingReducer(state: Player[], action: Action): Player[] {
   switch (action.type) {
     case "setAll": {
+      // normalize potentially gapped/unsorted external ranks into contiguous 1-based order
       const sorted = action.players
         .slice()
         .sort((a, b) => a.overallRank - b.overallRank);
