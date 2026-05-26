@@ -77,6 +77,18 @@ describe("sortPlayers", () => {
     const players = [mk({ id: "1", adp: null }), mk({ id: "2", adp: 5 })];
     expect(sortPlayers(players, "adp").map((p) => p.id)).toEqual(["2", "1"]);
   });
+  it("keeps null adp last even when descending", () => {
+    const players = [
+      mk({ id: "1", adp: null }),
+      mk({ id: "2", adp: 5 }),
+      mk({ id: "3", adp: 10 }),
+    ];
+    expect(sortPlayers(players, "adp", false).map((p) => p.id)).toEqual([
+      "3",
+      "2",
+      "1",
+    ]);
+  });
 });
 
 describe("moveAndRetier", () => {

@@ -44,6 +44,17 @@ export function groupByTier(players: Player[]): TierGroup[] {
   return groups;
 }
 
+function nullableCompare(
+  a: number | null,
+  b: number | null,
+  dir: number,
+): number {
+  if (a == null && b == null) return 0;
+  if (a == null) return 1; // nulls always last, regardless of direction
+  if (b == null) return -1;
+  return (a - b) * dir;
+}
+
 export function sortPlayers(
   players: Player[],
   key: SortKey,
@@ -53,17 +64,17 @@ export function sortPlayers(
   const cmp = (a: Player, b: Player): number => {
     switch (key) {
       case "name":
-        return a.name.localeCompare(b.name);
+        return a.name.localeCompare(b.name) * dir;
       case "adp":
-        return (a.adp ?? Infinity) - (b.adp ?? Infinity);
+        return nullableCompare(a.adp, b.adp, dir);
       case "bye":
-        return (a.byeWeek ?? Infinity) - (b.byeWeek ?? Infinity);
+        return nullableCompare(a.byeWeek, b.byeWeek, dir);
       case "overall":
       default:
-        return a.overallRank - b.overallRank;
+        return (a.overallRank - b.overallRank) * dir;
     }
   };
-  return players.slice().sort((a, b) => cmp(a, b) * dir);
+  return players.slice().sort(cmp);
 }
 
 // Reorder by dragging `activeId` onto `overId` in the overall-rank ordering.
