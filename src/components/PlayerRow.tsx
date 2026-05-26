@@ -5,6 +5,12 @@ import type { Player, Position, Flag } from "../types";
 import { POSITIONS } from "../types";
 import type { Action } from "../state/reducer";
 
+function toNum(v: string): number | null {
+  if (v.trim() === "") return null;
+  const n = Number(v);
+  return Number.isNaN(n) ? null : n;
+}
+
 interface Props {
   player: Player;
   positionalRank: number;
@@ -33,7 +39,7 @@ export function PlayerRow({
     opacity: isDragging ? 0.5 : player.drafted ? 0.45 : 1,
   };
 
-  const upd = (patch: Partial<Player>) =>
+  const upd = (patch: Partial<Omit<Player, "id" | "overallRank">>) =>
     dispatch({ type: "update", id: player.id, patch });
 
   const cycleFlag = () => {
@@ -101,30 +107,25 @@ export function PlayerRow({
       <td>
         <input
           className="num"
+          inputMode="numeric"
           value={player.byeWeek ?? ""}
-          onChange={(e) =>
-            upd({
-              byeWeek: e.target.value === "" ? null : Number(e.target.value),
-            })
-          }
+          onChange={(e) => upd({ byeWeek: toNum(e.target.value) })}
         />
       </td>
       <td>
         <input
           className="num"
+          inputMode="numeric"
           value={player.tier ?? ""}
-          onChange={(e) =>
-            upd({ tier: e.target.value === "" ? null : Number(e.target.value) })
-          }
+          onChange={(e) => upd({ tier: toNum(e.target.value) })}
         />
       </td>
       <td>
         <input
           className="num"
+          inputMode="numeric"
           value={player.adp ?? ""}
-          onChange={(e) =>
-            upd({ adp: e.target.value === "" ? null : Number(e.target.value) })
-          }
+          onChange={(e) => upd({ adp: toNum(e.target.value) })}
         />
       </td>
       <td>
