@@ -8,9 +8,16 @@ interface Props {
   players: Player[];
   positionalRanks: Record<string, number>;
   dispatch: Dispatch<Action>;
+  draggable: boolean;
 }
 
-export function TierGroup({ tier, players, positionalRanks, dispatch }: Props) {
+export function TierGroup({
+  tier,
+  players,
+  positionalRanks,
+  dispatch,
+  draggable,
+}: Props) {
   return (
     <>
       <tr className="tier-divider">
@@ -21,7 +28,7 @@ export function TierGroup({ tier, players, positionalRanks, dispatch }: Props) {
           key={p.id}
           player={p}
           positionalRank={positionalRanks[p.id]}
-          draggable
+          draggable={draggable}
           dispatch={dispatch}
         />
       ))}

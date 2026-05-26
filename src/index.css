@@ -65,7 +65,7 @@ table.players th:nth-child(4) {
   width: auto;
 } /* player name */
 table.players th:nth-child(5) {
-  width: 6.5rem;
+  width: 7.5rem;
 } /* pos + posrank */
 table.players th:nth-child(6) {
   width: 4rem;

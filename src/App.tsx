@@ -54,6 +54,8 @@ export default function App() {
     () => (grouped ? [] : sortPlayers(visible, sortKey!, true)),
     [grouped, visible, sortKey],
   );
+  const reorderable =
+    posFilter === "All" && search.trim() === "" && !hideDrafted;
 
   const onImport = () => {
     const input = document.createElement("input");
@@ -62,9 +64,9 @@ export default function App() {
     input.onchange = async () => {
       const file = input.files?.[0];
       if (!file) return;
-      const text = await file.text();
       if (!confirm("Importing will REPLACE your current list. Continue?"))
         return;
+      const text = await file.text();
       try {
         const parsed = file.name.toLowerCase().endsWith(".csv")
           ? parseCsv(text)
@@ -108,6 +110,7 @@ export default function App() {
         flat={flat}
         positionalRanks={positionalRanks}
         dispatch={dispatch}
+        reorderable={reorderable}
       />
     </div>
   );

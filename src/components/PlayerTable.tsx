@@ -23,6 +23,7 @@ interface Props {
   flat: Player[];
   positionalRanks: Record<string, number>;
   dispatch: Dispatch<Action>;
+  reorderable: boolean;
 }
 
 export function PlayerTable({
@@ -31,6 +32,7 @@ export function PlayerTable({
   flat,
   positionalRanks,
   dispatch,
+  reorderable,
 }: Props) {
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
@@ -87,6 +89,7 @@ export function PlayerTable({
                     players={g.players}
                     positionalRanks={positionalRanks}
                     dispatch={dispatch}
+                    draggable={reorderable}
                   />
                 ))
               : flat.map((p) => (
