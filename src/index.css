@@ -1,4 +1,143 @@
-body {
+:root {
   font-family: system-ui, sans-serif;
+  font-size: 14px;
+}
+body {
   margin: 1rem;
+  color: #1a1a1a;
+}
+.app h1 {
+  font-size: 1.25rem;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+.toolbar .search {
+  padding: 0.3rem 0.5rem;
+}
+.chips {
+  display: flex;
+  gap: 0.25rem;
+}
+.chip {
+  padding: 0.2rem 0.6rem;
+  border: 1px solid #ccc;
+  background: #fff;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.chip.active {
+  background: #1a1a1a;
+  color: #fff;
+  border-color: #1a1a1a;
+}
+
+table.players {
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed;
+}
+table.players th,
+table.players td {
+  padding: 0.25rem 0.4rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* fixed column widths so a dragged row keeps the table layout intact */
+table.players th:nth-child(1) {
+  width: 1.6rem;
+} /* drag handle */
+table.players th:nth-child(2) {
+  width: 2.4rem;
+} /* # */
+table.players th:nth-child(3) {
+  width: 2.4rem;
+} /* flag */
+table.players th:nth-child(4) {
+  width: auto;
+} /* player name */
+table.players th:nth-child(5) {
+  width: 6.5rem;
+} /* pos + posrank */
+table.players th:nth-child(6) {
+  width: 4rem;
+} /* team */
+table.players th:nth-child(7) {
+  width: 3.4rem;
+} /* bye */
+table.players th:nth-child(8) {
+  width: 3.4rem;
+} /* tier */
+table.players th:nth-child(9) {
+  width: 4rem;
+} /* adp */
+table.players th:nth-child(10) {
+  width: 12rem;
+} /* notes */
+table.players th:nth-child(11) {
+  width: 4.5rem;
+} /* drafted */
+table.players th:nth-child(12) {
+  width: 2rem;
+} /* delete */
+
+table.players input:not([type="checkbox"]) {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.tier-divider td {
+  background: #f3f4f6;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+.row.drafted .name {
+  text-decoration: line-through;
+}
+.drag {
+  cursor: grab;
+  color: #aaa;
+  user-select: none;
+  text-align: center;
+}
+.flag {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.flag-target {
+  color: #16a34a;
+}
+.flag-avoid {
+  color: #dc2626;
+}
+.posrank {
+  margin-left: 0.3rem;
+  color: #888;
+  font-size: 0.8rem;
+}
+.del {
+  border: none;
+  background: none;
+  color: #dc2626;
+  cursor: pointer;
+}
+.add-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background: #f9fafb;
+  border: 1px solid #eee;
 }
