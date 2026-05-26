@@ -14,7 +14,8 @@ const HEADER = [
 ];
 
 function escapeField(v: string): string {
-  return /[",\n]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v;
+  const s = v.replace(/\r?\n/g, " "); // collapse newlines so a field never spans CSV lines
+  return /[",]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
 }
 
 export function toCsv(players: Player[]): string {

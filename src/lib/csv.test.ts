@@ -58,4 +58,30 @@ describe("toCsv / parseCsv", () => {
     expect(parsed.map((p) => p.overallRank)).toEqual([1, 2]);
     expect(parsed[1].team).toBe("CIN");
   });
+
+  it("does not let a newline in notes corrupt the row on round-trip", () => {
+    const players: Player[] = [
+      {
+        id: "1",
+        name: "X",
+        position: "RB",
+        team: "ATL",
+        overallRank: 1,
+        byeWeek: null,
+        tier: 1,
+        adp: 1.1,
+        notes: "line1\nline2",
+        flag: "none",
+        drafted: false,
+      },
+    ];
+    const parsed = parseCsv(toCsv(players));
+    expect(parsed).toHaveLength(1);
+    expect(parsed[0].flag).toBe("none");
+    expect(parsed[0].notes).toBe("line1 line2");
+  });
+
+  it("returns an empty array for empty input", () => {
+    expect(parseCsv("")).toEqual([]);
+  });
 });
