@@ -89,12 +89,21 @@ for (const entry of raw) {
   });
 }
 
-players.sort((a, b) => a.overallRank - b.overallRank);
+players.sort(
+  (a, b) => a.overallRank - b.overallRank || Number(a.id) - Number(b.id),
+);
 const top = players.slice(0, LIMIT);
 top.forEach((p, i) => {
   p.overallRank = i + 1;
   p.tier = Math.floor(i / TIER_SIZE) + 1;
 });
+
+if (top.length === 0) {
+  console.error(
+    "No ranked players returned from ESPN — refusing to write an empty seed.",
+  );
+  process.exit(1);
+}
 
 const here = dirname(fileURLToPath(import.meta.url));
 const out = join(here, "..", "src", "data", "seed.json");
