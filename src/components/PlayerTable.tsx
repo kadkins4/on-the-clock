@@ -62,18 +62,16 @@ export function PlayerTable({
       <table className="players">
         <thead>
           <tr>
+            <th>Draft</th>
             <th></th>
             <th>#</th>
-            <th>{"★/⚑"}</th>
+            <th>Pos·Tm</th>
             <th>Player</th>
-            <th>Pos</th>
-            <th>Team</th>
             <th>Bye</th>
-            <th>Tier</th>
             <th>ADP</th>
+            <th>Tier</th>
             <th>Notes</th>
-            <th>Drafted</th>
-            <th></th>
+            <th>{"★/⚑"}</th>
           </tr>
         </thead>
         <tbody>

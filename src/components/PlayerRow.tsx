@@ -1,10 +1,10 @@
 import type { Dispatch, CSSProperties } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import type { Player, Position, Flag } from "../types";
-import { POSITIONS } from "../types";
+import type { Player, Flag } from "../types";
 import type { Action } from "../state/reducer";
 import { nextDraftStatus } from "../lib/draft";
+import { rowState } from "../lib/rowState";
 
 function toNum(v: string): number | null {
   if (v.trim() === "") return null;
@@ -18,6 +18,12 @@ interface Props {
   draggable: boolean;
   dispatch: Dispatch<Action>;
 }
+
+const DRAFT_LABEL: Record<Player["draftStatus"], string> = {
+  available: "·",
+  mine: "✓",
+  taken: "✕",
+};
 
 export function PlayerRow({
   player,
@@ -37,7 +43,7 @@ export function PlayerRow({
   const style: CSSProperties = {
     transform: CSS.Transform.toString(transform),
     transition,
-    opacity: isDragging ? 0.5 : player.draftStatus !== "available" ? 0.45 : 1,
+    opacity: isDragging ? 0.5 : 1,
   };
 
   const upd = (patch: Partial<Omit<Player, "id" | "overallRank">>) =>
@@ -53,12 +59,24 @@ export function PlayerRow({
     upd({ flag: next });
   };
 
+  const cycleDraft = () =>
+    upd({ draftStatus: nextDraftStatus(player.draftStatus) });
+
   return (
     <tr
       ref={setNodeRef}
       style={style}
-      className={player.draftStatus !== "available" ? "row drafted" : "row"}
+      className={`row state-${rowState(player.draftStatus, player.flag)}`}
     >
+      <td className="draft-cell">
+        <button
+          className={`draft draft-${player.draftStatus}`}
+          onClick={cycleDraft}
+          title={player.draftStatus}
+        >
+          {DRAFT_LABEL[player.draftStatus]}
+        </button>
+      </td>
       <td
         className="drag"
         {...(draggable ? { ...attributes, ...listeners } : {})}
@@ -66,67 +84,23 @@ export function PlayerRow({
         {draggable ? "⠷" : ""}
       </td>
       <td className="rank">{player.overallRank}</td>
-      <td>
-        <button
-          className={`flag flag-${player.flag}`}
-          onClick={cycleFlag}
-          title={player.flag}
-        >
-          {player.flag === "target" ? "★" : player.flag === "avoid" ? "⚑" : "·"}
-        </button>
-      </td>
-      <td>
-        <input
-          className="name"
-          value={player.name}
-          onChange={(e) => upd({ name: e.target.value })}
-        />
-      </td>
       <td className="pos">
-        <select
-          value={player.position}
-          onChange={(e) => upd({ position: e.target.value as Position })}
-        >
-          {POSITIONS.map((p) => (
-            <option key={p} value={p}>
-              {p}
-            </option>
-          ))}
-        </select>
         <span className="posrank">
-          {player.position}
-          {positionalRank}
+          {player.position}·{player.team} ({player.position}
+          {positionalRank})
         </span>
       </td>
-      <td>
-        <input
-          className="team"
-          value={player.team}
-          onChange={(e) => upd({ team: e.target.value.toUpperCase() })}
-        />
+      <td className="name-cell" title={player.name}>
+        {player.name}
       </td>
+      <td className="num">{player.byeWeek ?? ""}</td>
+      <td className="num">{player.adp ?? ""}</td>
       <td>
         <input
-          className="num"
-          inputMode="numeric"
-          value={player.byeWeek ?? ""}
-          onChange={(e) => upd({ byeWeek: toNum(e.target.value) })}
-        />
-      </td>
-      <td>
-        <input
-          className="num"
+          className="num tier-input"
           inputMode="numeric"
           value={player.tier ?? ""}
           onChange={(e) => upd({ tier: toNum(e.target.value) })}
-        />
-      </td>
-      <td>
-        <input
-          className="num"
-          inputMode="numeric"
-          value={player.adp ?? ""}
-          onChange={(e) => upd({ adp: toNum(e.target.value) })}
         />
       </td>
       <td>
@@ -136,25 +110,13 @@ export function PlayerRow({
           onChange={(e) => upd({ notes: e.target.value })}
         />
       </td>
-      <td className="drafted-cell">
-        <input
-          type="checkbox"
-          checked={player.draftStatus !== "available"}
-          onChange={() =>
-            dispatch({
-              type: "update",
-              id: player.id,
-              patch: { draftStatus: nextDraftStatus(player.draftStatus) },
-            })
-          }
-        />
-      </td>
       <td>
         <button
-          className="del"
-          onClick={() => dispatch({ type: "remove", id: player.id })}
+          className={`flag flag-${player.flag}`}
+          onClick={cycleFlag}
+          title={player.flag}
         >
-          {"✕"}
+          {player.flag === "target" ? "★" : player.flag === "avoid" ? "⚑" : "·"}
         </button>
       </td>
     </tr>
