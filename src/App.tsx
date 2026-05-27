@@ -7,6 +7,7 @@ import {
 } from "./lib/ranking";
 import { toCsv, parseCsv } from "./lib/csv";
 import { exportJson, importJson } from "./lib/storage";
+import { searchPlayers } from "./lib/search";
 import type { Position, SortKey } from "./types";
 import { POSITIONS } from "./types";
 import { draftedByPosition } from "./lib/counts";
@@ -40,13 +41,12 @@ export default function App() {
   const drafted = useMemo(() => draftedByPosition(players), [players]);
 
   const visible = useMemo(() => {
-    const q = search.trim().toLowerCase();
-    return players.filter(
+    const filtered = players.filter(
       (p) =>
         (posFilter === "All" || p.position === posFilter) &&
-        (q === "" || p.name.toLowerCase().includes(q)) &&
         (!hideDrafted || p.draftStatus === "available"),
     );
+    return searchPlayers(filtered, search);
   }, [players, search, posFilter, hideDrafted]);
 
   const grouped = sortKey === null;

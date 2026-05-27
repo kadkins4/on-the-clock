@@ -1,4 +1,4 @@
-import type { Player, Position, Flag } from "../types";
+import type { Player, Position, Flag, DraftStatus } from "../types";
 import { POSITIONS } from "../types";
 
 const HEADER = [
@@ -11,6 +11,7 @@ const HEADER = [
   "adp",
   "notes",
   "flag",
+  "draft",
 ];
 
 function escapeField(v: string): string {
@@ -32,6 +33,7 @@ export function toCsv(players: Player[]): string {
         p.adp == null ? "" : String(p.adp),
         escapeField(p.notes),
         p.flag,
+        p.draftStatus,
       ].join(","),
     );
   }
@@ -77,6 +79,10 @@ function toFlag(v: string): Flag {
   return v === "target" || v === "avoid" ? v : "none";
 }
 
+function toDraftStatus(v: string): DraftStatus {
+  return v === "mine" || v === "taken" ? v : "available";
+}
+
 function numOrNull(v: string): number | null {
   const t = v.trim();
   if (t === "") return null;
@@ -99,6 +105,7 @@ export function parseCsv(text: string): Player[] {
     adp: col("adp"),
     notes: col("notes"),
     flag: col("flag"),
+    draft: col("draft"),
   };
   const players: Player[] = [];
   for (let i = 1; i < lines.length; i++) {
@@ -116,7 +123,7 @@ export function parseCsv(text: string): Player[] {
       adp: numOrNull(get(ci.adp)),
       notes: get(ci.notes),
       flag: toFlag(get(ci.flag).trim()),
-      draftStatus: "available",
+      draftStatus: toDraftStatus(get(ci.draft).trim()),
     });
   }
   return players;

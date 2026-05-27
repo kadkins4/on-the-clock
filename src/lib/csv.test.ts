@@ -34,7 +34,7 @@ const sample: Player[] = [
 describe("toCsv / parseCsv", () => {
   it("starts with the canonical header", () => {
     expect(toCsv(sample).split("\n")[0]).toBe(
-      "rank,name,position,team,bye,tier,adp,notes,flag",
+      "rank,name,position,team,bye,tier,adp,notes,flag,draft",
     );
   });
 
@@ -84,4 +84,22 @@ describe("toCsv / parseCsv", () => {
   it("returns an empty array for empty input", () => {
     expect(parseCsv("")).toEqual([]);
   });
+});
+
+it("round-trips draftStatus through CSV", () => {
+  const p: Player = {
+    id: "1",
+    name: "A",
+    position: "RB",
+    team: "ATL",
+    overallRank: 1,
+    byeWeek: null,
+    tier: 1,
+    adp: null,
+    notes: "",
+    flag: "none",
+    draftStatus: "mine",
+  };
+  const back = parseCsv(toCsv([p]));
+  expect(back[0].draftStatus).toBe("mine");
 });
