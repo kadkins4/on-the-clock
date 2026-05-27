@@ -1,5 +1,6 @@
 import type { Player } from "../types";
 import { reassignOverallRanks, moveAndRetier } from "../lib/ranking";
+import { withByeWeeks } from "../lib/byes";
 
 export type Action =
   | { type: "setAll"; players: Player[] }
@@ -19,7 +20,7 @@ export function rankingReducer(state: Player[], action: Action): Player[] {
       const sorted = action.players
         .slice()
         .sort((a, b) => a.overallRank - b.overallRank);
-      return reassignOverallRanks(sorted);
+      return withByeWeeks(reassignOverallRanks(sorted));
     }
     case "add":
       return reassignOverallRanks([...state, action.player]);

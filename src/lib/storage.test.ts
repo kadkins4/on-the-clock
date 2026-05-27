@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { savePlayers, loadPlayers, exportJson, importJson } from "./storage";
+import { withByeWeeks } from "./byes";
 import seed from "../data/seed.json";
 import type { Player } from "../types";
 
@@ -24,11 +25,11 @@ beforeEach(() => localStorage.clear());
 describe("storage", () => {
   it("saves and loads players", () => {
     savePlayers(players);
-    expect(loadPlayers()).toEqual(players);
+    expect(loadPlayers()).toEqual(withByeWeeks(players));
   });
 
   it("falls back to the seed when nothing is stored", () => {
-    expect(loadPlayers()).toEqual(seed);
+    expect(loadPlayers()).toEqual(withByeWeeks(seed as unknown as Player[]));
   });
 
   it("round-trips JSON export/import", () => {

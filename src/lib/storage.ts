@@ -1,7 +1,8 @@
 import type { Player } from "../types";
 import seed from "../data/seed.json";
+import { withByeWeeks } from "./byes";
 
-const KEY = "ff-cheat-sheet:players:v1";
+const KEY = "ff-cheat-sheet:players:v2";
 
 export function savePlayers(players: Player[]): void {
   try {
@@ -16,12 +17,12 @@ export function loadPlayers(): Player[] {
     const raw = localStorage.getItem(KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed)) return parsed as Player[];
+      if (Array.isArray(parsed)) return withByeWeeks(parsed as Player[]);
     }
   } catch {
     // corrupt JSON — fall through to seed
   }
-  return seed as unknown as Player[];
+  return withByeWeeks(seed as unknown as Player[]);
 }
 
 export function exportJson(players: Player[]): string {
