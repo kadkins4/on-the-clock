@@ -21,7 +21,7 @@ export function TierGroup({
   return (
     <>
       <tr className="tier-divider">
-        <td colSpan={12}>{tier == null ? "Untiered" : `Tier ${tier}`}</td>
+        <td colSpan={10}>{tier == null ? "Untiered" : `Tier ${tier}`}</td>
       </tr>
       {players.map((p) => (
         <PlayerRow

@@ -51,7 +51,20 @@ export default function App() {
   }, [players, search, posFilter, hideDrafted]);
 
   const visibleIds = useMemo(() => visible.map((p) => p.id), [visible]);
-  const { rendered: renderedIds, pending } = useDelayedHide(visibleIds, 2500);
+  // Only drafted players (when "hide drafted" is on) may linger before hiding;
+  // search/filter removals disappear immediately.
+  const lingerableIds = useMemo(
+    () =>
+      hideDrafted
+        ? players.filter((p) => p.draftStatus !== "available").map((p) => p.id)
+        : [],
+    [players, hideDrafted],
+  );
+  const { rendered: renderedIds, pending } = useDelayedHide(
+    visibleIds,
+    lingerableIds,
+    2500,
+  );
   const byId = useMemo(() => new Map(players.map((p) => [p.id, p])), [players]);
   const renderPlayers = useMemo(
     () =>
