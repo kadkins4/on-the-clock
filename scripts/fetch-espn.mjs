@@ -86,6 +86,9 @@ for (const entry of raw) {
     notes: "",
     flag: "none",
     draftStatus: "available",
+    ...(p.injuryStatus && p.injuryStatus !== "ACTIVE"
+      ? { injuryStatus: p.injuryStatus }
+      : {}),
   });
 }
 

@@ -5,6 +5,7 @@ import type { Player, Flag } from "../types";
 import type { Action } from "../state/reducer";
 import { nextDraftStatus } from "../lib/draft";
 import { rowState } from "../lib/rowState";
+import { injuryBadge } from "../lib/injury";
 
 function toNum(v: string): number | null {
   if (v.trim() === "") return null;
@@ -62,6 +63,8 @@ export function PlayerRow({
   const cycleDraft = () =>
     upd({ draftStatus: nextDraftStatus(player.draftStatus) });
 
+  const inj = injuryBadge(player.injuryStatus);
+
   return (
     <tr
       ref={setNodeRef}
@@ -92,6 +95,14 @@ export function PlayerRow({
       </td>
       <td className="name-cell" title={player.name}>
         {player.name}
+        {inj && (
+          <span
+            className={`inj inj-${inj.severity}`}
+            title={player.injuryStatus}
+          >
+            {inj.code}
+          </span>
+        )}
       </td>
       <td className="num">{player.byeWeek ?? ""}</td>
       <td className="num">{player.adp ?? ""}</td>

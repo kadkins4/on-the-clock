@@ -17,4 +17,5 @@ export interface Player {
   notes: string;
   flag: Flag;
   draftStatus: DraftStatus;
+  injuryStatus?: string; // raw ESPN value, present only when not ACTIVE
 }
