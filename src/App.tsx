@@ -8,6 +8,8 @@ import {
 import { toCsv, parseCsv } from "./lib/csv";
 import { exportJson, importJson } from "./lib/storage";
 import type { Position, SortKey } from "./types";
+import { POSITIONS } from "./types";
+import { draftedByPosition } from "./lib/counts";
 import { Toolbar } from "./components/Toolbar";
 import { PlayerTable } from "./components/PlayerTable";
 import { AddPlayerForm } from "./components/AddPlayerForm";
@@ -34,6 +36,8 @@ export default function App() {
     () => computePositionalRanks(players),
     [players],
   );
+
+  const drafted = useMemo(() => draftedByPosition(players), [players]);
 
   const visible = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -82,6 +86,13 @@ export default function App() {
   return (
     <div className="app">
       <h1>FF Cheat Sheet</h1>
+      <div className="drafted-summary">
+        {POSITIONS.map((pos) => (
+          <span key={pos} className="drafted-summary-item">
+            {pos} <b>{drafted[pos]}</b>
+          </span>
+        ))}
+      </div>
       <Toolbar
         search={search}
         setSearch={setSearch}
