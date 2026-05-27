@@ -1,13 +1,34 @@
 :root {
   font-family: system-ui, sans-serif;
   font-size: 14px;
+  --bg: #0f1115;
+  --panel: #171a21;
+  --text: #e6e8eb;
+  --muted: #8b93a1;
+  --border: #2a2f3a;
+  --green: #22c55e;
+  --red: #ef4444;
+  --purple: #a855f7;
+  --grey: #5b6573;
 }
 body {
   margin: 1rem;
-  color: #1a1a1a;
+  background: var(--bg);
+  color: var(--text);
 }
 .app h1 {
   font-size: 1.25rem;
+}
+
+.drafted-summary {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+  color: var(--muted);
+}
+.drafted-summary-item b {
+  color: var(--text);
 }
 
 .toolbar {
@@ -19,6 +40,10 @@ body {
 }
 .toolbar .search {
   padding: 0.3rem 0.5rem;
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 4px;
 }
 .chips {
   display: flex;
@@ -26,15 +51,24 @@ body {
 }
 .chip {
   padding: 0.2rem 0.6rem;
-  border: 1px solid #ccc;
-  background: #fff;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text);
   border-radius: 999px;
   cursor: pointer;
 }
 .chip.active {
-  background: #1a1a1a;
-  color: #fff;
-  border-color: #1a1a1a;
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+}
+.toolbar select,
+.toolbar button {
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
 }
 
 table.players {
@@ -46,98 +80,149 @@ table.players th,
 table.players td {
   padding: 0.25rem 0.4rem;
   text-align: left;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--border);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-/* fixed column widths so a dragged row keeps the table layout intact */
 table.players th:nth-child(1) {
-  width: 1.6rem;
-} /* drag handle */
+  width: 3rem;
+} /* draft */
 table.players th:nth-child(2) {
-  width: 2.4rem;
-} /* # */
+  width: 1.6rem;
+} /* drag */
 table.players th:nth-child(3) {
   width: 2.4rem;
-} /* flag */
+} /* # */
 table.players th:nth-child(4) {
-  width: auto;
-} /* player name */
+  width: 7rem;
+} /* pos·tm */
 table.players th:nth-child(5) {
-  width: 7.5rem;
-} /* pos + posrank */
+  width: 9rem;
+} /* name (narrower) */
 table.players th:nth-child(6) {
-  width: 4rem;
-} /* team */
+  width: 3rem;
+} /* bye */
 table.players th:nth-child(7) {
   width: 3.4rem;
-} /* bye */
+} /* adp */
 table.players th:nth-child(8) {
-  width: 3.4rem;
+  width: 3rem;
 } /* tier */
 table.players th:nth-child(9) {
-  width: 4rem;
-} /* adp */
+  width: auto;
+} /* notes (wider) */
 table.players th:nth-child(10) {
-  width: 12rem;
-} /* notes */
-table.players th:nth-child(11) {
-  width: 4.5rem;
-} /* drafted */
-table.players th:nth-child(12) {
-  width: 2rem;
-} /* delete */
+  width: 2.4rem;
+} /* flag */
 
 table.players input:not([type="checkbox"]) {
   width: 100%;
   box-sizing: border-box;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid transparent;
+  border-radius: 3px;
+}
+table.players input:focus {
+  border-color: var(--border);
+  outline: none;
+}
+
+/* row state colors via a left accent + tint */
+.row td {
+  border-left: 3px solid transparent;
+}
+.row.state-target td:first-child {
+  border-left-color: var(--purple);
+}
+.row.state-avoid td:first-child {
+  border-left-color: var(--red);
+}
+.row.state-mine td:first-child {
+  border-left-color: var(--green);
+}
+.row.state-taken td:first-child {
+  border-left-color: var(--grey);
+}
+.row.state-mine {
+  color: var(--green);
+}
+.row.state-avoid {
+  color: var(--red);
+}
+.row.state-target {
+  color: var(--purple);
+}
+.row.state-taken {
+  color: var(--muted);
+  opacity: 0.55;
+}
+.row.state-taken .name-cell {
+  text-decoration: line-through;
 }
 
 .tier-divider td {
-  background: #f3f4f6;
+  background: var(--panel);
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   font-size: 0.75rem;
-}
-.row.drafted .name {
-  text-decoration: line-through;
+  color: var(--muted);
 }
 .drag {
   cursor: grab;
-  color: #aaa;
+  color: var(--muted);
   user-select: none;
   text-align: center;
+}
+.draft {
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text);
+  cursor: pointer;
+  width: 1.6rem;
+  border-radius: 4px;
+}
+.draft-mine {
+  color: var(--green);
+  border-color: var(--green);
+}
+.draft-taken {
+  color: var(--grey);
+  border-color: var(--grey);
 }
 .flag {
   border: none;
   background: none;
   cursor: pointer;
   font-size: 1rem;
+  color: var(--muted);
 }
 .flag-target {
-  color: #16a34a;
+  color: var(--purple);
 }
 .flag-avoid {
-  color: #dc2626;
+  color: var(--red);
 }
 .posrank {
-  margin-left: 0.3rem;
-  color: #888;
-  font-size: 0.8rem;
-}
-.del {
-  border: none;
-  background: none;
-  color: #dc2626;
-  cursor: pointer;
+  color: var(--muted);
+  font-size: 0.85rem;
 }
 .add-form {
   display: flex;
   gap: 0.5rem;
   margin-bottom: 1rem;
   padding: 0.5rem;
-  background: #f9fafb;
-  border: 1px solid #eee;
+  background: var(--panel);
+  border: 1px solid var(--border);
+}
+.add-form input,
+.add-form select,
+.add-form button {
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
 }
