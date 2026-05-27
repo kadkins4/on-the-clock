@@ -1,6 +1,7 @@
 export type Position = "QB" | "RB" | "WR" | "TE" | "K" | "DST";
 export type Flag = "none" | "target" | "avoid";
 export type SortKey = "overall" | "adp" | "name" | "bye";
+export type DraftStatus = "available" | "mine" | "taken";
 
 export const POSITIONS: Position[] = ["QB", "RB", "WR", "TE", "K", "DST"];
 
@@ -15,5 +16,5 @@ export interface Player {
   adp: number | null;
   notes: string;
   flag: Flag;
-  drafted: boolean;
+  draftStatus: DraftStatus;
 }

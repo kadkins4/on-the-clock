@@ -116,7 +116,7 @@ export function parseCsv(text: string): Player[] {
       adp: numOrNull(get(ci.adp)),
       notes: get(ci.notes),
       flag: toFlag(get(ci.flag).trim()),
-      drafted: false,
+      draftStatus: "available",
     });
   }
   return players;

@@ -4,6 +4,7 @@ import { CSS } from "@dnd-kit/utilities";
 import type { Player, Position, Flag } from "../types";
 import { POSITIONS } from "../types";
 import type { Action } from "../state/reducer";
+import { nextDraftStatus } from "../lib/draft";
 
 function toNum(v: string): number | null {
   if (v.trim() === "") return null;
@@ -36,7 +37,7 @@ export function PlayerRow({
   const style: CSSProperties = {
     transform: CSS.Transform.toString(transform),
     transition,
-    opacity: isDragging ? 0.5 : player.drafted ? 0.45 : 1,
+    opacity: isDragging ? 0.5 : player.draftStatus !== "available" ? 0.45 : 1,
   };
 
   const upd = (patch: Partial<Omit<Player, "id" | "overallRank">>) =>
@@ -56,7 +57,7 @@ export function PlayerRow({
     <tr
       ref={setNodeRef}
       style={style}
-      className={player.drafted ? "row drafted" : "row"}
+      className={player.draftStatus !== "available" ? "row drafted" : "row"}
     >
       <td
         className="drag"
@@ -138,8 +139,14 @@ export function PlayerRow({
       <td className="drafted-cell">
         <input
           type="checkbox"
-          checked={player.drafted}
-          onChange={() => dispatch({ type: "toggleDrafted", id: player.id })}
+          checked={player.draftStatus !== "available"}
+          onChange={() =>
+            dispatch({
+              type: "update",
+              id: player.id,
+              patch: { draftStatus: nextDraftStatus(player.draftStatus) },
+            })
+          }
         />
       </td>
       <td>

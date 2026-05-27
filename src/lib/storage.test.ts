@@ -15,7 +15,7 @@ const players: Player[] = [
     adp: null,
     notes: "",
     flag: "none",
-    drafted: false,
+    draftStatus: "available",
   },
 ];
 

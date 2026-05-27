@@ -14,7 +14,7 @@ function mk(id: string, over: number, tier: number | null = 1): Player {
     adp: null,
     notes: "",
     flag: "none",
-    drafted: false,
+    draftStatus: "available",
   };
 }
 
@@ -51,9 +51,13 @@ describe("rankingReducer", () => {
     expect(out.map((p) => p.overallRank)).toEqual([1, 2]);
   });
 
-  it("toggleDrafted flips drafted", () => {
-    const out = rankingReducer(base, { type: "toggleDrafted", id: "a" });
-    expect(out.find((p) => p.id === "a")!.drafted).toBe(true);
+  it("update can set draftStatus", () => {
+    const out = rankingReducer(base, {
+      type: "update",
+      id: "a",
+      patch: { draftStatus: "mine" },
+    });
+    expect(out.find((p) => p.id === "a")!.draftStatus).toBe("mine");
   });
 
   it("move reorders and reassigns ranks", () => {

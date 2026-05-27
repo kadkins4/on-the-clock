@@ -14,7 +14,7 @@ const sample: Player[] = [
     adp: 2.2,
     notes: "workhorse, RB1",
     flag: "target",
-    drafted: false,
+    draftStatus: "available",
   },
   {
     id: "2",
@@ -27,7 +27,7 @@ const sample: Player[] = [
     adp: null,
     notes: "",
     flag: "none",
-    drafted: false,
+    draftStatus: "available",
   },
 ];
 
@@ -46,7 +46,7 @@ describe("toCsv / parseCsv", () => {
     expect(parsed[0].adp).toBe(2.2);
     expect(parsed[0].tier).toBe(1);
     expect(parsed[0].flag).toBe("target");
-    expect(parsed[0].drafted).toBe(false);
+    expect(parsed[0].draftStatus).toBe("available");
     expect(parsed[1].name).toBe('Some "Guy"');
     expect(parsed[1].byeWeek).toBe(12);
     expect(parsed[1].adp).toBeNull();
@@ -72,7 +72,7 @@ describe("toCsv / parseCsv", () => {
         adp: 1.1,
         notes: "line1\nline2",
         flag: "none",
-        drafted: false,
+        draftStatus: "available",
       },
     ];
     const parsed = parseCsv(toCsv(players));

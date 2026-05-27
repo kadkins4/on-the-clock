@@ -41,7 +41,7 @@ export default function App() {
       (p) =>
         (posFilter === "All" || p.position === posFilter) &&
         (q === "" || p.name.toLowerCase().includes(q)) &&
-        (!hideDrafted || !p.drafted),
+        (!hideDrafted || p.draftStatus === "available"),
     );
   }, [players, search, posFilter, hideDrafted]);
 

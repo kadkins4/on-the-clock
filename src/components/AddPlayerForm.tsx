@@ -26,7 +26,7 @@ export function AddPlayerForm({ onAdd, onClose }: Props) {
       adp: null,
       notes: "",
       flag: "none",
-      drafted: false,
+      draftStatus: "available",
     });
     onClose();
   };

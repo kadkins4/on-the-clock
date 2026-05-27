@@ -10,7 +10,7 @@
     "adp": 2.32,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4429795",
@@ -23,7 +23,7 @@
     "adp": 2.41,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4426515",
@@ -36,7 +36,7 @@
     "adp": 4.14,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4362628",
@@ -49,7 +49,7 @@
     "adp": 5.17,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3117251",
@@ -62,7 +62,7 @@
     "adp": 5.4,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4430878",
@@ -75,7 +75,7 @@
     "adp": 6.44,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4374302",
@@ -88,7 +88,7 @@
     "adp": 8.5,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4242335",
@@ -101,7 +101,7 @@
     "adp": 8.36,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4429160",
@@ -114,7 +114,7 @@
     "adp": 10.66,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4241389",
@@ -127,7 +127,7 @@
     "adp": 11.5,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4890973",
@@ -140,7 +140,7 @@
     "adp": 14.44,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4262921",
@@ -153,7 +153,7 @@
     "adp": 12.88,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4379399",
@@ -166,7 +166,7 @@
     "adp": 13.38,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4870808",
@@ -179,7 +179,7 @@
     "adp": 16.99,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4426502",
@@ -192,7 +192,7 @@
     "adp": 19.22,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3929630",
@@ -205,7 +205,7 @@
     "adp": 15.89,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4428331",
@@ -218,7 +218,7 @@
     "adp": 23.61,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3043078",
@@ -231,7 +231,7 @@
     "adp": 18.32,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4258173",
@@ -244,7 +244,7 @@
     "adp": 25.08,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4685382",
@@ -257,7 +257,7 @@
     "adp": 21.84,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4595348",
@@ -270,7 +270,7 @@
     "adp": 25.54,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4361307",
@@ -283,7 +283,7 @@
     "adp": 20.42,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4047365",
@@ -296,7 +296,7 @@
     "adp": 24.6,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4432665",
@@ -309,7 +309,7 @@
     "adp": 25.3,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4362238",
@@ -322,7 +322,7 @@
     "adp": 27.45,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4361370",
@@ -335,7 +335,7 @@
     "adp": 33.19,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4427366",
@@ -348,7 +348,7 @@
     "adp": 31.65,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4426354",
@@ -361,7 +361,7 @@
     "adp": 27.67,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4047646",
@@ -374,7 +374,7 @@
     "adp": 32.75,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4567048",
@@ -387,7 +387,7 @@
     "adp": 28.04,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4569618",
@@ -400,7 +400,7 @@
     "adp": 39.38,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4685472",
@@ -413,7 +413,7 @@
     "adp": 38.52,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4241478",
@@ -426,7 +426,7 @@
     "adp": 40.17,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4361579",
@@ -439,7 +439,7 @@
     "adp": 35.86,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4430737",
@@ -452,7 +452,7 @@
     "adp": 36.45,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4239996",
@@ -465,7 +465,7 @@
     "adp": 42.67,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4429615",
@@ -478,7 +478,7 @@
     "adp": 44.5,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3121422",
@@ -491,7 +491,7 @@
     "adp": 53.46,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4696981",
@@ -504,7 +504,7 @@
     "adp": 41.89,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4239993",
@@ -517,7 +517,7 @@
     "adp": 49.71,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3918298",
@@ -530,7 +530,7 @@
     "adp": 24.13,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "16800",
@@ -543,7 +543,7 @@
     "adp": 44.92,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4596448",
@@ -556,7 +556,7 @@
     "adp": 50.93,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4871023",
@@ -569,7 +569,7 @@
     "adp": 58.54,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4723086",
@@ -582,7 +582,7 @@
     "adp": 45.29,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4685702",
@@ -595,7 +595,7 @@
     "adp": 53.29,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3916387",
@@ -608,7 +608,7 @@
     "adp": 37.37,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4612826",
@@ -621,7 +621,7 @@
     "adp": 57.99,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4567750",
@@ -634,7 +634,7 @@
     "adp": 52.56,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4372016",
@@ -647,7 +647,7 @@
     "adp": 60.06,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4431459",
@@ -660,7 +660,7 @@
     "adp": 47.24,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4432710",
@@ -673,7 +673,7 @@
     "adp": 58.93,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4426388",
@@ -686,7 +686,7 @@
     "adp": 67.82,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4685512",
@@ -699,7 +699,7 @@
     "adp": 62.04,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3915416",
@@ -712,7 +712,7 @@
     "adp": 65.36,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4685278",
@@ -725,7 +725,7 @@
     "adp": 75.86,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4426348",
@@ -738,7 +738,7 @@
     "adp": 54.77,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4431299",
@@ -751,7 +751,7 @@
     "adp": 71.87,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4432708",
@@ -764,7 +764,7 @@
     "adp": 79.85,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4882093",
@@ -777,7 +777,7 @@
     "adp": 74.53,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4259545",
@@ -790,7 +790,7 @@
     "adp": 68.1,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "5083076",
@@ -803,7 +803,7 @@
     "adp": 65.05,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4035538",
@@ -816,7 +816,7 @@
     "adp": 71.11,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4241416",
@@ -829,7 +829,7 @@
     "adp": 76.79,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4035687",
@@ -842,7 +842,7 @@
     "adp": 85.21,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4880281",
@@ -855,7 +855,7 @@
     "adp": 86.16,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4431452",
@@ -868,7 +868,7 @@
     "adp": 51.93,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3915511",
@@ -881,7 +881,7 @@
     "adp": 56.73,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4040715",
@@ -894,7 +894,7 @@
     "adp": 59.69,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4360078",
@@ -907,7 +907,7 @@
     "adp": 87.46,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4360248",
@@ -920,7 +920,7 @@
     "adp": 66.6,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4047650",
@@ -933,7 +933,7 @@
     "adp": 83.8,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "16737",
@@ -946,7 +946,7 @@
     "adp": 80.5,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3128429",
@@ -959,7 +959,7 @@
     "adp": 87.36,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3916148",
@@ -972,7 +972,7 @@
     "adp": 90.57,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3042519",
@@ -985,7 +985,7 @@
     "adp": 96.5,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4430027",
@@ -998,7 +998,7 @@
     "adp": 74.38,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4689114",
@@ -1011,7 +1011,7 @@
     "adp": 70.77,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4248528",
@@ -1024,7 +1024,7 @@
     "adp": 95.04,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4569987",
@@ -1037,7 +1037,7 @@
     "adp": 92.55,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3116165",
@@ -1050,7 +1050,7 @@
     "adp": 104.92,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3916433",
@@ -1063,7 +1063,7 @@
     "adp": 103.94,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4432620",
@@ -1076,7 +1076,7 @@
     "adp": 102.87,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4432773",
@@ -1089,7 +1089,7 @@
     "adp": 101.03,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4371733",
@@ -1102,7 +1102,7 @@
     "adp": 106.52,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4569587",
@@ -1115,7 +1115,7 @@
     "adp": 109.42,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4697815",
@@ -1128,7 +1128,7 @@
     "adp": 108.31,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4038815",
@@ -1141,7 +1141,7 @@
     "adp": 98.58,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4241985",
@@ -1154,7 +1154,7 @@
     "adp": 105.84,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4685415",
@@ -1167,7 +1167,7 @@
     "adp": 116.28,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4870795",
@@ -1180,7 +1180,7 @@
     "adp": 99.74,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4569173",
@@ -1193,7 +1193,7 @@
     "adp": 107.03,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4428209",
@@ -1206,7 +1206,7 @@
     "adp": 118.18,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4701936",
@@ -1219,7 +1219,7 @@
     "adp": 113.9,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "15847",
@@ -1232,7 +1232,7 @@
     "adp": 88.46,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4360761",
@@ -1245,7 +1245,7 @@
     "adp": 112.9,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4568490",
@@ -1258,7 +1258,7 @@
     "adp": 111.06,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4870653",
@@ -1271,7 +1271,7 @@
     "adp": 120.73,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4608686",
@@ -1284,7 +1284,7 @@
     "adp": 114.84,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4688813",
@@ -1297,7 +1297,7 @@
     "adp": 132.16,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4429096",
@@ -1310,7 +1310,7 @@
     "adp": 124.78,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4429205",
@@ -1323,7 +1323,7 @@
     "adp": 127.92,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4361741",
@@ -1336,7 +1336,7 @@
     "adp": 98.55,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4683062",
@@ -1349,7 +1349,7 @@
     "adp": 124.57,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "2577417",
@@ -1362,7 +1362,7 @@
     "adp": 89.15,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4678008",
@@ -1375,7 +1375,7 @@
     "adp": 131.32,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3040151",
@@ -1388,7 +1388,7 @@
     "adp": 95.66,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3121023",
@@ -1401,7 +1401,7 @@
     "adp": 101.67,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4242355",
@@ -1414,7 +1414,7 @@
     "adp": 106.55,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4373678",
@@ -1427,7 +1427,7 @@
     "adp": 133.42,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4575131",
@@ -1440,7 +1440,7 @@
     "adp": 130.72,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4429059",
@@ -1453,7 +1453,7 @@
     "adp": 141.39,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4428557",
@@ -1466,7 +1466,7 @@
     "adp": 147.93,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4362249",
@@ -1479,7 +1479,7 @@
     "adp": 143.08,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4426385",
@@ -1492,7 +1492,7 @@
     "adp": 139.15,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4361529",
@@ -1505,7 +1505,7 @@
     "adp": 143.57,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4360310",
@@ -1518,7 +1518,7 @@
     "adp": 110.85,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4429025",
@@ -1531,7 +1531,7 @@
     "adp": 142.38,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4361432",
@@ -1544,7 +1544,7 @@
     "adp": 141.21,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4572680",
@@ -1557,7 +1557,7 @@
     "adp": 113.84,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3054850",
@@ -1570,7 +1570,7 @@
     "adp": 150.73,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4695883",
@@ -1583,7 +1583,7 @@
     "adp": 159.72,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4360569",
@@ -1596,7 +1596,7 @@
     "adp": 152.08,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4723820",
@@ -1609,7 +1609,7 @@
     "adp": 156.69,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4431611",
@@ -1622,7 +1622,7 @@
     "adp": 101.85,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4877706",
@@ -1635,7 +1635,7 @@
     "adp": 161.98,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4430834",
@@ -1648,7 +1648,7 @@
     "adp": 165.55,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4426338",
@@ -1661,7 +1661,7 @@
     "adp": 116.34,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4361050",
@@ -1674,7 +1674,7 @@
     "adp": 129.6,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4362619",
@@ -1687,7 +1687,7 @@
     "adp": 162.65,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3925357",
@@ -1700,7 +1700,7 @@
     "adp": 165.7,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3953687",
@@ -1713,7 +1713,7 @@
     "adp": 83.02,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4373626",
@@ -1726,7 +1726,7 @@
     "adp": 165.76,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "-16034",
@@ -1739,7 +1739,7 @@
     "adp": 83.17,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "-16007",
@@ -1752,7 +1752,7 @@
     "adp": 87.7,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3139477",
@@ -1765,7 +1765,7 @@
     "adp": 105.32,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4241463",
@@ -1778,7 +1778,7 @@
     "adp": 166.11,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4038941",
@@ -1791,7 +1791,7 @@
     "adp": 124.39,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4429013",
@@ -1804,7 +1804,7 @@
     "adp": 167.7,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "-16026",
@@ -1817,7 +1817,7 @@
     "adp": 98.39,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "12483",
@@ -1830,7 +1830,7 @@
     "adp": 101.14,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4036133",
@@ -1843,7 +1843,7 @@
     "adp": 146.05,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4032473",
@@ -1856,7 +1856,7 @@
     "adp": 162.95,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "-16017",
@@ -1869,7 +1869,7 @@
     "adp": 125.34,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4362081",
@@ -1882,7 +1882,7 @@
     "adp": 111.59,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "-16023",
@@ -1895,7 +1895,7 @@
     "adp": 121.57,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "-16021",
@@ -1908,7 +1908,7 @@
     "adp": 132.47,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "-16014",
@@ -1921,7 +1921,7 @@
     "adp": 126.72,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4241474",
@@ -1934,7 +1934,7 @@
     "adp": 167.6,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "-16033",
@@ -1947,7 +1947,7 @@
     "adp": 137.69,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "2971573",
@@ -1960,7 +1960,7 @@
     "adp": 127.03,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "2473037",
@@ -1973,7 +1973,7 @@
     "adp": 121.88,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4685261",
@@ -1986,7 +1986,7 @@
     "adp": 167.96,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4869961",
@@ -1999,7 +1999,7 @@
     "adp": 168.18,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "5083315",
@@ -2012,7 +2012,7 @@
     "adp": 129.61,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4574716",
@@ -2025,7 +2025,7 @@
     "adp": 139.83,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4685247",
@@ -2038,7 +2038,7 @@
     "adp": 169.22,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3886598",
@@ -2051,7 +2051,7 @@
     "adp": 167.61,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4034949",
@@ -2064,7 +2064,7 @@
     "adp": 147.03,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4360689",
@@ -2077,7 +2077,7 @@
     "adp": 156.85,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4686361",
@@ -2090,7 +2090,7 @@
     "adp": 137.49,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3116365",
@@ -2103,7 +2103,7 @@
     "adp": 133.83,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4689936",
@@ -2116,7 +2116,7 @@
     "adp": 150.98,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "-16016",
@@ -2129,7 +2129,7 @@
     "adp": 156.94,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4385690",
@@ -2142,7 +2142,7 @@
     "adp": 151.96,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3917315",
@@ -2155,7 +2155,7 @@
     "adp": 154.68,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "-16005",
@@ -2168,7 +2168,7 @@
     "adp": 147,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3917792",
@@ -2181,7 +2181,7 @@
     "adp": 166.12,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "-16030",
@@ -2194,7 +2194,7 @@
     "adp": 160.47,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3055899",
@@ -2207,7 +2207,7 @@
     "adp": 154.47,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4697745",
@@ -2220,7 +2220,7 @@
     "adp": 159.91,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4832800",
@@ -2233,7 +2233,7 @@
     "adp": 166.78,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4040655",
@@ -2246,7 +2246,7 @@
     "adp": 169.42,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "-16008",
@@ -2259,7 +2259,7 @@
     "adp": 156.46,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "17427",
@@ -2272,7 +2272,7 @@
     "adp": 165.44,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4567104",
@@ -2285,7 +2285,7 @@
     "adp": 163.93,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "17372",
@@ -2298,7 +2298,7 @@
     "adp": 160.89,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3045147",
@@ -2311,7 +2311,7 @@
     "adp": 168.6,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "2976212",
@@ -2324,7 +2324,7 @@
     "adp": 162.85,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "5081432",
@@ -2337,7 +2337,7 @@
     "adp": 168.8,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "-16024",
@@ -2350,7 +2350,7 @@
     "adp": 164.53,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4382466",
@@ -2363,7 +2363,7 @@
     "adp": 169.49,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4428718",
@@ -2376,7 +2376,7 @@
     "adp": 168.91,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4360516",
@@ -2389,7 +2389,7 @@
     "adp": 167.34,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4686658",
@@ -2402,7 +2402,7 @@
     "adp": 168.6,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3046439",
@@ -2415,7 +2415,7 @@
     "adp": 157.99,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3046779",
@@ -2428,7 +2428,7 @@
     "adp": 151.54,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3052587",
@@ -2441,7 +2441,7 @@
     "adp": 158.78,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4242512",
@@ -2454,7 +2454,7 @@
     "adp": 167.59,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4429501",
@@ -2467,7 +2467,7 @@
     "adp": 169.71,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3929645",
@@ -2480,7 +2480,7 @@
     "adp": 164.75,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4430539",
@@ -2493,7 +2493,7 @@
     "adp": 167.75,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4869645",
@@ -2506,7 +2506,7 @@
     "adp": 169.84,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4360939",
@@ -2519,7 +2519,7 @@
     "adp": 169.63,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4603186",
@@ -2532,7 +2532,7 @@
     "adp": 169.86,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4430968",
@@ -2545,7 +2545,7 @@
     "adp": 169.67,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "-16012",
@@ -2558,7 +2558,7 @@
     "adp": 164.32,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4038441",
@@ -2571,7 +2571,7 @@
     "adp": 169.47,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4361411",
@@ -2584,7 +2584,7 @@
     "adp": 168.86,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4685397",
@@ -2597,7 +2597,7 @@
     "adp": 169.71,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4696044",
@@ -2610,7 +2610,7 @@
     "adp": 169.52,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4366031",
@@ -2623,7 +2623,7 @@
     "adp": 169.02,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4036378",
@@ -2636,7 +2636,7 @@
     "adp": 164.05,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4688380",
@@ -2649,7 +2649,7 @@
     "adp": 167.3,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4432577",
@@ -2662,7 +2662,7 @@
     "adp": 167.59,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3116406",
@@ -2675,7 +2675,7 @@
     "adp": 161.6,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3126486",
@@ -2688,7 +2688,7 @@
     "adp": 168.56,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4360438",
@@ -2701,7 +2701,7 @@
     "adp": 169.05,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4570037",
@@ -2714,7 +2714,7 @@
     "adp": 169.26,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3117256",
@@ -2727,7 +2727,7 @@
     "adp": 169.42,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4686612",
@@ -2740,7 +2740,7 @@
     "adp": 170.03,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "5123663",
@@ -2753,7 +2753,7 @@
     "adp": 169.46,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "2977187",
@@ -2766,7 +2766,7 @@
     "adp": 168.06,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "5083754",
@@ -2779,7 +2779,7 @@
     "adp": 169.73,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4685246",
@@ -2792,7 +2792,7 @@
     "adp": 169.67,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4685555",
@@ -2805,7 +2805,7 @@
     "adp": 169.14,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4832846",
@@ -2818,7 +2818,7 @@
     "adp": 169.94,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4686728",
@@ -2831,7 +2831,7 @@
     "adp": 169.85,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4595342",
@@ -2844,7 +2844,7 @@
     "adp": 168.49,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4360635",
@@ -2857,7 +2857,7 @@
     "adp": 169,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3912547",
@@ -2870,7 +2870,7 @@
     "adp": 165.99,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4685720",
@@ -2883,7 +2883,7 @@
     "adp": 168.59,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4837248",
@@ -2896,7 +2896,7 @@
     "adp": 162.57,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4702555",
@@ -2909,7 +2909,7 @@
     "adp": 169.15,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4686468",
@@ -2922,7 +2922,7 @@
     "adp": 170.1,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4832955",
@@ -2935,7 +2935,7 @@
     "adp": 169.31,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4710714",
@@ -2948,7 +2948,7 @@
     "adp": 169.64,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "5081397",
@@ -2961,7 +2961,7 @@
     "adp": 169.75,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3116389",
@@ -2974,7 +2974,7 @@
     "adp": 169.87,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4597500",
@@ -2987,7 +2987,7 @@
     "adp": 169.94,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4635008",
@@ -3000,7 +3000,7 @@
     "adp": 169.68,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4569603",
@@ -3013,7 +3013,7 @@
     "adp": 169.9,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4249417",
@@ -3026,7 +3026,7 @@
     "adp": 170.05,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3895856",
@@ -3039,7 +3039,7 @@
     "adp": 169.8,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4431487",
@@ -3052,7 +3052,7 @@
     "adp": 170.13,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4430034",
@@ -3065,7 +3065,7 @@
     "adp": 169.93,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4600981",
@@ -3078,7 +3078,7 @@
     "adp": 170.13,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "-16027",
@@ -3091,7 +3091,7 @@
     "adp": 167.98,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "-16009",
@@ -3104,7 +3104,7 @@
     "adp": 167.49,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3150744",
@@ -3117,7 +3117,7 @@
     "adp": 167.09,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4911851",
@@ -3130,7 +3130,7 @@
     "adp": 170.13,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4682745",
@@ -3143,7 +3143,7 @@
     "adp": 169.96,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4711533",
@@ -3156,7 +3156,7 @@
     "adp": 170.13,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4596334",
@@ -3169,7 +3169,7 @@
     "adp": 170.08,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4596602",
@@ -3182,7 +3182,7 @@
     "adp": 170.08,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4685526",
@@ -3195,7 +3195,7 @@
     "adp": 170.08,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4429275",
@@ -3208,7 +3208,7 @@
     "adp": 170.09,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4819231",
@@ -3221,7 +3221,7 @@
     "adp": 170.07,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3915411",
@@ -3234,7 +3234,7 @@
     "adp": 170.12,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4429023",
@@ -3247,7 +3247,7 @@
     "adp": 170.08,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4685279",
@@ -3260,7 +3260,7 @@
     "adp": 169.87,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "16002",
@@ -3273,7 +3273,7 @@
     "adp": 169.93,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3149687",
@@ -3286,7 +3286,7 @@
     "adp": 170.19,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4597703",
@@ -3299,7 +3299,7 @@
     "adp": 170.06,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4428850",
@@ -3312,7 +3312,7 @@
     "adp": 170.07,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "-16011",
@@ -3325,7 +3325,7 @@
     "adp": 169.25,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3124679",
@@ -3338,7 +3338,7 @@
     "adp": 169.11,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4360234",
@@ -3351,7 +3351,7 @@
     "adp": 168.51,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4576297",
@@ -3364,7 +3364,7 @@
     "adp": 169.1,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4367209",
@@ -3377,7 +3377,7 @@
     "adp": 170.02,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4259147",
@@ -3390,7 +3390,7 @@
     "adp": 169.86,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4429022",
@@ -3403,7 +3403,7 @@
     "adp": 169.85,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4870847",
@@ -3416,7 +3416,7 @@
     "adp": 168.92,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "5220680",
@@ -3429,7 +3429,7 @@
     "adp": 169.88,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "5088338",
@@ -3442,7 +3442,7 @@
     "adp": 170,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4695404",
@@ -3455,7 +3455,7 @@
     "adp": 170.06,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4887558",
@@ -3468,7 +3468,7 @@
     "adp": 169.94,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "15864",
@@ -3481,7 +3481,7 @@
     "adp": 169.89,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "8439",
@@ -3494,7 +3494,7 @@
     "adp": 168.89,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3122840",
@@ -3507,7 +3507,7 @@
     "adp": 169.99,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "2578570",
@@ -3520,7 +3520,7 @@
     "adp": 169.87,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3929785",
@@ -3533,7 +3533,7 @@
     "adp": 170.08,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4361577",
@@ -3546,7 +3546,7 @@
     "adp": 170.1,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3917914",
@@ -3559,7 +3559,7 @@
     "adp": 170.05,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3916945",
@@ -3572,7 +3572,7 @@
     "adp": 169.91,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4368003",
@@ -3585,7 +3585,7 @@
     "adp": 169.98,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4874509",
@@ -3598,7 +3598,7 @@
     "adp": 170.08,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4362748",
@@ -3611,7 +3611,7 @@
     "adp": 170.18,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4431545",
@@ -3624,7 +3624,7 @@
     "adp": 170.03,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4040761",
@@ -3637,7 +3637,7 @@
     "adp": 169.96,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4240603",
@@ -3650,7 +3650,7 @@
     "adp": 169.95,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4430871",
@@ -3663,7 +3663,7 @@
     "adp": 170.06,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4383396",
@@ -3676,7 +3676,7 @@
     "adp": 170.11,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4685350",
@@ -3689,7 +3689,7 @@
     "adp": 170.04,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3930066",
@@ -3702,7 +3702,7 @@
     "adp": 170.2,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "-16004",
@@ -3715,7 +3715,7 @@
     "adp": 169.4,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "-16003",
@@ -3728,7 +3728,7 @@
     "adp": 168.66,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "10621",
@@ -3741,7 +3741,7 @@
     "adp": 169.67,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4869461",
@@ -3754,7 +3754,7 @@
     "adp": 168.67,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4243331",
@@ -3767,7 +3767,7 @@
     "adp": 169.96,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3116164",
@@ -3780,7 +3780,7 @@
     "adp": 169.78,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3051876",
@@ -3793,7 +3793,7 @@
     "adp": 169.85,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "3123076",
@@ -3806,7 +3806,7 @@
     "adp": 168.75,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4429086",
@@ -3819,7 +3819,7 @@
     "adp": 170.1,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4686472",
@@ -3832,7 +3832,7 @@
     "adp": 170.18,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4361409",
@@ -3845,7 +3845,7 @@
     "adp": 170.07,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "4241479",
@@ -3858,7 +3858,7 @@
     "adp": 169.93,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "-16025",
@@ -3871,7 +3871,7 @@
     "adp": 167.74,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "-16020",
@@ -3884,7 +3884,7 @@
     "adp": 169.87,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   },
   {
     "id": "-16018",
@@ -3897,6 +3897,6 @@
     "adp": 169.71,
     "notes": "",
     "flag": "none",
-    "drafted": false
+    "draftStatus": "available"
   }
 ]

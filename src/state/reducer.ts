@@ -10,7 +10,6 @@ export type Action =
       patch: Partial<Omit<Player, "id" | "overallRank">>;
     }
   | { type: "remove"; id: string }
-  | { type: "toggleDrafted"; id: string }
   | { type: "move"; activeId: string; overId: string };
 
 export function rankingReducer(state: Player[], action: Action): Player[] {
@@ -30,10 +29,6 @@ export function rankingReducer(state: Player[], action: Action): Player[] {
       );
     case "remove":
       return reassignOverallRanks(state.filter((p) => p.id !== action.id));
-    case "toggleDrafted":
-      return state.map((p) =>
-        p.id === action.id ? { ...p, drafted: !p.drafted } : p,
-      );
     case "move":
       return moveAndRetier(state, action.activeId, action.overId);
     default:

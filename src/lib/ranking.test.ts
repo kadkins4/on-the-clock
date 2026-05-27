@@ -20,7 +20,7 @@ function mk(partial: Partial<Player> & { id: string }): Player {
     adp: partial.adp ?? null,
     notes: partial.notes ?? "",
     flag: partial.flag ?? "none",
-    drafted: partial.drafted ?? false,
+    draftStatus: partial.draftStatus ?? "available",
   };
 }
 

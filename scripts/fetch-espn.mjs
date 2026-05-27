@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
 const SEASON = 2026;
-const LIMIT = 300;
+const LIMIT = 500;
 const TIER_SIZE = 12; // ~one draft round per tier
 
 const POS = { 1: "QB", 2: "RB", 3: "WR", 4: "TE", 5: "K", 16: "DST" };
@@ -85,7 +85,7 @@ for (const entry of raw) {
     adp: p.ownership?.averageDraftPosition ?? null,
     notes: "",
     flag: "none",
-    drafted: false,
+    draftStatus: "available",
   });
 }
 
