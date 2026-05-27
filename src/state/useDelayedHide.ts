@@ -11,7 +11,6 @@ export function useDelayedHide(visibleIds: string[], delayMs: number) {
   const prev = useRef<string[]>(visibleIds);
 
   useEffect(() => {
-    const prevSet = new Set(prev.current);
     const nowSet = new Set(visibleIds);
 
     // ids that just dropped out -> start a linger timer
@@ -25,15 +24,13 @@ export function useDelayedHide(visibleIds: string[], delayMs: number) {
         timers.current.set(id, t);
       }
     }
-    // ids that came back -> cancel any linger timer (undo)
+    // a visible id that still has a pending hide timer just came back -> cancel it (undo)
     for (const id of visibleIds) {
-      if (prevSet.has(id) || nowSet.has(id)) {
-        const t = timers.current.get(id);
-        if (t) {
-          clearTimeout(t);
-          timers.current.delete(id);
-          setPending((p) => p.filter((x) => x !== id));
-        }
+      const t = timers.current.get(id);
+      if (t) {
+        clearTimeout(t);
+        timers.current.delete(id);
+        setPending((p) => p.filter((x) => x !== id));
       }
     }
     prev.current = visibleIds;
