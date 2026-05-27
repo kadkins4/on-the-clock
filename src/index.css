@@ -226,3 +226,19 @@ table.players input:focus {
   border-radius: 4px;
   padding: 0.25rem 0.5rem;
 }
+.undo-bar {
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--green);
+  border-radius: 999px;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+}
+.row.state-taken,
+.row.state-mine {
+  transition: opacity 0.4s ease;
+}

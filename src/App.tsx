@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { useRankings } from "./state/useRankings";
+import { useDelayedHide } from "./state/useDelayedHide";
 import {
   computePositionalRanks,
   groupByTier,
@@ -49,14 +50,30 @@ export default function App() {
     return searchPlayers(filtered, search);
   }, [players, search, posFilter, hideDrafted]);
 
+  const visibleIds = useMemo(() => visible.map((p) => p.id), [visible]);
+  const { rendered: renderedIds, pending } = useDelayedHide(visibleIds, 2500);
+  const byId = useMemo(() => new Map(players.map((p) => [p.id, p])), [players]);
+  const renderPlayers = useMemo(
+    () =>
+      renderedIds
+        .map((id) => byId.get(id))
+        .filter((p): p is (typeof players)[number] => !!p),
+    [renderedIds, byId],
+  );
+  const undoLast = () => {
+    const id = pending[pending.length - 1];
+    if (id)
+      dispatch({ type: "update", id, patch: { draftStatus: "available" } });
+  };
+
   const grouped = sortKey === null;
   const groups = useMemo(
-    () => (grouped ? groupByTier(visible) : []),
-    [grouped, visible],
+    () => (grouped ? groupByTier(renderPlayers) : []),
+    [grouped, renderPlayers],
   );
   const flat = useMemo(
-    () => (grouped ? [] : sortPlayers(visible, sortKey!, true)),
-    [grouped, visible, sortKey],
+    () => (grouped ? [] : sortPlayers(renderPlayers, sortKey!, true)),
+    [grouped, renderPlayers, sortKey],
   );
   const reorderable =
     posFilter === "All" && search.trim() === "" && !hideDrafted;
@@ -123,6 +140,11 @@ export default function App() {
         dispatch={dispatch}
         reorderable={reorderable}
       />
+      {pending.length > 0 && (
+        <button className="undo-bar" onClick={undoLast}>
+          Undo draft ({pending.length})
+        </button>
+      )}
     </div>
   );
 }
