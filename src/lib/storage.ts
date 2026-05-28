@@ -1,31 +1,66 @@
 import type { Player } from "../types";
+import type { Board } from "../state/reducer";
 import seed from "../data/seed.json";
 import { withByeWeeks } from "./byes";
 import { normalizeTiers, orderByAdp } from "./ranking";
 
-const KEY = "ff-cheat-sheet:players:v2";
+const LISTS_KEY = "ff-cheat-sheet:lists:v1";
+const OLD_KEY = "ff-cheat-sheet:players:v2"; // pre-named-lists single board
 
-export function savePlayers(players: Player[]): void {
+export function saveBoard(board: Board): void {
   try {
-    localStorage.setItem(KEY, JSON.stringify(players));
+    localStorage.setItem(LISTS_KEY, JSON.stringify(board));
   } catch {
     // storage full / unavailable — ignore
   }
 }
 
-export function loadPlayers(): Player[] {
+function readBoard(): Board {
   try {
-    const raw = localStorage.getItem(KEY);
+    const raw = localStorage.getItem(LISTS_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed))
-        return normalizeTiers(withByeWeeks(parsed as Player[]));
+      if (
+        parsed &&
+        typeof parsed.current === "string" &&
+        parsed.lists &&
+        Array.isArray(parsed.lists[parsed.current])
+      ) {
+        return parsed as Board;
+      }
     }
   } catch {
-    // corrupt JSON — fall through to seed
+    // corrupt JSON — fall through
   }
-  // fresh board: default to ADP order with ADP-based tiers
-  return normalizeTiers(withByeWeeks(orderByAdp(seed as unknown as Player[])));
+  // migrate a pre-named-lists single board
+  try {
+    const old = localStorage.getItem(OLD_KEY);
+    if (old) {
+      const arr = JSON.parse(old);
+      if (Array.isArray(arr)) {
+        return { current: "My Board", lists: { "My Board": arr as Player[] } };
+      }
+    }
+  } catch {
+    // ignore
+  }
+  // brand-new board: a single ADP-ordered list
+  return {
+    current: "My Board",
+    lists: { "My Board": orderByAdp(seed as unknown as Player[]) },
+  };
+}
+
+export function loadBoard(): Board {
+  const board = readBoard();
+  // normalize the active list (tiers + bye weeks) for immediate use
+  return {
+    ...board,
+    lists: {
+      ...board.lists,
+      [board.current]: normalizeTiers(withByeWeeks(board.lists[board.current])),
+    },
+  };
 }
 
 export function exportJson(players: Player[]): string {

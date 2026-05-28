@@ -61,3 +61,76 @@ export function rankingReducer(state: Player[], action: Action): Player[] {
       return state;
   }
 }
+
+// --- Named lists ------------------------------------------------------------
+// The board holds several named player lists (e.g. PPR, Dynasty) and which one
+// is active. Player actions apply to the active list; list actions manage them.
+
+export interface Board {
+  current: string;
+  lists: Record<string, Player[]>;
+}
+
+export type ListAction =
+  | { type: "switchList"; name: string }
+  | { type: "saveListAs"; name: string }
+  | { type: "deleteList"; name: string }
+  | { type: "renameList"; name: string };
+
+function normalize(players: Player[]): Player[] {
+  return normalizeTiers(withByeWeeks(players));
+}
+
+export function boardReducer(board: Board, action: Action | ListAction): Board {
+  switch (action.type) {
+    case "switchList": {
+      if (!board.lists[action.name] || action.name === board.current)
+        return board;
+      return {
+        current: action.name,
+        lists: {
+          ...board.lists,
+          [action.name]: normalize(board.lists[action.name]),
+        },
+      };
+    }
+    case "saveListAs": {
+      const name = action.name.trim();
+      if (!name) return board;
+      return {
+        current: name,
+        lists: { ...board.lists, [name]: board.lists[board.current] },
+      };
+    }
+    case "deleteList": {
+      if (!board.lists[action.name] || Object.keys(board.lists).length <= 1)
+        return board;
+      const lists = { ...board.lists };
+      delete lists[action.name];
+      const current =
+        action.name === board.current ? Object.keys(lists)[0] : board.current;
+      return {
+        current,
+        lists: { ...lists, [current]: normalize(lists[current]) },
+      };
+    }
+    case "renameList": {
+      const to = action.name.trim();
+      const from = board.current;
+      if (!to || to === from || board.lists[to]) return board;
+      const lists: Record<string, Player[]> = {};
+      // preserve insertion order, swapping the current name for the new one
+      for (const [k, v] of Object.entries(board.lists)) {
+        lists[k === from ? to : k] = v;
+      }
+      return { current: to, lists };
+    }
+    default: {
+      const players = rankingReducer(board.lists[board.current], action);
+      return {
+        ...board,
+        lists: { ...board.lists, [board.current]: players },
+      };
+    }
+  }
+}

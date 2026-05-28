@@ -1,15 +1,16 @@
 import { useEffect, useReducer } from "react";
-import { rankingReducer } from "./reducer";
-import { loadPlayers, savePlayers } from "../lib/storage";
+import { boardReducer } from "./reducer";
+import { loadBoard, saveBoard } from "../lib/storage";
 
 export function useRankings() {
-  const [players, dispatch] = useReducer(
-    rankingReducer,
-    undefined,
-    loadPlayers,
-  );
+  const [board, dispatch] = useReducer(boardReducer, undefined, loadBoard);
   useEffect(() => {
-    savePlayers(players);
-  }, [players]);
-  return { players, dispatch };
+    saveBoard(board);
+  }, [board]);
+  return {
+    players: board.lists[board.current],
+    dispatch,
+    currentList: board.current,
+    listNames: Object.keys(board.lists),
+  };
 }

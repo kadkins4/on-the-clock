@@ -26,16 +26,40 @@ function download(filename: string, text: string, type: string) {
   URL.revokeObjectURL(url);
 }
 
+const HIDE_KDST_KEY = "ff-cheat-sheet:hideKDst";
+
 export default function App() {
-  const { players, dispatch } = useRankings();
+  const { players, dispatch, currentList, listNames } = useRankings();
   const [search, setSearch] = useState("");
   const [posFilter, setPosFilter] = useState<Position | "All">("All");
   const [hideDrafted, setHideDrafted] = useState(false);
+  const [byeFilter, setByeFilter] = useState<number | null>(null);
+  const [hideKDst, setHideKDst] = useState(
+    () => localStorage.getItem(HIDE_KDST_KEY) === "1",
+  );
   const [sortKey, setSortKey] = useState<SortKey | null>(null);
   const [fetching, setFetching] = useState(false);
   // Empty tiers are session-only: each entry is the id of the player the empty
   // tier sits directly above. Never persisted or exported.
   const [emptyTiers, setEmptyTiers] = useState<string[]>([]);
+
+  useEffect(() => {
+    localStorage.setItem(HIDE_KDST_KEY, hideKDst ? "1" : "0");
+  }, [hideKDst]);
+
+  // positions to show in the summary + filter chips (K/DST optionally hidden)
+  const shownPositions = useMemo(
+    () =>
+      hideKDst ? POSITIONS.filter((p) => p !== "K" && p !== "DST") : POSITIONS,
+    [hideKDst],
+  );
+
+  // distinct bye weeks present, for the bye-week filter
+  const byeWeeks = useMemo(() => {
+    const s = new Set<number>();
+    for (const p of players) if (p.byeWeek != null) s.add(p.byeWeek);
+    return [...s].sort((a, b) => a - b);
+  }, [players]);
 
   const positionalRanks = useMemo(
     () => computePositionalRanks(players),
@@ -48,10 +72,12 @@ export default function App() {
     const filtered = players.filter(
       (p) =>
         (posFilter === "All" || p.position === posFilter) &&
-        (!hideDrafted || p.draftStatus === "available"),
+        (!hideDrafted || p.draftStatus === "available") &&
+        (!hideKDst || (p.position !== "K" && p.position !== "DST")) &&
+        (byeFilter === null || p.byeWeek === byeFilter),
     );
     return searchPlayers(filtered, search);
-  }, [players, search, posFilter, hideDrafted]);
+  }, [players, search, posFilter, hideDrafted, hideKDst, byeFilter]);
 
   const visibleIds = useMemo(() => visible.map((p) => p.id), [visible]);
   // Only drafted players (when "hide drafted" is on) may linger before hiding;
@@ -91,9 +117,10 @@ export default function App() {
     () => (grouped ? [] : sortPlayers(renderPlayers, sortKey!, true)),
     [grouped, renderPlayers, sortKey],
   );
-  // Reordering/tier editing stays available with "hide drafted" on — only a
-  // position filter or active search (a partial view) disables it.
-  const reorderable = posFilter === "All" && search.trim() === "";
+  // Reordering/tier editing stays available with "hide drafted" / "hide K&DST"
+  // on; only a position filter, search, or bye filter (a partial view) blocks it.
+  const reorderable =
+    posFilter === "All" && search.trim() === "" && byeFilter === null;
 
   // Drop empty-tier markers whose anchor is no longer the first player of a tier
   // (e.g. after a drag), so stale empties don't accumulate.
@@ -183,11 +210,34 @@ export default function App() {
     input.click();
   };
 
+  const onToggleKDst = () => {
+    setHideKDst((v) => {
+      const next = !v;
+      if (next && (posFilter === "K" || posFilter === "DST"))
+        setPosFilter("All");
+      return next;
+    });
+  };
+
+  const onSaveListAs = () => {
+    const name = prompt("Save current board as a new list:")?.trim();
+    if (name) dispatch({ type: "saveListAs", name });
+  };
+  const onRenameList = () => {
+    const name = prompt("Rename this list:", currentList)?.trim();
+    if (name) dispatch({ type: "renameList", name });
+  };
+  const onDeleteList = () => {
+    if (listNames.length <= 1) return;
+    if (confirm(`Delete the list "${currentList}"? This can't be undone.`))
+      dispatch({ type: "deleteList", name: currentList });
+  };
+
   return (
     <div className="app">
       <h1>Fantasy Football Draft Helper</h1>
       <div className="drafted-summary">
-        {POSITIONS.map((pos) => (
+        {shownPositions.map((pos) => (
           <span key={pos} className="drafted-summary-item">
             {pos} <b>{drafted[pos].drafted}</b>
             <span className="mine-count">({drafted[pos].mine})</span>
@@ -197,12 +247,24 @@ export default function App() {
       <Toolbar
         search={search}
         setSearch={setSearch}
+        positions={shownPositions}
         posFilter={posFilter}
         setPosFilter={setPosFilter}
         hideDrafted={hideDrafted}
         setHideDrafted={setHideDrafted}
+        byeFilter={byeFilter}
+        setByeFilter={setByeFilter}
+        byeWeeks={byeWeeks}
         sortKey={sortKey}
         setSortKey={setSortKey}
+        currentList={currentList}
+        listNames={listNames}
+        onSwitchList={(name) => dispatch({ type: "switchList", name })}
+        onSaveListAs={onSaveListAs}
+        onRenameList={onRenameList}
+        onDeleteList={onDeleteList}
+        hideKDst={hideKDst}
+        onToggleKDst={onToggleKDst}
         onFetch={onFetch}
         fetching={fetching}
         onImport={onImport}

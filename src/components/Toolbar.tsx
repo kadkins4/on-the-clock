@@ -1,16 +1,27 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { Position, SortKey } from "../types";
-import { POSITIONS } from "../types";
 
 interface Props {
   search: string;
   setSearch: (s: string) => void;
+  positions: Position[];
   posFilter: Position | "All";
   setPosFilter: (p: Position | "All") => void;
   hideDrafted: boolean;
   setHideDrafted: (b: boolean) => void;
+  byeFilter: number | null;
+  setByeFilter: (b: number | null) => void;
+  byeWeeks: number[];
   sortKey: SortKey | null;
   setSortKey: (k: SortKey | null) => void;
+  currentList: string;
+  listNames: string[];
+  onSwitchList: (name: string) => void;
+  onSaveListAs: () => void;
+  onRenameList: () => void;
+  onDeleteList: () => void;
+  hideKDst: boolean;
+  onToggleKDst: () => void;
   onFetch: () => void;
   fetching: boolean;
   onImport: () => void;
@@ -28,7 +39,7 @@ export function Toolbar(props: Props) {
         onChange={(e) => props.setSearch(e.target.value)}
       />
       <div className="chips">
-        {(["All", ...POSITIONS] as const).map((p) => (
+        {(["All", ...props.positions] as const).map((p) => (
           <button
             key={p}
             className={props.posFilter === p ? "chip active" : "chip"}
@@ -47,6 +58,24 @@ export function Toolbar(props: Props) {
         Hide drafted
       </label>
       <label>
+        Bye:{" "}
+        <select
+          value={props.byeFilter ?? "all"}
+          onChange={(e) =>
+            props.setByeFilter(
+              e.target.value === "all" ? null : Number(e.target.value),
+            )
+          }
+        >
+          <option value="all">All</option>
+          {props.byeWeeks.map((w) => (
+            <option key={w} value={w}>
+              {w}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label>
         Sort:{" "}
         <select
           value={props.sortKey ?? "tier"}
@@ -63,29 +92,109 @@ export function Toolbar(props: Props) {
           <option value="bye">Bye</option>
         </select>
       </label>
-      <SettingsMenu
-        items={[
-          {
-            label: props.fetching ? "Fetching…" : "Fetch players",
-            onClick: props.onFetch,
-            disabled: props.fetching,
-          },
-          { label: "Import…", onClick: props.onImport },
-          { label: "Export JSON", onClick: props.onExportJson },
-          { label: "Export CSV", onClick: props.onExportCsv },
-        ]}
-      />
+      <SettingsMenu>
+        {(close) => (
+          <>
+            <div className="menu-label">Lists</div>
+            {props.listNames.map((name) => (
+              <button
+                key={name}
+                className={
+                  name === props.currentList ? "menu-item current" : "menu-item"
+                }
+                onClick={() => {
+                  close();
+                  if (name !== props.currentList) props.onSwitchList(name);
+                }}
+              >
+                {name === props.currentList ? "✓ " : "  "}
+                {name}
+              </button>
+            ))}
+            <button
+              className="menu-item"
+              onClick={() => {
+                close();
+                props.onSaveListAs();
+              }}
+            >
+              Save as new list…
+            </button>
+            <button
+              className="menu-item"
+              onClick={() => {
+                close();
+                props.onRenameList();
+              }}
+            >
+              Rename current…
+            </button>
+            <button
+              className="menu-item"
+              disabled={props.listNames.length <= 1}
+              onClick={() => {
+                close();
+                props.onDeleteList();
+              }}
+            >
+              Delete current
+            </button>
+
+            <div className="menu-sep" />
+            <button className="menu-item" onClick={props.onToggleKDst}>
+              {props.hideKDst ? "✓ " : "  "}Hide K &amp; DST
+            </button>
+
+            <div className="menu-sep" />
+            <button
+              className="menu-item"
+              disabled={props.fetching}
+              onClick={() => {
+                close();
+                props.onFetch();
+              }}
+            >
+              {props.fetching ? "Fetching…" : "Fetch players"}
+            </button>
+            <button
+              className="menu-item"
+              onClick={() => {
+                close();
+                props.onImport();
+              }}
+            >
+              Import…
+            </button>
+            <button
+              className="menu-item"
+              onClick={() => {
+                close();
+                props.onExportJson();
+              }}
+            >
+              Export JSON
+            </button>
+            <button
+              className="menu-item"
+              onClick={() => {
+                close();
+                props.onExportCsv();
+              }}
+            >
+              Export CSV
+            </button>
+          </>
+        )}
+      </SettingsMenu>
     </div>
   );
 }
 
-interface MenuItem {
-  label: string;
-  onClick: () => void;
-  disabled?: boolean;
-}
-
-function SettingsMenu({ items }: { items: MenuItem[] }) {
+function SettingsMenu({
+  children,
+}: {
+  children: (close: () => void) => ReactNode;
+}) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -104,27 +213,14 @@ function SettingsMenu({ items }: { items: MenuItem[] }) {
     <div className="settings" ref={ref}>
       <button
         className="settings-btn"
-        title="Data & settings"
-        aria-label="Data & settings"
+        title="Lists & settings"
+        aria-label="Lists & settings"
         onClick={() => setOpen((o) => !o)}
       >
         ⚙
       </button>
       {open && (
-        <div className="settings-menu">
-          {items.map((it) => (
-            <button
-              key={it.label}
-              disabled={it.disabled}
-              onClick={() => {
-                setOpen(false);
-                it.onClick();
-              }}
-            >
-              {it.label}
-            </button>
-          ))}
-        </div>
+        <div className="settings-menu">{children(() => setOpen(false))}</div>
       )}
     </div>
   );
