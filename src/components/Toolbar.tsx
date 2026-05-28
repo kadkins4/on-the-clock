@@ -20,8 +20,10 @@ interface Props {
   onSaveListAs: () => void;
   onRenameList: () => void;
   onDeleteList: () => void;
-  hideKDst: boolean;
-  onToggleKDst: () => void;
+  hideK: boolean;
+  onToggleK: () => void;
+  hideDst: boolean;
+  onToggleDst: () => void;
   onFetch: () => void;
   fetching: boolean;
   onImport: () => void;
@@ -141,8 +143,11 @@ export function Toolbar(props: Props) {
             </button>
 
             <div className="menu-sep" />
-            <button className="menu-item" onClick={props.onToggleKDst}>
-              {props.hideKDst ? "✓ " : "  "}Hide K &amp; DST
+            <button className="menu-item" onClick={props.onToggleK}>
+              {props.hideK ? "✓ " : "  "}Hide kickers (K)
+            </button>
+            <button className="menu-item" onClick={props.onToggleDst}>
+              {props.hideDst ? "✓ " : "  "}Hide defenses (DST)
             </button>
 
             <div className="menu-sep" />

@@ -26,7 +26,9 @@ function download(filename: string, text: string, type: string) {
   URL.revokeObjectURL(url);
 }
 
-const HIDE_KDST_KEY = "ff-cheat-sheet:hideKDst";
+const HIDE_K_KEY = "ff-cheat-sheet:hideK";
+const HIDE_DST_KEY = "ff-cheat-sheet:hideDst";
+const OLD_HIDE_KDST_KEY = "ff-cheat-sheet:hideKDst"; // migrate combined toggle
 
 export default function App() {
   const { players, dispatch, currentList, listNames } = useRankings();
@@ -34,8 +36,15 @@ export default function App() {
   const [posFilter, setPosFilter] = useState<Position | "All">("All");
   const [hideDrafted, setHideDrafted] = useState(false);
   const [byeFilter, setByeFilter] = useState<number | null>(null);
-  const [hideKDst, setHideKDst] = useState(
-    () => localStorage.getItem(HIDE_KDST_KEY) === "1",
+  const [hideK, setHideK] = useState(
+    () =>
+      localStorage.getItem(HIDE_K_KEY) === "1" ||
+      localStorage.getItem(OLD_HIDE_KDST_KEY) === "1",
+  );
+  const [hideDst, setHideDst] = useState(
+    () =>
+      localStorage.getItem(HIDE_DST_KEY) === "1" ||
+      localStorage.getItem(OLD_HIDE_KDST_KEY) === "1",
   );
   const [sortKey, setSortKey] = useState<SortKey | null>(null);
   const [fetching, setFetching] = useState(false);
@@ -44,14 +53,19 @@ export default function App() {
   const [emptyTiers, setEmptyTiers] = useState<string[]>([]);
 
   useEffect(() => {
-    localStorage.setItem(HIDE_KDST_KEY, hideKDst ? "1" : "0");
-  }, [hideKDst]);
+    localStorage.setItem(HIDE_K_KEY, hideK ? "1" : "0");
+  }, [hideK]);
+  useEffect(() => {
+    localStorage.setItem(HIDE_DST_KEY, hideDst ? "1" : "0");
+  }, [hideDst]);
 
-  // positions to show in the summary + filter chips (K/DST optionally hidden)
+  // positions to show in the summary + filter chips (K / DST hidden separately)
   const shownPositions = useMemo(
     () =>
-      hideKDst ? POSITIONS.filter((p) => p !== "K" && p !== "DST") : POSITIONS,
-    [hideKDst],
+      POSITIONS.filter(
+        (p) => !(hideK && p === "K") && !(hideDst && p === "DST"),
+      ),
+    [hideK, hideDst],
   );
 
   // distinct bye weeks present, for the bye-week filter
@@ -73,11 +87,12 @@ export default function App() {
       (p) =>
         (posFilter === "All" || p.position === posFilter) &&
         (!hideDrafted || p.draftStatus === "available") &&
-        (!hideKDst || (p.position !== "K" && p.position !== "DST")) &&
+        !(hideK && p.position === "K") &&
+        !(hideDst && p.position === "DST") &&
         (byeFilter === null || p.byeWeek === byeFilter),
     );
     return searchPlayers(filtered, search);
-  }, [players, search, posFilter, hideDrafted, hideKDst, byeFilter]);
+  }, [players, search, posFilter, hideDrafted, hideK, hideDst, byeFilter]);
 
   const visibleIds = useMemo(() => visible.map((p) => p.id), [visible]);
   // Only drafted players (when "hide drafted" is on) may linger before hiding;
@@ -210,11 +225,17 @@ export default function App() {
     input.click();
   };
 
-  const onToggleKDst = () => {
-    setHideKDst((v) => {
+  const onToggleK = () => {
+    setHideK((v) => {
       const next = !v;
-      if (next && (posFilter === "K" || posFilter === "DST"))
-        setPosFilter("All");
+      if (next && posFilter === "K") setPosFilter("All");
+      return next;
+    });
+  };
+  const onToggleDst = () => {
+    setHideDst((v) => {
+      const next = !v;
+      if (next && posFilter === "DST") setPosFilter("All");
       return next;
     });
   };
@@ -263,8 +284,10 @@ export default function App() {
         onSaveListAs={onSaveListAs}
         onRenameList={onRenameList}
         onDeleteList={onDeleteList}
-        hideKDst={hideKDst}
-        onToggleKDst={onToggleKDst}
+        hideK={hideK}
+        onToggleK={onToggleK}
+        hideDst={hideDst}
+        onToggleDst={onToggleDst}
         onFetch={onFetch}
         fetching={fetching}
         onImport={onImport}
