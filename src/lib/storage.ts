@@ -1,6 +1,7 @@
 import type { Player } from "../types";
 import seed from "../data/seed.json";
 import { withByeWeeks } from "./byes";
+import { normalizeTiers } from "./ranking";
 
 const KEY = "ff-cheat-sheet:players:v2";
 
@@ -17,12 +18,13 @@ export function loadPlayers(): Player[] {
     const raw = localStorage.getItem(KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed)) return withByeWeeks(parsed as Player[]);
+      if (Array.isArray(parsed))
+        return normalizeTiers(withByeWeeks(parsed as Player[]));
     }
   } catch {
     // corrupt JSON — fall through to seed
   }
-  return withByeWeeks(seed as unknown as Player[]);
+  return normalizeTiers(withByeWeeks(seed as unknown as Player[]));
 }
 
 export function exportJson(players: Player[]): string {

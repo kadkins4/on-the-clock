@@ -10,7 +10,8 @@ interface Props {
   setHideDrafted: (b: boolean) => void;
   sortKey: SortKey | null;
   setSortKey: (k: SortKey | null) => void;
-  onAdd: () => void;
+  onFetch: () => void;
+  fetching: boolean;
   onImport: () => void;
   onExportJson: () => void;
   onExportCsv: () => void;
@@ -61,7 +62,9 @@ export function Toolbar(props: Props) {
           <option value="bye">Bye</option>
         </select>
       </label>
-      <button onClick={props.onAdd}>Add player</button>
+      <button onClick={props.onFetch} disabled={props.fetching}>
+        {props.fetching ? "Fetching…" : "Fetch players"}
+      </button>
       <button onClick={props.onImport}>Import</button>
       <button onClick={props.onExportJson}>Export JSON</button>
       <button onClick={props.onExportCsv}>Export CSV</button>

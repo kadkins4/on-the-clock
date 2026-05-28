@@ -7,16 +7,12 @@ import { nextDraftStatus } from "../lib/draft";
 import { rowState } from "../lib/rowState";
 import { injuryBadge } from "../lib/injury";
 
-function toNum(v: string): number | null {
-  if (v.trim() === "") return null;
-  const n = Number(v);
-  return Number.isNaN(n) ? null : n;
-}
-
 interface Props {
   player: Player;
   positionalRank: number;
   draggable: boolean;
+  startsTier: boolean; // first player of its tier → "+" inserts an empty tier here
+  onAddTier: (playerId: string, startsTier: boolean) => void;
   dispatch: Dispatch<Action>;
 }
 
@@ -30,6 +26,8 @@ export function PlayerRow({
   player,
   positionalRank,
   draggable,
+  startsTier,
+  onAddTier,
   dispatch,
 }: Props) {
   const {
@@ -71,6 +69,26 @@ export function PlayerRow({
       style={style}
       className={`row state-${rowState(player.draftStatus, player.flag)}`}
     >
+      <td className="mover">
+        {draggable && (
+          <>
+            <button
+              className="add-tier"
+              title={
+                startsTier
+                  ? "Add an empty tier above this player"
+                  : "Start a new tier here"
+              }
+              onClick={() => onAddTier(player.id, startsTier)}
+            >
+              ＋
+            </button>
+            <span className="drag-handle" {...attributes} {...listeners}>
+              ⠷
+            </span>
+          </>
+        )}
+      </td>
       <td className="draft-cell">
         <button
           className={`draft draft-${player.draftStatus}`}
@@ -80,48 +98,7 @@ export function PlayerRow({
           {DRAFT_LABEL[player.draftStatus]}
         </button>
       </td>
-      <td
-        className="drag"
-        {...(draggable ? { ...attributes, ...listeners } : {})}
-      >
-        {draggable ? "⠷" : ""}
-      </td>
-      <td className="rank">{player.overallRank}</td>
-      <td className="pos">
-        <span className="posrank">
-          {player.position}·{player.team} ({player.position}
-          {positionalRank})
-        </span>
-      </td>
-      <td className="name-cell" title={player.name}>
-        {player.name}
-        {inj && (
-          <span
-            className={`inj inj-${inj.severity}`}
-            title={player.injuryStatus}
-          >
-            {inj.code}
-          </span>
-        )}
-      </td>
-      <td className="num">{player.byeWeek ?? ""}</td>
-      <td className="num">{player.adp ?? ""}</td>
-      <td>
-        <input
-          className="num tier-input"
-          inputMode="numeric"
-          value={player.tier ?? ""}
-          onChange={(e) => upd({ tier: toNum(e.target.value) })}
-        />
-      </td>
-      <td>
-        <input
-          className="notes"
-          value={player.notes}
-          onChange={(e) => upd({ notes: e.target.value })}
-        />
-      </td>
-      <td>
+      <td className="flag-cell">
         <button
           className={`flag flag-${player.flag}`}
           onClick={cycleFlag}
@@ -129,6 +106,32 @@ export function PlayerRow({
         >
           {player.flag === "target" ? "★" : player.flag === "avoid" ? "⚑" : "·"}
         </button>
+      </td>
+      <td className="rank num">{player.overallRank}</td>
+      <td className="name-cell" title={player.name}>
+        {player.name}
+        {inj && (
+          <span
+            className={`inj inj-${inj.severity}`}
+            title={`${inj.label} — ${inj.description}`}
+          >
+            {inj.code}
+          </span>
+        )}
+      </td>
+      <td className="pos num">
+        {player.position}
+        {positionalRank}
+      </td>
+      <td className="team num">{player.team}</td>
+      <td className="adp num">{player.adp ?? ""}</td>
+      <td className="bye num">{player.byeWeek ?? ""}</td>
+      <td>
+        <input
+          className="notes"
+          value={player.notes}
+          onChange={(e) => upd({ notes: e.target.value })}
+        />
       </td>
     </tr>
   );

@@ -20,15 +20,15 @@ function mk(pos: Player["position"], status: DraftStatus): Player {
 }
 
 describe("draftedByPosition", () => {
-  it("counts non-available players per position", () => {
+  it("counts total drafted and mine per position", () => {
     const out = draftedByPosition([
       mk("RB", "mine"),
       mk("RB", "taken"),
       mk("RB", "available"),
       mk("WR", "taken"),
     ]);
-    expect(out.RB).toBe(2);
-    expect(out.WR).toBe(1);
-    expect(out.QB).toBe(0);
+    expect(out.RB).toEqual({ drafted: 2, mine: 1 });
+    expect(out.WR).toEqual({ drafted: 1, mine: 0 });
+    expect(out.QB).toEqual({ drafted: 0, mine: 0 });
   });
 });

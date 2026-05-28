@@ -10,6 +10,7 @@
   --red: #ef4444;
   --purple: #a855f7;
   --grey: #5b6573;
+  --accent: #3b82f6;
 }
 body {
   margin: 1rem;
@@ -29,6 +30,9 @@ body {
 }
 .drafted-summary-item b {
   color: var(--text);
+}
+.drafted-summary-item .mine-count {
+  color: var(--green);
 }
 
 .toolbar {
@@ -73,7 +77,9 @@ body {
 
 table.players {
   border-collapse: collapse;
-  width: 100%;
+  /* left gutter so the row-hover "+" (add tier) can poke out and stay clickable */
+  margin-left: 1.4rem;
+  width: calc(100% - 1.4rem);
   table-layout: fixed;
 }
 table.players th,
@@ -85,36 +91,60 @@ table.players td {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-table.players th:nth-child(1) {
-  width: 3rem;
-} /* draft */
-table.players th:nth-child(2) {
-  width: 1.6rem;
-} /* drag */
-table.players th:nth-child(3) {
-  width: 2.4rem;
-} /* # */
-table.players th:nth-child(4) {
-  width: 7rem;
-} /* pos·tm */
-table.players th:nth-child(5) {
-  width: 9rem;
-} /* name (narrower) */
-table.players th:nth-child(6) {
-  width: 3rem;
-} /* bye */
-table.players th:nth-child(7) {
+/* the mover cell must not clip the "+" that pokes above/left of the row */
+table.players td.mover,
+table.players th.col-mover {
+  overflow: visible;
+}
+/* column widths: numeric columns as thin as their data allows, Player wide */
+.col-mover {
+  width: 1.7rem;
+}
+.col-draft {
+  width: 2.6rem;
+}
+.col-flag {
+  width: 2rem;
+}
+.col-rank {
+  width: 2.2rem;
+}
+.col-name {
+  width: 16rem;
+} /* Player — the wide one */
+.col-pos {
   width: 3.4rem;
-} /* adp */
-table.players th:nth-child(8) {
+} /* fits e.g. DST12 without truncating */
+.col-team {
   width: 3rem;
-} /* tier */
-table.players th:nth-child(9) {
+}
+.col-adp {
+  width: 3.2rem;
+}
+.col-bye {
+  width: 2.6rem;
+}
+.col-notes {
   width: auto;
-} /* notes (wider) */
-table.players th:nth-child(10) {
-  width: 2.4rem;
-} /* flag */
+} /* notes takes the remaining space */
+
+/* center the slim numeric/identity columns (rank, pos, team, adp, bye) */
+table.players th.col-rank,
+table.players th.col-pos,
+table.players th.col-team,
+table.players th.col-adp,
+table.players th.col-bye,
+table.players th.col-draft,
+table.players th.col-flag,
+table.players td.rank,
+table.players td.pos,
+table.players td.team,
+table.players td.adp,
+table.players td.bye,
+table.players td.draft-cell,
+table.players td.flag-cell {
+  text-align: center;
+}
 
 table.players input:not([type="checkbox"]) {
   width: 100%;
@@ -170,11 +200,94 @@ table.players input:focus {
   font-size: 0.75rem;
   color: var(--muted);
 }
-.drag {
+.tier-tools {
+  float: right;
+  display: inline-flex;
+  gap: 0.4rem;
+  align-items: center;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.tier-move {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 0.7rem;
+  line-height: 1;
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+}
+.tier-move:hover:not(:disabled) {
+  border-color: var(--accent, #3b82f6);
+  color: var(--accent, #3b82f6);
+}
+.tier-move:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+.tier-remove {
+  border: none;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.85rem;
+  line-height: 1;
+  padding: 0 0.15rem;
+}
+.tier-remove:hover {
+  color: var(--red);
+}
+.empty-tier td {
+  color: var(--accent, #3b82f6);
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    var(--panel),
+    var(--panel) 8px,
+    #1b2030 8px,
+    #1b2030 16px
+  );
+}
+.empty-tier.drop-over td {
+  outline: 1px dashed var(--accent, #3b82f6);
+  outline-offset: -3px;
+}
+
+/* mover column: drag handle (centered) + a "+" that pokes into the left gutter */
+.mover {
+  position: relative;
+  text-align: center;
+  user-select: none;
+}
+.drag-handle {
   cursor: grab;
   color: var(--muted);
-  user-select: none;
-  text-align: center;
+}
+.add-tier {
+  position: absolute;
+  top: 50%;
+  left: -1.5rem;
+  transform: translateY(-50%);
+  width: 1.25rem;
+  height: 1.25rem;
+  padding: 0;
+  border: 1px solid var(--accent, #3b82f6);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--accent, #3b82f6);
+  font-size: 0.8rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.1s ease;
+  z-index: 3;
+}
+.row:hover .add-tier,
+.add-tier:hover {
+  opacity: 1;
 }
 .draft {
   border: 1px solid var(--border);
@@ -204,10 +317,6 @@ table.players input:focus {
 }
 .flag-avoid {
   color: var(--red);
-}
-.posrank {
-  color: var(--muted);
-  font-size: 0.85rem;
 }
 .add-form {
   display: flex;
