@@ -45,8 +45,8 @@ export function PlayerTable({
     useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
   );
 
-  // Only player rows are sortable; tier headers move via their ▲/▼ buttons and
-  // empty-tier dividers are plain droppables (registered in EmptyTier).
+  // Only player rows are sortable; empty-tier dividers are plain droppables
+  // (registered in EmptyTier). Tiers are reordered by moving players, not tiers.
   const orderedIds: string[] = [];
   if (grouped) {
     for (const g of display) {
@@ -55,15 +55,6 @@ export function PlayerTable({
   } else {
     flat.forEach((p) => orderedIds.push(p.id));
   }
-
-  // First/last tier (by display order) so the move arrows can disable at edges.
-  const tierNums = display
-    .filter(
-      (g): g is Extract<DisplayGroup, { kind: "tier" }> => g.kind === "tier",
-    )
-    .map((g) => g.tier);
-  const firstTier = tierNums[0];
-  const lastTier = tierNums[tierNums.length - 1];
 
   const onDragEnd = (e: DragEndEvent) => {
     const active = String(e.active.id);
@@ -138,8 +129,6 @@ export function PlayerTable({
                       key={`tier:${g.tier}`}
                       group={g}
                       editable={reorderable}
-                      isFirst={g.tier === firstTier}
-                      isLast={g.tier === lastTier}
                       dispatch={dispatch}
                       renderRow={renderRow}
                     />
@@ -156,15 +145,11 @@ export function PlayerTable({
 function TierHeaderGroup({
   group,
   editable,
-  isFirst,
-  isLast,
   dispatch,
   renderRow,
 }: {
   group: Extract<DisplayGroup, { kind: "tier" }>;
   editable: boolean;
-  isFirst: boolean;
-  isLast: boolean;
   dispatch: Dispatch<Action>;
   renderRow: (p: Player, startsTier: boolean) => ReactNode;
 }) {
@@ -174,11 +159,6 @@ function TierHeaderGroup({
         tier={group.tier}
         displayTier={group.displayTier}
         editable={editable}
-        isFirst={isFirst}
-        isLast={isLast}
-        onMove={(t, dir) =>
-          dispatch({ type: "moveTier", fromTier: t, toTier: t + dir })
-        }
         onRemove={(t) => dispatch({ type: "removeTier", tier: t })}
       />
       {group.players.map((p, i) => renderRow(p, i === 0))}

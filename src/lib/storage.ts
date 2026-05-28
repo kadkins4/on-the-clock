@@ -1,7 +1,7 @@
 import type { Player } from "../types";
 import seed from "../data/seed.json";
 import { withByeWeeks } from "./byes";
-import { normalizeTiers } from "./ranking";
+import { normalizeTiers, orderByAdp } from "./ranking";
 
 const KEY = "ff-cheat-sheet:players:v2";
 
@@ -24,7 +24,8 @@ export function loadPlayers(): Player[] {
   } catch {
     // corrupt JSON — fall through to seed
   }
-  return normalizeTiers(withByeWeeks(seed as unknown as Player[]));
+  // fresh board: default to ADP order with ADP-based tiers
+  return normalizeTiers(withByeWeeks(orderByAdp(seed as unknown as Player[])));
 }
 
 export function exportJson(players: Player[]): string {

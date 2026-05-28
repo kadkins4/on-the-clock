@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import type { Position, SortKey } from "../types";
 import { POSITIONS } from "../types";
 
@@ -62,12 +63,69 @@ export function Toolbar(props: Props) {
           <option value="bye">Bye</option>
         </select>
       </label>
-      <button onClick={props.onFetch} disabled={props.fetching}>
-        {props.fetching ? "Fetching…" : "Fetch players"}
+      <SettingsMenu
+        items={[
+          {
+            label: props.fetching ? "Fetching…" : "Fetch players",
+            onClick: props.onFetch,
+            disabled: props.fetching,
+          },
+          { label: "Import…", onClick: props.onImport },
+          { label: "Export JSON", onClick: props.onExportJson },
+          { label: "Export CSV", onClick: props.onExportCsv },
+        ]}
+      />
+    </div>
+  );
+}
+
+interface MenuItem {
+  label: string;
+  onClick: () => void;
+  disabled?: boolean;
+}
+
+function SettingsMenu({ items }: { items: MenuItem[] }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", onDown);
+    return () => document.removeEventListener("mousedown", onDown);
+  }, [open]);
+
+  return (
+    <div className="settings" ref={ref}>
+      <button
+        className="settings-btn"
+        title="Data & settings"
+        aria-label="Data & settings"
+        onClick={() => setOpen((o) => !o)}
+      >
+        ⚙
       </button>
-      <button onClick={props.onImport}>Import</button>
-      <button onClick={props.onExportJson}>Export JSON</button>
-      <button onClick={props.onExportCsv}>Export CSV</button>
+      {open && (
+        <div className="settings-menu">
+          {items.map((it) => (
+            <button
+              key={it.label}
+              disabled={it.disabled}
+              onClick={() => {
+                setOpen(false);
+                it.onClick();
+              }}
+            >
+              {it.label}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

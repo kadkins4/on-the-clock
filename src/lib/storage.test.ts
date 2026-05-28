@@ -28,8 +28,19 @@ describe("storage", () => {
     expect(loadPlayers()).toEqual(withByeWeeks(players));
   });
 
-  it("falls back to the seed when nothing is stored", () => {
-    expect(loadPlayers()).toEqual(withByeWeeks(seed as unknown as Player[]));
+  it("falls back to an ADP-ordered seed when nothing is stored", () => {
+    const out = loadPlayers();
+    expect(out.length).toBe((seed as unknown as Player[]).length);
+    // contiguous 1-based ranks
+    expect(out.map((p) => p.overallRank)).toEqual(out.map((_, i) => i + 1));
+    // ordered by ADP ascending, with null ADPs last
+    const adps = out.map((p) => p.adp);
+    const nullStart = adps.findIndex((a) => a == null);
+    const ranked = nullStart === -1 ? adps : adps.slice(0, nullStart);
+    expect(ranked.every((a) => a != null)).toBe(true);
+    for (let i = 1; i < ranked.length; i++) {
+      expect(ranked[i]!).toBeGreaterThanOrEqual(ranked[i - 1]!);
+    }
   });
 
   it("round-trips JSON export/import", () => {

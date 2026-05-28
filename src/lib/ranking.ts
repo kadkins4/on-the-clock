@@ -4,6 +4,22 @@ export function reassignOverallRanks(players: Player[]): Player[] {
   return players.map((p, i) => ({ ...p, overallRank: i + 1 }));
 }
 
+// Default board order: sort by ADP (nulls last), then rank 1..N and split into
+// even tiers of `tierSize`. Used as the starting layout before the user edits.
+export function orderByAdp(players: Player[], tierSize = 12): Player[] {
+  const sorted = players.slice().sort((a, b) => {
+    if (a.adp == null && b.adp == null) return 0;
+    if (a.adp == null) return 1;
+    if (b.adp == null) return -1;
+    return a.adp - b.adp;
+  });
+  return sorted.map((p, i) => ({
+    ...p,
+    overallRank: i + 1,
+    tier: Math.floor(i / tierSize) + 1,
+  }));
+}
+
 export function computePositionalRanks(
   players: Player[],
 ): Record<string, number> {

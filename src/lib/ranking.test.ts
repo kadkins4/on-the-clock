@@ -10,6 +10,7 @@ import {
   splitTierAt,
   removeTier,
   moveIntoNewTier,
+  orderByAdp,
 } from "./ranking";
 import type { Player } from "../types";
 
@@ -220,5 +221,19 @@ describe("moveIntoNewTier", () => {
     const out = moveIntoNewTier(players, "a", null);
     expect(out.map((p) => p.id)).toEqual(["b", "a"]);
     expect(out.map((p) => p.tier)).toEqual([1, 2]);
+  });
+});
+
+describe("orderByAdp", () => {
+  it("orders by ADP ascending with nulls last, reranking and re-tiering", () => {
+    const players = [
+      mk({ id: "a", adp: null, overallRank: 1 }),
+      mk({ id: "b", adp: 5, overallRank: 2 }),
+      mk({ id: "c", adp: 1, overallRank: 3 }),
+    ];
+    const out = orderByAdp(players, 2); // tier size 2
+    expect(out.map((p) => p.id)).toEqual(["c", "b", "a"]);
+    expect(out.map((p) => p.overallRank)).toEqual([1, 2, 3]);
+    expect(out.map((p) => p.tier)).toEqual([1, 1, 2]);
   });
 });

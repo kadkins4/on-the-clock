@@ -185,7 +185,7 @@ export default function App() {
 
   return (
     <div className="app">
-      <h1>FF Cheat Sheet</h1>
+      <h1>Fantasy Football Draft Helper</h1>
       <div className="drafted-summary">
         {POSITIONS.map((pos) => (
           <span key={pos} className="drafted-summary-item">
