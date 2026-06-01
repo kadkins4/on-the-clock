@@ -21,7 +21,7 @@ export function MockSummary({ summary, onRestart, onExit }: Props) {
             <span className="mock-name">{p.name}</span>
             <span className="mock-pos">{p.position}</span>
             <span className="mock-team">{p.team}</span>
-            {p.adpDelta != null && p.adpDelta !== 0 && (
+            {p.adpDelta != null && Math.round(p.adpDelta) !== 0 && (
               // adpDelta = adp - pick. Positive → you took them earlier than
               // their ADP (a reach); negative → later than ADP (a value).
               <span
@@ -31,8 +31,8 @@ export function MockSummary({ summary, onRestart, onExit }: Props) {
                 title="How far from ADP you drafted them — reach = earlier than ADP, value = later"
               >
                 {p.adpDelta > 0
-                  ? `reach ${p.adpDelta.toFixed(0)}`
-                  : `value ${Math.abs(p.adpDelta).toFixed(0)}`}
+                  ? `reach ${Math.round(p.adpDelta)}`
+                  : `value ${Math.abs(Math.round(p.adpDelta))}`}
               </span>
             )}
           </li>
