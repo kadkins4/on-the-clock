@@ -13,7 +13,8 @@ export interface Player {
   overallRank: number; // 1-based, derived from list order
   byeWeek: number | null;
   tier: number | null; // null = "Untiered" group
-  adp: number | null;
+  adp: number | null; // blended (mean of available sources); board sorts on this
+  adpSources?: { espn?: number | null; ffc?: number | null };
   notes: string;
   flag: Flag;
   draftStatus: DraftStatus;
