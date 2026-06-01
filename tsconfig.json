@@ -13,5 +13,5 @@
     "allowSyntheticDefaultImports": true,
     "noEmit": true
   },
-  "include": ["src"]
+  "include": ["src", "api", "vite.config.ts"]
 }

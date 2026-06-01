@@ -14,7 +14,7 @@ const noData = () =>
 
 describe("handleAdp", () => {
   it("requests the FFC format for the scoring + teams and normalizes", async () => {
-    const fetchImpl = vi.fn(async () =>
+    const fetchImpl = vi.fn(async (_url: RequestInfo | URL) =>
       ok([{ name: "CMC", position: "RB", team: "SF", adp: 1.4 }], {
         type: "PPR",
         total_drafts: 100,
@@ -24,7 +24,7 @@ describe("handleAdp", () => {
       { scoring: "ppr", teams: 12, season: 2026 },
       fetchImpl,
     );
-    expect(fetchImpl.mock.calls[0][0]).toContain("/adp/ppr?teams=12&year=2026");
+    expect(String(fetchImpl.mock.calls[0][0])).toContain("/adp/ppr?teams=12&year=2026");
     expect(res.players).toEqual([
       { name: "CMC", position: "RB", team: "SF", adp: 1.4 },
     ]);
@@ -50,11 +50,11 @@ describe("handleAdp", () => {
   });
 
   it("maps half scoring to the half-ppr slug", async () => {
-    const fetchImpl = vi.fn(async () =>
+    const fetchImpl = vi.fn(async (_url: RequestInfo | URL) =>
       ok([{ name: "CMC", position: "RB", team: "SF", adp: 1.4 }]),
     );
     await handleAdp({ scoring: "half", teams: 10, season: 2026 }, fetchImpl);
-    expect(fetchImpl.mock.calls[0][0]).toContain(
+    expect(String(fetchImpl.mock.calls[0][0])).toContain(
       "/adp/half-ppr?teams=10&year=2026",
     );
   });
