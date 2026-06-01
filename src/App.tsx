@@ -31,7 +31,7 @@ const HIDE_DST_KEY = "ff-cheat-sheet:hideDst";
 const OLD_HIDE_KDST_KEY = "ff-cheat-sheet:hideKDst"; // migrate combined toggle
 
 export default function App() {
-  const { players, dispatch, currentList, listNames } = useRankings();
+  const { players, dispatch, currentLeague, leagues } = useRankings();
   const [search, setSearch] = useState("");
   const [posFilter, setPosFilter] = useState<Position | "All">("All");
   const [hideDrafted, setHideDrafted] = useState(false);
@@ -240,18 +240,22 @@ export default function App() {
     });
   };
 
-  const onSaveListAs = () => {
-    const name = prompt("Save current board as a new list:")?.trim();
-    if (name) dispatch({ type: "saveListAs", name });
+  const onAddLeague = () => {
+    const name = prompt("New league name:")?.trim();
+    if (name) dispatch({ type: "addLeague", name });
   };
-  const onRenameList = () => {
-    const name = prompt("Rename this list:", currentList)?.trim();
-    if (name) dispatch({ type: "renameList", name });
+  const onRenameLeague = () => {
+    const name = prompt("Rename this league:", currentLeague.name)?.trim();
+    if (name) dispatch({ type: "renameLeague", id: currentLeague.id, name });
   };
-  const onDeleteList = () => {
-    if (listNames.length <= 1) return;
-    if (confirm(`Delete the list "${currentList}"? This can't be undone.`))
-      dispatch({ type: "deleteList", name: currentList });
+  const onDeleteLeague = () => {
+    if (leagues.length <= 1) return;
+    if (
+      confirm(
+        `Delete the league "${currentLeague.name}"? This can't be undone.`,
+      )
+    )
+      dispatch({ type: "deleteLeague", id: currentLeague.id });
   };
 
   return (
@@ -278,12 +282,23 @@ export default function App() {
         byeWeeks={byeWeeks}
         sortKey={sortKey}
         setSortKey={setSortKey}
-        currentList={currentList}
-        listNames={listNames}
-        onSwitchList={(name) => dispatch({ type: "switchList", name })}
-        onSaveListAs={onSaveListAs}
-        onRenameList={onRenameList}
-        onDeleteList={onDeleteList}
+        currentLeagueId={currentLeague.id}
+        leagues={leagues.map((l) => ({
+          id: l.id,
+          name: l.name,
+          scoring: l.scoring,
+        }))}
+        onSwitchLeague={(id) => dispatch({ type: "switchLeague", id })}
+        onAddLeague={onAddLeague}
+        onRenameLeague={onRenameLeague}
+        onDeleteLeague={onDeleteLeague}
+        onScoringChange={(scoring) =>
+          dispatch({
+            type: "updateLeagueSettings",
+            id: currentLeague.id,
+            patch: { scoring },
+          })
+        }
         hideK={hideK}
         onToggleK={onToggleK}
         hideDst={hideDst}

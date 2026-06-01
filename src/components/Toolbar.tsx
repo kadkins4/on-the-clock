@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import type { Position, SortKey } from "../types";
+import type { Position, Scoring, SortKey } from "../types";
 
 interface Props {
   search: string;
@@ -14,12 +14,13 @@ interface Props {
   byeWeeks: number[];
   sortKey: SortKey | null;
   setSortKey: (k: SortKey | null) => void;
-  currentList: string;
-  listNames: string[];
-  onSwitchList: (name: string) => void;
-  onSaveListAs: () => void;
-  onRenameList: () => void;
-  onDeleteList: () => void;
+  currentLeagueId: string;
+  leagues: { id: string; name: string; scoring: Scoring }[];
+  onSwitchLeague: (id: string) => void;
+  onAddLeague: () => void;
+  onRenameLeague: () => void;
+  onDeleteLeague: () => void;
+  onScoringChange: (scoring: Scoring) => void;
   hideK: boolean;
   onToggleK: () => void;
   hideDst: boolean;
@@ -97,54 +98,76 @@ export function Toolbar(props: Props) {
       <SettingsMenu>
         {(close) => (
           <>
-            <div className="menu-label">Lists</div>
-            {props.listNames.map((name) => (
+            <div className="menu-label">Leagues</div>
+            {props.leagues.map((lg) => (
               <button
-                key={name}
+                key={lg.id}
                 className={
-                  name === props.currentList ? "menu-item current" : "menu-item"
+                  lg.id === props.currentLeagueId
+                    ? "menu-item current"
+                    : "menu-item"
                 }
                 onClick={() => {
                   close();
-                  if (name !== props.currentList) props.onSwitchList(name);
+                  if (lg.id !== props.currentLeagueId)
+                    props.onSwitchLeague(lg.id);
                 }}
               >
-                {name === props.currentList ? "✓ " : "  "}
-                {name}
+                {lg.id === props.currentLeagueId ? "✓ " : "  "}
+                {lg.name}
               </button>
             ))}
             <button
               className="menu-item"
               onClick={() => {
                 close();
-                props.onSaveListAs();
+                props.onAddLeague();
               }}
             >
-              Save as new list…
+              + New league…
             </button>
             <button
               className="menu-item"
               onClick={() => {
                 close();
-                props.onRenameList();
+                props.onRenameLeague();
               }}
             >
               Rename current…
             </button>
             <button
               className="menu-item"
-              disabled={props.listNames.length <= 1}
+              disabled={props.leagues.length <= 1}
               onClick={() => {
                 close();
-                props.onDeleteList();
+                props.onDeleteLeague();
               }}
             >
               Delete current
             </button>
 
             <div className="menu-sep" />
+            <label className="menu-label">
+              Scoring{" "}
+              <select
+                className="menu-select"
+                value={
+                  props.leagues.find((l) => l.id === props.currentLeagueId)
+                    ?.scoring ?? "ppr"
+                }
+                onChange={(e) =>
+                  props.onScoringChange(e.target.value as Scoring)
+                }
+              >
+                <option value="ppr">PPR</option>
+                <option value="half">Half-PPR</option>
+                <option value="standard">Standard</option>
+              </select>
+            </label>
+
+            <div className="menu-sep" />
             <button className="menu-item" onClick={props.onToggleK}>
-              {props.hideK ? "✓ " : "  "}Hide kickers (K)
+              {props.hideK ? "✓ " : "  "}Hide kickers (K)
             </button>
             <button className="menu-item" onClick={props.onToggleDst}>
               {props.hideDst ? "✓ " : "  "}Hide defenses (DST)
