@@ -8,8 +8,11 @@ export function buildDraftOrder(
 ): number[] {
   const order: number[] = [];
   for (let round = 1; round <= rounds; round++) {
-    let reversed = round % 2 === 0; // even rounds reverse in plain snake
-    if (thirdRoundReversal && round === 3) reversed = true; // keep R2 direction
+    // Plain snake: even rounds reverse. With 3RR, round 3 reverses again
+    // (instead of flipping back), which inverts the parity for every round
+    // from 3 onward — so odd rounds reverse and even rounds go forward.
+    const reversed =
+      thirdRoundReversal && round >= 3 ? round % 2 === 1 : round % 2 === 0;
     const seq = Array.from({ length: teams }, (_, i) => i);
     order.push(...(reversed ? seq.reverse() : seq));
   }
