@@ -28,6 +28,8 @@ interface Props {
   onToggleDst: () => void;
   onFetch: () => void;
   fetching: boolean;
+  onRefreshAdp: () => void;
+  adpStatus: string | null;
   onImport: () => void;
   onExportJson: () => void;
   onExportCsv: () => void;
@@ -174,7 +176,9 @@ export function Toolbar(props: Props) {
                 <option value="standard">Standard</option>
               </select>
             </label>
-            <div className="menu-hint">Affects ADP — coming soon</div>
+            <div className="menu-hint">
+              Sets the ADP blend &amp; default sort
+            </div>
 
             <div className="menu-sep" />
             <button className="menu-item" onClick={props.onToggleK}>
@@ -195,6 +199,18 @@ export function Toolbar(props: Props) {
             >
               {props.fetching ? "Fetching…" : "Fetch players"}
             </button>
+            <button
+              className="menu-item"
+              onClick={() => {
+                close();
+                props.onRefreshAdp();
+              }}
+            >
+              Refresh ADP (ESPN + FFC)
+            </button>
+            {props.adpStatus && (
+              <div className="menu-hint">{props.adpStatus}</div>
+            )}
             <button
               className="menu-item"
               onClick={() => {

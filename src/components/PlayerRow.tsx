@@ -124,7 +124,23 @@ export function PlayerRow({
         {positionalRank}
       </td>
       <td className="team num">{player.team}</td>
-      <td className="adp num">{player.adp ?? ""}</td>
+      <td
+        className="adp num"
+        title={
+          player.adpSources
+            ? [
+                player.adpSources.espn != null &&
+                  `ESPN ${player.adpSources.espn.toFixed(1)}`,
+                player.adpSources.ffc != null &&
+                  `FFC ${player.adpSources.ffc.toFixed(1)}`,
+              ]
+                .filter(Boolean)
+                .join(" · ") || undefined
+            : undefined
+        }
+      >
+        {player.adp == null ? "" : Number(player.adp.toFixed(1))}
+      </td>
       <td className="bye num">{player.byeWeek ?? ""}</td>
       <td>
         <input

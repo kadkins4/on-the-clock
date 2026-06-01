@@ -9,6 +9,7 @@ import {
 import { toCsv, parseCsv } from "./lib/csv";
 import { exportJson, importJson } from "./lib/storage";
 import { fetchEspnPlayers } from "./lib/fetchEspn";
+import { fetchAdp } from "./lib/fetchAdp";
 import { searchPlayers } from "./lib/search";
 import type { Position, SortKey } from "./types";
 import { POSITIONS } from "./types";
@@ -48,6 +49,7 @@ export default function App() {
   );
   const [sortKey, setSortKey] = useState<SortKey | null>(null);
   const [fetching, setFetching] = useState(false);
+  const [adpStatus, setAdpStatus] = useState<string | null>(null);
   // Empty tiers are session-only: each entry is the id of the player the empty
   // tier sits directly above. Never persisted or exported.
   const [emptyTiers, setEmptyTiers] = useState<string[]>([]);
@@ -208,6 +210,21 @@ export default function App() {
     }
   };
 
+  const onRefreshAdp = async () => {
+    setAdpStatus("Loading ADP…");
+    try {
+      const { players: ffc, meta } = await fetchAdp(
+        currentLeague.scoring,
+        currentLeague.teams,
+      );
+      dispatch({ type: "applyAdp", ffc });
+      setAdpStatus(`ADP: ESPN + FFC ${meta.type ?? ""} (${meta.year})`.trim());
+    } catch (err) {
+      setAdpStatus("ADP refresh failed");
+      alert("ADP refresh failed: " + (err as Error).message);
+    }
+  };
+
   const onImport = () => {
     const input = document.createElement("input");
     input.type = "file";
@@ -325,6 +342,8 @@ export default function App() {
         onToggleDst={onToggleDst}
         onFetch={onFetch}
         fetching={fetching}
+        onRefreshAdp={onRefreshAdp}
+        adpStatus={adpStatus}
         onImport={onImport}
         onExportJson={() =>
           download(
