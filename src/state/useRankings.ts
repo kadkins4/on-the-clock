@@ -1,16 +1,18 @@
 import { useEffect, useReducer } from "react";
-import { boardReducer } from "./reducer";
-import { loadBoard, saveBoard } from "../lib/storage";
+import { leaguesReducer } from "./reducer";
+import { loadLeagues, saveLeagues } from "../lib/storage";
 
 export function useRankings() {
-  const [board, dispatch] = useReducer(boardReducer, undefined, loadBoard);
+  const [state, dispatch] = useReducer(leaguesReducer, undefined, loadLeagues);
   useEffect(() => {
-    saveBoard(board);
-  }, [board]);
+    saveLeagues(state);
+  }, [state]);
+  const current =
+    state.leagues.find((l) => l.id === state.currentId) ?? state.leagues[0];
   return {
-    players: board.lists[board.current],
+    players: current.board,
     dispatch,
-    currentList: board.current,
-    listNames: Object.keys(board.lists),
+    currentLeague: current,
+    leagues: state.leagues,
   };
 }
