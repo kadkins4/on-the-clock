@@ -1,10 +1,12 @@
 import type {
   League,
+  LeaguesState,
   Platform,
   Player,
   RosterSettings,
   Scoring,
 } from "../types";
+import type { Board } from "../state/reducer";
 
 export function defaultRoster(): RosterSettings {
   return {
@@ -39,4 +41,12 @@ export function makeLeague(opts: {
     board: opts.board ?? [],
     updatedAt: Date.now(),
   };
+}
+
+export function migrateBoardToLeagues(board: Board): LeaguesState {
+  const leagues = Object.keys(board.lists).map((name) =>
+    makeLeague({ name, board: board.lists[name] }),
+  );
+  const current = leagues.find((l) => l.name === board.current) ?? leagues[0];
+  return { currentId: current.id, leagues };
 }

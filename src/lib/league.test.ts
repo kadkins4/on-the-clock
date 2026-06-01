@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { defaultRoster, makeLeague } from "./league";
+import { defaultRoster, makeLeague, migrateBoardToLeagues } from "./league";
+import type { Board } from "../state/reducer";
 import type { Player } from "../types";
 
 const player = (id: string): Player => ({
@@ -70,5 +71,34 @@ describe("makeLeague", () => {
 
   it("gives distinct ids to distinct leagues", () => {
     expect(makeLeague({ name: "A" }).id).not.toBe(makeLeague({ name: "B" }).id);
+  });
+});
+
+describe("migrateBoardToLeagues", () => {
+  it("creates one league per named list, preserving boards", () => {
+    const board: Board = {
+      current: "Dynasty",
+      lists: { PPR: [player("1")], Dynasty: [player("2")] },
+    };
+    const state = migrateBoardToLeagues(board);
+    expect(state.leagues.map((l) => l.name)).toEqual(["PPR", "Dynasty"]);
+    expect(state.leagues[0].board).toEqual([player("1")]);
+    expect(state.leagues[1].board).toEqual([player("2")]);
+  });
+
+  it("sets currentId to the league matching board.current", () => {
+    const board: Board = {
+      current: "Dynasty",
+      lists: { PPR: [player("1")], Dynasty: [player("2")] },
+    };
+    const state = migrateBoardToLeagues(board);
+    const current = state.leagues.find((l) => l.id === state.currentId);
+    expect(current?.name).toBe("Dynasty");
+  });
+
+  it("falls back to the first league when current name is missing", () => {
+    const board: Board = { current: "Ghost", lists: { PPR: [player("1")] } };
+    const state = migrateBoardToLeagues(board);
+    expect(state.currentId).toBe(state.leagues[0].id);
   });
 });
