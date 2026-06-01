@@ -62,3 +62,63 @@ describe("storage (board)", () => {
     expect(() => importJson('{"foo":1}')).toThrow();
   });
 });
+
+import { loadLeagues, saveLeagues } from "./storage";
+import type { LeaguesState } from "../types";
+
+const LISTS_KEY = "ff-cheat-sheet:lists:v1";
+const LEAGUES_KEY = "ff-cheat-sheet:leagues:v1";
+
+describe("league storage", () => {
+  beforeEach(() => localStorage.clear());
+
+  it("round-trips a saved LeaguesState", () => {
+    saveLeagues({ currentId: "x", leagues: [] } as unknown as LeaguesState);
+    expect(localStorage.getItem(LEAGUES_KEY)).toContain('"currentId":"x"');
+  });
+
+  it("migrates a named-lists board when no leagues key exists", () => {
+    localStorage.setItem(
+      LISTS_KEY,
+      JSON.stringify({ current: "PPR", lists: { PPR: [], Dynasty: [] } }),
+    );
+    const state = loadLeagues();
+    expect(state.leagues.map((l) => l.name)).toEqual(["PPR", "Dynasty"]);
+    const current = state.leagues.find((l) => l.id === state.currentId);
+    expect(current?.name).toBe("PPR");
+  });
+
+  it("seeds a single league when storage is empty", () => {
+    const state = loadLeagues();
+    expect(state.leagues).toHaveLength(1);
+    expect(state.leagues[0].board.length).toBeGreaterThan(0);
+  });
+
+  it("prefers an existing leagues key over older shapes", () => {
+    const saved: LeaguesState = {
+      currentId: "keep",
+      leagues: [
+        {
+          id: "keep",
+          name: "Saved",
+          platform: "other",
+          scoring: "ppr",
+          tePremium: false,
+          teams: 12,
+          roster: {
+            QB: 1, RB: 2, WR: 2, TE: 1, FLEX: 1, SUPERFLEX: 0,
+            K: 1, DST: 1, bench: 6, disabled: [],
+          },
+          board: [],
+          updatedAt: 1,
+        },
+      ],
+    };
+    localStorage.setItem(LEAGUES_KEY, JSON.stringify(saved));
+    localStorage.setItem(
+      LISTS_KEY,
+      JSON.stringify({ current: "PPR", lists: { PPR: [] } }),
+    );
+    expect(loadLeagues().leagues[0].name).toBe("Saved");
+  });
+});

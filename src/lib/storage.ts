@@ -1,8 +1,9 @@
-import type { Player } from "../types";
+import type { LeaguesState, Player } from "../types";
 import type { Board } from "../state/reducer";
 import seed from "../data/seed.json";
 import { withByeWeeks } from "./byes";
 import { normalizeTiers, orderByAdp } from "./ranking";
+import { migrateBoardToLeagues } from "./league";
 
 const LISTS_KEY = "ff-cheat-sheet:lists:v1";
 const OLD_KEY = "ff-cheat-sheet:players:v2"; // pre-named-lists single board
@@ -72,4 +73,54 @@ export function importJson(text: string): Player[] {
   if (!Array.isArray(parsed))
     throw new Error("Expected a JSON array of players");
   return parsed as Player[];
+}
+
+// --- Leagues ----------------------------------------------------------------
+
+const LEAGUES_KEY = "ff-cheat-sheet:leagues:v1";
+
+export function saveLeagues(state: LeaguesState): void {
+  try {
+    localStorage.setItem(LEAGUES_KEY, JSON.stringify(state));
+  } catch {
+    // storage full / unavailable — ignore
+  }
+}
+
+function readLeagues(): LeaguesState | null {
+  try {
+    const raw = localStorage.getItem(LEAGUES_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (
+        parsed &&
+        typeof parsed.currentId === "string" &&
+        Array.isArray(parsed.leagues)
+      ) {
+        return parsed as LeaguesState;
+      }
+    }
+  } catch {
+    // corrupt JSON — fall through
+  }
+  return null;
+}
+
+export function loadLeagues(): LeaguesState {
+  const existing = readLeagues();
+  // when absent, migrate forward from the named-lists Board (which itself
+  // migrates the older single board, or falls back to the fresh seed).
+  const state = existing ?? migrateBoardToLeagues(readBoard());
+  const currentId =
+    state.leagues.find((l) => l.id === state.currentId)?.id ??
+    state.leagues[0].id;
+  // normalize the active league's board (tiers + bye weeks) for immediate use
+  return {
+    currentId,
+    leagues: state.leagues.map((l) =>
+      l.id === currentId
+        ? { ...l, board: normalizeTiers(withByeWeeks(l.board)) }
+        : l,
+    ),
+  };
 }
