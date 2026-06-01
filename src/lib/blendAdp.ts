@@ -28,10 +28,14 @@ export function applyFfcAdp(board: Player[], ffc: NormalizedAdp[]): Player[] {
   }
   return board.map((p) => {
     const match = byKey.get(adpMatchKey(p.position, p.name, p.team));
+    // Seed players carry `adp` but no adpSources yet — treat that existing
+    // number as the ESPN baseline so a first apply blends rather than discards.
+    const espn = p.adpSources?.espn ?? p.adp;
     const sources: AdpSources = {
-      ...p.adpSources,
+      espn,
       ffc: match ? match.adp : (p.adpSources?.ffc ?? undefined),
     };
+    if (sources.espn == null) delete sources.espn;
     if (sources.ffc == null) delete sources.ffc;
     return { ...p, adpSources: sources, adp: blendAdp(sources) };
   });

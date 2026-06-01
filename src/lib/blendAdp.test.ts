@@ -59,6 +59,20 @@ describe("applyFfcAdp", () => {
     expect(out[0].adp).toBe(131);
   });
 
+  it("treats an existing adp as the espn baseline when adpSources is absent (seed board)", () => {
+    // seed players have `adp` but no adpSources yet; a first Refresh ADP should
+    // blend FFC against that existing number, not discard it.
+    const board: Player[] = [
+      player({ id: "1", name: "Bijan Robinson", position: "RB", adp: 2.3 }),
+    ];
+    const ffc: NormalizedAdp[] = [
+      { name: "Bijan Robinson", position: "RB", team: "ATL", adp: 1.7 },
+    ];
+    const out = applyFfcAdp(board, ffc);
+    expect(out[0].adpSources).toEqual({ espn: 2.3, ffc: 1.7 });
+    expect(out[0].adp).toBe(2);
+  });
+
   it("leaves unmatched players' ffc unset and blend on espn only", () => {
     const board: Player[] = [player({ id: "1", name: "Nobody Here", adp: 9 })];
     board[0].adpSources = { espn: 9 };
