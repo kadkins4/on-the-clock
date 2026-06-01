@@ -144,6 +144,7 @@ export function boardReducer(board: Board, action: Action | ListAction): Board {
 export type LeagueAction =
   | { type: "switchLeague"; id: string }
   | { type: "addLeague"; name: string }
+  | { type: "duplicateLeague"; id: string; name: string }
   | { type: "deleteLeague"; id: string }
   | { type: "renameLeague"; id: string; name: string }
   | {
@@ -170,13 +171,38 @@ export function leaguesReducer(
   action: Action | LeagueAction,
 ): LeaguesState {
   switch (action.type) {
-    case "switchLeague":
+    case "switchLeague": {
       if (!state.leagues.some((l) => l.id === action.id)) return state;
-      return { ...state, currentId: action.id };
+      // Normalize the target board on switch (tiers + bye weeks), since only the
+      // active league is normalized at load time.
+      return mapLeague({ ...state, currentId: action.id }, action.id, (l) => ({
+        ...l,
+        board: normalizeTiers(withByeWeeks(l.board)),
+      }));
+    }
     case "addLeague": {
       const name = action.name.trim();
       if (!name) return state;
       const lg = makeLeague({ name });
+      return { currentId: lg.id, leagues: [...state.leagues, lg] };
+    }
+    case "duplicateLeague": {
+      const name = action.name.trim();
+      const src = state.leagues.find((l) => l.id === action.id);
+      if (!name || !src) return state;
+      // Clone the source board + settings into a brand-new league, so the user
+      // can start from an existing tier list instead of rebuilding it.
+      const lg: League = {
+        ...makeLeague({
+          name,
+          scoring: src.scoring,
+          platform: src.platform,
+          teams: src.teams,
+          board: src.board.map((p) => ({ ...p })),
+        }),
+        roster: { ...src.roster, disabled: [...src.roster.disabled] },
+        tePremium: src.tePremium,
+      };
       return { currentId: lg.id, leagues: [...state.leagues, lg] };
     }
     case "deleteLeague": {
@@ -194,10 +220,15 @@ export function leaguesReducer(
     case "updateLeagueSettings":
       return mapLeague(state, action.id, (l) => ({ ...l, ...action.patch }));
     default: {
-      // a player/tier Action — delegate to the active league's board
+      // a player/tier Action — delegate to the active league's board.
+      // Skip the update (and the updatedAt bump) when the board is unchanged.
+      const current = state.leagues.find((l) => l.id === state.currentId);
+      if (!current) return state;
+      const board = rankingReducer(current.board, action);
+      if (board === current.board) return state;
       return mapLeague(state, state.currentId, (l) => ({
         ...l,
-        board: rankingReducer(l.board, action),
+        board,
         updatedAt: Date.now(),
       }));
     }

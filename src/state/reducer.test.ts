@@ -234,3 +234,63 @@ describe("leaguesReducer — delegated player actions", () => {
     expect(next.leagues[0].updatedAt).toBeGreaterThan(1);
   });
 });
+
+import { teamMeta } from "../data/teamMeta";
+
+describe("leaguesReducer — review fixes (M1/L4/M2)", () => {
+  it("M1: switchLeague normalizes the target league's board (byes + tiers)", () => {
+    const a = makeLeague({ name: "A", board: [mkPlayer("1", 1)] });
+    const raw = makeLeague({
+      name: "B",
+      board: [{ ...mkPlayer("9", 1), tier: null, byeWeek: null, team: "ATL" }],
+    });
+    const s: LeaguesState = { currentId: a.id, leagues: [a, raw] };
+    const next = leaguesReducer(s, { type: "switchLeague", id: raw.id });
+    const b = next.leagues.find((l) => l.id === raw.id)!;
+    expect(b.board[0].tier).toBe(1); // null tier filled
+    expect(b.board[0].byeWeek).toBe(teamMeta["ATL"].byeWeek); // bye enriched
+  });
+
+  it("L4: a no-op delegated action returns the same state (no updatedAt bump)", () => {
+    const s = twoLeagues();
+    // moveAndRetier with activeId === overId is a no-op (same board ref)
+    const next = leaguesReducer(s, {
+      type: "move",
+      activeId: "1",
+      overId: "1",
+    });
+    expect(next).toBe(s);
+  });
+
+  it("M2: duplicateLeague clones board + settings into a new current league", () => {
+    const s = twoLeagues();
+    const src = leaguesReducer(s, {
+      type: "updateLeagueSettings",
+      id: s.leagues[0].id,
+      patch: { scoring: "half", teams: 14, tePremium: true },
+    });
+    const next = leaguesReducer(src, {
+      type: "duplicateLeague",
+      id: src.leagues[0].id,
+      name: "Clone",
+    });
+    expect(next.leagues).toHaveLength(3);
+    const dup = next.leagues[2];
+    expect(dup.name).toBe("Clone");
+    expect(next.currentId).toBe(dup.id);
+    expect(dup.scoring).toBe("half");
+    expect(dup.teams).toBe(14);
+    expect(dup.tePremium).toBe(true);
+    // board is a copy: equal contents, different array + element refs
+    expect(dup.board).toEqual(src.leagues[0].board);
+    expect(dup.board).not.toBe(src.leagues[0].board);
+    expect(dup.board[0]).not.toBe(src.leagues[0].board[0]);
+    expect(dup.id).not.toBe(src.leagues[0].id);
+  });
+
+  it("M2: duplicateLeague ignores blank names and unknown ids", () => {
+    const s = twoLeagues();
+    expect(leaguesReducer(s, { type: "duplicateLeague", id: s.leagues[0].id, name: " " })).toBe(s);
+    expect(leaguesReducer(s, { type: "duplicateLeague", id: "nope", name: "X" })).toBe(s);
+  });
+});
