@@ -151,7 +151,10 @@ function twoLeagues(): LeaguesState {
 describe("leaguesReducer — league actions", () => {
   it("switchLeague changes currentId", () => {
     const s = twoLeagues();
-    const next = leaguesReducer(s, { type: "switchLeague", id: s.leagues[1].id });
+    const next = leaguesReducer(s, {
+      type: "switchLeague",
+      id: s.leagues[1].id,
+    });
     expect(next.currentId).toBe(s.leagues[1].id);
   });
 
@@ -290,7 +293,44 @@ describe("leaguesReducer — review fixes (M1/L4/M2)", () => {
 
   it("M2: duplicateLeague ignores blank names and unknown ids", () => {
     const s = twoLeagues();
-    expect(leaguesReducer(s, { type: "duplicateLeague", id: s.leagues[0].id, name: " " })).toBe(s);
-    expect(leaguesReducer(s, { type: "duplicateLeague", id: "nope", name: "X" })).toBe(s);
+    expect(
+      leaguesReducer(s, {
+        type: "duplicateLeague",
+        id: s.leagues[0].id,
+        name: " ",
+      }),
+    ).toBe(s);
+    expect(
+      leaguesReducer(s, { type: "duplicateLeague", id: "nope", name: "X" }),
+    ).toBe(s);
+  });
+});
+
+describe("leaguesReducer — applyAdp", () => {
+  it("blends FFC adp into the active league's board, preserving order", () => {
+    const p: Player = {
+      id: "1",
+      name: "A.J. Brown",
+      position: "WR",
+      team: "PHI",
+      overallRank: 1,
+      byeWeek: null,
+      tier: 1,
+      adp: 10,
+      adpSources: { espn: 10 },
+      notes: "",
+      flag: "none",
+      draftStatus: "available",
+    };
+    const lg = makeLeague({ name: "Test", board: [p] });
+    const base: LeaguesState = { currentId: lg.id, leagues: [lg] };
+    const next = leaguesReducer(base, {
+      type: "applyAdp",
+      ffc: [{ name: "AJ Brown", position: "WR", team: "PHI", adp: 20 }],
+    });
+    const updated = next.leagues[0].board[0];
+    expect(updated.adpSources).toEqual({ espn: 10, ffc: 20 });
+    expect(updated.adp).toBe(15);
+    expect(updated.id).toBe("1");
   });
 });

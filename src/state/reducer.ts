@@ -10,6 +10,8 @@ import {
   moveIntoNewTier,
 } from "../lib/ranking";
 import { mergeFetched, type FetchedPlayer } from "../lib/fetchEspn";
+import { applyFfcAdp } from "../lib/blendAdp";
+import type { NormalizedAdp } from "../lib/ffcAdp";
 import { withByeWeeks } from "../lib/byes";
 
 export type Action =
@@ -26,7 +28,8 @@ export type Action =
   | { type: "splitTier"; playerId: string }
   | { type: "removeTier"; tier: number }
   | { type: "moveIntoNewTier"; playerId: string; beforeId: string | null }
-  | { type: "merge"; fetched: FetchedPlayer[] };
+  | { type: "merge"; fetched: FetchedPlayer[] }
+  | { type: "applyAdp"; ffc: NormalizedAdp[] };
 
 export function rankingReducer(state: Player[], action: Action): Player[] {
   switch (action.type) {
@@ -58,6 +61,8 @@ export function rankingReducer(state: Player[], action: Action): Player[] {
       return moveIntoNewTier(state, action.playerId, action.beforeId);
     case "merge":
       return withByeWeeks(mergeFetched(state, action.fetched));
+    case "applyAdp":
+      return applyFfcAdp(state, action.ffc);
     default:
       return state;
   }
