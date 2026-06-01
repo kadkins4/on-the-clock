@@ -8,6 +8,7 @@ import {
   teamRosterPositions,
 } from "../../lib/mock/engine";
 import { PickStrip } from "./PickStrip";
+import { DraftBoardGrid } from "./DraftBoardGrid";
 
 interface Props {
   state: MockState;
@@ -37,6 +38,7 @@ export function MockDraft({
   onExit,
 }: Props) {
   const [posFilter, setPosFilter] = useState<Position | "All">("All");
+  const [boardOpen, setBoardOpen] = useState(false);
   const onClock = currentTeamIndex(state);
   const isUser = onClock === userTeamIndex && !isComplete(state);
   const overall = state.picks.length + 1;
@@ -74,6 +76,12 @@ export function MockDraft({
           Round {round} · Pick {overall} of {state.order.length}
         </span>
         <div className="mock-controls">
+          <button
+            className={boardOpen ? "active" : ""}
+            onClick={() => setBoardOpen((v) => !v)}
+          >
+            {boardOpen ? "Hide board" : "Draft board"}
+          </button>
           <button onClick={onUndo} disabled={state.picks.length === 0}>
             Undo
           </button>
@@ -120,6 +128,13 @@ export function MockDraft({
         ))}
       </ul>
 
+      <DraftBoardGrid
+        state={state}
+        open={boardOpen}
+        onClose={() => setBoardOpen(false)}
+        canDraft={isUser}
+        onDraft={onDraft}
+      />
       <PickStrip state={state} />
     </div>
   );

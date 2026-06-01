@@ -527,3 +527,67 @@ table.players input:focus {
 .mock-strip .strip-pick { font-variant-numeric: tabular-nums; opacity: 0.75; }
 .mock-strip .strip-name { font-weight: 600; white-space: nowrap; }
 .mock-strip .strip-pos { opacity: 0.8; }
+
+/* --- Draft board bottom sheet --- */
+.mock-board-sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 85vh;
+  background: var(--bg, #1b1b1b);
+  border-top: 1px solid #555;
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 -8px 24px #0006;
+  transform: translateY(100%);
+  transition: transform 280ms ease;
+  display: flex;
+  flex-direction: column;
+  z-index: 50;
+}
+.mock-board-sheet.open { transform: translateY(0); }
+.mock-board-sheet .board-peek {
+  max-height: 132px;
+  overflow-y: auto;
+  border-bottom: 1px solid #444;
+  padding: 4px;
+}
+.mock-board-sheet .peek-row {
+  display: grid;
+  grid-template-columns: 28px 1fr 40px 48px 44px;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+  align-items: center;
+  border: 1px solid transparent;
+  border-left-width: 4px;
+  border-radius: 4px;
+  padding: 3px 6px;
+  font-size: 13px;
+  background: none;
+  cursor: pointer;
+}
+.mock-board-sheet .peek-row:disabled { cursor: default; opacity: 0.85; }
+.mock-board-sheet .peek-adp { text-align: right; font-variant-numeric: tabular-nums; }
+.mock-board-sheet .board-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+}
+.mock-board-sheet .board-scroll { overflow: auto; flex: 1; }
+.board-grid { border-collapse: collapse; font-size: 11px; }
+.board-grid th,
+.board-grid .board-cell {
+  border: 1px solid #3a3a3a;
+  padding: 2px 4px;
+  min-width: 74px;
+  vertical-align: top;
+}
+.board-grid .round-label { position: sticky; left: 0; background: #222; }
+.board-grid thead th { position: sticky; top: 0; background: #222; }
+.board-grid .user-col { outline: 2px solid #f0c000; outline-offset: -2px; }
+.board-grid .board-cell.empty { background: #00000022; }
+.board-grid .cell-pick { display: block; opacity: 0.7; font-variant-numeric: tabular-nums; }
+.board-grid .cell-name { display: block; font-weight: 600; white-space: nowrap; }
+.board-grid .cell-pos { display: block; opacity: 0.8; }
