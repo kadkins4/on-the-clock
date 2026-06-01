@@ -123,3 +123,114 @@ describe("boardReducer", () => {
     expect(dup).toEqual(board());
   });
 });
+
+import { leaguesReducer } from "./reducer";
+import { makeLeague, defaultRoster } from "../lib/league";
+import type { LeaguesState } from "../types";
+
+const mkPlayer = (id: string, rank: number): Player => ({
+  id,
+  name: `P${id}`,
+  position: "RB",
+  team: "ATL",
+  overallRank: rank,
+  byeWeek: null,
+  tier: 1,
+  adp: rank,
+  notes: "",
+  flag: "none",
+  draftStatus: "available",
+});
+
+function twoLeagues(): LeaguesState {
+  const a = makeLeague({ name: "Money", board: [mkPlayer("1", 1)] });
+  const b = makeLeague({ name: "Dynasty", board: [mkPlayer("2", 1)] });
+  return { currentId: a.id, leagues: [a, b] };
+}
+
+describe("leaguesReducer — league actions", () => {
+  it("switchLeague changes currentId", () => {
+    const s = twoLeagues();
+    const next = leaguesReducer(s, { type: "switchLeague", id: s.leagues[1].id });
+    expect(next.currentId).toBe(s.leagues[1].id);
+  });
+
+  it("switchLeague ignores unknown ids", () => {
+    const s = twoLeagues();
+    expect(leaguesReducer(s, { type: "switchLeague", id: "nope" })).toBe(s);
+  });
+
+  it("addLeague appends an empty-board league and makes it current", () => {
+    const s = twoLeagues();
+    const next = leaguesReducer(s, { type: "addLeague", name: "Best Ball" });
+    expect(next.leagues).toHaveLength(3);
+    expect(next.leagues[2].name).toBe("Best Ball");
+    expect(next.leagues[2].roster).toEqual(defaultRoster());
+    expect(next.currentId).toBe(next.leagues[2].id);
+  });
+
+  it("addLeague ignores blank names", () => {
+    const s = twoLeagues();
+    expect(leaguesReducer(s, { type: "addLeague", name: "  " })).toBe(s);
+  });
+
+  it("renameLeague renames the targeted league", () => {
+    const s = twoLeagues();
+    const next = leaguesReducer(s, {
+      type: "renameLeague",
+      id: s.leagues[0].id,
+      name: "Big Money",
+    });
+    expect(next.leagues[0].name).toBe("Big Money");
+  });
+
+  it("deleteLeague removes it and repoints current when needed", () => {
+    const s = twoLeagues();
+    const next = leaguesReducer(s, { type: "deleteLeague", id: s.currentId });
+    expect(next.leagues).toHaveLength(1);
+    expect(next.leagues[0].name).toBe("Dynasty");
+    expect(next.currentId).toBe(next.leagues[0].id);
+  });
+
+  it("deleteLeague refuses to remove the last league", () => {
+    const a = makeLeague({ name: "Solo", board: [] });
+    const s: LeaguesState = { currentId: a.id, leagues: [a] };
+    expect(leaguesReducer(s, { type: "deleteLeague", id: a.id })).toBe(s);
+  });
+
+  it("updateLeagueSettings patches scoring/teams/roster", () => {
+    const s = twoLeagues();
+    const next = leaguesReducer(s, {
+      type: "updateLeagueSettings",
+      id: s.leagues[0].id,
+      patch: { scoring: "half", teams: 14, tePremium: true },
+    });
+    expect(next.leagues[0].scoring).toBe("half");
+    expect(next.leagues[0].teams).toBe(14);
+    expect(next.leagues[0].tePremium).toBe(true);
+  });
+});
+
+describe("leaguesReducer — delegated player actions", () => {
+  it("routes 'update' to the active league's board only", () => {
+    const s = twoLeagues();
+    const next = leaguesReducer(s, {
+      type: "update",
+      id: "1",
+      patch: { notes: "stud" },
+    });
+    expect(next.leagues[0].board[0].notes).toBe("stud");
+    expect(next.leagues[1].board[0].notes).toBe("");
+  });
+
+  it("bumps updatedAt on the active league when its board changes", () => {
+    const s = twoLeagues();
+    s.leagues[0].updatedAt = 1;
+    const next = leaguesReducer(s, {
+      type: "update",
+      id: "1",
+      patch: { notes: "x" },
+    });
+    expect(next.leagues[0].updatedAt).toBeGreaterThan(1);
+  });
+});

@@ -1,4 +1,5 @@
-import type { Player } from "../types";
+import type { League, LeaguesState, Player } from "../types";
+import { makeLeague } from "../lib/league";
 import {
   reassignOverallRanks,
   moveAndRetier,
@@ -131,6 +132,74 @@ export function boardReducer(board: Board, action: Action | ListAction): Board {
         ...board,
         lists: { ...board.lists, [board.current]: players },
       };
+    }
+  }
+}
+
+// --- Leagues ----------------------------------------------------------------
+// A league is a player board plus its settings (scoring, teams, roster). Player
+// and tier actions delegate to rankingReducer on the active league's board;
+// league actions manage the league list and per-league settings.
+
+export type LeagueAction =
+  | { type: "switchLeague"; id: string }
+  | { type: "addLeague"; name: string }
+  | { type: "deleteLeague"; id: string }
+  | { type: "renameLeague"; id: string; name: string }
+  | {
+      type: "updateLeagueSettings";
+      id: string;
+      patch: Partial<
+        Pick<League, "platform" | "scoring" | "tePremium" | "teams" | "roster">
+      >;
+    };
+
+function mapLeague(
+  state: LeaguesState,
+  id: string,
+  fn: (l: League) => League,
+): LeaguesState {
+  return {
+    ...state,
+    leagues: state.leagues.map((l) => (l.id === id ? fn(l) : l)),
+  };
+}
+
+export function leaguesReducer(
+  state: LeaguesState,
+  action: Action | LeagueAction,
+): LeaguesState {
+  switch (action.type) {
+    case "switchLeague":
+      if (!state.leagues.some((l) => l.id === action.id)) return state;
+      return { ...state, currentId: action.id };
+    case "addLeague": {
+      const name = action.name.trim();
+      if (!name) return state;
+      const lg = makeLeague({ name });
+      return { currentId: lg.id, leagues: [...state.leagues, lg] };
+    }
+    case "deleteLeague": {
+      if (state.leagues.length <= 1) return state;
+      const leagues = state.leagues.filter((l) => l.id !== action.id);
+      const currentId =
+        action.id === state.currentId ? leagues[0].id : state.currentId;
+      return { currentId, leagues };
+    }
+    case "renameLeague": {
+      const name = action.name.trim();
+      if (!name) return state;
+      return mapLeague(state, action.id, (l) => ({ ...l, name }));
+    }
+    case "updateLeagueSettings":
+      return mapLeague(state, action.id, (l) => ({ ...l, ...action.patch }));
+    default: {
+      // a player/tier Action — delegate to the active league's board
+      return mapLeague(state, state.currentId, (l) => ({
+        ...l,
+        board: rankingReducer(l.board, action),
+        updatedAt: Date.now(),
+      }));
     }
   }
 }
