@@ -492,12 +492,30 @@ table.players input:focus {
 }
 
 /* --- Mock draft board: position colors (shared by strip + grid) --- */
-.pos-QB { background: #e3574033; border-color: #e35740; }
-.pos-RB { background: #2faa6e33; border-color: #2faa6e; }
-.pos-WR { background: #3b82c433; border-color: #3b82c4; }
-.pos-TE { background: #d9882233; border-color: #d98822; }
-.pos-K  { background: #8b5cf633; border-color: #8b5cf6; }
-.pos-DST{ background: #64748b33; border-color: #64748b; }
+.pos-QB {
+  background: #e3574033;
+  border-color: #e35740;
+}
+.pos-RB {
+  background: #2faa6e33;
+  border-color: #2faa6e;
+}
+.pos-WR {
+  background: #3b82c433;
+  border-color: #3b82c4;
+}
+.pos-TE {
+  background: #d9882233;
+  border-color: #d98822;
+}
+.pos-K {
+  background: #8b5cf633;
+  border-color: #8b5cf6;
+}
+.pos-DST {
+  background: #64748b33;
+  border-color: #64748b;
+}
 
 /* --- Pick strip --- */
 .mock-strip {
@@ -523,10 +541,20 @@ table.players input:focus {
   outline-offset: 1px;
   font-weight: 700;
 }
-.mock-strip .strip-card.upcoming { opacity: 0.6; }
-.mock-strip .strip-pick { font-variant-numeric: tabular-nums; opacity: 0.75; }
-.mock-strip .strip-name { font-weight: 600; white-space: nowrap; }
-.mock-strip .strip-pos { opacity: 0.8; }
+.mock-strip .strip-card.upcoming {
+  opacity: 0.6;
+}
+.mock-strip .strip-pick {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.75;
+}
+.mock-strip .strip-name {
+  font-weight: 600;
+  white-space: nowrap;
+}
+.mock-strip .strip-pos {
+  opacity: 0.8;
+}
 
 /* --- Draft board bottom sheet --- */
 .mock-board-sheet {
@@ -545,7 +573,9 @@ table.players input:focus {
   flex-direction: column;
   z-index: 50;
 }
-.mock-board-sheet.open { transform: translateY(0); }
+.mock-board-sheet.open {
+  transform: translateY(0);
+}
 .mock-board-sheet .board-peek {
   max-height: 132px;
   overflow-y: auto;
@@ -567,16 +597,28 @@ table.players input:focus {
   background: none;
   cursor: pointer;
 }
-.mock-board-sheet .peek-row:disabled { cursor: default; opacity: 0.85; }
-.mock-board-sheet .peek-adp { text-align: right; font-variant-numeric: tabular-nums; }
+.mock-board-sheet .peek-row:disabled {
+  cursor: default;
+  opacity: 0.85;
+}
+.mock-board-sheet .peek-adp {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
 .mock-board-sheet .board-head {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 6px 10px;
 }
-.mock-board-sheet .board-scroll { overflow: auto; flex: 1; }
-.board-grid { border-collapse: collapse; font-size: 11px; }
+.mock-board-sheet .board-scroll {
+  overflow: auto;
+  flex: 1;
+}
+.board-grid {
+  border-collapse: collapse;
+  font-size: 11px;
+}
 .board-grid th,
 .board-grid .board-cell {
   border: 1px solid #3a3a3a;
@@ -584,13 +626,37 @@ table.players input:focus {
   min-width: 74px;
   vertical-align: top;
 }
-.board-grid .round-label { position: sticky; left: 0; background: #222; }
-.board-grid thead th { position: sticky; top: 0; background: #222; }
-.board-grid .user-col { outline: 2px solid #f0c000; outline-offset: -2px; }
-.board-grid .board-cell.empty { background: #00000022; }
-.board-grid .cell-pick { display: block; opacity: 0.7; font-variant-numeric: tabular-nums; }
-.board-grid .cell-name { display: block; font-weight: 600; white-space: nowrap; }
-.board-grid .cell-pos { display: block; opacity: 0.8; }
+.board-grid .round-label {
+  position: sticky;
+  left: 0;
+  background: #222;
+}
+.board-grid thead th {
+  position: sticky;
+  top: 0;
+  background: #222;
+}
+.board-grid .user-col {
+  outline: 2px solid #f0c000;
+  outline-offset: -2px;
+}
+.board-grid .board-cell.empty {
+  background: #00000022;
+}
+.board-grid .cell-pick {
+  display: block;
+  opacity: 0.7;
+  font-variant-numeric: tabular-nums;
+}
+.board-grid .cell-name {
+  display: block;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.board-grid .cell-pos {
+  display: block;
+  opacity: 0.8;
+}
 
 /* ===== On the Clock — brand header, intro splash, alpha banner ===== */
 .otc-header {
@@ -599,7 +665,10 @@ table.players input:focus {
   gap: 10px;
   margin: 0 0 0.4rem;
 }
-.otc-logo { flex: 0 0 auto; border-radius: 7px; }
+.otc-logo {
+  flex: 0 0 auto;
+  border-radius: 7px;
+}
 .otc-title {
   margin: 0;
   font-size: 1.6rem;
@@ -607,8 +676,13 @@ table.players input:focus {
   letter-spacing: -0.02em;
   line-height: 1;
 }
-.otc-title span { opacity: 0.78; }
-.otc-title strong { color: #ff6b4a; font-weight: 800; }
+.otc-title span {
+  opacity: 0.78;
+}
+.otc-title strong {
+  color: #ff6b4a;
+  font-weight: 800;
+}
 
 /* --- Alpha banner --- */
 .otc-alpha {
@@ -632,7 +706,10 @@ table.players input:focus {
   border-radius: 4px;
   padding: 1px 6px;
 }
-.otc-alpha-msg { flex: 1; opacity: 0.9; }
+.otc-alpha-msg {
+  flex: 1;
+  opacity: 0.9;
+}
 .otc-alpha-x {
   flex: 0 0 auto;
   background: none;
@@ -643,24 +720,35 @@ table.players input:focus {
   font-size: 13px;
   padding: 2px 4px;
 }
-.otc-alpha-x:hover { opacity: 1; }
+.otc-alpha-x:hover {
+  opacity: 1;
+}
 
-/* --- Intro splash --- */
+/* --- Intro splash: typewriter + crisp stopwatch, fades to the board --- */
 .otc-intro {
   position: fixed;
   inset: 0;
   z-index: 200;
+  cursor: pointer;
+}
+.otc-intro-panel {
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 18px;
   background: #0b0e14;
-  cursor: pointer;
-  animation: otc-bg-in 0.25s ease;
+  animation: otc-bg-in 0.3s ease;
 }
-.otc-intro.leaving { animation: otc-fade-out 0.42s ease forwards; }
-.otc-intro-mark { filter: drop-shadow(0 6px 20px #ff6b4a44); }
+.otc-intro.leaving .otc-intro-panel {
+  animation: otc-fade-out 0.42s ease forwards;
+}
+/* crisp stopwatch: ring draws, hands sweep into place */
+.otc-intro-mark {
+  filter: drop-shadow(0 6px 20px #ff6b4a44);
+}
 .otc-intro-mark .ring {
   stroke-dasharray: 107;
   stroke-dashoffset: 107;
@@ -672,35 +760,74 @@ table.players input:focus {
   opacity: 0;
   animation: otc-sweep 0.7s 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
-.otc-intro-word {
-  margin-top: 14px;
-  font-size: 2.3rem;
+.otc-type {
+  text-align: center;
   font-weight: 800;
-  letter-spacing: -0.02em;
-  opacity: 0;
-  transform: translateY(8px);
-  animation: otc-rise 0.5s 0.55s ease forwards;
+  letter-spacing: -0.01em;
+  padding: 0 24px;
 }
-.otc-intro-word span { opacity: 0.8; }
-.otc-intro-word strong { color: #ff6b4a; }
-.otc-intro-sub {
-  font-size: 0.85rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  opacity: 0;
+.otc-type-1 {
+  font-size: 1.5rem;
   color: #8b97a8;
-  animation: otc-rise 0.5s 0.7s ease forwards;
+  min-height: 1.6em;
+}
+.otc-type-2 {
+  font-size: clamp(2.2rem, 9vw, 4.2rem);
+  color: #ff6b4a;
+  line-height: 1.05;
+  min-height: 1.1em;
+}
+.otc-caret {
+  display: inline-block;
+  width: 0.06em;
+  height: 1em;
+  margin-left: 3px;
+  vertical-align: -0.12em;
+  background: currentColor;
+  animation: otc-blink 0.9s steps(1) infinite;
 }
 
-@keyframes otc-bg-in { from { opacity: 0; } to { opacity: 1; } }
-@keyframes otc-fade-out { to { opacity: 0; visibility: hidden; } }
-@keyframes otc-draw { to { stroke-dashoffset: 0; } }
-@keyframes otc-sweep { to { transform: rotate(0deg); opacity: 1; } }
-@keyframes otc-rise { to { opacity: 1; transform: translateY(0); } }
+@keyframes otc-bg-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes otc-fade-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+@keyframes otc-blink {
+  50% {
+    opacity: 0;
+  }
+}
+@keyframes otc-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes otc-sweep {
+  to {
+    transform: rotate(0deg);
+    opacity: 1;
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .otc-intro-mark .ring,
-  .otc-intro-mark .hands,
-  .otc-intro-word,
-  .otc-intro-sub { animation-duration: 0.01s; animation-delay: 0s; }
+  .otc-intro-mark .hands {
+    animation-duration: 0.01s;
+    animation-delay: 0s;
+  }
+  .otc-intro.leaving .otc-intro-panel {
+    animation-duration: 0.2s;
+  }
+  .otc-caret {
+    animation: none;
+  }
 }

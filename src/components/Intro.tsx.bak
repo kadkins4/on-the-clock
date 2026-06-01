@@ -4,9 +4,9 @@ const KEY = "otc:intro-seen";
 const LINE1 = "You're now...";
 const LINE2 = "On The Clock";
 
-// Splash: a crisp stopwatch draws while a typewriter reads
-// "You're now... On The Clock", then a clean fade reveals the draft sheet.
-// Plays once per browser session; click to skip. Placeholder polish.
+// Splash: typewriter reads "You're now... On The Clock", then a football
+// wipes across to reveal the draft sheet. Plays once per browser session;
+// click to skip. Placeholder polish.
 export function Intro() {
   const [show, setShow] = useState(() => {
     try {
@@ -17,7 +17,7 @@ export function Intro() {
   });
   const [typed1, setTyped1] = useState("");
   const [typed2, setTyped2] = useState("");
-  const [phase, setPhase] = useState<"typing" | "leaving">("typing");
+  const [phase, setPhase] = useState<"typing" | "wiping">("typing");
   const timer = useRef<number | undefined>(undefined);
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export function Intro() {
         setTyped2(LINE2.slice(0, j));
         timer.current = window.setTimeout(step, 115);
       } else {
-        timer.current = window.setTimeout(() => setPhase("leaving"), 650);
+        timer.current = window.setTimeout(() => setPhase("wiping"), 650);
       }
     };
     timer.current = window.setTimeout(step, 450);
@@ -61,57 +61,14 @@ export function Intro() {
 
   return (
     <div
-      className={`otc-intro ${phase === "leaving" ? "leaving" : ""}`}
+      className={`otc-intro ${phase === "wiping" ? "wiping" : ""}`}
       onClick={skip}
       role="presentation"
     >
       <div
         className="otc-intro-panel"
-        onAnimationEnd={
-          phase === "leaving"
-            ? (e) => {
-                if (e.target === e.currentTarget) finish();
-              }
-            : undefined
-        }
+        onAnimationEnd={phase === "wiping" ? finish : undefined}
       >
-        <svg
-          className="otc-intro-mark"
-          viewBox="0 0 64 64"
-          width="92"
-          height="92"
-        >
-          <circle
-            className="ring"
-            cx="32"
-            cy="34"
-            r="17"
-            fill="none"
-            stroke="#ff6b4a"
-            strokeWidth="4"
-          />
-          <rect x="26" y="9" width="12" height="5" rx="2.5" fill="#ff6b4a" />
-          <g className="hands">
-            <line
-              x1="32"
-              y1="34"
-              x2="32"
-              y2="23"
-              stroke="#fff"
-              strokeWidth="3.5"
-              strokeLinecap="round"
-            />
-            <line
-              x1="32"
-              y1="34"
-              x2="40"
-              y2="38"
-              stroke="#fff"
-              strokeWidth="3.5"
-              strokeLinecap="round"
-            />
-          </g>
-        </svg>
         <div className="otc-type">
           <div className="otc-type-1">{typed1}</div>
           <div className="otc-type-2">
@@ -122,6 +79,9 @@ export function Intro() {
           </div>
         </div>
       </div>
+      <span className="otc-football" aria-hidden="true">
+        🏈
+      </span>
     </div>
   );
 }
