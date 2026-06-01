@@ -19,3 +19,36 @@ export interface Player {
   draftStatus: DraftStatus;
   injuryStatus?: string; // raw ESPN value, present only when not ACTIVE
 }
+
+export type Scoring = "ppr" | "half" | "standard";
+export type Platform = "espn" | "yahoo" | "sleeper" | "underdog" | "other";
+
+export interface RosterSettings {
+  QB: number;
+  RB: number;
+  WR: number;
+  TE: number;
+  FLEX: number;
+  SUPERFLEX: number;
+  K: number;
+  DST: number;
+  bench: number;
+  disabled: Position[]; // positions removed from this league entirely
+}
+
+export interface League {
+  id: string;
+  name: string;
+  platform: Platform;
+  scoring: Scoring;
+  tePremium: boolean;
+  teams: number; // 8–16
+  roster: RosterSettings;
+  board: Player[];
+  updatedAt: number; // epoch ms; used by a later sync plan
+}
+
+export interface LeaguesState {
+  currentId: string;
+  leagues: League[]; // insertion-ordered
+}
