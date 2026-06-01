@@ -7,6 +7,7 @@ import {
   isComplete,
   teamRosterPositions,
 } from "../../lib/mock/engine";
+import { PickStrip } from "./PickStrip";
 
 interface Props {
   state: MockState;
@@ -45,7 +46,7 @@ export function MockDraft({
   useEffect(() => {
     if (isComplete(state)) return;
     if (onClock === userTeamIndex) return;
-    const t = setTimeout(onBotTick, 350);
+    const t = setTimeout(onBotTick, 800);
     return () => clearTimeout(t);
   }, [state, onClock, userTeamIndex, onBotTick]);
 
@@ -118,6 +119,8 @@ export function MockDraft({
           </li>
         ))}
       </ul>
+
+      <PickStrip state={state} />
     </div>
   );
 }
