@@ -1,5 +1,6 @@
 import type { Player, Position } from "../types";
 import { normalizeTiers, reassignOverallRanks } from "./ranking";
+import { blendAdp } from "./blendAdp";
 
 const SEASON = 2026;
 const LIMIT = 500; // ESPN ignores the filter's limit, so we cap here (matches seed)
@@ -124,12 +125,14 @@ export function mergeFetched(
     .map((p) => {
       const f = fetchedById.get(p.id);
       if (!f) return p;
+      const sources = { ...p.adpSources, espn: f.adp };
       return {
         ...p,
         name: f.name,
         position: f.position,
         team: f.team,
-        adp: f.adp,
+        adp: blendAdp(sources),
+        adpSources: sources,
         injuryStatus: f.injuryStatus,
       };
     });
@@ -149,7 +152,8 @@ export function mergeFetched(
       overallRank: 0,
       byeWeek: null,
       tier: null, // normalizeTiers fills it from the player above
-      adp: f.adp,
+      adp: blendAdp({ espn: f.adp }),
+      adpSources: { espn: f.adp },
       notes: "",
       flag: "none",
       draftStatus: "available",

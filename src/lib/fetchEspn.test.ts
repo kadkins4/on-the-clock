@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { mapEspnPlayers, mergeFetched } from "./fetchEspn";
+import { blendAdp } from "./blendAdp";
 import type { Player } from "../types";
 
 function mk(partial: Partial<Player> & { id: string }): Player {
@@ -199,5 +200,52 @@ describe("mergeFetched", () => {
     const out = mergeFetched(current, fetched);
     expect(out.map((p) => p.id)).toContain("manual");
     expect(out.find((p) => p.id === "manual")!.name).toBe("My Sleeper");
+  });
+});
+
+describe("mergeFetched + adpSources", () => {
+  it("stores espn adp in adpSources and reblends, keeping ffc if present", () => {
+    const keep = mk({
+      id: "1",
+      name: "Keep Me",
+      team: "SF",
+      overallRank: 1,
+      byeWeek: 8,
+      tier: 1,
+      adp: 5,
+      notes: "mine",
+      flag: "target",
+    });
+    keep.adpSources = { espn: 5, ffc: 7 };
+    const fetched = [
+      {
+        id: "1",
+        name: "Keep Me",
+        position: "RB" as const,
+        team: "SF",
+        overallRank: 1,
+        adp: 9,
+      },
+    ];
+    const out = mergeFetched([keep], fetched);
+    expect(out[0].adpSources).toEqual({ espn: 9, ffc: 7 });
+    expect(out[0].adp).toBe(blendAdp({ espn: 9, ffc: 7 })); // 8
+    expect(out[0].notes).toBe("mine"); // curation preserved
+  });
+
+  it("seeds adpSources.espn for newcomers", () => {
+    const fetched = [
+      {
+        id: "9",
+        name: "New Guy",
+        position: "WR" as const,
+        team: "MIA",
+        overallRank: 1,
+        adp: 30,
+      },
+    ];
+    const out = mergeFetched([], fetched);
+    expect(out[0].adpSources).toEqual({ espn: 30 });
+    expect(out[0].adp).toBe(30);
   });
 });
