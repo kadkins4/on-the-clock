@@ -1,0 +1,98 @@
+import type { League, Player, Position } from "../../types";
+import type { MockSettings, MockState } from "./types";
+import { buildDraftOrder } from "./order";
+import { openNeeds } from "./roster";
+import { botPick } from "./bot";
+import { makeRng } from "./rng";
+
+function rosterSize(r: League["roster"]): number {
+  return (
+    r.QB + r.RB + r.WR + r.TE + r.FLEX + r.SUPERFLEX + r.K + r.DST + r.bench
+  );
+}
+
+const byAdp = (a: Player, b: Player) => {
+  if (a.adp == null && b.adp == null) return a.overallRank - b.overallRank;
+  if (a.adp == null) return 1;
+  if (b.adp == null) return -1;
+  return a.adp - b.adp;
+};
+
+export function createMock(
+  league: League,
+  settings: Omit<MockSettings, "rounds">,
+  seed: number,
+): MockState {
+  const rounds = rosterSize(league.roster);
+  const pool = league.board
+    .filter((pl) => !league.roster.disabled.includes(pl.position))
+    .map((pl) => ({ ...pl }))
+    .sort(byAdp);
+  return {
+    pool,
+    scoring: league.scoring,
+    roster: league.roster,
+    settings: { ...settings, rounds },
+    order: buildDraftOrder(settings.teams, rounds, settings.thirdRoundReversal),
+    picks: [],
+    draftedIds: new Set(),
+    seed,
+  };
+}
+
+export function isComplete(m: MockState): boolean {
+  return m.picks.length >= m.order.length;
+}
+
+export function currentTeamIndex(m: MockState): number {
+  return m.order[m.picks.length];
+}
+
+export function available(m: MockState): Player[] {
+  return m.pool.filter((pl) => !m.draftedIds.has(pl.id));
+}
+
+export function teamRosterPositions(
+  m: MockState,
+  teamIndex: number,
+): Position[] {
+  const byId = new Map(m.pool.map((pl) => [pl.id, pl]));
+  return m.picks
+    .filter((pk) => pk.teamIndex === teamIndex)
+    .map((pk) => byId.get(pk.playerId)!.position);
+}
+
+export function draftPlayer(m: MockState, playerId: string): MockState {
+  if (isComplete(m)) return m;
+  if (m.draftedIds.has(playerId)) return m;
+  if (!m.pool.some((pl) => pl.id === playerId)) return m;
+  const overall = m.picks.length + 1;
+  const teamIndex = currentTeamIndex(m);
+  const round = Math.floor((overall - 1) / m.settings.teams) + 1;
+  const draftedIds = new Set(m.draftedIds);
+  draftedIds.add(playerId);
+  return {
+    ...m,
+    draftedIds,
+    picks: [...m.picks, { overall, round, teamIndex, playerId }],
+  };
+}
+
+// Compute the id a bot would draft for the current team (does not mutate).
+export function botPickId(m: MockState): string {
+  const teamIndex = currentTeamIndex(m);
+  const round = Math.floor(m.picks.length / m.settings.teams) + 1;
+  const needs = openNeeds(teamRosterPositions(m, teamIndex), m.roster);
+  // advance the seed per pick so successive bot picks vary
+  const rng = makeRng(m.seed + m.picks.length * 2654435761);
+  return botPick(available(m), needs, round, rng);
+}
+
+export function undoLastPick(m: MockState): MockState {
+  if (m.picks.length === 0) return m;
+  const picks = m.picks.slice(0, -1);
+  const removed = m.picks[m.picks.length - 1];
+  const draftedIds = new Set(m.draftedIds);
+  draftedIds.delete(removed.playerId);
+  return { ...m, picks, draftedIds };
+}
