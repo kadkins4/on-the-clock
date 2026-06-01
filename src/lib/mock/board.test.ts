@@ -1,5 +1,10 @@
 import { describe, it, expect } from "vitest";
-import { formatPick, buildPickCells, userColumnIndex } from "./board";
+import {
+  formatPick,
+  buildPickCells,
+  userColumnIndex,
+  buildBoardGrid,
+} from "./board";
 import { createMock, draftPlayer } from "./engine";
 import type { League, Player } from "../../types";
 
@@ -101,5 +106,37 @@ describe("userColumnIndex", () => {
       1,
     );
     expect(userColumnIndex(m)).toBe(1);
+  });
+});
+
+describe("buildBoardGrid", () => {
+  it("is a rounds x teams matrix, null where unpicked", () => {
+    const m = createMock(
+      league(board),
+      { teams: 2, userSlot: 1, thirdRoundReversal: false },
+      1,
+    );
+    const grid = buildBoardGrid(m);
+    expect(grid).toHaveLength(3); // 3 rounds
+    expect(grid[0]).toHaveLength(2); // 2 teams
+    expect(grid[0][0]).toBeNull();
+  });
+
+  it("places picks by team column and honors snake order across rounds", () => {
+    let m = createMock(
+      league(board),
+      { teams: 2, userSlot: 1, thirdRoundReversal: false },
+      1,
+    );
+    m = draftPlayer(m, "a"); // overall 1 -> round 1, team 0
+    m = draftPlayer(m, "b"); // overall 2 -> round 1, team 1
+    m = draftPlayer(m, "c"); // overall 3 -> round 2, team 1 (snake reverses)
+    const grid = buildBoardGrid(m);
+    expect(grid[0][0]?.name).toBe("A");
+    expect(grid[0][1]?.name).toBe("B");
+    // round 2 first sequential pick ("2.01") belongs to team 1's column
+    expect(grid[1][1]?.name).toBe("C");
+    expect(grid[1][1]?.label).toBe("2.01");
+    expect(grid[1][0]).toBeNull();
   });
 });

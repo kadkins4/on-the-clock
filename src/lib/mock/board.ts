@@ -63,3 +63,16 @@ export function buildPickCells(state: MockState): PickCell[] {
 export function userColumnIndex(state: MockState): number {
   return state.settings.userSlot - 1;
 }
+
+export function buildBoardGrid(state: MockState): (PickCell | null)[][] {
+  const { rounds, teams } = state.settings;
+  const grid: (PickCell | null)[][] = Array.from({ length: rounds }, () =>
+    Array.from({ length: teams }, () => null as PickCell | null),
+  );
+  for (const cell of buildPickCells(state)) {
+    if (cell.kind === "done") {
+      grid[cell.round - 1][cell.teamIndex] = cell;
+    }
+  }
+  return grid;
+}
