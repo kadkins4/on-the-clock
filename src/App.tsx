@@ -58,6 +58,11 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem(HIDE_DST_KEY, hideDst ? "1" : "0");
   }, [hideDst]);
+  // Session empty-tier markers are anchored by player id; clear them when the
+  // active league changes so a stale anchor can't render a phantom empty tier.
+  useEffect(() => {
+    setEmptyTiers([]);
+  }, [currentLeague.id]);
 
   // positions to show in the summary + filter chips (K / DST hidden separately)
   const shownPositions = useMemo(
@@ -244,6 +249,13 @@ export default function App() {
     const name = prompt("New league name:")?.trim();
     if (name) dispatch({ type: "addLeague", name });
   };
+  const onDuplicateLeague = () => {
+    const name = prompt(
+      "Duplicate this league as:",
+      `${currentLeague.name} copy`,
+    )?.trim();
+    if (name) dispatch({ type: "duplicateLeague", id: currentLeague.id, name });
+  };
   const onRenameLeague = () => {
     const name = prompt("Rename this league:", currentLeague.name)?.trim();
     if (name) dispatch({ type: "renameLeague", id: currentLeague.id, name });
@@ -257,6 +269,13 @@ export default function App() {
     )
       dispatch({ type: "deleteLeague", id: currentLeague.id });
   };
+  // filename-safe league name for exports (so 5 leagues don't all collide on
+  // "rankings.json")
+  const leagueSlug =
+    currentLeague.name
+      .replace(/[^\w.-]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .toLowerCase() || "rankings";
 
   return (
     <div className="app">
@@ -290,6 +309,7 @@ export default function App() {
         }))}
         onSwitchLeague={(id) => dispatch({ type: "switchLeague", id })}
         onAddLeague={onAddLeague}
+        onDuplicateLeague={onDuplicateLeague}
         onRenameLeague={onRenameLeague}
         onDeleteLeague={onDeleteLeague}
         onScoringChange={(scoring) =>
@@ -307,9 +327,15 @@ export default function App() {
         fetching={fetching}
         onImport={onImport}
         onExportJson={() =>
-          download("rankings.json", exportJson(players), "application/json")
+          download(
+            `${leagueSlug}-rankings.json`,
+            exportJson(players),
+            "application/json",
+          )
         }
-        onExportCsv={() => download("rankings.csv", toCsv(players), "text/csv")}
+        onExportCsv={() =>
+          download(`${leagueSlug}-rankings.csv`, toCsv(players), "text/csv")
+        }
       />
       <PlayerTable
         grouped={grouped}

@@ -18,6 +18,7 @@ interface Props {
   leagues: { id: string; name: string; scoring: Scoring }[];
   onSwitchLeague: (id: string) => void;
   onAddLeague: () => void;
+  onDuplicateLeague: () => void;
   onRenameLeague: () => void;
   onDeleteLeague: () => void;
   onScoringChange: (scoring: Scoring) => void;
@@ -130,6 +131,15 @@ export function Toolbar(props: Props) {
               className="menu-item"
               onClick={() => {
                 close();
+                props.onDuplicateLeague();
+              }}
+            >
+              Duplicate current…
+            </button>
+            <button
+              className="menu-item"
+              onClick={() => {
+                close();
                 props.onRenameLeague();
               }}
             >
@@ -164,6 +174,7 @@ export function Toolbar(props: Props) {
                 <option value="standard">Standard</option>
               </select>
             </label>
+            <div className="menu-hint">Affects ADP — coming soon</div>
 
             <div className="menu-sep" />
             <button className="menu-item" onClick={props.onToggleK}>
