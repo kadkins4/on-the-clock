@@ -415,3 +415,78 @@ table.players input:focus {
   background: #7f1d1d;
   color: #fecaca;
 }
+
+/* --- Mock draft --- */
+.mock-setup,
+.mock-summary {
+  max-width: 32rem;
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.mock-sub {
+  margin: 0;
+  opacity: 0.8;
+  font-size: 0.9rem;
+}
+.mock-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border, #ddd);
+}
+.mock-controls {
+  margin-left: auto;
+  display: flex;
+  gap: 0.5rem;
+}
+.mock-myroster {
+  padding: 0.5rem 0;
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+.mock-available {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.mock-available li {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto auto;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid var(--border, #eee);
+}
+.mock-draft-btn:disabled {
+  opacity: 0.4;
+}
+.mock-roster {
+  padding-left: 1.25rem;
+}
+.mock-roster li {
+  display: flex;
+  gap: 0.75rem;
+  align-items: baseline;
+  padding: 0.2rem 0;
+}
+.mock-counts {
+  font-weight: 600;
+}
+.mock-delta {
+  font-size: 0.8rem;
+}
+.mock-delta.value {
+  color: #1a7f37;
+}
+.mock-delta.reach {
+  color: #b35900;
+}
+.mock-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}

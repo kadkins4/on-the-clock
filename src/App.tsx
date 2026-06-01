@@ -16,6 +16,7 @@ import { POSITIONS } from "./types";
 import { draftedByPosition } from "./lib/counts";
 import { Toolbar } from "./components/Toolbar";
 import { PlayerTable, type DisplayGroup } from "./components/PlayerTable";
+import { MockMode } from "./components/mock/MockMode";
 
 function download(filename: string, text: string, type: string) {
   const blob = new Blob([text], { type });
@@ -50,6 +51,7 @@ export default function App() {
   const [sortKey, setSortKey] = useState<SortKey | null>(null);
   const [fetching, setFetching] = useState(false);
   const [adpStatus, setAdpStatus] = useState<string | null>(null);
+  const [mockMode, setMockMode] = useState(false);
   // Empty tiers are session-only: each entry is the id of the player the empty
   // tier sits directly above. Never persisted or exported.
   const [emptyTiers, setEmptyTiers] = useState<string[]>([]);
@@ -294,6 +296,14 @@ export default function App() {
       .replace(/^-+|-+$/g, "")
       .toLowerCase() || "rankings";
 
+  if (mockMode) {
+    return (
+      <div className="app">
+        <MockMode league={currentLeague} onExit={() => setMockMode(false)} />
+      </div>
+    );
+  }
+
   return (
     <div className="app">
       <h1>Fantasy Football Draft Helper</h1>
@@ -344,6 +354,7 @@ export default function App() {
         fetching={fetching}
         onRefreshAdp={onRefreshAdp}
         adpStatus={adpStatus}
+        onMock={() => setMockMode(true)}
         onImport={onImport}
         onExportJson={() =>
           download(
