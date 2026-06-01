@@ -6,6 +6,8 @@ import {
 } from "../src/lib/ffcAdp";
 import type { Scoring } from "../src/types";
 
+export const config = { runtime: "edge" };
+
 export interface AdpParams {
   scoring: Scoring;
   teams: number;
