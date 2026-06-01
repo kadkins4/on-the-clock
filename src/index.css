@@ -591,3 +591,116 @@ table.players input:focus {
 .board-grid .cell-pick { display: block; opacity: 0.7; font-variant-numeric: tabular-nums; }
 .board-grid .cell-name { display: block; font-weight: 600; white-space: nowrap; }
 .board-grid .cell-pos { display: block; opacity: 0.8; }
+
+/* ===== On the Clock — brand header, intro splash, alpha banner ===== */
+.otc-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 0.4rem;
+}
+.otc-logo { flex: 0 0 auto; border-radius: 7px; }
+.otc-title {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.otc-title span { opacity: 0.78; }
+.otc-title strong { color: #ff6b4a; font-weight: 800; }
+
+/* --- Alpha banner --- */
+.otc-alpha {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 0.6rem;
+  padding: 7px 10px;
+  border: 1px solid #ff6b4a55;
+  background: #ff6b4a14;
+  border-radius: 8px;
+  font-size: 13px;
+}
+.otc-alpha-tag {
+  flex: 0 0 auto;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #ff6b4a;
+  border: 1px solid #ff6b4a88;
+  border-radius: 4px;
+  padding: 1px 6px;
+}
+.otc-alpha-msg { flex: 1; opacity: 0.9; }
+.otc-alpha-x {
+  flex: 0 0 auto;
+  background: none;
+  border: none;
+  color: inherit;
+  opacity: 0.6;
+  cursor: pointer;
+  font-size: 13px;
+  padding: 2px 4px;
+}
+.otc-alpha-x:hover { opacity: 1; }
+
+/* --- Intro splash --- */
+.otc-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #0b0e14;
+  cursor: pointer;
+  animation: otc-bg-in 0.25s ease;
+}
+.otc-intro.leaving { animation: otc-fade-out 0.42s ease forwards; }
+.otc-intro-mark { filter: drop-shadow(0 6px 20px #ff6b4a44); }
+.otc-intro-mark .ring {
+  stroke-dasharray: 107;
+  stroke-dashoffset: 107;
+  animation: otc-draw 0.7s 0.05s ease forwards;
+}
+.otc-intro-mark .hands {
+  transform-origin: 32px 34px;
+  transform: rotate(-150deg);
+  opacity: 0;
+  animation: otc-sweep 0.7s 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+.otc-intro-word {
+  margin-top: 14px;
+  font-size: 2.3rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: otc-rise 0.5s 0.55s ease forwards;
+}
+.otc-intro-word span { opacity: 0.8; }
+.otc-intro-word strong { color: #ff6b4a; }
+.otc-intro-sub {
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0;
+  color: #8b97a8;
+  animation: otc-rise 0.5s 0.7s ease forwards;
+}
+
+@keyframes otc-bg-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes otc-fade-out { to { opacity: 0; visibility: hidden; } }
+@keyframes otc-draw { to { stroke-dashoffset: 0; } }
+@keyframes otc-sweep { to { transform: rotate(0deg); opacity: 1; } }
+@keyframes otc-rise { to { opacity: 1; transform: translateY(0); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .otc-intro-mark .ring,
+  .otc-intro-mark .hands,
+  .otc-intro-word,
+  .otc-intro-sub { animation-duration: 0.01s; animation-delay: 0s; }
+}
