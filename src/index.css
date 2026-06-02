@@ -75,6 +75,15 @@ body {
   padding: 0.25rem 0.5rem;
 }
 
+.toolbar button.clear-filters {
+  cursor: pointer;
+  white-space: nowrap;
+}
+.toolbar button.clear-filters:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
 /* settings cog: pushed to the right end of the toolbar */
 .settings {
   position: relative;

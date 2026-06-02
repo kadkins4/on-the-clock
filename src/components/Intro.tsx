@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 const KEY = "otc:intro-seen";
-const LINE1 = "You're now...";
+const LINE1 = "You are now...";
 const LINE2 = "On The Clock";
 
 // Splash: a crisp stopwatch draws while a typewriter reads
@@ -31,6 +31,24 @@ export function Intro({ replay = 0 }: { replay?: number }) {
     setPhase("typing");
     setShow(true);
   }, [replay]);
+
+  // While the splash is up: drop focus from whatever was clicked (so Enter
+  // can't re-fire it), and let Esc / Enter / Space / (click, handled below)
+  // skip the whole thing. Any other key is ignored.
+  useEffect(() => {
+    if (!show) return;
+    (document.activeElement as HTMLElement | null)?.blur();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape" || e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        e.stopPropagation();
+        skip();
+      }
+    };
+    // capture so a focused button can't act on Enter/Space before we skip
+    window.addEventListener("keydown", onKey, true);
+    return () => window.removeEventListener("keydown", onKey, true);
+  }, [show]);
 
   useEffect(() => {
     if (!show) return;
@@ -128,7 +146,8 @@ export function Intro({ replay = 0 }: { replay?: number }) {
           <div className="otc-type-1">{typed1}</div>
           <div className="otc-type-2">
             {typed2}
-            {phase === "typing" && (
+            {/* caret holds for a beat once line 1 finishes, then leads line 2 */}
+            {phase === "typing" && typed1 === LINE1 && (
               <span className="otc-caret" aria-hidden="true" />
             )}
           </div>

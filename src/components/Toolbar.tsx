@@ -14,6 +14,8 @@ interface Props {
   byeWeeks: number[];
   sortKey: SortKey | null;
   setSortKey: (k: SortKey | null) => void;
+  filtersActive: boolean;
+  onClearFilters: () => void;
   currentLeagueId: string;
   leagues: { id: string; name: string; scoring: Scoring }[];
   onSwitchLeague: (id: string) => void;
@@ -108,6 +110,14 @@ export function Toolbar(props: Props) {
           <option value="bye">Bye</option>
         </select>
       </label>
+      <button
+        className="clear-filters"
+        onClick={props.onClearFilters}
+        disabled={!props.filtersActive}
+        title="Reset search, position, bye & sort (keeps your league and tier list)"
+      >
+        Clear filters
+      </button>
       <SettingsMenu>
         {(close) => (
           <>

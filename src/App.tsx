@@ -268,6 +268,22 @@ export default function App() {
     input.click();
   };
 
+  // Reset the transient view filters to defaults — league, active tier list,
+  // saved hide-K/DST prefs, and scroll position are all left alone.
+  const filtersActive =
+    search !== "" ||
+    posFilter !== "All" ||
+    hideDrafted ||
+    byeFilter !== null ||
+    sortKey !== null;
+  const onClearFilters = () => {
+    setSearch("");
+    setPosFilter("All");
+    setHideDrafted(false);
+    setByeFilter(null);
+    setSortKey(null);
+  };
+
   const onToggleK = () => {
     setHideK((v) => {
       const next = !v;
@@ -416,6 +432,8 @@ export default function App() {
         byeWeeks={byeWeeks}
         sortKey={sortKey}
         setSortKey={setSortKey}
+        filtersActive={filtersActive}
+        onClearFilters={onClearFilters}
         currentLeagueId={currentLeague.id}
         leagues={leagues.map((l) => ({
           id: l.id,

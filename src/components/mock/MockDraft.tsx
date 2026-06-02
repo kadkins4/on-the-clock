@@ -1,6 +1,6 @@
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { MockState } from "../../lib/mock/types";
-import type { Position } from "../../types";
+import type { Player, Position } from "../../types";
 import {
   available,
   currentTeamIndex,
@@ -63,17 +63,44 @@ export function MockDraft({
 
   const myPositions = teamRosterPositions(state, userTeamIndex);
 
-  // Dotted lines mark where the user's upcoming picks would land if every
-  // remaining player went straight down the board. The projection only holds
-  // for the full list, so we hide the lines while a position filter is active.
-  const pickRoundByIndex = useMemo(() => {
-    const m = new Map<number, number>();
-    if (posFilter !== "All" || isComplete(state)) return m;
-    for (const mk of userPickMarkers(state, userTeamIndex)) {
-      m.set(mk.availIndex, mk.round);
+  // Build the available list interleaved with "your pick" dotted lines. Each
+  // line is placed by the player's NATURAL position in the full board order, so
+  // it stays at its true round even when the list is filtered by position (a
+  // line sits just above the first visible player at/after that board slot).
+  type AvailRow =
+    | { kind: "line"; round: number; key: string }
+    | { kind: "player"; p: Player };
+  const availRows = useMemo<AvailRow[]>(() => {
+    const full = available(state);
+    const fullIndex = new Map(full.map((p, i) => [p.id, i]));
+    const markers = isComplete(state)
+      ? []
+      : userPickMarkers(state, userTeamIndex);
+    const rows: AvailRow[] = [];
+    let mi = 0;
+    for (const p of avail.slice(0, 100)) {
+      const f = fullIndex.get(p.id) ?? Infinity;
+      while (mi < markers.length && markers[mi].availIndex <= f) {
+        rows.push({
+          kind: "line",
+          round: markers[mi].round,
+          key: `m${markers[mi].overall}`,
+        });
+        mi += 1;
+      }
+      rows.push({ kind: "player", p });
     }
-    return m;
-  }, [state, posFilter, userTeamIndex]);
+    // your later picks fall past the last visible player — show them trailing
+    while (mi < markers.length) {
+      rows.push({
+        kind: "line",
+        round: markers[mi].round,
+        key: `m${markers[mi].overall}`,
+      });
+      mi += 1;
+    }
+    return rows;
+  }, [state, avail, userTeamIndex]);
 
   return (
     <div className="mock-draft">
@@ -122,34 +149,30 @@ export function MockDraft({
       </div>
 
       <ul className="mock-available">
-        {avail.slice(0, 100).map((p, i) => {
-          const markRound = pickRoundByIndex.get(i);
-          return (
-            <Fragment key={p.id}>
-              {markRound != null && (
-                <li className="mock-pick-line" aria-hidden="true">
-                  <span className="mock-pick-line-label">R{markRound}</span>
-                  <span className="mock-pick-line-rule" />
-                </li>
-              )}
-              <li>
-                <span className="mock-name">{p.name}</span>
-                <span className="mock-pos">{p.position}</span>
-                <span className="mock-team">{p.team}</span>
-                <span className="mock-adp num">
-                  {p.adp == null ? "" : Number(p.adp.toFixed(1))}
-                </span>
-                <button
-                  className="mock-draft-btn"
-                  disabled={!isUser}
-                  onClick={() => onDraft(p.id)}
-                >
-                  Draft
-                </button>
-              </li>
-            </Fragment>
-          );
-        })}
+        {availRows.map((row) =>
+          row.kind === "line" ? (
+            <li className="mock-pick-line" aria-hidden="true" key={row.key}>
+              <span className="mock-pick-line-label">R{row.round}</span>
+              <span className="mock-pick-line-rule" />
+            </li>
+          ) : (
+            <li key={row.p.id}>
+              <span className="mock-name">{row.p.name}</span>
+              <span className="mock-pos">{row.p.position}</span>
+              <span className="mock-team">{row.p.team}</span>
+              <span className="mock-adp num">
+                {row.p.adp == null ? "" : Number(row.p.adp.toFixed(1))}
+              </span>
+              <button
+                className="mock-draft-btn"
+                disabled={!isUser}
+                onClick={() => onDraft(row.p.id)}
+              >
+                Draft
+              </button>
+            </li>
+          ),
+        )}
       </ul>
 
       <DraftBoardGrid
