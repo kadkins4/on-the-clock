@@ -1,5 +1,10 @@
 import { describe, it, expect } from "vitest";
-import { projectedPoints, mapEspnPlayers, mergeFetched } from "./fetchEspn";
+import {
+  appliedProjTotal,
+  extractProjStats,
+  mapEspnPlayers,
+  mergeFetched,
+} from "./fetchEspn";
 import { blendAdp } from "./blendAdp";
 import type { Player } from "../types";
 
@@ -250,7 +255,7 @@ describe("mergeFetched + adpSources", () => {
   });
 });
 
-describe("projectedPoints", () => {
+describe("appliedProjTotal", () => {
   it("reads the 2026 projected season total from stats", () => {
     const p = {
       stats: [
@@ -274,15 +279,15 @@ describe("projectedPoints", () => {
         },
       ],
     };
-    expect(projectedPoints(p)).toBe(287.4);
+    expect(appliedProjTotal(p)).toBe(287.4);
   });
 
   it("returns null when no projection is present", () => {
-    expect(projectedPoints({})).toBeNull();
-    expect(projectedPoints({ stats: [] })).toBeNull();
+    expect(appliedProjTotal({})).toBeNull();
+    expect(appliedProjTotal({ stats: [] })).toBeNull();
   });
 
-  it("mapEspnPlayers carries projPoints through", () => {
+  it("mapEspnPlayers carries the applied total into projPoints", () => {
     const raw = [
       {
         player: {
@@ -304,5 +309,38 @@ describe("projectedPoints", () => {
       },
     ];
     expect(mapEspnPlayers(raw)[0].projPoints).toBe(290);
+  });
+});
+
+describe("extractProjStats", () => {
+  const withLine = {
+    stats: [
+      {
+        seasonId: 2026,
+        statSourceId: 1,
+        statSplitTypeId: 0,
+        stats: { "3": 4000, "4": 30, "20": 10, "24": 200, "25": 2, "53": 0 },
+      },
+    ],
+  };
+
+  it("pulls the fantasy stat ids for an offensive player", () => {
+    const s = extractProjStats(withLine, "QB");
+    expect(s).toMatchObject({
+      passYds: 4000,
+      passTD: 30,
+      int: 10,
+      rushYds: 200,
+      rushTD: 2,
+    });
+  });
+
+  it("returns null for K/DST even when a line exists", () => {
+    expect(extractProjStats(withLine, "K")).toBeNull();
+    expect(extractProjStats(withLine, "DST")).toBeNull();
+  });
+
+  it("returns null when there is no projection line", () => {
+    expect(extractProjStats({}, "RB")).toBeNull();
   });
 });

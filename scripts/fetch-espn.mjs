@@ -8,6 +8,50 @@ const SEASON = 2026;
 const LIMIT = 500;
 const TIER_SIZE = 12; // ~one draft round per tier
 
+const OFFENSE = ["QB", "RB", "WR", "TE"];
+// ESPN projected stat ids (kept in sync with src/lib/fetchEspn.ts).
+const STAT = {
+  passYds: "3",
+  passTD: "4",
+  int: "20",
+  rushYds: "24",
+  rushTD: "25",
+  rec: "53",
+  recYds: "42",
+  recTD: "43",
+  fumblesLost: "72",
+  pass2: "19",
+  rush2: "26",
+  rec2: "44",
+};
+
+// The player's 2026 projected season row (projected, full-season split).
+const projRow = (p) =>
+  p.stats?.find(
+    (x) =>
+      x.statSourceId === 1 && x.statSplitTypeId === 0 && x.seasonId === SEASON,
+  );
+
+// Raw projected stat line for an offensive player; null for K/DST or no line.
+function extractProjStats(p, position) {
+  if (!OFFENSE.includes(position)) return null;
+  const st = projRow(p)?.stats;
+  if (!st) return null;
+  const g = (k) => Number(st[k]) || 0;
+  return {
+    passYds: g(STAT.passYds),
+    passTD: g(STAT.passTD),
+    int: g(STAT.int),
+    rushYds: g(STAT.rushYds),
+    rushTD: g(STAT.rushTD),
+    rec: g(STAT.rec),
+    recYds: g(STAT.recYds),
+    recTD: g(STAT.recTD),
+    fumblesLost: g(STAT.fumblesLost),
+    twoPt: g(STAT.pass2) + g(STAT.rush2) + g(STAT.rec2),
+  };
+}
+
 const POS = { 1: "QB", 2: "RB", 3: "WR", 4: "TE", 5: "K", 16: "DST" };
 const TEAM = {
   0: "FA",
@@ -83,6 +127,8 @@ for (const entry of raw) {
     byeWeek: null,
     tier: null,
     adp: p.ownership?.averageDraftPosition ?? null,
+    projStats: extractProjStats(p, position),
+    projPoints: projRow(p)?.appliedTotal ?? null,
     notes: "",
     flag: "none",
     draftStatus: "available",

@@ -15,11 +15,31 @@ export interface Player {
   tier: number | null; // null = "Untiered" group
   adp: number | null; // blended (mean of available sources); board sorts on this
   adpSources?: { espn?: number | null; ffc?: number | null };
-  projPoints?: number | null; // ESPN projected season total (default scoring); feeds VOR
+  // Raw projected stat line (offensive players only) — scored at the league's
+  // settings to produce projected points for VOR. K/DST have no line.
+  projStats?: ProjStats | null;
+  // ESPN's own precomputed projected total. Sparse today; used as the fallback
+  // for K/DST (and anyone without a raw line) so VOR fills in nearer the season.
+  projPoints?: number | null;
   notes: string;
   flag: Flag;
   draftStatus: DraftStatus;
   injuryStatus?: string; // raw ESPN value, present only when not ACTIVE
+}
+
+// Fantasy-relevant projected stats pulled from ESPN's raw projection line.
+// Scored by src/lib/projection.ts to get projected points under a league's rules.
+export interface ProjStats {
+  passYds: number;
+  passTD: number;
+  int: number;
+  rushYds: number;
+  rushTD: number;
+  rec: number;
+  recYds: number;
+  recTD: number;
+  fumblesLost: number;
+  twoPt: number; // pass + rush + rec 2-pt conversions
 }
 
 export type Scoring = "ppr" | "half" | "standard";

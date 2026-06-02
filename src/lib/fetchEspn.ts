@@ -1,6 +1,7 @@
-import type { Player, Position } from "../types";
+import type { Player, Position, ProjStats } from "../types";
 import { normalizeTiers, reassignOverallRanks } from "./ranking";
 import { blendAdp } from "./blendAdp";
+import { OFFENSE } from "./projection";
 
 const SEASON = 2026;
 const LIMIT = 500; // ESPN ignores the filter's limit, so we cap here (matches seed)
@@ -12,6 +13,7 @@ export interface FetchedPlayer {
   team: string;
   overallRank: number; // ESPN PPR rank, 1-based and contiguous
   adp: number | null;
+  projStats?: ProjStats | null;
   projPoints?: number | null;
   injuryStatus?: string;
 }
@@ -21,7 +23,24 @@ interface EspnStat {
   statSourceId?: number; // 0 = actual, 1 = projected
   statSplitTypeId?: number; // 0 = season total
   appliedTotal?: number;
+  stats?: Record<string, number>; // raw stat-id → projected value
 }
+
+// ESPN projected stat ids (validated against their precomputed PPR totals).
+const STAT = {
+  passYds: "3",
+  passTD: "4",
+  int: "20",
+  rushYds: "24",
+  rushTD: "25",
+  rec: "53",
+  recYds: "42",
+  recTD: "43",
+  fumblesLost: "72",
+  pass2: "19",
+  rush2: "26",
+  rec2: "44",
+} as const;
 
 const POS: Record<number, Position> = {
   1: "QB",
@@ -84,15 +103,44 @@ interface EspnPlayer {
   stats?: EspnStat[];
 }
 
-// ESPN ships each player's stats array in kona_player_info. The projected
-// season total for the draft year is statSourceId 1 (projected), split 0 (full
-// season). Returns null when absent (e.g. some K/DST or stale rows).
-export function projectedPoints(p: { stats?: EspnStat[] }): number | null {
-  const s = p.stats?.find(
+// The player's projected season row in kona_player_info: statSourceId 1
+// (projected), split 0 (full season), for the draft year.
+function projRow(p: { stats?: EspnStat[] }): EspnStat | undefined {
+  return p.stats?.find(
     (x) =>
       x.statSourceId === 1 && x.statSplitTypeId === 0 && x.seasonId === SEASON,
   );
+}
+
+// ESPN's own precomputed projected total. Sparse today (only a few dozen
+// players), so it's used only as the K/DST fallback for projected points.
+export function appliedProjTotal(p: { stats?: EspnStat[] }): number | null {
+  const s = projRow(p);
   return s && s.appliedTotal != null ? s.appliedTotal : null;
+}
+
+// Fantasy-relevant raw projected stats for an offensive player. Null for K/DST
+// or when ESPN has not published a projection line yet.
+export function extractProjStats(
+  p: { stats?: EspnStat[] },
+  position: Position,
+): ProjStats | null {
+  if (!OFFENSE.includes(position)) return null;
+  const st = projRow(p)?.stats;
+  if (!st) return null;
+  const g = (k: string) => Number(st[k]) || 0;
+  return {
+    passYds: g(STAT.passYds),
+    passTD: g(STAT.passTD),
+    int: g(STAT.int),
+    rushYds: g(STAT.rushYds),
+    rushTD: g(STAT.rushTD),
+    rec: g(STAT.rec),
+    recYds: g(STAT.recYds),
+    recTD: g(STAT.recTD),
+    fumblesLost: g(STAT.fumblesLost),
+    twoPt: g(STAT.pass2) + g(STAT.rush2) + g(STAT.rec2),
+  };
 }
 
 // Mirror of scripts/fetch-espn.mjs: filter to ranked, known-position players,
@@ -112,7 +160,8 @@ export function mapEspnPlayers(raw: EspnEntry[]): FetchedPlayer[] {
       team: TEAM[p.proTeamId ?? 0] ?? "FA",
       overallRank: pprRank,
       adp: p.ownership?.averageDraftPosition ?? null,
-      projPoints: projectedPoints(p),
+      projStats: extractProjStats(p, position),
+      projPoints: appliedProjTotal(p),
       ...(p.injuryStatus && p.injuryStatus !== "ACTIVE"
         ? { injuryStatus: p.injuryStatus }
         : {}),
@@ -154,6 +203,7 @@ export function mergeFetched(
         team: f.team,
         adp: blendAdp(sources),
         adpSources: sources,
+        projStats: f.projStats,
         projPoints: f.projPoints,
         injuryStatus: f.injuryStatus,
       };
@@ -176,6 +226,7 @@ export function mergeFetched(
       tier: null, // normalizeTiers fills it from the player above
       adp: blendAdp({ espn: f.adp }),
       adpSources: { espn: f.adp },
+      projStats: f.projStats,
       projPoints: f.projPoints,
       notes: "",
       flag: "none",
