@@ -37,6 +37,7 @@ const OLD_HIDE_KDST_KEY = "ff-cheat-sheet:hideKDst"; // migrate combined toggle
 export default function App() {
   const {
     players,
+    vorById,
     dispatch,
     refresh,
     currentLeague,
@@ -157,8 +158,8 @@ export default function App() {
     [grouped, renderPlayers],
   );
   const flat = useMemo(
-    () => (grouped ? [] : sortPlayers(renderPlayers, sortKey!, true)),
-    [grouped, renderPlayers, sortKey],
+    () => (grouped ? [] : sortPlayers(renderPlayers, sortKey!, true, vorById)),
+    [grouped, renderPlayers, sortKey, vorById],
   );
   // Reordering/tier editing stays available with "hide drafted" / "hide K&DST"
   // on; only a position filter, search, or bye filter (a partial view) blocks it.
@@ -489,6 +490,7 @@ export default function App() {
         display={display}
         flat={flat}
         positionalRanks={positionalRanks}
+        vorById={vorById}
         dispatch={dispatch}
         reorderable={reorderable}
         onAddTier={onAddTier}

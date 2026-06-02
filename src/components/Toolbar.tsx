@@ -108,6 +108,7 @@ export function Toolbar(props: Props) {
           <option value="adp">ADP</option>
           <option value="name">Name</option>
           <option value="bye">Bye</option>
+          <option value="vor">VOR</option>
         </select>
       </label>
       <button
