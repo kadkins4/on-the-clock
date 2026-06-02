@@ -1113,3 +1113,34 @@ table.players input:focus {
 .mock-timer-sel {
   font-size: 0.75rem;
 }
+.mock-name-wrap {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+}
+.val-dots {
+  flex: 0 0 56px;
+  width: 56px;
+  display: inline-flex;
+  gap: 3px;
+  justify-content: flex-start;
+}
+.mock-available li .mock-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.val-legend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #9aa4b2;
+  padding: 4px 2px;
+}
+.val-legend .num-dot {
+  min-width: 18px;
+  height: 18px;
+  font-size: 10px;
+}

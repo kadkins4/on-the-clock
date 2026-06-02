@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import type { MockState } from "../../lib/mock/types";
 import type { Player, Position } from "../../types";
+import { fallenBy } from "../../lib/draftValue";
 import {
   available,
   bestAvailableId,
@@ -58,6 +59,9 @@ export function MockDraft({
   const isUser = onClock === userTeamIndex && !isComplete(state);
   const overall = state.picks.length + 1;
   const round = Math.floor((overall - 1) / state.settings.teams) + 1;
+  const valThreshold =
+    state.settings.valueThreshold ?? state.settings.teams + 2;
+  const valEnabled = state.settings.valueFlagsEnabled ?? true;
 
   // Reset the clock to full on a new pick, a duration change, or resuming from a
   // pause. The pause case only reaches the user's clock via undo-on-your-turn
@@ -226,6 +230,12 @@ export function MockDraft({
         ))}
       </div>
 
+      {valEnabled && (
+        <div className="val-legend">
+          <span className="num-dot adp">#</span> fell past ADP ·{" "}
+          <span className="num-dot rank">#</span> fell past your rank
+        </div>
+      )}
       <ul className="mock-available">
         {availRows.map((row) =>
           row.kind === "line" ? (
@@ -235,7 +245,44 @@ export function MockDraft({
             </li>
           ) : (
             <li key={row.p.id}>
-              <span className="mock-name">{row.p.name}</span>
+              <span className="mock-name-wrap">
+                <span className="val-dots">
+                  {valEnabled &&
+                    (() => {
+                      const adpFell = fallenBy(
+                        row.p.adp,
+                        overall,
+                        valThreshold,
+                      );
+                      const rankFell = fallenBy(
+                        row.p.overallRank,
+                        overall,
+                        valThreshold,
+                      );
+                      return (
+                        <>
+                          {adpFell != null && (
+                            <span
+                              className="num-dot adp"
+                              title={`Fell ${adpFell} past ADP`}
+                            >
+                              {adpFell}
+                            </span>
+                          )}
+                          {rankFell != null && (
+                            <span
+                              className="num-dot rank"
+                              title={`Fell ${rankFell} past your rank`}
+                            >
+                              {rankFell}
+                            </span>
+                          )}
+                        </>
+                      );
+                    })()}
+                </span>
+                <span className="mock-name">{row.p.name}</span>
+              </span>
               <span className="mock-pos">{row.p.position}</span>
               <span className="mock-team">{row.p.team}</span>
               <span className="mock-adp num">
