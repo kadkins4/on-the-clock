@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { League } from "../../types";
 import type { MockSettings } from "../../lib/mock/types";
 import { valueFlagsEnabled } from "../../lib/league";
+import { defaultValueThreshold } from "../../lib/draftValue";
 
 interface Props {
   league: League;
@@ -88,7 +89,7 @@ export function MockSetup({
         <input
           type="number"
           min={1}
-          placeholder={`${teams + 2}`}
+          placeholder={`${defaultValueThreshold(teams)}`}
           value={vfThreshold ?? ""}
           disabled={!vfEnabled}
           onChange={(e) =>
@@ -111,7 +112,7 @@ export function MockSetup({
               teams,
               userSlot,
               thirdRoundReversal,
-              valueThreshold: vfThreshold ?? teams + 2,
+              valueThreshold: vfThreshold ?? defaultValueThreshold(teams),
               valueFlagsEnabled: vfEnabled,
             });
           }}

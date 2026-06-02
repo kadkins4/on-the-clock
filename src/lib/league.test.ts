@@ -117,10 +117,10 @@ describe("migrateBoardToLeagues", () => {
 });
 
 describe("value-flag settings", () => {
-  it("defaults the threshold to teams + 2 and enabled to true", () => {
+  it("defaults the threshold to 2*teams + 2 and enabled to true", () => {
     const l = makeLeague({ name: "L", teams: 12 });
     const list = l.tierLists[0];
-    expect(valueThreshold(l, list)).toBe(14);
+    expect(valueThreshold(l, list)).toBe(26); // 2*12 + 2
     expect(valueFlagsEnabled(list)).toBe(true);
   });
   it("honors an explicit override and disabled flag", () => {
@@ -138,7 +138,7 @@ describe("value-flag settings", () => {
       ...l.tierLists[0],
       valueFlags: { enabled: true, threshold: null },
     };
-    expect(valueThreshold(l, list)).toBe(10);
+    expect(valueThreshold(l, list)).toBe(18); // 2*8 + 2
   });
 });
 

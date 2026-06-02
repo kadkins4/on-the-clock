@@ -5,6 +5,12 @@ export interface PickSignal {
   amount: number; // picks off the baseline, >= 0
 }
 
+// Default flag threshold when a list has no explicit override: a bit over two
+// rounds (2 × teams + 2). Centralized so every surface agrees.
+export function defaultValueThreshold(teams: number): number {
+  return 2 * teams + 2;
+}
+
 // A *made* pick vs one baseline (ADP for v1). reach = earlier than baseline,
 // value = later. null when no baseline or within the threshold.
 export function pickSignal(

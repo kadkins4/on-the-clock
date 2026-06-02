@@ -685,12 +685,6 @@ table.players input:focus {
 .num-dot.value {
   background: #3fbf6e;
 }
-.num-dot.adp {
-  background: #3fbf6e;
-}
-.num-dot.rank {
-  background: #6f8cf0;
-}
 .mock-strip .strip-card .num-dot {
   position: absolute;
   top: 6px;
@@ -1119,12 +1113,25 @@ table.players input:focus {
   gap: 5px;
   min-width: 0;
 }
-.val-dots {
-  flex: 0 0 56px;
-  width: 56px;
+/* Fixed-width slot so player names never shift whether a row is flagged or not. */
+.val-fall {
+  flex: 0 0 62px;
+  width: 62px;
   display: inline-flex;
-  gap: 3px;
   justify-content: flex-start;
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.fall-rank {
+  color: #6f8cf0;
+}
+.fall-adp {
+  color: #3fbf6e;
+}
+.fall-sep {
+  color: #5a6270;
+  font-weight: 400;
 }
 .mock-available li .mock-name {
   white-space: nowrap;
@@ -1134,13 +1141,8 @@ table.players input:focus {
 .val-legend {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   font-size: 11px;
   color: #9aa4b2;
   padding: 4px 2px;
-}
-.val-legend .num-dot {
-  min-width: 18px;
-  height: 18px;
-  font-size: 10px;
 }

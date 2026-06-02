@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import type { MockState } from "../../lib/mock/types";
 import type { Player, Position } from "../../types";
-import { fallenBy } from "../../lib/draftValue";
+import { fallenBy, defaultValueThreshold } from "../../lib/draftValue";
 import {
   available,
   bestAvailableId,
@@ -60,7 +60,8 @@ export function MockDraft({
   const overall = state.picks.length + 1;
   const round = Math.floor((overall - 1) / state.settings.teams) + 1;
   const valThreshold =
-    state.settings.valueThreshold ?? state.settings.teams + 2;
+    state.settings.valueThreshold ??
+    defaultValueThreshold(state.settings.teams);
   const valEnabled = state.settings.valueFlagsEnabled ?? true;
 
   // Reset the clock to full on a new pick, a duration change, or resuming from a
@@ -232,8 +233,9 @@ export function MockDraft({
 
       {valEnabled && (
         <div className="val-legend">
-          <span className="num-dot adp">#</span> fell past ADP ·{" "}
-          <span className="num-dot rank">#</span> fell past your rank
+          fallen past <span className="fall-rank">your rank</span>
+          <span className="fall-sep"> | </span>
+          <span className="fall-adp">ADP</span>
         </div>
       )}
       <ul className="mock-available">
@@ -246,7 +248,7 @@ export function MockDraft({
           ) : (
             <li key={row.p.id}>
               <span className="mock-name-wrap">
-                <span className="val-dots">
+                <span className="val-fall">
                   {valEnabled &&
                     (() => {
                       const adpFell = fallenBy(
@@ -259,25 +261,17 @@ export function MockDraft({
                         overall,
                         valThreshold,
                       );
+                      if (adpFell == null && rankFell == null) return null;
+                      // "rank | ADP" — each in color, "-" when that baseline
+                      // hasn't fallen past the threshold.
                       return (
-                        <>
-                          {adpFell != null && (
-                            <span
-                              className="num-dot adp"
-                              title={`Fell ${adpFell} past ADP`}
-                            >
-                              {adpFell}
-                            </span>
-                          )}
-                          {rankFell != null && (
-                            <span
-                              className="num-dot rank"
-                              title={`Fell ${rankFell} past your rank`}
-                            >
-                              {rankFell}
-                            </span>
-                          )}
-                        </>
+                        <span
+                          title={`Fallen — rank ${rankFell ?? "—"}, ADP ${adpFell ?? "—"}`}
+                        >
+                          <span className="fall-rank">{rankFell ?? "-"}</span>
+                          <span className="fall-sep"> | </span>
+                          <span className="fall-adp">{adpFell ?? "-"}</span>
+                        </span>
                       );
                     })()}
                 </span>

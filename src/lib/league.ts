@@ -8,6 +8,7 @@ import type {
   TierList,
 } from "../types";
 import type { Board } from "../state/reducer";
+import { defaultValueThreshold } from "./draftValue";
 
 // --- Tier-list accessors ----------------------------------------------------
 // Each falls back to the first list if the stored id has gone missing, so a
@@ -65,9 +66,9 @@ export function makeLeague(opts: {
   };
 }
 
-// Reach/value threshold for a list: explicit override, else teams + 2.
+// Reach/value threshold for a list: explicit override, else the default.
 export function valueThreshold(league: League, list: TierList): number {
-  return list.valueFlags?.threshold ?? league.teams + 2;
+  return list.valueFlags?.threshold ?? defaultValueThreshold(league.teams);
 }
 
 export function valueFlagsEnabled(list: TierList): boolean {

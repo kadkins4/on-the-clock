@@ -1,5 +1,12 @@
 import { describe, it, expect } from "vitest";
-import { pickSignal, fallenBy } from "./draftValue";
+import { pickSignal, fallenBy, defaultValueThreshold } from "./draftValue";
+
+describe("defaultValueThreshold", () => {
+  it("is 2*teams + 2", () => {
+    expect(defaultValueThreshold(12)).toBe(26);
+    expect(defaultValueThreshold(10)).toBe(22);
+  });
+});
 
 describe("pickSignal", () => {
   it("flags a reach when taken earlier than baseline by >= threshold", () => {

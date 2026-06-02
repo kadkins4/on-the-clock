@@ -4,3 +4,6 @@ dist/
 *.bak
 .vercel
 .claude/worktrees/
+
+# Playwright MCP scratch output
+.playwright-mcp/

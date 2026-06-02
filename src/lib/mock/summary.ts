@@ -1,6 +1,6 @@
 import type { Player, Position } from "../../types";
 import type { MockState } from "./types";
-import { pickSignal } from "../draftValue";
+import { pickSignal, defaultValueThreshold } from "../draftValue";
 
 export interface SummaryPlayer {
   id: string;
@@ -29,7 +29,8 @@ export function mockSummary(
     .filter((pk) => pk.teamIndex === teamIndex)
     .map((pk) => {
       const pl = byId.get(pk.playerId) as Player;
-      const threshold = m.settings.valueThreshold ?? m.settings.teams + 2;
+      const threshold =
+        m.settings.valueThreshold ?? defaultValueThreshold(m.settings.teams);
       const enabled = m.settings.valueFlagsEnabled ?? true;
       const sig = enabled ? pickSignal(pl.adp, pk.overall, threshold) : null;
       return {
