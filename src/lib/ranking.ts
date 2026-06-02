@@ -75,6 +75,7 @@ export function sortPlayers(
   players: Player[],
   key: SortKey,
   asc = true,
+  vorById?: Record<string, number | null>,
 ): Player[] {
   const dir = asc ? 1 : -1;
   const cmp = (a: Player, b: Player): number => {
@@ -85,6 +86,13 @@ export function sortPlayers(
         return nullableCompare(a.adp, b.adp, dir);
       case "bye":
         return nullableCompare(a.byeWeek, b.byeWeek, dir);
+      case "vor":
+        // higher VOR is better, so invert dir; nulls sort last regardless
+        return nullableCompare(
+          vorById?.[a.id] ?? null,
+          vorById?.[b.id] ?? null,
+          -dir,
+        );
       case "overall":
       default:
         return (a.overallRank - b.overallRank) * dir;

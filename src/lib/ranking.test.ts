@@ -238,6 +238,29 @@ describe("moveIntoNewTier", () => {
   });
 });
 
+describe("sortPlayers vor", () => {
+  const base = {
+    position: "RB" as const,
+    team: "FA",
+    byeWeek: null,
+    tier: null,
+    adp: null,
+    notes: "",
+    flag: "none" as const,
+    draftStatus: "available" as const,
+  };
+  it("sorts by VOR descending with nulls last", () => {
+    const players = [
+      { ...base, id: "a", name: "A", overallRank: 1 },
+      { ...base, id: "b", name: "B", overallRank: 2 },
+      { ...base, id: "c", name: "C", overallRank: 3 },
+    ];
+    const vor = { a: 10, b: 50, c: null };
+    const out = sortPlayers(players, "vor", true, vor).map((p) => p.id);
+    expect(out).toEqual(["b", "a", "c"]);
+  });
+});
+
 describe("orderByAdp", () => {
   it("orders by ADP ascending with nulls last, reranking and re-tiering", () => {
     const players = [
