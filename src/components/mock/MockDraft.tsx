@@ -11,6 +11,7 @@ import {
 import { userPickMarkers, formatPick } from "../../lib/mock/board";
 import { PickStrip } from "./PickStrip";
 import { DraftBoardGrid } from "./DraftBoardGrid";
+import { OnTheClockBanner } from "./OnTheClockBanner";
 
 interface Props {
   state: MockState;
@@ -139,38 +140,31 @@ export function MockDraft({
 
   return (
     <div className="mock-draft">
-      <div className="mock-status">
-        <strong>{status}</strong>
-        <span>
-          Round {round} · Pick {overall} of {state.order.length}
-        </span>
-        <div className="mock-controls">
-          {!isUser && !isComplete(state) && (
-            <button
-              className={paused ? "active" : ""}
-              onClick={() => setPaused((p) => !p)}
-            >
-              {paused ? "▶ Resume" : "⏸ Pause"}
-            </button>
-          )}
-          <button
-            className={boardOpen ? "active" : ""}
-            onClick={() => setBoardOpen((v) => !v)}
-          >
-            {boardOpen ? "Hide board" : "Draft board"}
-          </button>
-          <button onClick={undoAndPause} disabled={state.picks.length === 0}>
-            Undo
-          </button>
-          <button className="secondary" onClick={onExit}>
-            Exit
-          </button>
-        </div>
-      </div>
+      <OnTheClockBanner
+        state={state}
+        status={status}
+        round={round}
+        overall={overall}
+        isUser={isUser}
+        isComplete={isComplete(state)}
+        paused={paused}
+        onTogglePause={() => setPaused((p) => !p)}
+        onUndo={undoAndPause}
+        onExit={onExit}
+      />
 
       <div className="mock-myroster">
         Your team ({myPositions.length}):{" "}
         {myPositions.length ? myPositions.join(" · ") : "—"}
+      </div>
+
+      <div className="mock-boardtoggle">
+        <button
+          className={boardOpen ? "active" : ""}
+          onClick={() => setBoardOpen((v) => !v)}
+        >
+          {boardOpen ? "Hide board" : "Draft board"}
+        </button>
       </div>
 
       <div className="chips">

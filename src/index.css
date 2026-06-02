@@ -460,6 +460,39 @@ table.players input:focus {
   display: flex;
   gap: 0.5rem;
 }
+.mock-banner {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  background: #11161d;
+  border-bottom: 1px solid #232b36;
+}
+.mock-banner-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.on-clock-you {
+  color: #f0c000;
+}
+.mock-ticker {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  color: #9aa4b2;
+}
+.mock-ticker-item {
+  white-space: nowrap;
+}
+.mock-ticker-item:not(:last-child)::after {
+  content: " ·";
+  margin-left: 8px;
+}
 .mock-myroster {
   padding: 0.5rem 0;
   font-size: 0.9rem;
