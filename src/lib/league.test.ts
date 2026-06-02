@@ -6,6 +6,8 @@ import {
   activeTierList,
   activeBoard,
   defaultBoard,
+  valueThreshold,
+  valueFlagsEnabled,
 } from "./league";
 import type { Board } from "../state/reducer";
 import type { League, Player } from "../types";
@@ -111,6 +113,32 @@ describe("migrateBoardToLeagues", () => {
     const board: Board = { current: "Ghost", lists: { PPR: [player("1")] } };
     const state = migrateBoardToLeagues(board);
     expect(state.currentId).toBe(state.leagues[0].id);
+  });
+});
+
+describe("value-flag settings", () => {
+  it("defaults the threshold to teams + 2 and enabled to true", () => {
+    const l = makeLeague({ name: "L", teams: 12 });
+    const list = l.tierLists[0];
+    expect(valueThreshold(l, list)).toBe(14);
+    expect(valueFlagsEnabled(list)).toBe(true);
+  });
+  it("honors an explicit override and disabled flag", () => {
+    const l = makeLeague({ name: "L", teams: 10 });
+    const list = {
+      ...l.tierLists[0],
+      valueFlags: { enabled: false, threshold: 8 },
+    };
+    expect(valueThreshold(l, list)).toBe(8);
+    expect(valueFlagsEnabled(list)).toBe(false);
+  });
+  it("auto threshold when override is null", () => {
+    const l = makeLeague({ name: "L", teams: 8 });
+    const list = {
+      ...l.tierLists[0],
+      valueFlags: { enabled: true, threshold: null },
+    };
+    expect(valueThreshold(l, list)).toBe(10);
   });
 });
 

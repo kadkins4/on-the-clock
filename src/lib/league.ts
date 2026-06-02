@@ -65,6 +65,15 @@ export function makeLeague(opts: {
   };
 }
 
+// Reach/value threshold for a list: explicit override, else teams + 2.
+export function valueThreshold(league: League, list: TierList): number {
+  return list.valueFlags?.threshold ?? league.teams + 2;
+}
+
+export function valueFlagsEnabled(list: TierList): boolean {
+  return list.valueFlags?.enabled ?? true;
+}
+
 export function migrateBoardToLeagues(board: Board): LeaguesState {
   const leagues = Object.keys(board.lists).map((name) =>
     makeLeague({ name, board: board.lists[name] }),

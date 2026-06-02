@@ -64,6 +64,8 @@ export interface TierList {
   id: string;
   name: string;
   board: Player[];
+  // Reach/value cue config for this list. Absent => enabled, auto threshold.
+  valueFlags?: { enabled: boolean; threshold: number | null };
 }
 
 export interface League {
