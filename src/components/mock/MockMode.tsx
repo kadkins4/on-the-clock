@@ -18,11 +18,15 @@ import { MockSummary } from "./MockSummary";
 interface Props {
   league: League;
   onExit: () => void;
+  onSetValueFlags: (
+    listId: string,
+    valueFlags: { enabled: boolean; threshold: number | null },
+  ) => void;
 }
 
 type Phase = "setup" | "draft" | "summary";
 
-export function MockMode({ league, onExit }: Props) {
+export function MockMode({ league, onExit, onSetValueFlags }: Props) {
   const [phase, setPhase] = useState<Phase>("setup");
   const [state, setState] = useState<MockState | null>(null);
   const [userSlot, setUserSlot] = useState(1);
@@ -62,7 +66,14 @@ export function MockMode({ league, onExit }: Props) {
   }, [state, phase]);
 
   if (phase === "setup") {
-    return <MockSetup league={league} onStart={start} onCancel={onExit} />;
+    return (
+      <MockSetup
+        league={league}
+        onStart={start}
+        onCancel={onExit}
+        onSetValueFlags={onSetValueFlags}
+      />
+    );
   }
   if (phase === "draft" && state) {
     return (

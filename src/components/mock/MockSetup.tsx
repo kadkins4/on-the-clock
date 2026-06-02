@@ -1,17 +1,35 @@
 import { useState } from "react";
 import type { League } from "../../types";
 import type { MockSettings } from "../../lib/mock/types";
+import { valueFlagsEnabled } from "../../lib/league";
+import { defaultValueThreshold } from "../../lib/draftValue";
 
 interface Props {
   league: League;
   onStart: (settings: Omit<MockSettings, "rounds">) => void;
   onCancel: () => void;
+  onSetValueFlags: (
+    listId: string,
+    valueFlags: { enabled: boolean; threshold: number | null },
+  ) => void;
 }
 
-export function MockSetup({ league, onStart, onCancel }: Props) {
+export function MockSetup({
+  league,
+  onStart,
+  onCancel,
+  onSetValueFlags,
+}: Props) {
   const [teams, setTeams] = useState(league.teams);
   const [userSlot, setUserSlot] = useState(1);
   const [thirdRoundReversal, setThirdRoundReversal] = useState(false);
+  const defaultList =
+    league.tierLists.find((t) => t.id === league.defaultTierListId) ??
+    league.tierLists[0];
+  const [vfEnabled, setVfEnabled] = useState(valueFlagsEnabled(defaultList));
+  const [vfThreshold, setVfThreshold] = useState<number | null>(
+    defaultList.valueFlags?.threshold ?? null,
+  );
 
   return (
     <div className="mock-setup">
@@ -58,9 +76,46 @@ export function MockSetup({ league, onStart, onCancel }: Props) {
         />{" "}
         3rd-round reversal
       </label>
+      <label>
+        <input
+          type="checkbox"
+          checked={vfEnabled}
+          onChange={(e) => setVfEnabled(e.target.checked)}
+        />{" "}
+        Highlight reaches &amp; values
+      </label>
+      <label>
+        Threshold (picks off ADP/rank){" "}
+        <input
+          type="number"
+          min={1}
+          placeholder={`${defaultValueThreshold(teams)}`}
+          value={vfThreshold ?? ""}
+          disabled={!vfEnabled}
+          onChange={(e) =>
+            setVfThreshold(
+              e.target.value === ""
+                ? null
+                : Math.max(1, Math.round(Number(e.target.value))),
+            )
+          }
+        />
+      </label>
       <div className="mock-actions">
         <button
-          onClick={() => onStart({ teams, userSlot, thirdRoundReversal })}
+          onClick={() => {
+            onSetValueFlags(defaultList.id, {
+              enabled: vfEnabled,
+              threshold: vfThreshold,
+            });
+            onStart({
+              teams,
+              userSlot,
+              thirdRoundReversal,
+              valueThreshold: vfThreshold ?? defaultValueThreshold(teams),
+              valueFlagsEnabled: vfEnabled,
+            });
+          }}
         >
           Start mock
         </button>

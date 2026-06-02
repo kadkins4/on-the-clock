@@ -5,6 +5,10 @@ export interface MockSettings {
   userSlot: number; // 1-based draft position
   rounds: number; // total roster size (starters + bench)
   thirdRoundReversal: boolean;
+  // resolved reach/value config for the mock (from the seeding list). Optional
+  // so existing fixtures keep working; read sites default threshold to teams+2.
+  valueThreshold?: number;
+  valueFlagsEnabled?: boolean;
 }
 
 export interface DraftPick {

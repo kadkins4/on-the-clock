@@ -1,5 +1,10 @@
 import type { MockState } from "./types";
 import type { Player, Position } from "../../types";
+import {
+  pickSignal,
+  defaultValueThreshold,
+  type PickSignal,
+} from "../draftValue";
 
 export type CellKind = "done" | "current" | "upcoming";
 
@@ -13,6 +18,7 @@ export interface PickCell {
   playerId?: string;
   name?: string;
   position?: Position;
+  signal?: PickSignal; // reach/value vs ADP for a made pick
 }
 
 export function formatPick(overall: number, teams: number): string {
@@ -45,12 +51,18 @@ export function buildPickCells(state: MockState): PickCell[] {
     if (overall <= made) {
       const pick = picks[overall - 1];
       const pl = byId.get(pick.playerId);
+      const threshold = settings.valueThreshold ?? defaultValueThreshold(teams);
+      const enabled = settings.valueFlagsEnabled ?? true;
+      const signal = enabled
+        ? (pickSignal(pl?.adp ?? null, overall, threshold) ?? undefined)
+        : undefined;
       return {
         ...base,
         kind: "done" as const,
         playerId: pick.playerId,
         name: pl?.name,
         position: pl?.position,
+        signal,
       };
     }
     return {

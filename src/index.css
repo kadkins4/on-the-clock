@@ -663,6 +663,33 @@ table.players input:focus {
 .mock-strip .strip-pos {
   opacity: 0.8;
 }
+.mock-strip .strip-card {
+  position: relative;
+}
+.num-dot {
+  min-width: 22px;
+  height: 22px;
+  border-radius: 11px;
+  padding: 0 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  color: #0c0f15;
+  font-variant-numeric: tabular-nums;
+}
+.num-dot.reach {
+  background: #e0894b;
+}
+.num-dot.value {
+  background: #3fbf6e;
+}
+.mock-strip .strip-card .num-dot {
+  position: absolute;
+  top: 6px;
+  right: 7px;
+}
 
 /* --- Draft board bottom sheet --- */
 .mock-board-sheet {
@@ -1079,4 +1106,43 @@ table.players input:focus {
 }
 .mock-timer-sel {
   font-size: 0.75rem;
+}
+.mock-name-wrap {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+}
+/* Fixed-width slot so player names never shift whether a row is flagged or not. */
+.val-fall {
+  flex: 0 0 62px;
+  width: 62px;
+  display: inline-flex;
+  justify-content: flex-start;
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.fall-rank {
+  color: #6f8cf0;
+}
+.fall-adp {
+  color: #3fbf6e;
+}
+.fall-sep {
+  color: #5a6270;
+  font-weight: 400;
+}
+.mock-available li .mock-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.val-legend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #9aa4b2;
+  padding: 4px 2px;
 }

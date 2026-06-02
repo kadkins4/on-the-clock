@@ -51,6 +51,11 @@ export function PickStrip({ state, onPickClick }: Props) {
           <span className="strip-pick">{c.label}</span>
           {c.kind === "done" ? (
             <>
+              {c.signal && (
+                <span className={`num-dot ${c.signal.kind}`}>
+                  {c.signal.amount}
+                </span>
+              )}
               <span className="strip-name" title={c.name}>
                 {c.name}
               </span>

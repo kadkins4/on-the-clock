@@ -1,5 +1,6 @@
 import type { Player, Position } from "../../types";
 import type { MockState } from "./types";
+import { pickSignal, defaultValueThreshold } from "../draftValue";
 
 export interface SummaryPlayer {
   id: string;
@@ -9,19 +10,9 @@ export interface SummaryPlayer {
   overallPick: number;
   adp: number | null;
   adpDelta: number | null; // adp - overallPick; >0 reach, <0 value
-  // "reach"/"value" only when the pick is at least a full round (teams picks)
-  // off ADP; null when within a round — too close to be worth flagging.
+  // "reach"/"value" only when the pick is at least `valueThreshold` picks off ADP
+  // (default teams + 2); null when closer, or when value flags are disabled.
   adpFlag: "reach" | "value" | null;
-}
-
-// A pick is only a notable reach/value when it's a full round (one team's worth
-// of picks) or more away from the player's ADP. Closer than that is just noise.
-export function adpFlag(
-  adpDelta: number | null,
-  teams: number,
-): "reach" | "value" | null {
-  if (adpDelta == null || Math.abs(adpDelta) < teams) return null;
-  return adpDelta > 0 ? "reach" : "value";
 }
 
 export interface MockSummaryResult {
@@ -38,7 +29,10 @@ export function mockSummary(
     .filter((pk) => pk.teamIndex === teamIndex)
     .map((pk) => {
       const pl = byId.get(pk.playerId) as Player;
-      const adpDelta = pl.adp == null ? null : pl.adp - pk.overall;
+      const threshold =
+        m.settings.valueThreshold ?? defaultValueThreshold(m.settings.teams);
+      const enabled = m.settings.valueFlagsEnabled ?? true;
+      const sig = enabled ? pickSignal(pl.adp, pk.overall, threshold) : null;
       return {
         id: pl.id,
         name: pl.name,
@@ -46,8 +40,8 @@ export function mockSummary(
         team: pl.team,
         overallPick: pk.overall,
         adp: pl.adp,
-        adpDelta,
-        adpFlag: adpFlag(adpDelta, m.settings.teams),
+        adpDelta: pl.adp == null ? null : pl.adp - pk.overall,
+        adpFlag: sig?.kind ?? null,
       };
     });
 

@@ -210,6 +210,7 @@ describe("isComplete + teamRosterPositions", () => {
 });
 
 import { bestAvailableId } from "./engine";
+import { makeLeague } from "../league";
 
 describe("bestAvailableId", () => {
   it("returns the available player with the lowest overallRank", () => {
@@ -222,5 +223,24 @@ describe("bestAvailableId", () => {
       draftedIds: new Set<string>(["y"]),
     } as unknown as Parameters<typeof bestAvailableId>[0];
     expect(bestAvailableId(m)).toBe("z");
+  });
+});
+
+describe("createMock value config", () => {
+  it("carries valueThreshold/enabled from the start settings", () => {
+    const l = makeLeague({ name: "T", teams: 10, board: [] });
+    const m = createMock(
+      l,
+      {
+        teams: 10,
+        userSlot: 1,
+        thirdRoundReversal: false,
+        valueThreshold: 12,
+        valueFlagsEnabled: false,
+      },
+      1,
+    );
+    expect(m.settings.valueThreshold).toBe(12);
+    expect(m.settings.valueFlagsEnabled).toBe(false);
   });
 });

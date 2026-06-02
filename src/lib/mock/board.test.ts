@@ -6,6 +6,7 @@ import {
   buildBoardGrid,
   userPickMarkers,
 } from "./board";
+import type { MockState } from "./types";
 import { createMock, draftPlayer } from "./engine";
 import type { League, Player } from "../../types";
 
@@ -171,5 +172,72 @@ describe("userPickMarkers", () => {
     // the user's next pick (overall 2) is the top of the available list
     expect(markers[0]).toEqual({ availIndex: 0, overall: 2, round: 1 });
     expect(markers.map((x) => x.availIndex)).toEqual([0, 1, 4]);
+  });
+});
+
+describe("buildPickCells value signal", () => {
+  it("flags a made pick that cleared the threshold vs ADP", () => {
+    const player = (id: string, adp: number) => ({
+      id,
+      name: id,
+      position: "RB" as const,
+      team: "FA",
+      overallRank: 1,
+      byeWeek: null,
+      tier: null,
+      adp,
+      notes: "",
+      flag: "none" as const,
+      draftStatus: "available" as const,
+    });
+    const m = {
+      pool: [player("a", 20)],
+      order: [0, 1],
+      picks: [{ overall: 1, round: 1, teamIndex: 0, playerId: "a" }],
+      draftedIds: new Set(["a"]),
+      settings: {
+        teams: 2,
+        userSlot: 1,
+        rounds: 1,
+        thirdRoundReversal: false,
+        valueThreshold: 14,
+        valueFlagsEnabled: true,
+      },
+    } as unknown as Parameters<typeof buildPickCells>[0];
+    const done = buildPickCells(m).find((c) => c.kind === "done")!;
+    expect(done.signal).toEqual({ kind: "reach", amount: 19 });
+  });
+
+  it("attaches no signal when value flags are disabled", () => {
+    const player = {
+      id: "a",
+      name: "a",
+      position: "RB" as const,
+      team: "FA",
+      overallRank: 1,
+      byeWeek: null,
+      tier: null,
+      adp: 20,
+      notes: "",
+      flag: "none" as const,
+      draftStatus: "available" as const,
+    };
+    const m = {
+      pool: [player],
+      order: [0, 1],
+      picks: [{ overall: 1, round: 1, teamIndex: 0, playerId: "a" }],
+      draftedIds: new Set(["a"]),
+      settings: {
+        teams: 2,
+        userSlot: 1,
+        rounds: 1,
+        thirdRoundReversal: false,
+        valueThreshold: 14,
+        valueFlagsEnabled: false,
+      },
+    } as unknown as Parameters<typeof buildPickCells>[0];
+    expect(
+      buildPickCells(m).find((c) => c.kind === "done")!.signal,
+    ).toBeUndefined();
   });
 });
