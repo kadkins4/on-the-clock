@@ -572,19 +572,25 @@ table.players input:focus {
   z-index: 40;
 }
 .mock-strip .strip-card {
+  /* fixed footprint so a card never changes size between states */
   flex: 0 0 auto;
-  min-width: 86px;
+  width: 150px;
+  height: 54px;
+  box-sizing: border-box;
   border: 1px solid #888;
   border-radius: 6px;
-  padding: 4px 6px;
+  padding: 5px 8px;
   font-size: 12px;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  justify-content: flex-start;
+  gap: 1px;
+  overflow: hidden;
 }
 .mock-strip .strip-card.current {
-  outline: 2px solid #f0c000;
-  outline-offset: 1px;
+  /* highlight without changing the box: gold border + inset ring, no outline */
+  border-color: #f0c000;
+  box-shadow: inset 0 0 0 1px #f0c000;
   font-weight: 700;
 }
 .mock-strip .strip-card.upcoming {
@@ -594,9 +600,17 @@ table.players input:focus {
   font-variant-numeric: tabular-nums;
   opacity: 0.75;
 }
+.mock-strip .strip-name,
+.mock-strip .strip-team {
+  /* long names truncate with an ellipsis instead of stretching the card */
+  min-width: 0;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .mock-strip .strip-name {
   font-weight: 600;
-  white-space: nowrap;
 }
 .mock-strip .strip-pos {
   opacity: 0.8;

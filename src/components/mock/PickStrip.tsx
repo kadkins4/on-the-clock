@@ -51,7 +51,9 @@ export function PickStrip({ state, onPickClick }: Props) {
           <span className="strip-pick">{c.label}</span>
           {c.kind === "done" ? (
             <>
-              <span className="strip-name">{c.name}</span>
+              <span className="strip-name" title={c.name}>
+                {c.name}
+              </span>
               <span className="strip-pos">{c.position}</span>
             </>
           ) : (
