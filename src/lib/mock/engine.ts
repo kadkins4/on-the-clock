@@ -54,6 +54,16 @@ export function available(m: MockState): Player[] {
   return m.pool.filter((pl) => !m.draftedIds.has(pl.id));
 }
 
+// The user's best still-available player by board rank (lowest overallRank).
+// Used by the pick timer's auto-pick. Returns "" when nothing is available.
+export function bestAvailableId(m: MockState): string {
+  let best: Player | null = null;
+  for (const p of available(m)) {
+    if (!best || p.overallRank < best.overallRank) best = p;
+  }
+  return best ? best.id : "";
+}
+
 export function teamRosterPositions(
   m: MockState,
   teamIndex: number,

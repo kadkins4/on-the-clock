@@ -208,3 +208,19 @@ describe("isComplete + teamRosterPositions", () => {
     expect(teamRosterPositions(m, 0).length).toBe(3);
   });
 });
+
+import { bestAvailableId } from "./engine";
+
+describe("bestAvailableId", () => {
+  it("returns the available player with the lowest overallRank", () => {
+    const m = {
+      pool: [
+        { id: "x", overallRank: 3 },
+        { id: "y", overallRank: 1 },
+        { id: "z", overallRank: 2 },
+      ],
+      draftedIds: new Set<string>(["y"]),
+    } as unknown as Parameters<typeof bestAvailableId>[0];
+    expect(bestAvailableId(m)).toBe("z");
+  });
+});
