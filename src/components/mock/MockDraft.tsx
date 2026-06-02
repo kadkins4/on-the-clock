@@ -3,6 +3,7 @@ import type { MockState } from "../../lib/mock/types";
 import type { Player, Position } from "../../types";
 import {
   available,
+  bestAvailableId,
   botPickId,
   currentTeamIndex,
   isComplete,
@@ -51,10 +52,29 @@ export function MockDraft({
   const [paused, setPaused] = useState(false);
   const [menuFor, setMenuFor] = useState<number | null>(null); // pick popover
   const [replaceSearch, setReplaceSearch] = useState("");
+  const [timerSec, setTimerSec] = useState<number | null>(60); // null = Off
+  const [remaining, setRemaining] = useState(60);
   const onClock = currentTeamIndex(state);
   const isUser = onClock === userTeamIndex && !isComplete(state);
   const overall = state.picks.length + 1;
   const round = Math.floor((overall - 1) / state.settings.teams) + 1;
+
+  // Reset clock on new pick, duration change, or resume from pause.
+  useEffect(() => {
+    if (timerSec != null) setRemaining(timerSec);
+  }, [overall, timerSec, paused]);
+
+  // Countdown + auto-pick (user's live, unpaused turn only).
+  useEffect(() => {
+    if (timerSec == null || paused || !isUser) return;
+    if (remaining <= 0) {
+      const id = bestAvailableId(state);
+      if (id) onDraft(id);
+      return;
+    }
+    const t = setTimeout(() => setRemaining((s) => s - 1), 1000);
+    return () => clearTimeout(t);
+  }, [timerSec, paused, isUser, remaining, state, onDraft]);
 
   // Bots pick automatically while running. Pausing (or a dry pool that leaves a
   // bot with no legal pick) stops the timer so the draft can't spin or fight an
@@ -138,6 +158,28 @@ export function MockDraft({
         ? `Paused — Team ${onClock + 1}`
         : `Team ${onClock + 1} picking…`;
 
+  const timerUi = (
+    <span className="mock-timer-wrap">
+      <span className={`mock-timer ${remaining <= 10 ? "urgent" : ""}`}>
+        {timerSec == null
+          ? "—"
+          : `0:${String(Math.max(remaining, 0)).padStart(2, "0")}`}
+      </span>
+      <select
+        className="mock-timer-sel"
+        value={timerSec ?? "off"}
+        onChange={(e) =>
+          setTimerSec(e.target.value === "off" ? null : Number(e.target.value))
+        }
+      >
+        <option value="30">0:30</option>
+        <option value="60">1:00</option>
+        <option value="90">1:30</option>
+        <option value="off">Off</option>
+      </select>
+    </span>
+  );
+
   return (
     <div className="mock-draft">
       <OnTheClockBanner
@@ -151,6 +193,7 @@ export function MockDraft({
         onTogglePause={() => setPaused((p) => !p)}
         onUndo={undoAndPause}
         onExit={onExit}
+        timer={timerUi}
       />
 
       <div className="mock-myroster">
