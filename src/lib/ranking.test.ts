@@ -121,6 +121,20 @@ describe("moveAndRetier", () => {
     expect(out.map((p) => p.id)).toEqual(["b", "a", "c"]);
     expect(out.map((p) => p.tier)).toEqual([1, 1, 2]);
   });
+
+  it("dragging DOWN onto a player lands directly above it, joining its tier", () => {
+    const players = [
+      mk({ id: "a", tier: 1, overallRank: 1 }),
+      mk({ id: "b", tier: 1, overallRank: 2 }),
+      mk({ id: "c", tier: 2, overallRank: 3 }),
+      mk({ id: "d", tier: 2, overallRank: 4 }),
+    ];
+    // drag a down onto c (top of tier 2): a lands ABOVE c (no swap), tier 2
+    const out = moveAndRetier(players, "a", "c");
+    expect(out.map((p) => p.id)).toEqual(["b", "a", "c", "d"]);
+    expect(out.find((p) => p.id === "a")!.tier).toBe(2);
+    expect(out.map((p) => p.tier)).toEqual([1, 2, 2, 2]);
+  });
 });
 
 describe("normalizeTiers", () => {

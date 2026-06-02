@@ -94,25 +94,23 @@ export function sortPlayers(
 }
 
 // Reorder by dragging `activeId` onto `overId` in the overall-rank ordering.
-// The moved player adopts the tier of its new upper neighbor (or lower neighbor
-// if it lands first), giving "drag across a divider re-tiers" behavior.
+// The moved player lands directly ABOVE the drop target and adopts the target's
+// tier — so dragging across a divider joins the tier you dropped onto, the same
+// way in both directions (no swap with the neighbor below the target).
 export function moveAndRetier(
   players: Player[],
   activeId: string,
   overId: string,
 ): Player[] {
   const ordered = players.slice().sort((a, b) => a.overallRank - b.overallRank);
-  const from = ordered.findIndex((p) => p.id === activeId);
-  const to = ordered.findIndex((p) => p.id === overId);
-  if (from === -1 || to === -1 || from === to) return players;
-  const [moved] = ordered.splice(from, 1);
-  ordered.splice(to, 0, moved);
-  const idx = ordered.findIndex((p) => p.id === activeId);
-  const neighbor = idx > 0 ? ordered[idx - 1] : ordered[idx + 1];
-  const newTier = neighbor ? neighbor.tier : moved.tier;
-  ordered[idx] = { ...moved, tier: newTier };
+  const moved = ordered.find((p) => p.id === activeId);
+  const over = ordered.find((p) => p.id === overId);
+  if (!moved || !over || activeId === overId) return players;
+  const without = ordered.filter((p) => p.id !== activeId);
+  const overIdx = without.findIndex((p) => p.id === overId);
+  without.splice(overIdx, 0, { ...moved, tier: over.tier });
   // Renumber so an emptied tier doesn't leave a gap in the sequence.
-  return fromBlocks(toBlocks(reassignOverallRanks(ordered)));
+  return fromBlocks(toBlocks(reassignOverallRanks(without)));
 }
 
 // --- Tier structure ---------------------------------------------------------
