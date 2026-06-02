@@ -4,6 +4,7 @@ import {
   buildPickCells,
   userColumnIndex,
   buildBoardGrid,
+  userPickMarkers,
 } from "./board";
 import { createMock, draftPlayer } from "./engine";
 import type { League, Player } from "../../types";
@@ -140,5 +141,35 @@ describe("buildBoardGrid", () => {
     expect(grid[1][1]?.name).toBe("C");
     expect(grid[1][1]?.label).toBe("2.01");
     expect(grid[1][0]).toBeNull();
+  });
+});
+
+describe("userPickMarkers", () => {
+  // 2-team snake order = teams [0,1,1,0,0,1]; user (slot 2 -> team 1) picks at
+  // overall 2, 3, 6.
+  it("marks where the user's upcoming picks land in board order", () => {
+    const m = createMock(
+      league(board),
+      { teams: 2, userSlot: 2, thirdRoundReversal: false },
+      1,
+    );
+    expect(userPickMarkers(m, 1)).toEqual([
+      { availIndex: 1, overall: 2, round: 1 },
+      { availIndex: 2, overall: 3, round: 2 },
+      { availIndex: 5, overall: 6, round: 3 },
+    ]);
+  });
+
+  it("offsets by picks already made so availIndex tracks the available list", () => {
+    let m = createMock(
+      league(board),
+      { teams: 2, userSlot: 2, thirdRoundReversal: false },
+      1,
+    );
+    m = draftPlayer(m, "a"); // overall 1 done; on the clock is now overall 2
+    const markers = userPickMarkers(m, 1);
+    // the user's next pick (overall 2) is the top of the available list
+    expect(markers[0]).toEqual({ availIndex: 0, overall: 2, round: 1 });
+    expect(markers.map((x) => x.availIndex)).toEqual([0, 1, 4]);
   });
 });

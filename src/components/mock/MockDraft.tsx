@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import type { MockState } from "../../lib/mock/types";
 import type { Position } from "../../types";
 import {
@@ -7,6 +7,7 @@ import {
   isComplete,
   teamRosterPositions,
 } from "../../lib/mock/engine";
+import { userPickMarkers } from "../../lib/mock/board";
 import { PickStrip } from "./PickStrip";
 import { DraftBoardGrid } from "./DraftBoardGrid";
 
@@ -62,6 +63,18 @@ export function MockDraft({
 
   const myPositions = teamRosterPositions(state, userTeamIndex);
 
+  // Dotted lines mark where the user's upcoming picks would land if every
+  // remaining player went straight down the board. The projection only holds
+  // for the full list, so we hide the lines while a position filter is active.
+  const pickRoundByIndex = useMemo(() => {
+    const m = new Map<number, number>();
+    if (posFilter !== "All" || isComplete(state)) return m;
+    for (const mk of userPickMarkers(state, userTeamIndex)) {
+      m.set(mk.availIndex, mk.round);
+    }
+    return m;
+  }, [state, posFilter, userTeamIndex]);
+
   return (
     <div className="mock-draft">
       <div className="mock-status">
@@ -109,23 +122,34 @@ export function MockDraft({
       </div>
 
       <ul className="mock-available">
-        {avail.slice(0, 100).map((p) => (
-          <li key={p.id}>
-            <span className="mock-name">{p.name}</span>
-            <span className="mock-pos">{p.position}</span>
-            <span className="mock-team">{p.team}</span>
-            <span className="mock-adp num">
-              {p.adp == null ? "" : Number(p.adp.toFixed(1))}
-            </span>
-            <button
-              className="mock-draft-btn"
-              disabled={!isUser}
-              onClick={() => onDraft(p.id)}
-            >
-              Draft
-            </button>
-          </li>
-        ))}
+        {avail.slice(0, 100).map((p, i) => {
+          const markRound = pickRoundByIndex.get(i);
+          return (
+            <Fragment key={p.id}>
+              {markRound != null && (
+                <li className="mock-pick-line" aria-hidden="true">
+                  <span className="mock-pick-line-label">R{markRound}</span>
+                  <span className="mock-pick-line-rule" />
+                </li>
+              )}
+              <li>
+                <span className="mock-name">{p.name}</span>
+                <span className="mock-pos">{p.position}</span>
+                <span className="mock-team">{p.team}</span>
+                <span className="mock-adp num">
+                  {p.adp == null ? "" : Number(p.adp.toFixed(1))}
+                </span>
+                <button
+                  className="mock-draft-btn"
+                  disabled={!isUser}
+                  onClick={() => onDraft(p.id)}
+                >
+                  Draft
+                </button>
+              </li>
+            </Fragment>
+          );
+        })}
       </ul>
 
       <DraftBoardGrid

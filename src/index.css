@@ -464,6 +464,26 @@ table.players input:focus {
 .mock-draft-btn:disabled {
   opacity: 0.4;
 }
+/* dotted marker showing where the user's upcoming picks land in board order */
+.mock-available li.mock-pick-line {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.15rem 0;
+  border-bottom: none;
+}
+.mock-pick-line-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--accent, #3b82f6);
+  white-space: nowrap;
+}
+.mock-pick-line-rule {
+  flex: 1;
+  border-top: 1px dotted var(--accent, #3b82f6);
+  opacity: 0.6;
+}
 .mock-roster {
   padding-left: 1.25rem;
 }

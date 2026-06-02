@@ -64,6 +64,35 @@ export function userColumnIndex(state: MockState): number {
   return state.settings.userSlot - 1;
 }
 
+export interface PickMarker {
+  availIndex: number; // 0-based index into the in-order available list
+  overall: number; // 1-based overall pick this marker represents
+  round: number; // 1-based round for the user
+}
+
+// Where the user's upcoming picks land if every remaining player is drafted
+// straight down the available (ADP/board-ordered) list. availIndex is the
+// offset into available(state): the player at that index is the one the user
+// would get at that pick. Markers are returned in pick order.
+export function userPickMarkers(
+  state: MockState,
+  userTeamIndex: number,
+): PickMarker[] {
+  const { order, picks, settings } = state;
+  const teams = settings.teams;
+  const nextOverall = picks.length + 1; // pick currently on the clock
+  const markers: PickMarker[] = [];
+  for (let overall = nextOverall; overall <= order.length; overall++) {
+    if (order[overall - 1] !== userTeamIndex) continue;
+    markers.push({
+      availIndex: overall - nextOverall,
+      overall,
+      round: Math.floor((overall - 1) / teams) + 1,
+    });
+  }
+  return markers;
+}
+
 export function buildBoardGrid(state: MockState): (PickCell | null)[][] {
   const { rounds, teams } = state.settings;
   const grid: (PickCell | null)[][] = Array.from({ length: rounds }, () =>
