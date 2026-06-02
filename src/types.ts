@@ -15,6 +15,7 @@ export interface Player {
   tier: number | null; // null = "Untiered" group
   adp: number | null; // blended (mean of available sources); board sorts on this
   adpSources?: { espn?: number | null; ffc?: number | null };
+  projPoints?: number | null; // ESPN projected season total (default scoring); feeds VOR
   notes: string;
   flag: Flag;
   draftStatus: DraftStatus;

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { mapEspnPlayers, mergeFetched } from "./fetchEspn";
+import { projectedPoints, mapEspnPlayers, mergeFetched } from "./fetchEspn";
 import { blendAdp } from "./blendAdp";
 import type { Player } from "../types";
 
@@ -247,5 +247,62 @@ describe("mergeFetched + adpSources", () => {
     const out = mergeFetched([], fetched);
     expect(out[0].adpSources).toEqual({ espn: 30 });
     expect(out[0].adp).toBe(30);
+  });
+});
+
+describe("projectedPoints", () => {
+  it("reads the 2026 projected season total from stats", () => {
+    const p = {
+      stats: [
+        {
+          seasonId: 2025,
+          statSourceId: 0,
+          statSplitTypeId: 0,
+          appliedTotal: 300,
+        },
+        {
+          seasonId: 2026,
+          statSourceId: 1,
+          statSplitTypeId: 0,
+          appliedTotal: 287.4,
+        },
+        {
+          seasonId: 2026,
+          statSourceId: 1,
+          statSplitTypeId: 1,
+          appliedTotal: 18,
+        },
+      ],
+    };
+    expect(projectedPoints(p)).toBe(287.4);
+  });
+
+  it("returns null when no projection is present", () => {
+    expect(projectedPoints({})).toBeNull();
+    expect(projectedPoints({ stats: [] })).toBeNull();
+  });
+
+  it("mapEspnPlayers carries projPoints through", () => {
+    const raw = [
+      {
+        player: {
+          id: 1,
+          fullName: "Test Back",
+          defaultPositionId: 2,
+          proTeamId: 12,
+          draftRanksByRankType: { PPR: { rank: 1 } },
+          ownership: { averageDraftPosition: 1.2 },
+          stats: [
+            {
+              seasonId: 2026,
+              statSourceId: 1,
+              statSplitTypeId: 0,
+              appliedTotal: 290,
+            },
+          ],
+        },
+      },
+    ];
+    expect(mapEspnPlayers(raw)[0].projPoints).toBe(290);
   });
 });

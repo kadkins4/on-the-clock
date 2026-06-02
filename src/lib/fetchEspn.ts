@@ -12,7 +12,15 @@ export interface FetchedPlayer {
   team: string;
   overallRank: number; // ESPN PPR rank, 1-based and contiguous
   adp: number | null;
+  projPoints?: number | null;
   injuryStatus?: string;
+}
+
+interface EspnStat {
+  seasonId?: number;
+  statSourceId?: number; // 0 = actual, 1 = projected
+  statSplitTypeId?: number; // 0 = season total
+  appliedTotal?: number;
 }
 
 const POS: Record<number, Position> = {
@@ -73,6 +81,18 @@ interface EspnPlayer {
   draftRanksByRankType?: { PPR?: { rank?: number } };
   ownership?: { averageDraftPosition?: number };
   injuryStatus?: string;
+  stats?: EspnStat[];
+}
+
+// ESPN ships each player's stats array in kona_player_info. The projected
+// season total for the draft year is statSourceId 1 (projected), split 0 (full
+// season). Returns null when absent (e.g. some K/DST or stale rows).
+export function projectedPoints(p: { stats?: EspnStat[] }): number | null {
+  const s = p.stats?.find(
+    (x) =>
+      x.statSourceId === 1 && x.statSplitTypeId === 0 && x.seasonId === SEASON,
+  );
+  return s && s.appliedTotal != null ? s.appliedTotal : null;
 }
 
 // Mirror of scripts/fetch-espn.mjs: filter to ranked, known-position players,
@@ -92,6 +112,7 @@ export function mapEspnPlayers(raw: EspnEntry[]): FetchedPlayer[] {
       team: TEAM[p.proTeamId ?? 0] ?? "FA",
       overallRank: pprRank,
       adp: p.ownership?.averageDraftPosition ?? null,
+      projPoints: projectedPoints(p),
       ...(p.injuryStatus && p.injuryStatus !== "ACTIVE"
         ? { injuryStatus: p.injuryStatus }
         : {}),
@@ -133,6 +154,7 @@ export function mergeFetched(
         team: f.team,
         adp: blendAdp(sources),
         adpSources: sources,
+        projPoints: f.projPoints,
         injuryStatus: f.injuryStatus,
       };
     });
@@ -154,6 +176,7 @@ export function mergeFetched(
       tier: null, // normalizeTiers fills it from the player above
       adp: blendAdp({ espn: f.adp }),
       adpSources: { espn: f.adp },
+      projPoints: f.projPoints,
       notes: "",
       flag: "none",
       draftStatus: "available",
