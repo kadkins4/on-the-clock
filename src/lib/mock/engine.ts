@@ -97,7 +97,11 @@ export function botPickId(m: MockState): string {
   const needs = openNeeds(teamRosterPositions(m, teamIndex), m.roster);
   // advance the seed per pick so successive bot picks vary
   const rng = makeRng(m.seed + m.picks.length * 2654435761);
-  return botPick(available(m), needs, round, rng);
+  const byId = new Map(m.pool.map((pl) => [pl.id, pl]));
+  const recentPositions = m.picks
+    .slice(-6)
+    .map((pk) => byId.get(pk.playerId)!.position);
+  return botPick(available(m), needs, round, rng, recentPositions);
 }
 
 // Swap the player drafted at pick `overall` (1-based). Frees the old player

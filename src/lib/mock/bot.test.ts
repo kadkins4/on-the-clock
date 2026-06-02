@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { pickWindowSize, botPick } from "./bot";
 import { makeRng } from "./rng";
 import { openNeeds } from "./roster";
-import type { Player, RosterSettings } from "../../types";
+import type { Player, Position, RosterSettings } from "../../types";
 
 const roster = (): RosterSettings => ({
   QB: 1,
@@ -94,5 +94,44 @@ describe("botPick", () => {
     });
     const id = botPick(available, noNeeds, 1, makeRng(1));
     expect(id).toBe("rb1"); // window size 1 → best available overall
+  });
+});
+
+function mk(id: string, position: Player["position"], rank: number): Player {
+  return {
+    id,
+    name: id,
+    position,
+    team: "FA",
+    overallRank: rank,
+    byeWeek: null,
+    tier: null,
+    adp: rank,
+    notes: "",
+    flag: "none",
+    draftStatus: "available",
+  };
+}
+
+describe("botPick run-chasing", () => {
+  function shareOfWr(recent: Player["position"][]): number {
+    const avail = [mk("wr", "WR", 1), mk("rb", "RB", 2)];
+    const needs = {
+      base: { WR: 1, RB: 1 },
+      flex: 0,
+      superflex: 0,
+    } as unknown as Parameters<typeof botPick>[1];
+    let wr = 0;
+    const N = 400;
+    for (let i = 0; i < N; i++) {
+      const rng = () => (i + 0.5) / N;
+      if (botPick(avail, needs, 5, rng, recent) === "wr") wr++;
+    }
+    return wr / N;
+  }
+  it("raises the running position's selection share", () => {
+    const noRun = shareOfWr([]);
+    const run = shareOfWr(["WR", "WR", "WR", "WR"] as Position[]);
+    expect(run).toBeGreaterThan(noRun);
   });
 });
