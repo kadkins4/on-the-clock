@@ -35,11 +35,19 @@ and this-season projected season totals.
   **Fetch players** (no storage migration needed; `projPoints` is just absent →
   treated as null).
 
-**Scoring caveat (documented, accepted):** `appliedTotal` reflects ESPN's default
-scoring, not the league's `ppr`/`half`/`standard` setting. VOR here is a _relative_
-positional-scarcity signal, so default-scoring projections are acceptable. Exact
-per-league-scoring VOR (recomputing applied totals from raw stats) is a later
-refinement, explicitly out of scope.
+**REVISED during implementation (2026-06-02):** ESPN's precomputed `appliedTotal`
+turned out to be populated for only ~8% of players, so it cannot feed the column.
+Instead we parse the **raw** projected stat line (present for ~all offensive
+players) into `Player.projStats` and score it at the league's `ppr`/`half`/`standard`
+(plus TE premium) via `src/lib/projection.ts`. This **resolves** the scoring caveat
+below — VOR now honors league scoring rather than ESPN default. `projPoints` is kept
+as the K/DST fallback (ESPN's total, null today, fills in nearer the season). Stat
+ids validated against ESPN's PPR totals (skill players within ~1%). See the plan's
+"Revision" banner for details.
+
+~~**Scoring caveat (documented, accepted):** `appliedTotal` reflects ESPN's default
+scoring, not the league's `ppr`/`half`/`standard` setting.~~ (Superseded — we compute
+league-scored points from the raw stat line, see revision above.)
 
 ### Compute — `src/lib/vor.ts` (pure, unit-tested)
 

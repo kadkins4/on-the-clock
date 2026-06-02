@@ -12,6 +12,32 @@
 
 ---
 
+## ⚠️ Revision (2026-06-02, during implementation) — projection source
+
+Discovered mid-build: ESPN's **precomputed** projected total (`appliedTotal`) is
+sparse — only ~8% of players have it — so the original plan (read `appliedTotal`
+into `projPoints`) cannot fill a VOR column. The **raw** projected stat line,
+however, is present for ~all offensive players. Per user decision (Option 1), the
+implemented design is:
+
+- `Player` gains `projStats?: ProjStats` (raw line: pass/rush/rec yds, TDs, INTs,
+  receptions, fumbles, 2pt) **and** keeps `projPoints` as the ESPN-total **fallback**
+  for K/DST (null today; auto-fills nearer the season).
+- New module `src/lib/projection.ts` → `projectedPoints(player, scoring, tePremium)`
+  scores the raw line at the **league's** scoring (resolves the spec's scoring
+  caveat). `fetchEspn.ts` exposes `extractProjStats` + `appliedProjTotal` (renamed
+  from `projectedPoints`); the seed script mirrors it. Stat ids validated against
+  ESPN's PPR totals (skill players within ~1%; e.g. Bijan computed 352 vs ESPN 353).
+- `computeVor(players, roster, teams, scoring, tePremium)` uses `projectedPoints`
+  for both player value and the positional baselines.
+
+Tasks 1–3 below were implemented in this revised form (committed). Tasks 4–11 are
+unchanged **except** the Task 5 `useRankings` call passes `scoring` + `tePremium`
+(updated inline). The Task 1–3 code blocks below show the original `appliedTotal`
+approach and are kept for history only.
+
+---
+
 ## File Structure
 
 - `src/types.ts` — add `projPoints` to `Player`; add `"vor"` to `SortKey`.
@@ -551,8 +577,15 @@ After `const current = ...` and before `refresh`, add:
 ```ts
 const players = activeBoard(current);
 const vorById = useMemo(
-  () => computeVor(players, current.roster, current.teams),
-  [players, current.roster, current.teams],
+  () =>
+    computeVor(
+      players,
+      current.roster,
+      current.teams,
+      current.scoring,
+      current.tePremium,
+    ),
+  [players, current.roster, current.teams, current.scoring, current.tePremium],
 );
 ```
 
