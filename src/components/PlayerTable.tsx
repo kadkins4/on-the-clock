@@ -25,6 +25,7 @@ interface Props {
   display: DisplayGroup[];
   flat: Player[];
   positionalRanks: Record<string, number>;
+  vorById: Record<string, number | null>;
   dispatch: Dispatch<Action>;
   reorderable: boolean;
   onAddTier: (playerId: string, startsTier: boolean) => void;
@@ -36,6 +37,7 @@ export function PlayerTable({
   display,
   flat,
   positionalRanks,
+  vorById,
   dispatch,
   reorderable,
   onAddTier,
@@ -82,6 +84,7 @@ export function PlayerTable({
       key={p.id}
       player={p}
       positionalRank={positionalRanks[p.id]}
+      vor={vorById[p.id] ?? null}
       draggable={reorderable}
       startsTier={startsTier}
       onAddTier={onAddTier}
@@ -106,6 +109,7 @@ export function PlayerTable({
             <th className="col-pos">Pos</th>
             <th className="col-team">Team</th>
             <th className="col-adp">ADP</th>
+            <th className="col-vor">VOR</th>
             <th className="col-bye">Bye</th>
             <th className="col-notes">Notes</th>
           </tr>

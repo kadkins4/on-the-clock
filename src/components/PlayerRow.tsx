@@ -10,6 +10,7 @@ import { injuryBadge } from "../lib/injury";
 interface Props {
   player: Player;
   positionalRank: number;
+  vor: number | null;
   draggable: boolean;
   startsTier: boolean; // first player of its tier → "+" inserts an empty tier here
   onAddTier: (playerId: string, startsTier: boolean) => void;
@@ -25,6 +26,7 @@ const DRAFT_LABEL: Record<Player["draftStatus"], string> = {
 export function PlayerRow({
   player,
   positionalRank,
+  vor,
   draggable,
   startsTier,
   onAddTier,
@@ -140,6 +142,9 @@ export function PlayerRow({
         }
       >
         {player.adp == null ? "" : Number(player.adp.toFixed(1))}
+      </td>
+      <td className="vor num">
+        {vor == null ? "—" : vor > 0 ? `+${vor}` : String(vor)}
       </td>
       <td className="bye num">{player.byeWeek ?? ""}</td>
       <td>

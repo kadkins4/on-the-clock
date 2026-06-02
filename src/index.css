@@ -196,6 +196,14 @@ table.players th.col-mover {
 .col-adp {
   width: 4.2rem;
 } /* fits 3-digit ADP, e.g. 104.59 */
+.col-vor {
+  width: 3.5rem;
+  text-align: right;
+}
+td.vor {
+  font-variant-numeric: tabular-nums;
+  color: #9aa4b2;
+}
 .col-bye {
   width: 2.6rem;
 }
