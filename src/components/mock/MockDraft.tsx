@@ -35,7 +35,7 @@ const POS_FILTERS: (Position | "All")[] = [
   "DST",
 ];
 
-const BOT_DELAY = 800;
+const BOT_DELAY = 850;
 
 export function MockDraft({
   state,
@@ -155,7 +155,8 @@ export function MockDraft({
   const status = isComplete(state)
     ? "Draft complete"
     : isUser
-      ? "You're on the clock"
+    // TODO: On The Clock. should be the "logo" here. Match the colors exactly. In fact, let's make every instance of On The Clock. be the same as the logo
+      ? "You are now... On The Clock."
       : paused
         ? `Paused — Team ${onClock + 1}`
         : `Team ${onClock + 1} picking…`;
@@ -176,9 +177,12 @@ export function MockDraft({
           setTimerSec(e.target.value === "off" ? null : Number(e.target.value))
         }
       >
+        <option value="10">0:10</option>
         <option value="30">0:30</option>
+        <option value="45">0:45</option>
         <option value="60">1:00</option>
         <option value="90">1:30</option>
+        <option value="1200">2:00</option>
         <option value="off">Off</option>
       </select>
     </span>

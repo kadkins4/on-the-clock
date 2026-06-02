@@ -408,7 +408,7 @@ export default function App() {
             />
           </svg>
           <h1 className="otc-title">
-            <span>On the</span> <strong>Clock</strong>
+            <span>On The</span> <strong>Clock</strong><span>.</span>
           </h1>
         </button>
       </header>

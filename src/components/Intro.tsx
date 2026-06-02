@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 const KEY = "otc:intro-seen";
 const LINE1 = "You are now...";
-const LINE2 = "On The Clock";
+const LINE2 = "On The Clock.";
 
 // Splash: a crisp stopwatch draws while a typewriter reads
 // "You're now... On The Clock", then a clean fade reveals the draft sheet.
