@@ -39,7 +39,7 @@ export interface ProjStats {
   recYds: number;
   recTD: number;
   fumblesLost: number;
-  twoPt: number; // pass + rush + rec 2-pt conversions
+  twoPt: number; // sum of pass/rush/rec 2-pt conversions (ESPN ids 19/26/44)
 }
 
 export type Scoring = "ppr" | "half" | "standard";

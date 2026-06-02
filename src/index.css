@@ -476,8 +476,15 @@ table.players input:focus {
   align-items: center;
   gap: 12px;
 }
+.mock-banner-pick {
+  font-size: 0.85rem;
+  color: #9aa4b2;
+}
 .on-clock-you {
   color: #f0c000;
+}
+.mock-boardtoggle {
+  margin: 8px 0 4px;
 }
 .mock-ticker {
   display: flex;

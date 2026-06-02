@@ -59,7 +59,9 @@ export function MockDraft({
   const overall = state.picks.length + 1;
   const round = Math.floor((overall - 1) / state.settings.teams) + 1;
 
-  // Reset clock on new pick, duration change, or resume from pause.
+  // Reset the clock to full on a new pick, a duration change, or resuming from a
+  // pause. The pause case only reaches the user's clock via undo-on-your-turn
+  // (which pauses); a fresh full clock there is intended, not a resume mid-count.
   useEffect(() => {
     if (timerSec != null) setRemaining(timerSec);
   }, [overall, timerSec, paused]);
