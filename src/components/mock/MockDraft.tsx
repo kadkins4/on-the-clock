@@ -163,7 +163,9 @@ export function MockDraft({
       <span className={`mock-timer ${remaining <= 10 ? "urgent" : ""}`}>
         {timerSec == null
           ? "—"
-          : `0:${String(Math.max(remaining, 0)).padStart(2, "0")}`}
+          : `${Math.floor(Math.max(remaining, 0) / 60)}:${String(
+              Math.max(remaining, 0) % 60,
+            ).padStart(2, "0")}`}
       </span>
       <select
         className="mock-timer-sel"
