@@ -143,5 +143,19 @@ docked mini board (PickStrip) stays as-is at the bottom.
 ## Out of scope / later
 
 - Apply-to-board writeback (deferred by request).
-- Per-league-scoring-accurate VOR (uses ESPN default scoring for now).
 - Visible timer on bot picks / full live-clock pacing.
+
+### 🔖 Revisit: VOR column (post-ship)
+
+We ship VOR on ESPN **default-scoring** projections in this pass. Come back and
+reconsider the column once it's in real use:
+
+- **Per-league scoring accuracy** — recompute applied totals from raw stat lines so
+  VOR respects the league's `ppr` / `half` / `standard` (and TE-premium) settings,
+  instead of ESPN's default.
+- **Projection source** — sanity-check ESPN projections vs. how they feel at the
+  draft table; consider blending a second source or letting last-season actuals
+  inform it.
+- **Presentation** — is a raw VOR number the most useful surface, or do we also want
+  positional VOR rank / tiering off VOR / a value-vs-ADP delta? Decide after seeing
+  it live.
