@@ -7,7 +7,9 @@ const LINE2 = "On The Clock";
 // Splash: a crisp stopwatch draws while a typewriter reads
 // "You're now... On The Clock", then a clean fade reveals the draft sheet.
 // Plays once per browser session; click to skip. Placeholder polish.
-export function Intro() {
+// `replay` is a counter — bumping it (e.g. clicking the header) re-runs the
+// splash from the top, regardless of the once-per-session flag.
+export function Intro({ replay = 0 }: { replay?: number }) {
   const [show, setShow] = useState(() => {
     try {
       return sessionStorage.getItem(KEY) !== "1";
@@ -19,6 +21,16 @@ export function Intro() {
   const [typed2, setTyped2] = useState("");
   const [phase, setPhase] = useState<"typing" | "leaving">("typing");
   const timer = useRef<number | undefined>(undefined);
+
+  // Replay on demand: reset the typewriter and show the overlay again. Skips
+  // the initial render (replay === 0) so first-load behavior is unchanged.
+  useEffect(() => {
+    if (!replay) return;
+    setTyped1("");
+    setTyped2("");
+    setPhase("typing");
+    setShow(true);
+  }, [replay]);
 
   useEffect(() => {
     if (!show) return;

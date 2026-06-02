@@ -10,9 +10,13 @@ export function useRankings() {
   }, [state]);
   const current =
     state.leagues.find((l) => l.id === state.currentId) ?? state.leagues[0];
+  // Re-load league data from the source of truth (storage today; a DB sync
+  // later). Mock-draft and UI filter state live elsewhere, so they're untouched.
+  const refresh = () => dispatch({ type: "setLeagues", state: loadLeagues() });
   return {
     players: activeBoard(current),
     dispatch,
+    refresh,
     currentLeague: current,
     leagues: state.leagues,
     tierLists: current.tierLists.map(({ id, name }) => ({ id, name })),

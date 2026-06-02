@@ -206,6 +206,15 @@ describe("leaguesReducer — league actions", () => {
     expect(leaguesReducer(s, { type: "deleteLeague", id: a.id })).toBe(s);
   });
 
+  it("setLeagues replaces the whole state (refresh from source)", () => {
+    const s = twoLeagues();
+    const fresh: LeaguesState = {
+      currentId: s.leagues[1].id,
+      leagues: [s.leagues[1]],
+    };
+    expect(leaguesReducer(s, { type: "setLeagues", state: fresh })).toBe(fresh);
+  });
+
   it("updateLeagueSettings patches scoring/teams/roster", () => {
     const s = twoLeagues();
     const next = leaguesReducer(s, {

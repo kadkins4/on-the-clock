@@ -154,6 +154,9 @@ export type LeagueAction =
   | { type: "duplicateLeague"; id: string; name: string }
   | { type: "deleteLeague"; id: string }
   | { type: "renameLeague"; id: string; name: string }
+  // Replace the whole state from the source of truth (a "refresh"). Today that
+  // source is storage; later it'll be a DB sync.
+  | { type: "setLeagues"; state: LeaguesState }
   | {
       type: "updateLeagueSettings";
       id: string;
@@ -200,6 +203,8 @@ export function leaguesReducer(
   action: Action | LeagueAction | TierListAction,
 ): LeaguesState {
   switch (action.type) {
+    case "setLeagues":
+      return action.state;
     case "switchLeague": {
       if (!state.leagues.some((l) => l.id === action.id)) return state;
       // Normalize the target's active list on switch (tiers + bye weeks), since

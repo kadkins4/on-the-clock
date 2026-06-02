@@ -38,6 +38,7 @@ export default function App() {
   const {
     players,
     dispatch,
+    refresh,
     currentLeague,
     leagues,
     tierLists,
@@ -45,6 +46,13 @@ export default function App() {
     defaultTierListId,
   } = useRankings();
   const activeTierList = tierLists.find((t) => t.id === activeTierListId);
+  const [introReplay, setIntroReplay] = useState(0);
+  // Clicking the brand is a soft "refresh": replay the splash and re-load data
+  // from the source of truth. In-progress mock draft + filters are untouched.
+  const onBrandClick = () => {
+    refresh();
+    setIntroReplay((n) => n + 1);
+  };
   const [search, setSearch] = useState("");
   const [posFilter, setPosFilter] = useState<Position | "All">("All");
   const [hideDrafted, setHideDrafted] = useState(false);
@@ -342,42 +350,50 @@ export default function App() {
 
   return (
     <div className="app">
-      <Intro />
+      <Intro replay={introReplay} />
       <AlphaBanner />
       <header className="otc-header">
-        <svg className="otc-logo" viewBox="0 0 64 64" width="30" height="30">
-          <rect width="64" height="64" rx="15" fill="#14161f" />
-          <circle
-            cx="32"
-            cy="34"
-            r="17"
-            fill="none"
-            stroke="#ff6b4a"
-            strokeWidth="4"
-          />
-          <rect x="26" y="9" width="12" height="5" rx="2.5" fill="#ff6b4a" />
-          <line
-            x1="32"
-            y1="34"
-            x2="32"
-            y2="23"
-            stroke="#fff"
-            strokeWidth="3.5"
-            strokeLinecap="round"
-          />
-          <line
-            x1="32"
-            y1="34"
-            x2="40"
-            y2="38"
-            stroke="#fff"
-            strokeWidth="3.5"
-            strokeLinecap="round"
-          />
-        </svg>
-        <h1 className="otc-title">
-          <span>On the</span> <strong>Clock</strong>
-        </h1>
+        <button
+          type="button"
+          className="otc-brand"
+          onClick={onBrandClick}
+          title="Refresh & replay intro"
+          aria-label="Refresh and replay intro"
+        >
+          <svg className="otc-logo" viewBox="0 0 64 64" width="30" height="30">
+            <rect width="64" height="64" rx="15" fill="#14161f" />
+            <circle
+              cx="32"
+              cy="34"
+              r="17"
+              fill="none"
+              stroke="#ff6b4a"
+              strokeWidth="4"
+            />
+            <rect x="26" y="9" width="12" height="5" rx="2.5" fill="#ff6b4a" />
+            <line
+              x1="32"
+              y1="34"
+              x2="32"
+              y2="23"
+              stroke="#fff"
+              strokeWidth="3.5"
+              strokeLinecap="round"
+            />
+            <line
+              x1="32"
+              y1="34"
+              x2="40"
+              y2="38"
+              stroke="#fff"
+              strokeWidth="3.5"
+              strokeLinecap="round"
+            />
+          </svg>
+          <h1 className="otc-title">
+            <span>On the</span> <strong>Clock</strong>
+          </h1>
+        </button>
       </header>
       <div className="drafted-summary">
         {shownPositions.map((pos) => (

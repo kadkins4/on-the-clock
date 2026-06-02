@@ -685,6 +685,25 @@ table.players input:focus {
   gap: 10px;
   margin: 0 0 0.4rem;
 }
+.otc-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  border-radius: 8px;
+}
+.otc-brand:hover {
+  opacity: 0.85;
+}
+.otc-brand:focus-visible {
+  outline: 2px solid #ff6b4a;
+  outline-offset: 3px;
+}
 .otc-logo {
   flex: 0 0 auto;
   border-radius: 7px;
