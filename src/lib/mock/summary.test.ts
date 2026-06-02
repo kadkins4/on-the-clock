@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { mockSummary, adpFlag } from "./summary";
+import { mockSummary } from "./summary";
 import { createMock, draftPlayer } from "./engine";
 import type { League, Player } from "../../types";
 
@@ -70,7 +70,7 @@ describe("mockSummary", () => {
   it("flags value (drafted later than ADP) and reach (earlier)", () => {
     let m = createMock(
       league(board),
-      { teams: 2, userSlot: 1, thirdRoundReversal: false },
+      { teams: 2, userSlot: 1, thirdRoundReversal: false, valueThreshold: 2 },
       1,
     );
     // user team 0 takes "c" (adp 3) at overall pick 1 → a reach of +2
@@ -82,17 +82,6 @@ describe("mockSummary", () => {
     const c = s.players.find((pl) => pl.id === "c")!;
     expect(c.overallPick).toBe(1);
     expect(c.adpDelta).toBe(2); // adp 3 - pick 1 = +2 (reach)
-    expect(c.adpFlag).toBe("reach"); // 2 picks = a full round in a 2-team mock
-  });
-});
-
-describe("adpFlag", () => {
-  it("flags only when a full round (teams picks) or more off ADP", () => {
-    expect(adpFlag(0, 10)).toBeNull();
-    expect(adpFlag(9, 10)).toBeNull(); // under a round early — too close
-    expect(adpFlag(-9, 10)).toBeNull(); // under a round late — too close
-    expect(adpFlag(10, 10)).toBe("reach"); // exactly a round earlier than ADP
-    expect(adpFlag(-15, 10)).toBe("value"); // 1.5 rounds later — fell to you
-    expect(adpFlag(null, 10)).toBeNull();
+    expect(c.adpFlag).toBe("reach"); // +2 with an explicit threshold of 2
   });
 });
