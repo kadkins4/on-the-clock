@@ -49,11 +49,15 @@ A small popover anchored to the clicked cell (mini board or full grid):
 
 Mock is full-screen (`App` renders `<MockMode>` and hides the Toolbar/cog), so league switching isn't reachable through the cog today. **OPEN Q2:** Kendall to point at where a league/settings switch is reachable from the mock so we guard the right control (or confirm it's already covered).
 
-## Open questions
+## Resolved decisions (2026-06-02)
 
-- **Q1 — Replace-player UX:** how to choose the replacement? (a) reuse the available-players list with a "replacing pick X" banner; (b) a compact searchable dropdown in the popover. Lean (b) for speed.
-- **Q2 — League-switch entry point:** where did you see this during a mock?
-- **Q3 — Mini board content:** a horizontal pick strip (compact, scrolls to current) vs a tiny teams×rounds grid. Lean strip for a 15vh dock; full grid stays in the slide-up sheet.
+- **Q1 — Replace-player UX → A (popover):** the pick popover holds an inline search + short list of available players; picking one swaps the slot. (Prototyped both A and B in a live mock; A chosen for speed.)
+- **Q2 — League-switch guard → not needed:** confirmed the mock is full-screen and hides the cog, so a league/settings switch isn't reachable mid-draft. No extra guard.
+- **Q3 — Mini board → docked pick strip:** a horizontal strip pinned at the bottom (~15vh), always visible. It auto-recenters on the current pick but **pauses that auto-scroll while the user is interacting** (pointer over or keyboard focus), resuming after. The full teams×rounds grid stays in the slide-up sheet; both surfaces open the pick menu.
+
+## Status
+
+Built and live-verified 2026-06-02: engine `rewindTo`/`replacePick` (TDD); pausable autodraft with stall guard; sticky/repeatable Undo; pick popover (resume-from-here / replace / undo-on-latest) on the mini board and full grid; docked interaction-aware mini board.
 
 ## Testing
 

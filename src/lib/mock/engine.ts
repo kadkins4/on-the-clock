@@ -90,6 +90,37 @@ export function botPickId(m: MockState): string {
   return botPick(available(m), needs, round, rng);
 }
 
+// Swap the player drafted at pick `overall` (1-based). Frees the old player
+// back into the pool; refuses if the replacement is unknown or already drafted
+// elsewhere. Keeps the slot's overall/round/teamIndex.
+export function replacePick(
+  m: MockState,
+  overall: number,
+  newPlayerId: string,
+): MockState {
+  const idx = overall - 1;
+  if (idx < 0 || idx >= m.picks.length) return m;
+  if (!m.pool.some((pl) => pl.id === newPlayerId)) return m;
+  const old = m.picks[idx];
+  if (newPlayerId !== old.playerId && m.draftedIds.has(newPlayerId)) return m;
+  const draftedIds = new Set(m.draftedIds);
+  draftedIds.delete(old.playerId);
+  draftedIds.add(newPlayerId);
+  const picks = m.picks.map((pk, i) =>
+    i === idx ? { ...pk, playerId: newPlayerId } : pk,
+  );
+  return { ...m, draftedIds, picks };
+}
+
+// Undo every pick from `overall` onward, so pick `overall` is back on the clock.
+// Rebuilds draftedIds from the surviving picks. `undoLastPick` is the N=last case.
+export function rewindTo(m: MockState, overall: number): MockState {
+  if (overall < 1 || overall > m.picks.length) return m;
+  const picks = m.picks.slice(0, overall - 1);
+  const draftedIds = new Set(picks.map((p) => p.playerId));
+  return { ...m, picks, draftedIds };
+}
+
 export function undoLastPick(m: MockState): MockState {
   if (m.picks.length === 0) return m;
   const picks = m.picks.slice(0, -1);

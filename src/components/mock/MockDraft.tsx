@@ -3,11 +3,12 @@ import type { MockState } from "../../lib/mock/types";
 import type { Player, Position } from "../../types";
 import {
   available,
+  botPickId,
   currentTeamIndex,
   isComplete,
   teamRosterPositions,
 } from "../../lib/mock/engine";
-import { userPickMarkers } from "../../lib/mock/board";
+import { userPickMarkers, formatPick } from "../../lib/mock/board";
 import { PickStrip } from "./PickStrip";
 import { DraftBoardGrid } from "./DraftBoardGrid";
 
@@ -18,6 +19,8 @@ interface Props {
   onBotTick: () => void; // advance one bot pick
   onUndo: () => void;
   onExit: () => void;
+  onReplacePick: (overall: number, playerId: string) => void;
+  onRewindTo: (overall: number) => void;
 }
 
 const POS_FILTERS: (Position | "All")[] = [
@@ -30,6 +33,8 @@ const POS_FILTERS: (Position | "All")[] = [
   "DST",
 ];
 
+const BOT_DELAY = 800;
+
 export function MockDraft({
   state,
   userTeamIndex,
@@ -37,21 +42,31 @@ export function MockDraft({
   onBotTick,
   onUndo,
   onExit,
+  onReplacePick,
+  onRewindTo,
 }: Props) {
   const [posFilter, setPosFilter] = useState<Position | "All">("All");
   const [boardOpen, setBoardOpen] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const [menuFor, setMenuFor] = useState<number | null>(null); // pick popover
+  const [replaceSearch, setReplaceSearch] = useState("");
   const onClock = currentTeamIndex(state);
   const isUser = onClock === userTeamIndex && !isComplete(state);
   const overall = state.picks.length + 1;
   const round = Math.floor((overall - 1) / state.settings.teams) + 1;
 
-  // Bots pick automatically (short delay so the board visibly updates).
+  // Bots pick automatically while running. Pausing (or a dry pool that leaves a
+  // bot with no legal pick) stops the timer so the draft can't spin or fight an
+  // undo.
   useEffect(() => {
-    if (isComplete(state)) return;
-    if (onClock === userTeamIndex) return;
-    const t = setTimeout(onBotTick, 800);
+    if (paused || isComplete(state) || onClock === userTeamIndex) return;
+    if (!botPickId(state)) {
+      setPaused(true); // stall guard: nothing legal to draft
+      return;
+    }
+    const t = setTimeout(onBotTick, BOT_DELAY);
     return () => clearTimeout(t);
-  }, [state, onClock, userTeamIndex, onBotTick]);
+  }, [state, paused, onClock, userTeamIndex, onBotTick]);
 
   const avail = useMemo(
     () =>
@@ -102,27 +117,49 @@ export function MockDraft({
     return rows;
   }, [state, avail, userTeamIndex]);
 
+  // Undo / resume-from-here edit history, so pause the bots — otherwise they'd
+  // immediately re-draft the slot you just cleared.
+  const undoAndPause = () => {
+    onUndo();
+    setPaused(true);
+  };
+  const resumeFromHere = (o: number) => {
+    onRewindTo(o);
+    setPaused(true);
+    setMenuFor(null);
+  };
+
+  const status = isComplete(state)
+    ? "Draft complete"
+    : isUser
+      ? "You're on the clock"
+      : paused
+        ? `Paused — Team ${onClock + 1}`
+        : `Team ${onClock + 1} picking…`;
+
   return (
     <div className="mock-draft">
       <div className="mock-status">
-        <strong>
-          {isComplete(state)
-            ? "Draft complete"
-            : isUser
-              ? "You're on the clock"
-              : `Team ${onClock + 1} picking…`}
-        </strong>
+        <strong>{status}</strong>
         <span>
           Round {round} · Pick {overall} of {state.order.length}
         </span>
         <div className="mock-controls">
+          {!isUser && !isComplete(state) && (
+            <button
+              className={paused ? "active" : ""}
+              onClick={() => setPaused((p) => !p)}
+            >
+              {paused ? "▶ Resume" : "⏸ Pause"}
+            </button>
+          )}
           <button
             className={boardOpen ? "active" : ""}
             onClick={() => setBoardOpen((v) => !v)}
           >
             {boardOpen ? "Hide board" : "Draft board"}
           </button>
-          <button onClick={onUndo} disabled={state.picks.length === 0}>
+          <button onClick={undoAndPause} disabled={state.picks.length === 0}>
             Undo
           </button>
           <button className="secondary" onClick={onExit}>
@@ -181,8 +218,72 @@ export function MockDraft({
         onClose={() => setBoardOpen(false)}
         canDraft={isUser}
         onDraft={onDraft}
+        onPickClick={(o) => setMenuFor(o)}
       />
-      <PickStrip state={state} />
+      <PickStrip state={state} onPickClick={(o) => setMenuFor(o)} />
+
+      {/* Edit a made pick: resume from here, replace the player, or undo it. */}
+      {menuFor != null && (
+        <>
+          <div className="pickmenu-scrim" onClick={() => setMenuFor(null)} />
+          <div className="pickmenu">
+            <div className="pickmenu-head">
+              Pick {formatPick(menuFor, state.settings.teams)}
+            </div>
+            <button
+              className="pickmenu-item"
+              onClick={() => resumeFromHere(menuFor)}
+            >
+              ↩ Resume draft from here
+            </button>
+            {menuFor === state.picks.length && (
+              <button
+                className="pickmenu-item"
+                onClick={() => {
+                  undoAndPause();
+                  setMenuFor(null);
+                }}
+              >
+                ✕ Undo this pick
+              </button>
+            )}
+
+            <div className="pickmenu-replace">
+              <div className="pickmenu-replace-label">Replace with…</div>
+              <input
+                className="pickmenu-search"
+                placeholder="Search players…"
+                value={replaceSearch}
+                onChange={(e) => setReplaceSearch(e.target.value)}
+                autoFocus
+              />
+              <div className="pickmenu-list">
+                {available(state)
+                  .filter((p) =>
+                    p.name.toLowerCase().includes(replaceSearch.toLowerCase()),
+                  )
+                  .slice(0, 8)
+                  .map((p) => (
+                    <button
+                      key={p.id}
+                      className={`pickmenu-row pos-${p.position}`}
+                      onClick={() => {
+                        onReplacePick(menuFor, p.id);
+                        setMenuFor(null);
+                        setReplaceSearch("");
+                      }}
+                    >
+                      <span>{p.name}</span>
+                      <span className="pickmenu-meta">
+                        {p.position} · {p.team}
+                      </span>
+                    </button>
+                  ))}
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }

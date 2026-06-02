@@ -547,12 +547,29 @@ table.players input:focus {
 }
 
 /* --- Pick strip --- */
+/* always-docked mini board: pinned to the bottom of the viewport */
+.mock-draft {
+  padding-bottom: calc(15vh + 16px);
+}
 .mock-strip {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 15vh;
+  min-height: 92px;
+  box-sizing: border-box;
   display: flex;
+  align-items: center;
   gap: 6px;
   overflow-x: auto;
-  padding: 8px 4px;
+  overflow-y: hidden;
+  padding: 8px 10px;
   scroll-padding-inline: 50%;
+  background: var(--bg, #11141c);
+  border-top: 1px solid #333;
+  box-shadow: 0 -4px 16px #0006;
+  z-index: 40;
 }
 .mock-strip .strip-card {
   flex: 0 0 auto;
@@ -878,4 +895,107 @@ table.players input:focus {
   .otc-caret {
     animation: none;
   }
+}
+
+/* ===== Pick edit menu (click a made pick on the mini board / full board) === */
+.mock-strip .strip-card.clickable,
+.board-cell.clickable {
+  cursor: pointer;
+}
+.mock-strip .strip-card.clickable:hover,
+.board-cell.clickable:hover {
+  outline: 2px solid #ff6b4a;
+  outline-offset: -1px;
+}
+.pickmenu-scrim {
+  position: fixed;
+  inset: 0;
+  background: #0007;
+  z-index: 60;
+}
+.pickmenu {
+  position: fixed;
+  left: 50%;
+  bottom: calc(15vh + 12px);
+  transform: translateX(-50%);
+  width: min(360px, 92vw);
+  background: var(--panel, #1b1f2a);
+  border: 1px solid #ff6b4a;
+  border-radius: 10px;
+  box-shadow: 0 12px 40px #000a;
+  z-index: 61;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pickmenu-head {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--muted, #8b93a1);
+  padding: 2px 6px 6px;
+  border-bottom: 1px solid #333;
+}
+.pickmenu-item {
+  text-align: left;
+  background: none;
+  border: none;
+  color: var(--text, #e7e9ee);
+  padding: 8px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.pickmenu-item:hover {
+  background: #2a2f3e;
+}
+.pickmenu-replace {
+  border-top: 1px solid #333;
+  margin-top: 4px;
+  padding-top: 6px;
+}
+.pickmenu-replace-label {
+  font-size: 12px;
+  color: var(--muted, #8b93a1);
+  padding: 0 6px 4px;
+}
+.pickmenu-search {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--border, #333);
+  background: #11141c;
+  color: var(--text, #e7e9ee);
+  margin-bottom: 6px;
+}
+.pickmenu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+.pickmenu-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  text-align: left;
+  background: none;
+  border: 1px solid transparent;
+  border-left-width: 4px;
+  border-radius: 4px;
+  padding: 6px 8px;
+  cursor: pointer;
+  color: var(--text, #e7e9ee);
+  font-size: 13px;
+}
+.pickmenu-row:hover {
+  background: #2a2f3e;
+}
+.pickmenu-meta {
+  color: var(--muted, #8b93a1);
+  font-size: 11px;
+  white-space: nowrap;
 }

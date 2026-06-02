@@ -4,15 +4,20 @@ import { buildPickCells } from "../../lib/mock/board";
 
 interface Props {
   state: MockState;
+  onPickClick?: (overall: number) => void;
 }
 
-export function PickStrip({ state }: Props) {
+// The always-docked mini board. Auto-recenters on the current pick as the draft
+// advances, but holds still while you're interacting with it (pointer over or
+// keyboard focus) so it never yanks out from under you mid-scroll.
+export function PickStrip({ state, onPickClick }: Props) {
   const cells = buildPickCells(state);
   const made = state.picks.length;
   const currentRef = useRef<HTMLDivElement | null>(null);
+  const interacting = useRef(false);
 
-  // Auto-recenter on the current pick whenever the draft advances.
   useEffect(() => {
+    if (interacting.current) return;
     currentRef.current?.scrollIntoView({
       behavior: "smooth",
       inline: "center",
@@ -21,12 +26,27 @@ export function PickStrip({ state }: Props) {
   }, [made]);
 
   return (
-    <div className="mock-strip" aria-label="pick strip">
+    <div
+      className="mock-strip"
+      aria-label="pick board"
+      onPointerEnter={() => (interacting.current = true)}
+      onPointerLeave={() => (interacting.current = false)}
+      onFocusCapture={() => (interacting.current = true)}
+      onBlurCapture={() => (interacting.current = false)}
+    >
       {cells.map((c) => (
         <div
           key={c.overall}
           ref={c.kind === "current" ? currentRef : undefined}
-          className={`strip-card ${c.kind} ${c.position ? `pos-${c.position}` : ""}`}
+          className={`strip-card ${c.kind} ${c.position ? `pos-${c.position}` : ""} ${
+            c.kind === "done" && onPickClick ? "clickable" : ""
+          }`}
+          role={c.kind === "done" && onPickClick ? "button" : undefined}
+          onClick={
+            c.kind === "done" && onPickClick
+              ? () => onPickClick(c.overall)
+              : undefined
+          }
         >
           <span className="strip-pick">{c.label}</span>
           {c.kind === "done" ? (

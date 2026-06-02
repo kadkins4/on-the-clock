@@ -6,6 +6,8 @@ import {
   draftPlayer,
   botPickId,
   undoLastPick,
+  replacePick,
+  rewindTo,
   isComplete,
 } from "../../lib/mock/engine";
 import { mockSummary } from "../../lib/mock/summary";
@@ -46,6 +48,14 @@ export function MockMode({ league, onExit }: Props) {
     setState((m) => (m ? undoLastPick(m) : m));
   }, []);
 
+  const replace = useCallback((overall: number, id: string) => {
+    setState((m) => (m ? replacePick(m, overall, id) : m));
+  }, []);
+
+  const rewind = useCallback((overall: number) => {
+    setState((m) => (m ? rewindTo(m, overall) : m));
+  }, []);
+
   // advance to summary once the board fills
   useEffect(() => {
     if (state && isComplete(state) && phase === "draft") setPhase("summary");
@@ -63,6 +73,8 @@ export function MockMode({ league, onExit }: Props) {
         onBotTick={botTick}
         onUndo={undo}
         onExit={onExit}
+        onReplacePick={replace}
+        onRewindTo={rewind}
       />
     );
   }

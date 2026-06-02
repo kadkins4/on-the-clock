@@ -6,6 +6,8 @@ import {
   draftPlayer,
   botPickId,
   undoLastPick,
+  replacePick,
+  rewindTo,
   isComplete,
   teamRosterPositions,
 } from "./engine";
@@ -96,6 +98,63 @@ describe("draftPlayer + available", () => {
     const same = draftPlayer(m, "a");
     expect(same).toBe(m);
     expect(draftPlayer(m, "zzz")).toBe(m);
+  });
+});
+
+describe("replacePick", () => {
+  const start = () =>
+    createMock(
+      league(board),
+      { teams: 2, userSlot: 1, thirdRoundReversal: false },
+      1,
+    );
+
+  it("swaps the player at a pick and frees the old one", () => {
+    let m = start();
+    m = draftPlayer(m, "a"); // pick 1 = a
+    const out = replacePick(m, 1, "d");
+    expect(out.picks[0].playerId).toBe("d");
+    expect(out.picks[0].teamIndex).toBe(m.picks[0].teamIndex); // slot kept
+    expect(available(out).some((p) => p.id === "a")).toBe(true); // freed
+    expect(available(out).some((p) => p.id === "d")).toBe(false); // taken
+  });
+
+  it("refuses an already-drafted or unknown replacement, or bad pick", () => {
+    let m = start();
+    m = draftPlayer(m, "a");
+    m = draftPlayer(m, "b");
+    expect(replacePick(m, 1, "b")).toBe(m); // b already drafted
+    expect(replacePick(m, 1, "zzz")).toBe(m); // unknown
+    expect(replacePick(m, 9, "d")).toBe(m); // no such pick
+  });
+});
+
+describe("rewindTo", () => {
+  const start = () =>
+    createMock(
+      league(board),
+      { teams: 2, userSlot: 1, thirdRoundReversal: false },
+      1,
+    );
+
+  it("undoes back through the given pick (it goes back on the clock)", () => {
+    let m = start();
+    m = draftPlayer(m, "a"); // pick 1
+    m = draftPlayer(m, "b"); // pick 2
+    m = draftPlayer(m, "c"); // pick 3
+    const out = rewindTo(m, 2); // undo picks 2 and 3
+    expect(out.picks.map((p) => p.playerId)).toEqual(["a"]);
+    expect(out.draftedIds.has("a")).toBe(true);
+    expect(out.draftedIds.has("b")).toBe(false);
+    expect(out.draftedIds.has("c")).toBe(false);
+    expect(currentTeamIndex(out)).toBe(m.order[1]); // pick 2 on the clock
+  });
+
+  it("ignores out-of-range targets", () => {
+    let m = start();
+    m = draftPlayer(m, "a");
+    expect(rewindTo(m, 0)).toBe(m);
+    expect(rewindTo(m, 5)).toBe(m);
   });
 });
 

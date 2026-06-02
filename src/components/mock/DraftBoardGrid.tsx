@@ -8,6 +8,7 @@ interface Props {
   onClose: () => void;
   canDraft: boolean; // user is on the clock
   onDraft: (playerId: string) => void;
+  onPickClick?: (overall: number) => void; // open the edit menu for a made pick
 }
 
 export function DraftBoardGrid({
@@ -16,6 +17,7 @@ export function DraftBoardGrid({
   onClose,
   canDraft,
   onDraft,
+  onPickClick,
 }: Props) {
   const grid = buildBoardGrid(state);
   const userCol = userColumnIndex(state);
@@ -74,7 +76,13 @@ export function DraftBoardGrid({
                     key={t}
                     className={`board-cell ${t === userCol ? "user-col" : ""} ${
                       cell ? `pos-${cell.position}` : "empty"
-                    }`}
+                    } ${cell && onPickClick ? "clickable" : ""}`}
+                    role={cell && onPickClick ? "button" : undefined}
+                    onClick={
+                      cell && onPickClick
+                        ? () => onPickClick(cell.overall)
+                        : undefined
+                    }
                   >
                     {cell && (
                       <>
