@@ -1,5 +1,5 @@
 import type { League, LeaguesState, Player } from "../types";
-import { makeLeague } from "../lib/league";
+import { makeLeague, activeTierList } from "../lib/league";
 import {
   reassignOverallRanks,
   moveAndRetier,
@@ -8,7 +8,9 @@ import {
   splitTierAt,
   removeTier,
   moveIntoNewTier,
+  orderByAdp,
 } from "../lib/ranking";
+import seed from "../data/seed.json";
 import { mergeFetched, type FetchedPlayer } from "../lib/fetchEspn";
 import { applyFfcAdp } from "../lib/blendAdp";
 import type { NormalizedAdp } from "../lib/ffcAdp";
@@ -160,6 +162,16 @@ export type LeagueAction =
       >;
     };
 
+// Tier-list actions operate on the *current* league's tier lists. switch/delete/
+// setDefault take a list id; add/duplicate/rename act on the active list.
+export type TierListAction =
+  | { type: "switchTierList"; id: string }
+  | { type: "addTierList"; name: string }
+  | { type: "duplicateTierList"; name: string }
+  | { type: "renameTierList"; name: string }
+  | { type: "deleteTierList"; id: string }
+  | { type: "setDefaultTierList"; id: string };
+
 function mapLeague(
   state: LeaguesState,
   id: string,
@@ -171,19 +183,30 @@ function mapLeague(
   };
 }
 
+// Re-derive tiers + bye weeks on the active tier list's board. Only the active
+// league/list is normalized eagerly, so we run this on switch.
+function normalizeActiveList(l: League): League {
+  const activeId = activeTierList(l).id;
+  return {
+    ...l,
+    tierLists: l.tierLists.map((t) =>
+      t.id === activeId ? { ...t, board: normalize(t.board) } : t,
+    ),
+  };
+}
+
 export function leaguesReducer(
   state: LeaguesState,
-  action: Action | LeagueAction,
+  action: Action | LeagueAction | TierListAction,
 ): LeaguesState {
   switch (action.type) {
     case "switchLeague": {
       if (!state.leagues.some((l) => l.id === action.id)) return state;
-      // Normalize the target board on switch (tiers + bye weeks), since only the
-      // active league is normalized at load time.
-      return mapLeague({ ...state, currentId: action.id }, action.id, (l) => ({
-        ...l,
-        board: normalizeTiers(withByeWeeks(l.board)),
-      }));
+      // Normalize the target's active list on switch (tiers + bye weeks), since
+      // only the current league is normalized at load time.
+      return mapLeague({ ...state, currentId: action.id }, action.id, (l) =>
+        normalizeActiveList(l),
+      );
     }
     case "addLeague": {
       const name = action.name.trim();
@@ -195,18 +218,26 @@ export function leaguesReducer(
       const name = action.name.trim();
       const src = state.leagues.find((l) => l.id === action.id);
       if (!name || !src) return state;
-      // Clone the source board + settings into a brand-new league, so the user
-      // can start from an existing tier list instead of rebuilding it.
+      // Clone every tier list with fresh ids (so the copy is fully independent),
+      // remapping the active/default pointers onto the new ids.
+      const idMap = new Map<string, string>();
+      const tierLists = src.tierLists.map((t) => {
+        const id = crypto.randomUUID();
+        idMap.set(t.id, id);
+        return { id, name: t.name, board: t.board.map((p) => ({ ...p })) };
+      });
       const lg: League = {
         ...makeLeague({
           name,
           scoring: src.scoring,
           platform: src.platform,
           teams: src.teams,
-          board: src.board.map((p) => ({ ...p })),
         }),
         roster: { ...src.roster, disabled: [...src.roster.disabled] },
         tePremium: src.tePremium,
+        tierLists,
+        activeTierListId: idMap.get(src.activeTierListId) ?? tierLists[0].id,
+        defaultTierListId: idMap.get(src.defaultTierListId) ?? tierLists[0].id,
       };
       return { currentId: lg.id, leagues: [...state.leagues, lg] };
     }
@@ -224,16 +255,96 @@ export function leaguesReducer(
     }
     case "updateLeagueSettings":
       return mapLeague(state, action.id, (l) => ({ ...l, ...action.patch }));
+
+    case "switchTierList": {
+      const current = state.leagues.find((l) => l.id === state.currentId);
+      if (!current || !current.tierLists.some((t) => t.id === action.id))
+        return state;
+      return mapLeague(state, current.id, (l) =>
+        normalizeActiveList({ ...l, activeTierListId: action.id }),
+      );
+    }
+    case "addTierList": {
+      const name = action.name.trim();
+      const current = state.leagues.find((l) => l.id === state.currentId);
+      if (!name || !current) return state;
+      const id = crypto.randomUUID();
+      const board = normalize(orderByAdp(seed as unknown as Player[]));
+      return mapLeague(state, current.id, (l) => ({
+        ...l,
+        tierLists: [...l.tierLists, { id, name, board }],
+        activeTierListId: id,
+      }));
+    }
+    case "duplicateTierList": {
+      const name = action.name.trim();
+      const current = state.leagues.find((l) => l.id === state.currentId);
+      if (!name || !current) return state;
+      const id = crypto.randomUUID();
+      const board = activeTierList(current).board.map((p) => ({ ...p }));
+      return mapLeague(state, current.id, (l) => ({
+        ...l,
+        tierLists: [...l.tierLists, { id, name, board }],
+        activeTierListId: id,
+      }));
+    }
+    case "renameTierList": {
+      const name = action.name.trim();
+      const current = state.leagues.find((l) => l.id === state.currentId);
+      if (!name || !current) return state;
+      const activeId = current.activeTierListId;
+      return mapLeague(state, current.id, (l) => ({
+        ...l,
+        tierLists: l.tierLists.map((t) =>
+          t.id === activeId ? { ...t, name } : t,
+        ),
+      }));
+    }
+    case "deleteTierList": {
+      const current = state.leagues.find((l) => l.id === state.currentId);
+      if (!current || current.tierLists.length <= 1) return state;
+      if (!current.tierLists.some((t) => t.id === action.id)) return state;
+      const tierLists = current.tierLists.filter((t) => t.id !== action.id);
+      const activeTierListId =
+        action.id === current.activeTierListId
+          ? tierLists[0].id
+          : current.activeTierListId;
+      const defaultTierListId =
+        action.id === current.defaultTierListId
+          ? tierLists[0].id
+          : current.defaultTierListId;
+      return mapLeague(state, current.id, (l) =>
+        normalizeActiveList({
+          ...l,
+          tierLists,
+          activeTierListId,
+          defaultTierListId,
+        }),
+      );
+    }
+    case "setDefaultTierList": {
+      const current = state.leagues.find((l) => l.id === state.currentId);
+      if (!current || !current.tierLists.some((t) => t.id === action.id))
+        return state;
+      return mapLeague(state, current.id, (l) => ({
+        ...l,
+        defaultTierListId: action.id,
+      }));
+    }
+
     default: {
-      // a player/tier Action — delegate to the active league's board.
+      // a player/tier Action — delegate to the current league's ACTIVE list.
       // Skip the update (and the updatedAt bump) when the board is unchanged.
       const current = state.leagues.find((l) => l.id === state.currentId);
       if (!current) return state;
-      const board = rankingReducer(current.board, action);
-      if (board === current.board) return state;
+      const active = activeTierList(current);
+      const board = rankingReducer(active.board, action);
+      if (board === active.board) return state;
       return mapLeague(state, state.currentId, (l) => ({
         ...l,
-        board,
+        tierLists: l.tierLists.map((t) =>
+          t.id === active.id ? { ...t, board } : t,
+        ),
         updatedAt: Date.now(),
       }));
     }

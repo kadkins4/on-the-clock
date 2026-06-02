@@ -44,7 +44,9 @@ const league = (board: Player[]): League => ({
     bench: 0,
     disabled: ["TE", "K", "DST"],
   },
-  board,
+  tierLists: [{ id: "tl", name: "Default", board }],
+  activeTierListId: "tl",
+  defaultTierListId: "tl",
   updatedAt: 0,
 });
 

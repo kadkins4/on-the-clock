@@ -35,7 +35,16 @@ const HIDE_DST_KEY = "ff-cheat-sheet:hideDst";
 const OLD_HIDE_KDST_KEY = "ff-cheat-sheet:hideKDst"; // migrate combined toggle
 
 export default function App() {
-  const { players, dispatch, currentLeague, leagues } = useRankings();
+  const {
+    players,
+    dispatch,
+    currentLeague,
+    leagues,
+    tierLists,
+    activeTierListId,
+    defaultTierListId,
+  } = useRankings();
+  const activeTierList = tierLists.find((t) => t.id === activeTierListId);
   const [search, setSearch] = useState("");
   const [posFilter, setPosFilter] = useState<Position | "All">("All");
   const [hideDrafted, setHideDrafted] = useState(false);
@@ -290,6 +299,31 @@ export default function App() {
     )
       dispatch({ type: "deleteLeague", id: currentLeague.id });
   };
+
+  const onAddTierList = () => {
+    const name = prompt("New tier list name:")?.trim();
+    if (name) dispatch({ type: "addTierList", name });
+  };
+  const onDuplicateTierList = () => {
+    const name = prompt(
+      "Duplicate this tier list as:",
+      `${activeTierList?.name ?? "Default"} copy`,
+    )?.trim();
+    if (name) dispatch({ type: "duplicateTierList", name });
+  };
+  const onRenameTierList = () => {
+    const name = prompt("Rename this tier list:", activeTierList?.name)?.trim();
+    if (name) dispatch({ type: "renameTierList", name });
+  };
+  const onDeleteTierList = () => {
+    if (tierLists.length <= 1) return;
+    if (
+      confirm(
+        `Delete the tier list "${activeTierList?.name}"? This can't be undone.`,
+      )
+    )
+      dispatch({ type: "deleteTierList", id: activeTierListId });
+  };
   // filename-safe league name for exports (so 5 leagues don't all collide on
   // "rankings.json")
   const leagueSlug =
@@ -377,6 +411,17 @@ export default function App() {
         onDuplicateLeague={onDuplicateLeague}
         onRenameLeague={onRenameLeague}
         onDeleteLeague={onDeleteLeague}
+        tierLists={tierLists}
+        activeTierListId={activeTierListId}
+        defaultTierListId={defaultTierListId}
+        onSwitchTierList={(id) => dispatch({ type: "switchTierList", id })}
+        onAddTierList={onAddTierList}
+        onDuplicateTierList={onDuplicateTierList}
+        onRenameTierList={onRenameTierList}
+        onDeleteTierList={onDeleteTierList}
+        onSetDefaultTierList={() =>
+          dispatch({ type: "setDefaultTierList", id: activeTierListId })
+        }
         onScoringChange={(scoring) =>
           dispatch({
             type: "updateLeagueSettings",

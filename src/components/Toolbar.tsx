@@ -21,6 +21,15 @@ interface Props {
   onDuplicateLeague: () => void;
   onRenameLeague: () => void;
   onDeleteLeague: () => void;
+  tierLists: { id: string; name: string }[];
+  activeTierListId: string;
+  defaultTierListId: string;
+  onSwitchTierList: (id: string) => void;
+  onAddTierList: () => void;
+  onDuplicateTierList: () => void;
+  onRenameTierList: () => void;
+  onDeleteTierList: () => void;
+  onSetDefaultTierList: () => void;
   onScoringChange: (scoring: Scoring) => void;
   hideK: boolean;
   onToggleK: () => void;
@@ -164,6 +173,75 @@ export function Toolbar(props: Props) {
               onClick={() => {
                 close();
                 props.onDeleteLeague();
+              }}
+            >
+              Delete current
+            </button>
+
+            <div className="menu-sep" />
+            <div className="menu-label">Tier lists</div>
+            {props.tierLists.map((tl) => (
+              <button
+                key={tl.id}
+                className={
+                  tl.id === props.activeTierListId
+                    ? "menu-item current"
+                    : "menu-item"
+                }
+                onClick={() => {
+                  close();
+                  if (tl.id !== props.activeTierListId)
+                    props.onSwitchTierList(tl.id);
+                }}
+              >
+                {tl.id === props.activeTierListId ? "✓ " : "  "}
+                {tl.name}
+                {tl.id === props.defaultTierListId ? " ★" : ""}
+              </button>
+            ))}
+            <button
+              className="menu-item"
+              onClick={() => {
+                close();
+                props.onAddTierList();
+              }}
+            >
+              + New tier list…
+            </button>
+            <button
+              className="menu-item"
+              onClick={() => {
+                close();
+                props.onDuplicateTierList();
+              }}
+            >
+              Duplicate current…
+            </button>
+            <button
+              className="menu-item"
+              onClick={() => {
+                close();
+                props.onRenameTierList();
+              }}
+            >
+              Rename current…
+            </button>
+            <button
+              className="menu-item"
+              disabled={props.activeTierListId === props.defaultTierListId}
+              onClick={() => {
+                close();
+                props.onSetDefaultTierList();
+              }}
+            >
+              Set as default
+            </button>
+            <button
+              className="menu-item"
+              disabled={props.tierLists.length <= 1}
+              onClick={() => {
+                close();
+                props.onDeleteTierList();
               }}
             >
               Delete current

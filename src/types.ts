@@ -37,6 +37,14 @@ export interface RosterSettings {
   disabled: Position[]; // positions removed from this league entirely
 }
 
+// A named ranking within a league. A league owns several (e.g. "Balanced",
+// "RB-heavy"); ids are stable so renaming can't orphan active/default pointers.
+export interface TierList {
+  id: string;
+  name: string;
+  board: Player[];
+}
+
 export interface League {
   id: string;
   name: string;
@@ -45,7 +53,9 @@ export interface League {
   tePremium: boolean;
   teams: number; // 8–16
   roster: RosterSettings;
-  board: Player[];
+  tierLists: TierList[]; // replaces the old single `board`
+  activeTierListId: string; // the list the board view shows/edits
+  defaultTierListId: string; // marked "default"; a mock starts from this
   updatedAt: number; // epoch ms; used by a later sync plan
 }
 

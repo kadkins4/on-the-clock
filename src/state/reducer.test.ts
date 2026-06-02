@@ -125,7 +125,12 @@ describe("boardReducer", () => {
 });
 
 import { leaguesReducer } from "./reducer";
-import { makeLeague, defaultRoster } from "../lib/league";
+import {
+  makeLeague,
+  defaultRoster,
+  activeBoard,
+  activeTierList,
+} from "../lib/league";
 import type { LeaguesState } from "../types";
 
 const mkPlayer = (id: string, rank: number): Player => ({
@@ -222,8 +227,8 @@ describe("leaguesReducer — delegated player actions", () => {
       id: "1",
       patch: { notes: "stud" },
     });
-    expect(next.leagues[0].board[0].notes).toBe("stud");
-    expect(next.leagues[1].board[0].notes).toBe("");
+    expect(activeBoard(next.leagues[0])[0].notes).toBe("stud");
+    expect(activeBoard(next.leagues[1])[0].notes).toBe("");
   });
 
   it("bumps updatedAt on the active league when its board changes", () => {
@@ -250,8 +255,8 @@ describe("leaguesReducer — review fixes (M1/L4/M2)", () => {
     const s: LeaguesState = { currentId: a.id, leagues: [a, raw] };
     const next = leaguesReducer(s, { type: "switchLeague", id: raw.id });
     const b = next.leagues.find((l) => l.id === raw.id)!;
-    expect(b.board[0].tier).toBe(1); // null tier filled
-    expect(b.board[0].byeWeek).toBe(teamMeta["ATL"].byeWeek); // bye enriched
+    expect(activeBoard(b)[0].tier).toBe(1); // null tier filled
+    expect(activeBoard(b)[0].byeWeek).toBe(teamMeta["ATL"].byeWeek); // bye enriched
   });
 
   it("L4: a no-op delegated action returns the same state (no updatedAt bump)", () => {
@@ -285,10 +290,14 @@ describe("leaguesReducer — review fixes (M1/L4/M2)", () => {
     expect(dup.teams).toBe(14);
     expect(dup.tePremium).toBe(true);
     // board is a copy: equal contents, different array + element refs
-    expect(dup.board).toEqual(src.leagues[0].board);
-    expect(dup.board).not.toBe(src.leagues[0].board);
-    expect(dup.board[0]).not.toBe(src.leagues[0].board[0]);
+    const dupBoard = activeBoard(dup);
+    const srcBoard = activeBoard(src.leagues[0]);
+    expect(dupBoard).toEqual(srcBoard);
+    expect(dupBoard).not.toBe(srcBoard);
+    expect(dupBoard[0]).not.toBe(srcBoard[0]);
     expect(dup.id).not.toBe(src.leagues[0].id);
+    // tier lists are cloned with fresh ids
+    expect(dup.tierLists[0].id).not.toBe(src.leagues[0].tierLists[0].id);
   });
 
   it("M2: duplicateLeague ignores blank names and unknown ids", () => {
@@ -328,9 +337,125 @@ describe("leaguesReducer — applyAdp", () => {
       type: "applyAdp",
       ffc: [{ name: "AJ Brown", position: "WR", team: "PHI", adp: 20 }],
     });
-    const updated = next.leagues[0].board[0];
+    const updated = activeBoard(next.leagues[0])[0];
     expect(updated.adpSources).toEqual({ espn: 10, ffc: 20 });
     expect(updated.adp).toBe(15);
     expect(updated.id).toBe("1");
+  });
+});
+
+describe("leaguesReducer — tier-list actions", () => {
+  // a single league with two named tier lists, the first active + default
+  function withTierLists(): LeaguesState {
+    const lg = makeLeague({ name: "L", board: [mkPlayer("a", 1)] });
+    const second = {
+      id: "list-2",
+      name: "RB-heavy",
+      board: [mkPlayer("b", 1)],
+    };
+    const withTwo = { ...lg, tierLists: [...lg.tierLists, second] };
+    return { currentId: lg.id, leagues: [withTwo] };
+  }
+
+  it("switchTierList changes the active list and normalizes its board", () => {
+    const s = withTierLists();
+    const next = leaguesReducer(s, { type: "switchTierList", id: "list-2" });
+    const lg = next.leagues[0];
+    expect(lg.activeTierListId).toBe("list-2");
+    expect(activeTierList(lg).name).toBe("RB-heavy");
+    expect(activeBoard(lg)[0].tier).toBe(1); // normalized
+  });
+
+  it("switchTierList ignores unknown ids", () => {
+    const s = withTierLists();
+    expect(leaguesReducer(s, { type: "switchTierList", id: "nope" })).toBe(s);
+  });
+
+  it("addTierList appends a seeded list and makes it active", () => {
+    const s = withTierLists();
+    const next = leaguesReducer(s, { type: "addTierList", name: "Sleepers" });
+    const lg = next.leagues[0];
+    expect(lg.tierLists).toHaveLength(3);
+    expect(lg.tierLists[2].name).toBe("Sleepers");
+    expect(lg.activeTierListId).toBe(lg.tierLists[2].id);
+    expect(activeBoard(lg).length).toBeGreaterThan(0); // seeded from ADP
+  });
+
+  it("addTierList ignores blank names", () => {
+    const s = withTierLists();
+    expect(leaguesReducer(s, { type: "addTierList", name: " " })).toBe(s);
+  });
+
+  it("duplicateTierList copies the active board into an independent list", () => {
+    const s = withTierLists();
+    const next = leaguesReducer(s, {
+      type: "duplicateTierList",
+      name: "L copy",
+    });
+    const lg = next.leagues[0];
+    expect(lg.tierLists).toHaveLength(3);
+    expect(lg.activeTierListId).toBe(lg.tierLists[2].id);
+    expect(activeBoard(lg)).toEqual([mkPlayer("a", 1)]);
+    // editing the copy must not touch the original
+    const edited = leaguesReducer(next, {
+      type: "update",
+      id: "a",
+      patch: { notes: "copy-only" },
+    });
+    expect(activeBoard(edited.leagues[0])[0].notes).toBe("copy-only");
+    expect(edited.leagues[0].tierLists[0].board[0].notes).toBe("");
+  });
+
+  it("renameTierList renames the active list", () => {
+    const s = withTierLists();
+    const next = leaguesReducer(s, {
+      type: "renameTierList",
+      name: "Balanced",
+    });
+    expect(next.leagues[0].tierLists[0].name).toBe("Balanced");
+    expect(leaguesReducer(s, { type: "renameTierList", name: " " })).toBe(s);
+  });
+
+  it("deleteTierList removes by id and reassigns active/default", () => {
+    const s = withTierLists(); // active+default = list-1
+    const list1 = s.leagues[0].tierLists[0].id;
+    const next = leaguesReducer(s, { type: "deleteTierList", id: list1 });
+    const lg = next.leagues[0];
+    expect(lg.tierLists.map((t) => t.id)).toEqual(["list-2"]);
+    expect(lg.activeTierListId).toBe("list-2");
+    expect(lg.defaultTierListId).toBe("list-2");
+  });
+
+  it("deleteTierList refuses to remove the last list", () => {
+    const lg = makeLeague({ name: "Solo", board: [mkPlayer("a", 1)] });
+    const s: LeaguesState = { currentId: lg.id, leagues: [lg] };
+    expect(
+      leaguesReducer(s, {
+        type: "deleteTierList",
+        id: lg.tierLists[0].id,
+      }),
+    ).toBe(s);
+  });
+
+  it("setDefaultTierList marks a list default; ignores unknown ids", () => {
+    const s = withTierLists();
+    const next = leaguesReducer(s, {
+      type: "setDefaultTierList",
+      id: "list-2",
+    });
+    expect(next.leagues[0].defaultTierListId).toBe("list-2");
+    expect(leaguesReducer(s, { type: "setDefaultTierList", id: "x" })).toBe(s);
+  });
+
+  it("player actions target only the active tier list", () => {
+    const s = withTierLists(); // active = list-1
+    const next = leaguesReducer(s, {
+      type: "update",
+      id: "a",
+      patch: { notes: "active-only" },
+    });
+    const lg = next.leagues[0];
+    expect(lg.tierLists[0].board[0].notes).toBe("active-only");
+    expect(lg.tierLists[1].board[0].notes).toBe(""); // other list untouched
   });
 });

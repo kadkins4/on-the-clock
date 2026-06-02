@@ -1,9 +1,9 @@
-import type { LeaguesState, Player } from "../types";
+import type { League, LeaguesState, Player } from "../types";
 import type { Board } from "../state/reducer";
 import seed from "../data/seed.json";
 import { withByeWeeks } from "./byes";
 import { normalizeTiers, orderByAdp } from "./ranking";
-import { migrateBoardToLeagues } from "./league";
+import { migrateBoardToLeagues, activeTierList } from "./league";
 
 const LISTS_KEY = "ff-cheat-sheet:lists:v1";
 const OLD_KEY = "ff-cheat-sheet:players:v2"; // pre-named-lists single board
@@ -77,19 +77,39 @@ export function importJson(text: string): Player[] {
 
 // --- Leagues ----------------------------------------------------------------
 
-const LEAGUES_KEY = "ff-cheat-sheet:leagues:v1";
+const LEAGUES_KEY_V1 = "ff-cheat-sheet:leagues:v1"; // legacy single-board leagues
+const LEAGUES_KEY_V2 = "ff-cheat-sheet:leagues:v2"; // leagues with tier lists
 
 export function saveLeagues(state: LeaguesState): void {
   try {
-    localStorage.setItem(LEAGUES_KEY, JSON.stringify(state));
+    localStorage.setItem(LEAGUES_KEY_V2, JSON.stringify(state));
   } catch {
     // storage full / unavailable — ignore
   }
 }
 
-function readLeagues(): LeaguesState | null {
+// A v1 league carried a single `board`; v2 wraps it as one "Default" tier list.
+// Leagues already in v2 shape pass through untouched (idempotent).
+export function migrateLeaguesV1toV2(state: LeaguesState): LeaguesState {
+  return {
+    ...state,
+    leagues: state.leagues.map((l) => {
+      if (Array.isArray((l as { tierLists?: unknown }).tierLists)) return l;
+      const { board = [], ...rest } = l as League & { board?: Player[] };
+      const id = crypto.randomUUID();
+      return {
+        ...rest,
+        tierLists: [{ id, name: "Default", board }],
+        activeTierListId: id,
+        defaultTierListId: id,
+      } as League;
+    }),
+  };
+}
+
+function parseLeagues(key: string): LeaguesState | null {
   try {
-    const raw = localStorage.getItem(LEAGUES_KEY);
+    const raw = localStorage.getItem(key);
     if (raw) {
       const parsed = JSON.parse(raw);
       if (
@@ -106,6 +126,15 @@ function readLeagues(): LeaguesState | null {
   return null;
 }
 
+function readLeagues(): LeaguesState | null {
+  const v2 = parseLeagues(LEAGUES_KEY_V2);
+  if (v2) return v2;
+  // older single-board leagues → wrap each board as a "Default" tier list
+  const v1 = parseLeagues(LEAGUES_KEY_V1);
+  if (v1) return migrateLeaguesV1toV2(v1);
+  return null;
+}
+
 export function loadLeagues(): LeaguesState {
   const existing = readLeagues();
   // when absent, migrate forward from the named-lists Board (which itself
@@ -114,13 +143,22 @@ export function loadLeagues(): LeaguesState {
   const currentId =
     state.leagues.find((l) => l.id === state.currentId)?.id ??
     state.leagues[0].id;
-  // normalize the active league's board (tiers + bye weeks) for immediate use
+  // normalize the current league's active list (tiers + bye weeks) for use
   return {
     currentId,
     leagues: state.leagues.map((l) =>
-      l.id === currentId
-        ? { ...l, board: normalizeTiers(withByeWeeks(l.board)) }
-        : l,
+      l.id === currentId ? normalizeActiveList(l) : l,
+    ),
+  };
+}
+
+function normalizeActiveList(l: League): League {
+  const active = activeTierList(l);
+  const board = normalizeTiers(withByeWeeks(active.board));
+  return {
+    ...l,
+    tierLists: l.tierLists.map((t) =>
+      t.id === active.id ? { ...t, board } : t,
     ),
   };
 }

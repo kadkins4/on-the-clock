@@ -1,5 +1,6 @@
 import type { League, Player, Position } from "../../types";
 import type { MockSettings, MockState } from "./types";
+import { defaultBoard } from "../league";
 import { buildDraftOrder } from "./order";
 import { openNeeds } from "./roster";
 import { botPick } from "./bot";
@@ -24,7 +25,8 @@ export function createMock(
   seed: number,
 ): MockState {
   const rounds = rosterSize(league.roster);
-  const pool = league.board
+  // a mock drafts from the league's default tier list
+  const pool = defaultBoard(league)
     .filter((pl) => !league.roster.disabled.includes(pl.position))
     .map((pl) => ({ ...pl }))
     .sort(byAdp);

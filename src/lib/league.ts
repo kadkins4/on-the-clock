@@ -5,8 +5,27 @@ import type {
   Player,
   RosterSettings,
   Scoring,
+  TierList,
 } from "../types";
 import type { Board } from "../state/reducer";
+
+// --- Tier-list accessors ----------------------------------------------------
+// Each falls back to the first list if the stored id has gone missing, so a
+// stale/corrupt active/default pointer can never leave the league boardless.
+
+export function activeTierList(l: League): TierList {
+  return l.tierLists.find((t) => t.id === l.activeTierListId) ?? l.tierLists[0];
+}
+
+export function activeBoard(l: League): Player[] {
+  return activeTierList(l).board;
+}
+
+export function defaultBoard(l: League): Player[] {
+  return (
+    l.tierLists.find((t) => t.id === l.defaultTierListId) ?? l.tierLists[0]
+  ).board;
+}
 
 export function defaultRoster(): RosterSettings {
   return {
@@ -30,6 +49,7 @@ export function makeLeague(opts: {
   platform?: Platform;
   teams?: number;
 }): League {
+  const listId = crypto.randomUUID();
   return {
     id: crypto.randomUUID(),
     name: opts.name,
@@ -38,7 +58,9 @@ export function makeLeague(opts: {
     tePremium: false,
     teams: opts.teams ?? 12,
     roster: defaultRoster(),
-    board: opts.board ?? [],
+    tierLists: [{ id: listId, name: "Default", board: opts.board ?? [] }],
+    activeTierListId: listId,
+    defaultTierListId: listId,
     updatedAt: Date.now(),
   };
 }
