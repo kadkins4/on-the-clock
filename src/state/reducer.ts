@@ -173,7 +173,12 @@ export type TierListAction =
   | { type: "duplicateTierList"; name: string }
   | { type: "renameTierList"; name: string }
   | { type: "deleteTierList"; id: string }
-  | { type: "setDefaultTierList"; id: string };
+  | { type: "setDefaultTierList"; id: string }
+  | {
+      type: "setListValueFlags";
+      listId: string;
+      valueFlags: { enabled: boolean; threshold: number | null };
+    };
 
 function mapLeague(
   state: LeaguesState,
@@ -334,6 +339,16 @@ export function leaguesReducer(
       return mapLeague(state, current.id, (l) => ({
         ...l,
         defaultTierListId: action.id,
+      }));
+    }
+    case "setListValueFlags": {
+      const current = state.leagues.find((l) => l.id === state.currentId);
+      if (!current) return state;
+      return mapLeague(state, current.id, (l) => ({
+        ...l,
+        tierLists: l.tierLists.map((t) =>
+          t.id === action.listId ? { ...t, valueFlags: action.valueFlags } : t,
+        ),
       }));
     }
 

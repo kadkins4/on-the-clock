@@ -360,7 +360,13 @@ export default function App() {
   if (mockMode) {
     return (
       <div className="app">
-        <MockMode league={currentLeague} onExit={() => setMockMode(false)} />
+        <MockMode
+          league={currentLeague}
+          onExit={() => setMockMode(false)}
+          onSetValueFlags={(listId, valueFlags) =>
+            dispatch({ type: "setListValueFlags", listId, valueFlags })
+          }
+        />
       </div>
     );
   }
