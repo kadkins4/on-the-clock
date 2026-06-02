@@ -21,18 +21,14 @@ export function MockSummary({ summary, onRestart, onExit }: Props) {
             <span className="mock-name">{p.name}</span>
             <span className="mock-pos">{p.position}</span>
             <span className="mock-team">{p.team}</span>
-            {p.adpDelta != null && Math.round(p.adpDelta) !== 0 && (
-              // adpDelta = adp - pick. Positive → you took them earlier than
-              // their ADP (a reach); negative → later than ADP (a value).
+            {p.adpFlag != null && p.adpDelta != null && (
+              // Only flagged when at least a full round off ADP (see adpFlag).
+              // reach = drafted earlier than ADP; value = later (fell to you).
               <span
-                className={
-                  p.adpDelta > 0 ? "mock-delta reach" : "mock-delta value"
-                }
-                title="How far from ADP you drafted them — reach = earlier than ADP, value = later"
+                className={`mock-delta ${p.adpFlag}`}
+                title="How far from ADP you drafted them — only shown when a full round or more off (reach = earlier than ADP, value = later)"
               >
-                {p.adpDelta > 0
-                  ? `reach ${Math.round(p.adpDelta)}`
-                  : `value ${Math.abs(Math.round(p.adpDelta))}`}
+                {p.adpFlag} {Math.abs(Math.round(p.adpDelta))}
               </span>
             )}
           </li>
