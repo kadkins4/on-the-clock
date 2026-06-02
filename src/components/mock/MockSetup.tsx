@@ -93,7 +93,9 @@ export function MockSetup({
           disabled={!vfEnabled}
           onChange={(e) =>
             setVfThreshold(
-              e.target.value === "" ? null : Number(e.target.value),
+              e.target.value === ""
+                ? null
+                : Math.max(1, Math.round(Number(e.target.value))),
             )
           }
         />

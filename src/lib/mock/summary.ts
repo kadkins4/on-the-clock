@@ -10,8 +10,8 @@ export interface SummaryPlayer {
   overallPick: number;
   adp: number | null;
   adpDelta: number | null; // adp - overallPick; >0 reach, <0 value
-  // "reach"/"value" only when the pick is at least a full round (teams picks)
-  // off ADP; null when within a round — too close to be worth flagging.
+  // "reach"/"value" only when the pick is at least `valueThreshold` picks off ADP
+  // (default teams + 2); null when closer, or when value flags are disabled.
   adpFlag: "reach" | "value" | null;
 }
 
@@ -30,7 +30,8 @@ export function mockSummary(
     .map((pk) => {
       const pl = byId.get(pk.playerId) as Player;
       const threshold = m.settings.valueThreshold ?? m.settings.teams + 2;
-      const sig = pickSignal(pl.adp, pk.overall, threshold);
+      const enabled = m.settings.valueFlagsEnabled ?? true;
+      const sig = enabled ? pickSignal(pl.adp, pk.overall, threshold) : null;
       return {
         id: pl.id,
         name: pl.name,

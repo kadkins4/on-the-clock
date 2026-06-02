@@ -84,4 +84,25 @@ describe("mockSummary", () => {
     expect(c.adpDelta).toBe(2); // adp 3 - pick 1 = +2 (reach)
     expect(c.adpFlag).toBe("reach"); // +2 with an explicit threshold of 2
   });
+
+  it("does not flag when value flags are disabled", () => {
+    let m = createMock(
+      league(board),
+      {
+        teams: 2,
+        userSlot: 1,
+        thirdRoundReversal: false,
+        valueThreshold: 2,
+        valueFlagsEnabled: false,
+      },
+      1,
+    );
+    m = draftPlayer(m, "c");
+    m = draftPlayer(m, "a");
+    m = draftPlayer(m, "b");
+    m = draftPlayer(m, "d");
+    const c = mockSummary(m, 0).players.find((pl) => pl.id === "c")!;
+    expect(c.adpDelta).toBe(2); // delta still reported
+    expect(c.adpFlag).toBeNull(); // but no flag when disabled
+  });
 });

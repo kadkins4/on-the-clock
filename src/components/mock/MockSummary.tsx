@@ -22,8 +22,8 @@ export function MockSummary({ summary, onRestart, onExit }: Props) {
             <span className="mock-pos">{p.position}</span>
             <span className="mock-team">{p.team}</span>
             {p.adpFlag != null && p.adpDelta != null && (
-              // Only flagged when at least a full round off ADP (see adpFlag).
-              // reach = drafted earlier than ADP; value = later (fell to you).
+              // adpFlag is set by mockSummary (per-list threshold, off when
+              // disabled). reach = drafted earlier than ADP; value = later.
               <span
                 className={`mock-delta ${p.adpFlag}`}
                 title="How far from ADP you drafted them — only shown when a full round or more off (reach = earlier than ADP, value = later)"

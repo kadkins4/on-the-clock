@@ -234,7 +234,12 @@ export function leaguesReducer(
       const tierLists = src.tierLists.map((t) => {
         const id = crypto.randomUUID();
         idMap.set(t.id, id);
-        return { id, name: t.name, board: t.board.map((p) => ({ ...p })) };
+        return {
+          id,
+          name: t.name,
+          board: t.board.map((p) => ({ ...p })),
+          valueFlags: t.valueFlags,
+        };
       });
       const lg: League = {
         ...makeLeague({
@@ -291,10 +296,14 @@ export function leaguesReducer(
       const current = state.leagues.find((l) => l.id === state.currentId);
       if (!name || !current) return state;
       const id = crypto.randomUUID();
-      const board = activeTierList(current).board.map((p) => ({ ...p }));
+      const source = activeTierList(current);
+      const board = source.board.map((p) => ({ ...p }));
       return mapLeague(state, current.id, (l) => ({
         ...l,
-        tierLists: [...l.tierLists, { id, name, board }],
+        tierLists: [
+          ...l.tierLists,
+          { id, name, board, valueFlags: source.valueFlags },
+        ],
         activeTierListId: id,
       }));
     }
