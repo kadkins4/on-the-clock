@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { projectedPoints } from "./projection";
+import { scoreStatLine, projectedPoints, lastSeasonPoints } from "./projection";
 import type { Player, ProjStats } from "../types";
 
 const zero: ProjStats = {
@@ -66,5 +66,33 @@ describe("projectedPoints", () => {
   it("falls back to ESPN's total when there is no raw line (K/DST)", () => {
     expect(projectedPoints(player("K", null, 140), "ppr")).toBe(140);
     expect(projectedPoints(player("DST", null, null), "ppr")).toBeNull();
+  });
+});
+
+describe("scoreStatLine", () => {
+  it("scores receptions by scoring format", () => {
+    const s: ProjStats = { ...zero, rec: 100, recYds: 1000 };
+    expect(scoreStatLine(s, "WR", "ppr")).toBe(200); // 100*1 + 1000*0.1
+    expect(scoreStatLine(s, "WR", "half")).toBe(150);
+    expect(scoreStatLine(s, "WR", "standard")).toBe(100);
+  });
+  it("adds TE premium to receptions only for TEs", () => {
+    const s: ProjStats = { ...zero, rec: 10 };
+    expect(scoreStatLine(s, "TE", "ppr", true)).toBe(15); // 10*1.5
+    expect(scoreStatLine(s, "WR", "ppr", true)).toBe(10);
+  });
+});
+
+describe("lastSeasonPoints", () => {
+  it("scores lastStats with the same core", () => {
+    const p = {
+      position: "RB",
+      lastStats: { ...zero, rushYds: 1000, rushTD: 10 },
+    } as Player;
+    expect(lastSeasonPoints(p, "ppr")).toBe(160); // 1000*0.1 + 10*6
+  });
+  it("returns null when no last line (no projPoints fallback)", () => {
+    const p = { position: "RB", lastStats: null } as Player;
+    expect(lastSeasonPoints(p, "ppr")).toBeNull();
   });
 });

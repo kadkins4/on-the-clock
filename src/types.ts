@@ -1,6 +1,14 @@
 export type Position = "QB" | "RB" | "WR" | "TE" | "K" | "DST";
 export type Flag = "none" | "target" | "avoid";
-export type SortKey = "overall" | "adp" | "name" | "bye" | "vor" | "pos";
+export type SortKey =
+  | "overall"
+  | "adp"
+  | "name"
+  | "bye"
+  | "vor"
+  | "pos"
+  | "proj"
+  | "last";
 export type DraftStatus = "available" | "mine" | "taken";
 
 export const POSITIONS: Position[] = ["QB", "RB", "WR", "TE", "K", "DST"];
@@ -18,6 +26,9 @@ export interface Player {
   // Raw projected stat line (offensive players only) — scored at the league's
   // settings to produce projected points for VOR. K/DST have no line.
   projStats?: ProjStats | null;
+  // Raw last-season ACTUAL stat line (offensive players); same shape as
+  // projStats, scored by the same core. Absent for K/DST, rookies, unmatched.
+  lastStats?: ProjStats | null;
   // ESPN's own precomputed projected total. Sparse today; used as the fallback
   // for K/DST (and anyone without a raw line) so VOR fills in nearer the season.
   projPoints?: number | null;
