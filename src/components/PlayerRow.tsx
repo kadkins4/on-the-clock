@@ -12,6 +12,9 @@ interface Props {
   columns: ColumnDef[];
   positionalRank: number;
   vor: number | null;
+  proj: number | null;
+  last: number | null;
+  rookie: boolean;
   draggable: boolean;
   startsTier: boolean;
   stripe: boolean; // zebra: true => the lighter band
@@ -24,6 +27,9 @@ export function PlayerRow({
   columns,
   positionalRank,
   vor,
+  proj,
+  last,
+  rookie,
   draggable,
   startsTier,
   stripe,
@@ -48,6 +54,9 @@ export function PlayerRow({
   const ctx: CellCtx = {
     positionalRank,
     vor,
+    proj,
+    last,
+    rookie,
     draggable,
     startsTier,
     onAddTier,

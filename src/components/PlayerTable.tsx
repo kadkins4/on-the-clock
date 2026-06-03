@@ -29,6 +29,8 @@ interface Props {
   flat: Player[];
   positionalRanks: Record<string, number>;
   vorById: Record<string, number | null>;
+  projById: Record<string, number | null>;
+  lastById: Record<string, number | null>;
   sortKey: SortKey | null;
   sortAsc: boolean;
   onSort: (key: SortKey) => void;
@@ -45,6 +47,8 @@ export function PlayerTable({
   flat,
   positionalRanks,
   vorById,
+  projById,
+  lastById,
   sortKey,
   sortAsc,
   onSort,
@@ -91,6 +95,9 @@ export function PlayerTable({
       columns={columns}
       positionalRank={positionalRanks[p.id]}
       vor={vorById[p.id] ?? null}
+      proj={projById[p.id] ?? null}
+      last={lastById[p.id] ?? null}
+      rookie={false}
       draggable={reorderable}
       startsTier={startsTier}
       stripe={stripe}

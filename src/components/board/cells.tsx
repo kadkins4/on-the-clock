@@ -11,6 +11,9 @@ import { injuryBadge } from "../../lib/injury";
 export interface CellCtx {
   positionalRank: number;
   vor: number | null;
+  proj: number | null;
+  last: number | null;
+  rookie: boolean; // no NFL season yet → '25 cell shows "R" instead of "–"
   draggable: boolean;
   startsTier: boolean;
   onAddTier: (playerId: string, startsTier: boolean) => void;
@@ -141,6 +144,16 @@ export const CELL_RENDERERS: Record<
   vor: (_p, ctx) => (
     <td className="vor num">
       {ctx.vor == null ? "—" : ctx.vor > 0 ? `+${ctx.vor}` : String(ctx.vor)}
+    </td>
+  ),
+  proj: (_p, ctx) => (
+    <td className="proj num">
+      {ctx.proj == null ? "–" : Math.round(ctx.proj)}
+    </td>
+  ),
+  last: (_p, ctx) => (
+    <td className="last num">
+      {ctx.last != null ? Math.round(ctx.last) : ctx.rookie ? "R" : "–"}
     </td>
   ),
   bye: (p) => <td className="bye num">{p.byeWeek ?? ""}</td>,
