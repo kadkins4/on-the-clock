@@ -454,8 +454,16 @@ table.players input:focus {
 }
 .mock-controls {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   gap: 0.5rem;
   flex-wrap: wrap;
+}
+/* two control clusters: actions (left) and utilities (right) */
+.mock-controls-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 .mock-controls button {
   background: #1e222b;

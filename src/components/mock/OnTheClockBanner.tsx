@@ -92,65 +92,65 @@ export function OnTheClockBanner({
         </div>
       </div>
 
-<div className="flex">
       <div className="mock-controls">
-        {!isComplete && (
-          <button className={paused ? "active" : ""} onClick={onTogglePause}>
-            {paused ? "▶ Resume" : "⏸ Pause"}
-          </button>
-        )}
-        <button onClick={onUndo} disabled={state.picks.length === 0}>
-          Undo
-        </button>
-      </div>
-      <div className="mock-controls">
-                <button
-          className={`mock-mute${muted ? " muted" : ""}`}
-          onClick={onToggleMute}
-          aria-label={muted ? "Unmute" : "Mute"}
-          title={muted ? "Unmute" : "Mute"}
-        >
-          {muted ? "🔇" : "🔊"}
-        </button>
-        <div className="mock-settings-wrap">
-          <button
-            className={`mock-cog${settingsOpen ? " active" : ""}`}
-            onClick={() => setSettingsOpen((o) => !o)}
-            aria-label="Pick-clock settings"
-            title="Pick-clock settings"
-          >
-            ⚙
-          </button>
-          {settingsOpen && (
-            <>
-              <div
-                className="mock-settings-scrim"
-                onClick={() => setSettingsOpen(false)}
-              />
-              <div className="mock-settings-pop" role="menu">
-                <div className="mock-settings-head">Pick clock</div>
-                {TIMER_OPTIONS.map((opt) => (
-                  <button
-                    key={opt.label}
-                    className={`mock-settings-opt${
-                      timerSec === opt.value ? " active" : ""
-                    }`}
-                    onClick={() => {
-                      onTimerSecChange(opt.value);
-                      setSettingsOpen(false);
-                    }}
-                  >
-                    {opt.label}
-                  </button>
-                ))}
-              </div>
-            </>
+        <div className="mock-controls-group">
+          {!isComplete && (
+            <button className={paused ? "active" : ""} onClick={onTogglePause}>
+              {paused ? "▶ Resume" : "⏸ Pause"}
+            </button>
           )}
+          <button onClick={onUndo} disabled={state.picks.length === 0}>
+            Undo
+          </button>
         </div>
-        <button className="secondary" onClick={onExit}>
-          Exit
-        </button>
-      </div>
+        <div className="mock-controls-group">
+          <button
+            className={`mock-mute${muted ? " muted" : ""}`}
+            onClick={onToggleMute}
+            aria-label={muted ? "Unmute" : "Mute"}
+            title={muted ? "Unmute" : "Mute"}
+          >
+            {muted ? "🔇" : "🔊"}
+          </button>
+          <div className="mock-settings-wrap">
+            <button
+              className={`mock-cog${settingsOpen ? " active" : ""}`}
+              onClick={() => setSettingsOpen((o) => !o)}
+              aria-label="Pick-clock settings"
+              title="Pick-clock settings"
+            >
+              ⚙
+            </button>
+            {settingsOpen && (
+              <>
+                <div
+                  className="mock-settings-scrim"
+                  onClick={() => setSettingsOpen(false)}
+                />
+                <div className="mock-settings-pop" role="menu">
+                  <div className="mock-settings-head">Pick clock</div>
+                  {TIMER_OPTIONS.map((opt) => (
+                    <button
+                      key={opt.label}
+                      className={`mock-settings-opt${
+                        timerSec === opt.value ? " active" : ""
+                      }`}
+                      onClick={() => {
+                        onTimerSecChange(opt.value);
+                        setSettingsOpen(false);
+                      }}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+          <button className="secondary" onClick={onExit}>
+            Exit
+          </button>
+        </div>
       </div>
     </div>
   );
