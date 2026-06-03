@@ -10,6 +10,8 @@ export type ColumnId =
   | "team"
   | "adp"
   | "vor"
+  | "proj"
+  | "last"
   | "bye"
   | "notes";
 
@@ -79,6 +81,24 @@ export const COLUMN_DEFS: ColumnDef[] = [
     sortKey: "vor",
     align: "r",
     width: "3.5rem",
+  },
+  {
+    id: "proj",
+    label: "Proj",
+    sortable: true,
+    sortKey: "proj",
+    align: "r",
+    width: "3.6rem",
+  },
+  {
+    // Last completed season (SEASON−1). Header tracks the year; bump on the
+    // yearly seed regen alongside fetch-espn's SEASON.
+    id: "last",
+    label: "'25",
+    sortable: true,
+    sortKey: "last",
+    align: "r",
+    width: "3.2rem",
   },
   {
     id: "bye",

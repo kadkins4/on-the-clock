@@ -39,6 +39,8 @@ describe("ColumnHeader", () => {
       "Team",
       "ADP",
       "VOR",
+      "Proj",
+      "'25",
       "Bye",
       "Notes",
     ]);
