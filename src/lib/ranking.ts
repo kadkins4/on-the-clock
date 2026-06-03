@@ -86,6 +86,11 @@ export function sortPlayers(
         return nullableCompare(a.adp, b.adp, dir);
       case "bye":
         return nullableCompare(a.byeWeek, b.byeWeek, dir);
+      case "pos":
+        return (
+          a.position.localeCompare(b.position) * dir ||
+          a.overallRank - b.overallRank
+        );
       case "vor":
         // higher VOR is better, so invert dir; nulls sort last regardless
         return nullableCompare(
@@ -237,4 +242,10 @@ export function moveIntoNewTier(
   const after = result[idx + 1];
   if (after) result = splitTierAt(result, after.id);
   return result;
+}
+
+// Default sort direction for a freshly-clicked header. Value-better numeric
+// columns (VOR) start descending; identity/ordinal columns start ascending.
+export function defaultSortAsc(key: SortKey): boolean {
+  return key !== "vor";
 }

@@ -11,6 +11,7 @@ import {
   removeTier,
   moveIntoNewTier,
   orderByAdp,
+  defaultSortAsc,
 } from "./ranking";
 import type { Player } from "../types";
 
@@ -272,5 +273,35 @@ describe("orderByAdp", () => {
     expect(out.map((p) => p.id)).toEqual(["c", "b", "a"]);
     expect(out.map((p) => p.overallRank)).toEqual([1, 2, 3]);
     expect(out.map((p) => p.tier)).toEqual([1, 1, 2]);
+  });
+});
+
+describe("sort additions for clickable headers", () => {
+  it("sorts by position, then overall rank within a position", () => {
+    const players = [
+      mk({ id: "wr1", position: "WR", overallRank: 3 }),
+      mk({ id: "rb2", position: "RB", overallRank: 4 }),
+      mk({ id: "rb1", position: "RB", overallRank: 1 }),
+      mk({ id: "qb1", position: "QB", overallRank: 2 }),
+    ];
+    const ids = sortPlayers(players, "pos", true).map((p) => p.id);
+    expect(ids).toEqual(["qb1", "rb1", "rb2", "wr1"]);
+  });
+
+  it("descending pos reverses the position groups", () => {
+    const players = [
+      mk({ id: "qb1", position: "QB", overallRank: 1 }),
+      mk({ id: "wr1", position: "WR", overallRank: 2 }),
+    ];
+    const ids = sortPlayers(players, "pos", false).map((p) => p.id);
+    expect(ids).toEqual(["wr1", "qb1"]);
+  });
+
+  it("defaultSortAsc: value columns default descending, others ascending", () => {
+    expect(defaultSortAsc("vor")).toBe(false);
+    expect(defaultSortAsc("name")).toBe(true);
+    expect(defaultSortAsc("adp")).toBe(true);
+    expect(defaultSortAsc("overall")).toBe(true);
+    expect(defaultSortAsc("pos")).toBe(true);
   });
 });
