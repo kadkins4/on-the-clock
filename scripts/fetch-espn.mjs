@@ -52,6 +52,37 @@ function extractProjStats(p, position) {
   };
 }
 
+const LAST_SEASON = SEASON - 1; // last completed season's actuals (2025)
+
+// The player's prior-season ACTUAL row (statSourceId 0 = actual, full-season).
+const lastRow = (p) =>
+  p.stats?.find(
+    (x) =>
+      x.statSourceId === 0 &&
+      x.statSplitTypeId === 0 &&
+      x.seasonId === LAST_SEASON,
+  );
+
+// Raw last-season actual stat line for an offensive player; null otherwise.
+function extractLastStats(p, position) {
+  if (!OFFENSE.includes(position)) return null;
+  const st = lastRow(p)?.stats;
+  if (!st) return null;
+  const g = (k) => Number(st[k]) || 0;
+  return {
+    passYds: g(STAT.passYds),
+    passTD: g(STAT.passTD),
+    int: g(STAT.int),
+    rushYds: g(STAT.rushYds),
+    rushTD: g(STAT.rushTD),
+    rec: g(STAT.rec),
+    recYds: g(STAT.recYds),
+    recTD: g(STAT.recTD),
+    fumblesLost: g(STAT.fumblesLost),
+    twoPt: g(STAT.pass2) + g(STAT.rush2) + g(STAT.rec2),
+  };
+}
+
 const POS = { 1: "QB", 2: "RB", 3: "WR", 4: "TE", 5: "K", 16: "DST" };
 const TEAM = {
   0: "FA",
@@ -128,6 +159,7 @@ for (const entry of raw) {
     tier: null,
     adp: p.ownership?.averageDraftPosition ?? null,
     projStats: extractProjStats(p, position),
+    lastStats: extractLastStats(p, position),
     projPoints: projRow(p)?.appliedTotal ?? null,
     notes: "",
     flag: "none",

@@ -14,6 +14,7 @@ export interface FetchedPlayer {
   overallRank: number; // ESPN PPR rank, 1-based and contiguous
   adp: number | null;
   projStats?: ProjStats | null;
+  lastStats?: ProjStats | null;
   projPoints?: number | null;
   injuryStatus?: string;
 }
@@ -143,6 +144,42 @@ export function extractProjStats(
   };
 }
 
+const LAST_SEASON = SEASON - 1; // last completed season's actuals
+
+// The player's prior-season ACTUAL row: statSourceId 0 (actual), split 0.
+function lastRow(p: { stats?: EspnStat[] }): EspnStat | undefined {
+  return p.stats?.find(
+    (x) =>
+      x.statSourceId === 0 &&
+      x.statSplitTypeId === 0 &&
+      x.seasonId === LAST_SEASON,
+  );
+}
+
+// Fantasy-relevant raw last-season actual stats for an offensive player. Null
+// for K/DST, rookies, or anyone without a prior-season line.
+export function extractLastStats(
+  p: { stats?: EspnStat[] },
+  position: Position,
+): ProjStats | null {
+  if (!OFFENSE.includes(position)) return null;
+  const st = lastRow(p)?.stats;
+  if (!st) return null;
+  const g = (k: string) => Number(st[k]) || 0;
+  return {
+    passYds: g(STAT.passYds),
+    passTD: g(STAT.passTD),
+    int: g(STAT.int),
+    rushYds: g(STAT.rushYds),
+    rushTD: g(STAT.rushTD),
+    rec: g(STAT.rec),
+    recYds: g(STAT.recYds),
+    recTD: g(STAT.recTD),
+    fumblesLost: g(STAT.fumblesLost),
+    twoPt: g(STAT.pass2) + g(STAT.rush2) + g(STAT.rec2),
+  };
+}
+
 // Mirror of scripts/fetch-espn.mjs: filter to ranked, known-position players,
 // sort by PPR rank, and assign a contiguous 1-based overall rank.
 export function mapEspnPlayers(raw: EspnEntry[]): FetchedPlayer[] {
@@ -161,6 +198,7 @@ export function mapEspnPlayers(raw: EspnEntry[]): FetchedPlayer[] {
       overallRank: pprRank,
       adp: p.ownership?.averageDraftPosition ?? null,
       projStats: extractProjStats(p, position),
+      lastStats: extractLastStats(p, position),
       projPoints: appliedProjTotal(p),
       ...(p.injuryStatus && p.injuryStatus !== "ACTIVE"
         ? { injuryStatus: p.injuryStatus }
@@ -204,6 +242,7 @@ export function mergeFetched(
         adp: blendAdp(sources),
         adpSources: sources,
         projStats: f.projStats,
+        lastStats: f.lastStats,
         projPoints: f.projPoints,
         injuryStatus: f.injuryStatus,
       };
@@ -227,6 +266,7 @@ export function mergeFetched(
       adp: blendAdp({ espn: f.adp }),
       adpSources: { espn: f.adp },
       projStats: f.projStats,
+      lastStats: f.lastStats,
       projPoints: f.projPoints,
       notes: "",
       flag: "none",
