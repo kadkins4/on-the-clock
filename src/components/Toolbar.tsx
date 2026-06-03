@@ -7,6 +7,7 @@ import {
   type ChipConfig,
   type Macro,
 } from "../lib/posFilter";
+import { SearchPill } from "./SearchPill";
 
 interface Props {
   search: string;
@@ -58,12 +59,7 @@ interface Props {
 export function Toolbar(props: Props) {
   return (
     <div className="toolbar">
-      <input
-        className="search"
-        placeholder={"Search…"}
-        value={props.search}
-        onChange={(e) => props.setSearch(e.target.value)}
-      />
+      <SearchPill value={props.search} onChange={props.setSearch} />
       <div className="chips">
         <button
           className={
