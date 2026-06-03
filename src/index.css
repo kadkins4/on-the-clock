@@ -11,6 +11,11 @@
   --purple: #a855f7;
   --grey: #5b6573;
   --accent: #3b82f6;
+  /* Brand wordmark — single source of truth for "On The Clock." coloring.
+     ink = the gray-white of "On The" + "."; accent = the orange "Clock".
+     Explicit colors (not opacity) so they stay consistent over any background. */
+  --otc-ink: #b7b9bc;
+  --otc-accent: #ff6b4a;
 }
 body {
   margin: 1rem;
@@ -480,9 +485,6 @@ table.players input:focus {
   font-size: 0.85rem;
   color: #9aa4b2;
 }
-.on-clock-you {
-  color: #f0c000;
-}
 .mock-boardtoggle {
   margin: 8px 0 4px;
 }
@@ -830,12 +832,15 @@ table.players input:focus {
   letter-spacing: -0.02em;
   line-height: 1;
 }
-/* Brand wordmark — colors live here so every instance matches the logo. */
-.otc-wordmark span {
-  opacity: 0.78;
+/* Brand wordmark — explicit colors so every instance matches the logo,
+   regardless of the surrounding text color. .otc-ink is the same gray for
+   adjacent copy (e.g. the mock "You are now…" lead-in). */
+.otc-wordmark span,
+.otc-ink {
+  color: var(--otc-ink);
 }
 .otc-wordmark strong {
-  color: #ff6b4a;
+  color: var(--otc-accent);
   font-weight: 800;
 }
 
@@ -977,14 +982,18 @@ table.players input:focus {
 }
 .otc-type-1 {
   font-size: 1.5rem;
-  color: #8b97a8;
+  color: var(--otc-ink);
   min-height: 1.6em;
 }
 .otc-type-2 {
   font-size: clamp(2.2rem, 9vw, 4.2rem);
-  color: #ff6b4a;
+  color: var(--otc-ink);
   line-height: 1.05;
   min-height: 1.1em;
+}
+/* "Clock" — the one orange word in the splash wordmark. */
+.otc-type-accent {
+  color: var(--otc-accent);
 }
 .otc-caret {
   display: inline-block;

@@ -162,9 +162,9 @@ export function MockDraft({
   const status: ReactNode = isComplete(state) ? (
     "Draft complete"
   ) : isUser ? (
-    <>
+    <span className="otc-ink">
       You are now... <Wordmark />
-    </>
+    </span>
   ) : paused ? (
     `Paused — Team ${onClock + 1}`
   ) : (

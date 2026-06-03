@@ -47,7 +47,7 @@ export function OnTheClockBanner({
   return (
     <div className="mock-banner">
       <div className="mock-banner-main">
-        <strong className={isUser ? "on-clock-you" : ""}>{status}</strong>
+        <strong>{status}</strong>
         <span className="mock-banner-pick">
           R{round} · Pick {overall} of {state.order.length}
         </span>

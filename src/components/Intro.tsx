@@ -3,6 +3,24 @@ import { useEffect, useRef, useState } from "react";
 const KEY = "otc:intro-seen";
 const LINE1 = "You are now...";
 const LINE2 = "On The Clock.";
+// Where "Clock" sits inside LINE2 — the only orange segment of the wordmark.
+const CLOCK_START = LINE2.indexOf("Clock");
+const CLOCK_END = CLOCK_START + "Clock".length;
+
+// Reveal the typed prefix of LINE2 with the wordmark coloring: "On The" and the
+// trailing "." in ink, "Clock" in accent. Mirrors the <Wordmark/> component so
+// the splash matches the header and mock banner.
+function typedWordmark(typed: string) {
+  return (
+    <>
+      {typed.slice(0, CLOCK_START)}
+      <span className="otc-type-accent">
+        {typed.slice(CLOCK_START, CLOCK_END)}
+      </span>
+      {typed.slice(CLOCK_END)}
+    </>
+  );
+}
 
 // Splash: a crisp stopwatch draws while a typewriter reads
 // "You're now... On The Clock", then a clean fade reveals the draft sheet.
@@ -145,7 +163,7 @@ export function Intro({ replay = 0 }: { replay?: number }) {
         <div className="otc-type">
           <div className="otc-type-1">{typed1}</div>
           <div className="otc-type-2">
-            {typed2}
+            {typedWordmark(typed2)}
             {/* caret holds for a beat once line 1 finishes, then leads line 2 */}
             {phase === "typing" && typed1 === LINE1 && (
               <span className="otc-caret" aria-hidden="true" />
