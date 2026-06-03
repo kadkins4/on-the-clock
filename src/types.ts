@@ -1,6 +1,6 @@
 export type Position = "QB" | "RB" | "WR" | "TE" | "K" | "DST";
 export type Flag = "none" | "target" | "avoid";
-export type SortKey = "overall" | "adp" | "name" | "bye" | "vor";
+export type SortKey = "overall" | "adp" | "name" | "bye" | "vor" | "pos";
 export type DraftStatus = "available" | "mine" | "taken";
 
 export const POSITIONS: Position[] = ["QB", "RB", "WR", "TE", "K", "DST"];
