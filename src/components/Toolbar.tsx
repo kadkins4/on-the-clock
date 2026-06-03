@@ -1,12 +1,20 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { Position, Scoring } from "../types";
+import {
+  setsEqual,
+  FLEX_SET,
+  SFLEX_SET,
+  type ChipConfig,
+  type Macro,
+} from "../lib/posFilter";
 
 interface Props {
   search: string;
   setSearch: (s: string) => void;
-  positions: Position[];
-  posFilter: Position | "All";
-  setPosFilter: (p: Position | "All") => void;
+  posChips: ChipConfig;
+  activePos: ReadonlySet<Position>;
+  onToggleChip: (p: Position) => void;
+  onApplyMacro: (m: Macro) => void;
   hideDrafted: boolean;
   setHideDrafted: (b: boolean) => void;
   byeFilter: number | null;
@@ -57,11 +65,43 @@ export function Toolbar(props: Props) {
         onChange={(e) => props.setSearch(e.target.value)}
       />
       <div className="chips">
-        {(["All", ...props.positions] as const).map((p) => (
+        <button
+          className={
+            props.activePos.size === 0 ? "chip macro active" : "chip macro"
+          }
+          onClick={() => props.onApplyMacro("ALL")}
+        >
+          All
+        </button>
+        {props.posChips.flex && (
+          <button
+            className={
+              setsEqual(props.activePos, FLEX_SET)
+                ? "chip macro active"
+                : "chip macro"
+            }
+            onClick={() => props.onApplyMacro("FLEX")}
+          >
+            FLEX
+          </button>
+        )}
+        {props.posChips.sflex && (
+          <button
+            className={
+              setsEqual(props.activePos, SFLEX_SET)
+                ? "chip macro active"
+                : "chip macro"
+            }
+            onClick={() => props.onApplyMacro("SFLEX")}
+          >
+            SFLEX
+          </button>
+        )}
+        {props.posChips.positions.map((p) => (
           <button
             key={p}
-            className={props.posFilter === p ? "chip active" : "chip"}
-            onClick={() => props.setPosFilter(p)}
+            className={props.activePos.has(p) ? "chip active" : "chip"}
+            onClick={() => props.onToggleChip(p)}
           >
             {p}
           </button>
