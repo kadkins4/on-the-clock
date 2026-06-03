@@ -84,12 +84,13 @@ export function sortPlayers(
   scored: ScoredMaps = {},
 ): Player[] {
   const dir = asc ? 1 : -1;
-  // higher score is better, so invert dir; nulls sort last regardless
+  // Value-better columns share the normal direction (asc => low→high); they
+  // just default to descending via defaultSortAsc. Nulls sort last regardless.
   const byScore = (
     map: Record<string, number | null> | undefined,
     a: Player,
     b: Player,
-  ) => nullableCompare(map?.[a.id] ?? null, map?.[b.id] ?? null, -dir);
+  ) => nullableCompare(map?.[a.id] ?? null, map?.[b.id] ?? null, dir);
   const cmp = (a: Player, b: Player): number => {
     switch (key) {
       case "name":

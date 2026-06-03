@@ -257,7 +257,8 @@ describe("sortPlayers vor", () => {
       { ...base, id: "c", name: "C", overallRank: 3 },
     ];
     const vor = { a: 10, b: 50, c: null };
-    const out = sortPlayers(players, "vor", true, { vor }).map((p) => p.id);
+    // descending = the default (asc=false) for value-better columns; nulls last
+    const out = sortPlayers(players, "vor", false, { vor }).map((p) => p.id);
     expect(out).toEqual(["b", "a", "c"]);
   });
 
@@ -269,7 +270,7 @@ describe("sortPlayers vor", () => {
     ];
     const proj = { a: 100, b: 250, c: null };
     expect(
-      sortPlayers(players, "proj", true, { proj }).map((p) => p.id),
+      sortPlayers(players, "proj", false, { proj }).map((p) => p.id),
     ).toEqual(["b", "a", "c"]);
   });
 
@@ -280,7 +281,7 @@ describe("sortPlayers vor", () => {
     ];
     const last = { a: 50, b: 300 };
     expect(
-      sortPlayers(players, "last", true, { last }).map((p) => p.id),
+      sortPlayers(players, "last", false, { last }).map((p) => p.id),
     ).toEqual(["b", "a"]);
   });
 
