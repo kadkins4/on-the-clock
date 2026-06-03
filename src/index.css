@@ -291,6 +291,7 @@ table.players input:focus {
   padding: 0.32rem 0.6rem;
   background: var(--panel);
   border-left: 3px solid var(--otc-accent);
+  border-right: 3px solid var(--otc-accent);
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -334,6 +335,7 @@ table.players input:focus {
   text-transform: none;
   letter-spacing: 0;
   border-left-color: var(--accent, #3b82f6);
+  border-right-color: var(--accent, #3b82f6);
   background: repeating-linear-gradient(
     45deg,
     var(--panel),
