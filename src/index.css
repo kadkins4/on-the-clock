@@ -281,12 +281,32 @@ table.players input:focus {
 }
 
 .tier-divider td {
+  padding: 0;
+  background: transparent;
+}
+.tier-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.32rem 0.6rem;
   background: var(--panel);
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  border-left: 3px solid var(--otc-accent);
+  font-weight: 700;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   font-size: 0.75rem;
+  color: var(--text);
+}
+.tier-banner .tier-count {
   color: var(--muted);
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.tier-banner .tier-tools {
+  margin-left: auto;
+  text-transform: none;
+  letter-spacing: 0;
 }
 .tier-tools {
   float: right;
@@ -308,11 +328,12 @@ table.players input:focus {
 .tier-remove:hover {
   color: var(--red);
 }
-.empty-tier td {
+.empty-tier .tier-banner {
   color: var(--accent, #3b82f6);
   font-style: italic;
   text-transform: none;
   letter-spacing: 0;
+  border-left-color: var(--accent, #3b82f6);
   background: repeating-linear-gradient(
     45deg,
     var(--panel),
@@ -324,6 +345,44 @@ table.players input:focus {
 .empty-tier.drop-over td {
   outline: 1px dashed var(--accent, #3b82f6);
   outline-offset: -3px;
+}
+
+/* Subtle zebra. Stripe parity resets per tier (PlayerTable passes `stripe`),
+   and the first row under each banner is the dark base so it doesn't blend
+   into the brighter tier banner. */
+tr.prow td {
+  background: var(--bg);
+}
+tr.prow.lite td {
+  background: #13161c;
+}
+tr.row:hover td {
+  background: #1e2330;
+}
+
+/* clickable sortable headers + the ↩ Tiers button */
+table.players th.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+table.players th.sortable:hover {
+  color: var(--text);
+}
+table.players th.sorted {
+  color: var(--otc-accent);
+}
+.sort-arrow {
+  font-size: 0.7em;
+}
+.tiers-btn {
+  cursor: pointer;
+  white-space: nowrap;
+}
+.tiers-btn.active {
+  background: var(--otc-accent);
+  border-color: var(--otc-accent);
+  color: #1a0e09;
+  font-weight: 600;
 }
 
 /* mover column: drag handle (centered) + a "+" that pokes into the left gutter */

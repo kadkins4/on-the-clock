@@ -1,9 +1,9 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
 import { render, screen, fireEvent, cleanup } from "@testing-library/react";
-
-afterEach(cleanup);
 import { ColumnHeader } from "./ColumnHeader";
 import { orderedColumns, DEFAULT_COLUMN_ORDER } from "../../lib/columns";
+
+afterEach(cleanup);
 
 function renderHeader(props: Partial<Parameters<typeof ColumnHeader>[0]> = {}) {
   const onSort = vi.fn();
