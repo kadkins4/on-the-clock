@@ -202,6 +202,19 @@ td.vor {
   font-variant-numeric: tabular-nums;
   color: #9aa4b2;
 }
+.col-proj {
+  width: 3.6rem;
+  text-align: right;
+}
+.col-last {
+  width: 3.2rem;
+  text-align: right;
+}
+td.proj,
+td.last {
+  font-variant-numeric: tabular-nums;
+  color: #9aa4b2;
+}
 .col-bye {
   width: 2.6rem;
 }
