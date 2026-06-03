@@ -452,18 +452,30 @@ table.players input:focus {
   opacity: 0.8;
   font-size: 0.9rem;
 }
-.mock-status {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.5rem 0;
-  border-bottom: 1px solid var(--border, #ddd);
-}
 .mock-controls {
-  margin-left: auto;
   display: flex;
   gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.mock-controls button {
+  background: #1e222b;
+  border: 1px solid var(--border);
+  color: #d6d9de;
+  border-radius: 7px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.mock-controls button:hover:not(:disabled) {
+  border-color: #3a4150;
+}
+.mock-controls button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.mock-controls button.active {
+  border-color: var(--otc-accent);
+  color: #fff;
 }
 .mock-banner {
   position: sticky;
@@ -482,9 +494,10 @@ table.players input:focus {
   justify-content: space-between;
   gap: 16px;
 }
-.mock-status {
+.otc-banner-status {
   display: flex;
   flex-direction: column;
+  align-items: flex-start; /* keep the lead + line 2 hard left, never centered */
   gap: 2px;
   min-height: 56px;
 }
@@ -506,6 +519,12 @@ table.players input:focus {
 .mock-waiting {
   color: #8b93a1;
   font-weight: 700;
+}
+/* fixed-width slot so only the number changes, not the "picks away" text */
+.otc-picks-num {
+  /* zero-padded to 2 digits + tabular figures → constant width, words never shift */
+  font-variant-numeric: tabular-nums;
+  color: var(--otc-ink);
 }
 /* animated "On The Clock." reveal — splash-style, ends with a glow */
 .mock-otc-reveal {
@@ -548,20 +567,6 @@ table.players input:focus {
 }
 .mock-boardtoggle {
   margin: 8px 0 4px;
-}
-.mock-ticker {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  font-size: 0.8rem;
-  color: #9aa4b2;
-}
-.mock-ticker-item {
-  white-space: nowrap;
-}
-.mock-ticker-item:not(:last-child)::after {
-  content: " ·";
-  margin-left: 8px;
 }
 .mock-myroster {
   padding: 0.5rem 0;
@@ -1238,9 +1243,9 @@ table.players input:focus {
 }
 .mock-timer-wrap {
   display: inline-flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 2px;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
 }
 .mock-timer {
   font-variant-numeric: tabular-nums;
@@ -1256,13 +1261,89 @@ table.players input:focus {
 .mock-timer.idle {
   color: #4b515e;
 }
-.mock-timer-sel {
-  font-size: 0.72rem;
-  background: #15181f;
-  color: #9aa4b2;
+/* Final-seconds stopwatch — sweeps like a running clock. */
+.mock-stopwatch {
+  flex: 0 0 auto;
+  filter: drop-shadow(0 2px 8px #ff6b4a55);
+}
+.mock-stopwatch .hand {
+  transform-origin: 32px 34px;
+}
+.mock-stopwatch.urgent .hand {
+  animation: otc-tick 1s linear infinite;
+}
+.mock-stopwatch.urgent .ring {
+  animation: otc-ring-pulse 1s ease-in-out infinite;
+  transform-origin: 32px 34px;
+}
+@keyframes otc-tick {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes otc-ring-pulse {
+  50% {
+    opacity: 0.55;
+    transform: scale(1.08);
+  }
+}
+/* re-pulse the wordmark while the clock is in its final seconds */
+.mock-line2.urgent .mock-otc-reveal {
+  animation: otc-pulse-glow 1s ease-in-out infinite;
+}
+
+/* Pick-clock settings cog + popover */
+.mock-settings-wrap {
+  position: relative;
+  display: inline-flex;
+}
+.mock-cog {
+  width: 36px;
+  text-align: center;
+}
+.mock-settings-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+}
+.mock-settings-pop {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 41;
+  background: #11161d;
   border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 96px;
+  box-shadow: 0 8px 24px #00000066;
+}
+.mock-settings-head {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #8b93a1;
+  padding: 2px 8px 4px;
+}
+.mock-settings-opt {
+  background: none;
+  border: none;
+  color: #d6d9de;
+  text-align: left;
+  padding: 6px 8px;
   border-radius: 5px;
-  padding: 1px 4px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.mock-settings-opt:hover {
+  background: #1e222b;
+}
+.mock-settings-opt.active {
+  color: var(--otc-accent);
+  font-weight: 700;
 }
 .mock-name-wrap {
   display: flex;

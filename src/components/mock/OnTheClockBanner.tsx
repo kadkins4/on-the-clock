@@ -1,6 +1,32 @@
+import { useState } from "react";
 import type { ReactNode } from "react";
 import type { MockState } from "../../lib/mock/types";
 import { OnTheClockReveal } from "./OnTheClockReveal";
+
+// Pick-clock durations for the settings cog. null = Off.
+const TIMER_OPTIONS: { value: number | null; label: string }[] = [
+  { value: 10, label: "0:10" },
+  { value: 30, label: "0:30" },
+  { value: 45, label: "0:45" },
+  { value: 60, label: "1:00" },
+  { value: 90, label: "1:30" },
+  { value: 120, label: "2:00" },
+  { value: null, label: "Off" },
+];
+
+// "NN picks away" — number zero-padded to 2 digits so the words never shift.
+function waitingLabel(picksAway: number): ReactNode {
+  if (picksAway < 0) return "no more picks";
+  if (picksAway === 0) return "almost up";
+  return (
+    <>
+      <span className="otc-picks-num">
+        {String(picksAway).padStart(2, "0")}
+      </span>{" "}
+      {picksAway === 1 ? "pick" : "picks"} away
+    </>
+  );
+}
 
 interface Props {
   state: MockState;
@@ -10,33 +36,15 @@ interface Props {
   isComplete: boolean;
   paused: boolean;
   picksAway: number; // picksUntilUser; >= 1 while the user waits
+  urgent: boolean; // pick clock in its final seconds
   muted: boolean;
   onToggleMute: () => void;
+  timerSec: number | null;
+  onTimerSecChange: (s: number | null) => void;
   onTogglePause: () => void;
   onUndo: () => void;
   onExit: () => void;
   timer?: ReactNode; // large pick-clock UI, shown on the user's turn
-}
-
-// Last few picks as "Name (POS)", most recent first.
-function recentPicks(state: MockState): { id: string; label: string }[] {
-  const byId = new Map(state.pool.map((p) => [p.id, p]));
-  return state.picks
-    .slice(-5)
-    .reverse()
-    .map((pk) => {
-      const p = byId.get(pk.playerId);
-      return {
-        id: `${pk.overall}`,
-        label: p ? `${p.name} (${p.position})` : "—",
-      };
-    });
-}
-
-function waitingLabel(picksAway: number): string {
-  if (picksAway < 0) return "no more picks";
-  if (picksAway === 0) return "almost up";
-  return picksAway === 1 ? "1 pick away" : `${picksAway} picks away`;
 }
 
 export function OnTheClockBanner({
@@ -47,20 +55,24 @@ export function OnTheClockBanner({
   isComplete,
   paused,
   picksAway,
+  urgent,
   muted,
   onToggleMute,
+  timerSec,
+  onTimerSecChange,
   onTogglePause,
   onUndo,
   onExit,
   timer,
 }: Props) {
-  const recent = recentPicks(state);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+
   return (
     <div className="mock-banner">
       <div className="mock-banner-main">
-        <div className="mock-status">
+        <div className="otc-banner-status">
           {!isComplete && <span className="mock-lead">You are now…</span>}
-          <span className="mock-line2">
+          <span className={`mock-line2${urgent ? " urgent" : ""}`}>
             {isComplete ? (
               "Draft complete"
             ) : isUser ? (
@@ -79,16 +91,6 @@ export function OnTheClockBanner({
           </span>
         </div>
       </div>
-
-      {recent.length > 0 && (
-        <div className="mock-ticker">
-          {recent.map((r) => (
-            <span className="mock-ticker-item" key={r.id}>
-              {r.label}
-            </span>
-          ))}
-        </div>
-      )}
 
       <div className="mock-controls">
         {!isUser && !isComplete && (
@@ -110,6 +112,41 @@ export function OnTheClockBanner({
         >
           {muted ? "🔇" : "🔊"}
         </button>
+        <div className="mock-settings-wrap">
+          <button
+            className={`mock-cog${settingsOpen ? " active" : ""}`}
+            onClick={() => setSettingsOpen((o) => !o)}
+            aria-label="Pick-clock settings"
+            title="Pick-clock settings"
+          >
+            ⚙
+          </button>
+          {settingsOpen && (
+            <>
+              <div
+                className="mock-settings-scrim"
+                onClick={() => setSettingsOpen(false)}
+              />
+              <div className="mock-settings-pop" role="menu">
+                <div className="mock-settings-head">Pick clock</div>
+                {TIMER_OPTIONS.map((opt) => (
+                  <button
+                    key={opt.label}
+                    className={`mock-settings-opt${
+                      timerSec === opt.value ? " active" : ""
+                    }`}
+                    onClick={() => {
+                      onTimerSecChange(opt.value);
+                      setSettingsOpen(false);
+                    }}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

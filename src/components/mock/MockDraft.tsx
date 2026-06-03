@@ -19,6 +19,7 @@ import { playPing } from "../../lib/sound";
 import { PickStrip } from "./PickStrip";
 import { DraftBoardGrid } from "./DraftBoardGrid";
 import { OnTheClockBanner } from "./OnTheClockBanner";
+import { StopwatchMark } from "./StopwatchMark";
 
 interface Props {
   state: MockState;
@@ -201,8 +202,11 @@ export function MockDraft({
     setMenuFor(null);
   };
 
+  // Final-seconds alert: the stopwatch sweeps and the wordmark re-pulses.
+  const urgent = isUser && !revealing && timerSec != null && remaining <= 5;
   const timerUi = (
     <span className="mock-timer-wrap">
+      {urgent && <StopwatchMark urgent />}
       <span
         className={`mock-timer ${revealing ? "idle" : remaining <= 10 ? "urgent" : ""}`}
       >
@@ -212,21 +216,6 @@ export function MockDraft({
               Math.max(remaining, 0) % 60,
             ).padStart(2, "0")}`}
       </span>
-      <select
-        className="mock-timer-sel"
-        value={timerSec ?? "off"}
-        onChange={(e) =>
-          setTimerSec(e.target.value === "off" ? null : Number(e.target.value))
-        }
-      >
-        <option value="10">0:10</option>
-        <option value="30">0:30</option>
-        <option value="45">0:45</option>
-        <option value="60">1:00</option>
-        <option value="90">1:30</option>
-        <option value="1200">2:00</option>
-        <option value="off">Off</option>
-      </select>
     </span>
   );
 
@@ -240,8 +229,11 @@ export function MockDraft({
         isComplete={isComplete(state)}
         paused={paused}
         picksAway={picksAway}
+        urgent={urgent}
         muted={muted}
         onToggleMute={toggleMute}
+        timerSec={timerSec}
+        onTimerSecChange={setTimerSec}
         onTogglePause={() => setPaused((p) => !p)}
         onUndo={undoAndPause}
         onExit={onExit}
