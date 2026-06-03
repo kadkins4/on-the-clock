@@ -1,5 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
-import type { ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { MockState } from "../../lib/mock/types";
 import type { Player, Position } from "../../types";
 import { fallenBy, defaultValueThreshold } from "../../lib/draftValue";
@@ -11,11 +10,15 @@ import {
   isComplete,
   teamRosterPositions,
 } from "../../lib/mock/engine";
-import { userPickMarkers, formatPick } from "../../lib/mock/board";
+import {
+  userPickMarkers,
+  formatPick,
+  picksUntilUser,
+} from "../../lib/mock/board";
+import { playPing } from "../../lib/sound";
 import { PickStrip } from "./PickStrip";
 import { DraftBoardGrid } from "./DraftBoardGrid";
 import { OnTheClockBanner } from "./OnTheClockBanner";
-import { Wordmark } from "../Wordmark";
 
 interface Props {
   state: MockState;
@@ -57,14 +60,52 @@ export function MockDraft({
   const [replaceSearch, setReplaceSearch] = useState("");
   const [timerSec, setTimerSec] = useState<number | null>(60); // null = Off
   const [remaining, setRemaining] = useState(60);
+  // The "on the clock" reveal locks the clock + Draft for a beat so the
+  // typewriter + glow can play before the user can act.
+  const [revealing, setRevealing] = useState(false);
+  const [muted, setMuted] = useState(() => {
+    try {
+      return localStorage.getItem("otc:muted") === "1";
+    } catch {
+      return false;
+    }
+  });
+  const mutedRef = useRef(muted);
+  mutedRef.current = muted;
   const onClock = currentTeamIndex(state);
   const isUser = onClock === userTeamIndex && !isComplete(state);
   const overall = state.picks.length + 1;
   const round = Math.floor((overall - 1) / state.settings.teams) + 1;
+  const picksAway = picksUntilUser(state, userTeamIndex);
   const valThreshold =
     state.settings.valueThreshold ??
     defaultValueThreshold(state.settings.teams);
   const valEnabled = state.settings.valueFlagsEnabled ?? true;
+
+  const toggleMute = () =>
+    setMuted((m) => {
+      const next = !m;
+      try {
+        localStorage.setItem("otc:muted", next ? "1" : "0");
+      } catch {
+        /* ignore */
+      }
+      return next;
+    });
+
+  // Going on the clock: ping (unless muted) and hold a 1.5s reveal during which
+  // the timer is idle and Draft is locked. Re-fires for each new user pick.
+  const REVEAL_MS = 1500;
+  useEffect(() => {
+    if (!isUser) {
+      setRevealing(false);
+      return;
+    }
+    setRevealing(true);
+    if (!mutedRef.current) playPing();
+    const t = setTimeout(() => setRevealing(false), REVEAL_MS);
+    return () => clearTimeout(t);
+  }, [isUser, overall]);
 
   // Reset the clock to full on a new pick, a duration change, or resuming from a
   // pause. The pause case only reaches the user's clock via undo-on-your-turn
@@ -73,9 +114,10 @@ export function MockDraft({
     if (timerSec != null) setRemaining(timerSec);
   }, [overall, timerSec, paused]);
 
-  // Countdown + auto-pick (user's live, unpaused turn only).
+  // Countdown + auto-pick (user's live, unpaused turn only). Held during the
+  // reveal so the clock doesn't start until the animation finishes.
   useEffect(() => {
-    if (timerSec == null || paused || !isUser) return;
+    if (timerSec == null || paused || !isUser || revealing) return;
     if (remaining <= 0) {
       const id = bestAvailableId(state);
       if (id) onDraft(id);
@@ -83,7 +125,7 @@ export function MockDraft({
     }
     const t = setTimeout(() => setRemaining((s) => s - 1), 1000);
     return () => clearTimeout(t);
-  }, [timerSec, paused, isUser, remaining, state, onDraft]);
+  }, [timerSec, paused, isUser, revealing, remaining, state, onDraft]);
 
   // Bots pick automatically while running. Pausing (or a dry pool that leaves a
   // bot with no legal pick) stops the timer so the draft can't spin or fight an
@@ -159,21 +201,11 @@ export function MockDraft({
     setMenuFor(null);
   };
 
-  const status: ReactNode = isComplete(state) ? (
-    "Draft complete"
-  ) : isUser ? (
-    <span className="otc-ink">
-      You are now... <Wordmark />
-    </span>
-  ) : paused ? (
-    `Paused — Team ${onClock + 1}`
-  ) : (
-    `Team ${onClock + 1} picking…`
-  );
-
   const timerUi = (
     <span className="mock-timer-wrap">
-      <span className={`mock-timer ${remaining <= 10 ? "urgent" : ""}`}>
+      <span
+        className={`mock-timer ${revealing ? "idle" : remaining <= 10 ? "urgent" : ""}`}
+      >
         {timerSec == null
           ? "—"
           : `${Math.floor(Math.max(remaining, 0) / 60)}:${String(
@@ -202,12 +234,14 @@ export function MockDraft({
     <div className="mock-draft">
       <OnTheClockBanner
         state={state}
-        status={status}
         round={round}
         overall={overall}
         isUser={isUser}
         isComplete={isComplete(state)}
         paused={paused}
+        picksAway={picksAway}
+        muted={muted}
+        onToggleMute={toggleMute}
         onTogglePause={() => setPaused((p) => !p)}
         onUndo={undoAndPause}
         onExit={onExit}
@@ -256,6 +290,13 @@ export function MockDraft({
             </li>
           ) : (
             <li key={row.p.id}>
+              <button
+                className="mock-draft-btn"
+                disabled={!isUser || revealing}
+                onClick={() => onDraft(row.p.id)}
+              >
+                Draft
+              </button>
               <span className="mock-name-wrap">
                 <span className="val-fall">
                   {valEnabled &&
@@ -291,13 +332,6 @@ export function MockDraft({
               <span className="mock-adp num">
                 {row.p.adp == null ? "" : Number(row.p.adp.toFixed(1))}
               </span>
-              <button
-                className="mock-draft-btn"
-                disabled={!isUser}
-                onClick={() => onDraft(row.p.id)}
-              >
-                Draft
-              </button>
             </li>
           ),
         )}
@@ -307,7 +341,7 @@ export function MockDraft({
         state={state}
         open={boardOpen}
         onClose={() => setBoardOpen(false)}
-        canDraft={isUser}
+        canDraft={isUser && !revealing}
         onDraft={onDraft}
         onPickClick={(o) => setMenuFor(o)}
       />

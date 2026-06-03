@@ -11,6 +11,7 @@ import {
   isComplete,
 } from "../../lib/mock/engine";
 import { mockSummary } from "../../lib/mock/summary";
+import { unlockAudio } from "../../lib/sound";
 import { MockSetup } from "./MockSetup";
 import { MockDraft } from "./MockDraft";
 import { MockSummary } from "./MockSummary";
@@ -33,6 +34,7 @@ export function MockMode({ league, onExit, onSetValueFlags }: Props) {
 
   const start = useCallback(
     (settings: Omit<MockSettings, "rounds">) => {
+      unlockAudio(); // prime audio on this gesture so the clock bell can play
       setUserSlot(settings.userSlot);
       setState(createMock(league, settings, Date.now() >>> 0));
       setPhase("draft");

@@ -5,6 +5,7 @@ import {
   userColumnIndex,
   buildBoardGrid,
   userPickMarkers,
+  picksUntilUser,
 } from "./board";
 import { createMock, draftPlayer } from "./engine";
 import type { League, Player } from "../../types";
@@ -238,5 +239,35 @@ describe("buildPickCells value signal", () => {
     expect(
       buildPickCells(m).find((c) => c.kind === "done")!.signal,
     ).toBeUndefined();
+  });
+});
+
+describe("picksUntilUser", () => {
+  // 2-team snake over 3 rounds → order [0,1, 1,0, 0,1].
+  const mk = () =>
+    createMock(
+      league(board),
+      { teams: 2, userSlot: 1, thirdRoundReversal: false },
+      1,
+    );
+
+  it("is 0 when the user holds the current pick", () => {
+    expect(picksUntilUser(mk(), 0)).toBe(0);
+  });
+
+  it("counts picks until the user's next turn while waiting", () => {
+    expect(picksUntilUser(mk(), 1)).toBe(1); // team 1 is on the clock next
+  });
+
+  it("updates as picks are made", () => {
+    let s = mk();
+    s = draftPlayer(s, "a"); // pick 1 done; team 0 next picks at overall 4
+    expect(picksUntilUser(s, 0)).toBe(2);
+  });
+
+  it("is -1 when the user has no remaining picks", () => {
+    let s = mk();
+    for (const id of ["a", "b", "c", "d", "e", "f"]) s = draftPlayer(s, id);
+    expect(picksUntilUser(s, 0)).toBe(-1);
   });
 });

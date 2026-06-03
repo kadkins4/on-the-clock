@@ -105,6 +105,21 @@ export function userPickMarkers(
   return markers;
 }
 
+// How many picks until the user is next on the clock: 0 when the user holds the
+// current pick, -1 when they have no remaining picks. Drives the "N picks away"
+// status while the user waits.
+export function picksUntilUser(
+  state: MockState,
+  userTeamIndex: number,
+): number {
+  const nextOverall = state.picks.length + 1; // pick currently on the clock
+  for (let overall = nextOverall; overall <= state.order.length; overall++) {
+    if (state.order[overall - 1] === userTeamIndex)
+      return overall - nextOverall;
+  }
+  return -1;
+}
+
 export function buildBoardGrid(state: MockState): (PickCell | null)[][] {
   const { rounds, teams } = state.settings;
   const grid: (PickCell | null)[][] = Array.from({ length: rounds }, () =>
