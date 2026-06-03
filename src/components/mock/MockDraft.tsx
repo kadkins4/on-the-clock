@@ -16,6 +16,7 @@ import {
   picksUntilUser,
 } from "../../lib/mock/board";
 import { playPing } from "../../lib/sound";
+import { SearchPill } from "../SearchPill";
 import { PickStrip } from "./PickStrip";
 import { DraftBoardGrid } from "./DraftBoardGrid";
 import { OnTheClockBanner } from "./OnTheClockBanner";
@@ -367,11 +368,10 @@ export function MockDraft({
 
             <div className="pickmenu-replace">
               <div className="pickmenu-replace-label">Replace with…</div>
-              <input
-                className="pickmenu-search"
-                placeholder="Search players…"
+              <SearchPill
                 value={replaceSearch}
-                onChange={(e) => setReplaceSearch(e.target.value)}
+                onChange={setReplaceSearch}
+                placeholder="Search players…"
                 autoFocus
               />
               <div className="pickmenu-list">

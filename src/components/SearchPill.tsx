@@ -2,12 +2,14 @@ interface Props {
   value: string;
   onChange: (s: string) => void;
   placeholder?: string;
+  autoFocus?: boolean;
 }
 
 export function SearchPill({
   value,
   onChange,
   placeholder = "Search…",
+  autoFocus,
 }: Props) {
   return (
     <div className="search-pill">
@@ -35,6 +37,7 @@ export function SearchPill({
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        autoFocus={autoFocus}
       />
       {value !== "" && (
         <button
