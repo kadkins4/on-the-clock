@@ -71,13 +71,25 @@ function nullableCompare(
   return (a - b) * dir;
 }
 
+// Per-id scored maps for the value-better numeric columns (higher is better,
+// nulls sort last). All three derive from the same scoring pipeline.
+export type ScoredMaps = Partial<
+  Record<"vor" | "proj" | "last", Record<string, number | null>>
+>;
+
 export function sortPlayers(
   players: Player[],
   key: SortKey,
   asc = true,
-  vorById?: Record<string, number | null>,
+  scored: ScoredMaps = {},
 ): Player[] {
   const dir = asc ? 1 : -1;
+  // higher score is better, so invert dir; nulls sort last regardless
+  const byScore = (
+    map: Record<string, number | null> | undefined,
+    a: Player,
+    b: Player,
+  ) => nullableCompare(map?.[a.id] ?? null, map?.[b.id] ?? null, -dir);
   const cmp = (a: Player, b: Player): number => {
     switch (key) {
       case "name":
@@ -92,12 +104,11 @@ export function sortPlayers(
           a.overallRank - b.overallRank
         );
       case "vor":
-        // higher VOR is better, so invert dir; nulls sort last regardless
-        return nullableCompare(
-          vorById?.[a.id] ?? null,
-          vorById?.[b.id] ?? null,
-          -dir,
-        );
+        return byScore(scored.vor, a, b);
+      case "proj":
+        return byScore(scored.proj, a, b);
+      case "last":
+        return byScore(scored.last, a, b);
       case "overall":
       default:
         return (a.overallRank - b.overallRank) * dir;
@@ -247,5 +258,6 @@ export function moveIntoNewTier(
 // Default sort direction for a freshly-clicked header. Value-better numeric
 // columns (VOR) start descending; identity/ordinal columns start ascending.
 export function defaultSortAsc(key: SortKey): boolean {
-  return key !== "vor";
+  // Value-better numeric columns default to descending (higher first).
+  return key !== "vor" && key !== "proj" && key !== "last";
 }

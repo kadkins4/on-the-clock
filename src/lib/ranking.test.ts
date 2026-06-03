@@ -257,8 +257,36 @@ describe("sortPlayers vor", () => {
       { ...base, id: "c", name: "C", overallRank: 3 },
     ];
     const vor = { a: 10, b: 50, c: null };
-    const out = sortPlayers(players, "vor", true, vor).map((p) => p.id);
+    const out = sortPlayers(players, "vor", true, { vor }).map((p) => p.id);
     expect(out).toEqual(["b", "a", "c"]);
+  });
+
+  it("sorts by proj higher-is-better; nulls last", () => {
+    const players = [
+      { ...base, id: "a", name: "A", overallRank: 1 },
+      { ...base, id: "b", name: "B", overallRank: 2 },
+      { ...base, id: "c", name: "C", overallRank: 3 },
+    ];
+    const proj = { a: 100, b: 250, c: null };
+    expect(
+      sortPlayers(players, "proj", true, { proj }).map((p) => p.id),
+    ).toEqual(["b", "a", "c"]);
+  });
+
+  it("sorts by last higher-is-better", () => {
+    const players = [
+      { ...base, id: "a", name: "A", overallRank: 1 },
+      { ...base, id: "b", name: "B", overallRank: 2 },
+    ];
+    const last = { a: 50, b: 300 };
+    expect(
+      sortPlayers(players, "last", true, { last }).map((p) => p.id),
+    ).toEqual(["b", "a"]);
+  });
+
+  it("proj and last default to descending", () => {
+    expect(defaultSortAsc("proj")).toBe(false);
+    expect(defaultSortAsc("last")).toBe(false);
   });
 });
 
