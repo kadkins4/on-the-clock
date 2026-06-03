@@ -92,8 +92,9 @@ export function OnTheClockBanner({
         </div>
       </div>
 
+<div className="flex">
       <div className="mock-controls">
-        {!isUser && !isComplete && (
+        {!isComplete && (
           <button className={paused ? "active" : ""} onClick={onTogglePause}>
             {paused ? "▶ Resume" : "⏸ Pause"}
           </button>
@@ -101,10 +102,9 @@ export function OnTheClockBanner({
         <button onClick={onUndo} disabled={state.picks.length === 0}>
           Undo
         </button>
-        <button className="secondary" onClick={onExit}>
-          Exit
-        </button>
-        <button
+      </div>
+      <div className="mock-controls">
+                <button
           className={`mock-mute${muted ? " muted" : ""}`}
           onClick={onToggleMute}
           aria-label={muted ? "Unmute" : "Mute"}
@@ -147,6 +147,10 @@ export function OnTheClockBanner({
             </>
           )}
         </div>
+        <button className="secondary" onClick={onExit}>
+          Exit
+        </button>
+      </div>
       </div>
     </div>
   );

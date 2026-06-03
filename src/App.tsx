@@ -385,7 +385,7 @@ export default function App() {
           aria-label="Refresh and replay intro"
         >
           <svg className="otc-logo" viewBox="0 0 64 64" width="30" height="30">
-            <rect width="64" height="64" rx="15" fill="#14161f" />
+            {/* <rect width="64" height="64" rx="15" fill="#14161f" /> */}
             <circle
               cx="32"
               cy="34"

@@ -894,7 +894,6 @@ table.players input:focus {
 .otc-brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
   padding: 0;
   background: none;
   border: none;
