@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import type { Position, Scoring, SortKey } from "../types";
+import type { Position, Scoring } from "../types";
 
 interface Props {
   search: string;
@@ -12,8 +12,8 @@ interface Props {
   byeFilter: number | null;
   setByeFilter: (b: number | null) => void;
   byeWeeks: number[];
-  sortKey: SortKey | null;
-  setSortKey: (k: SortKey | null) => void;
+  grouped: boolean;
+  onBackToTiers: () => void;
   filtersActive: boolean;
   onClearFilters: () => void;
   currentLeagueId: string;
@@ -93,24 +93,13 @@ export function Toolbar(props: Props) {
           ))}
         </select>
       </label>
-      <label>
-        Sort:{" "}
-        <select
-          value={props.sortKey ?? "tier"}
-          onChange={(e) =>
-            props.setSortKey(
-              e.target.value === "tier" ? null : (e.target.value as SortKey),
-            )
-          }
-        >
-          <option value="tier">Tier (grouped)</option>
-          <option value="overall">Overall</option>
-          <option value="adp">ADP</option>
-          <option value="name">Name</option>
-          <option value="bye">Bye</option>
-          <option value="vor">VOR</option>
-        </select>
-      </label>
+      <button
+        className={props.grouped ? "tiers-btn active" : "tiers-btn"}
+        onClick={props.onBackToTiers}
+        title="Group by tier (default view)"
+      >
+        ↩ Tiers
+      </button>
       <button
         className="clear-filters"
         onClick={props.onClearFilters}

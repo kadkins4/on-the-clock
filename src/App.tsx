@@ -5,7 +5,9 @@ import {
   computePositionalRanks,
   groupByTier,
   sortPlayers,
+  defaultSortAsc,
 } from "./lib/ranking";
+import { orderedColumns, DEFAULT_COLUMN_ORDER } from "./lib/columns";
 import { toCsv, parseCsv } from "./lib/csv";
 import { exportJson, importJson } from "./lib/storage";
 import { fetchEspnPlayers } from "./lib/fetchEspn";
@@ -70,6 +72,17 @@ export default function App() {
       localStorage.getItem(OLD_HIDE_KDST_KEY) === "1",
   );
   const [sortKey, setSortKey] = useState<SortKey | null>(null);
+  const [sortAsc, setSortAsc] = useState(true);
+  const columns = useMemo(() => orderedColumns(DEFAULT_COLUMN_ORDER), []);
+  const onSort = (key: SortKey) => {
+    if (sortKey === key) {
+      setSortAsc((a) => !a);
+    } else {
+      setSortKey(key);
+      setSortAsc(defaultSortAsc(key));
+    }
+  };
+  const onBackToTiers = () => setSortKey(null);
   const [fetching, setFetching] = useState(false);
   const [adpStatus, setAdpStatus] = useState<string | null>(null);
   const [mockMode, setMockMode] = useState(false);
@@ -159,8 +172,9 @@ export default function App() {
     [grouped, renderPlayers],
   );
   const flat = useMemo(
-    () => (grouped ? [] : sortPlayers(renderPlayers, sortKey!, true, vorById)),
-    [grouped, renderPlayers, sortKey, vorById],
+    () =>
+      grouped ? [] : sortPlayers(renderPlayers, sortKey!, sortAsc, vorById),
+    [grouped, renderPlayers, sortKey, sortAsc, vorById],
   );
   // Reordering/tier editing stays available with "hide drafted" / "hide K&DST"
   // on; only a position filter, search, or bye filter (a partial view) blocks it.
@@ -284,6 +298,7 @@ export default function App() {
     setHideDrafted(false);
     setByeFilter(null);
     setSortKey(null);
+    setSortAsc(true);
   };
 
   const onToggleK = () => {
@@ -438,8 +453,8 @@ export default function App() {
         byeFilter={byeFilter}
         setByeFilter={setByeFilter}
         byeWeeks={byeWeeks}
-        sortKey={sortKey}
-        setSortKey={setSortKey}
+        grouped={grouped}
+        onBackToTiers={onBackToTiers}
         filtersActive={filtersActive}
         onClearFilters={onClearFilters}
         currentLeagueId={currentLeague.id}
@@ -493,11 +508,15 @@ export default function App() {
         }
       />
       <PlayerTable
+        columns={columns}
         grouped={grouped}
         display={display}
         flat={flat}
         positionalRanks={positionalRanks}
         vorById={vorById}
+        sortKey={sortKey}
+        sortAsc={sortAsc}
+        onSort={onSort}
         dispatch={dispatch}
         reorderable={reorderable}
         onAddTier={onAddTier}

@@ -11,21 +11,27 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import type { Player } from "../types";
+import type { Player, SortKey } from "../types";
 import type { Action } from "../state/reducer";
+import type { ColumnDef } from "../lib/columns";
 import { PlayerRow } from "./PlayerRow";
 import { TierHeader, EmptyTier } from "./TierGroup";
+import { ColumnHeader } from "./board/ColumnHeader";
 
 export type DisplayGroup =
   | { kind: "tier"; tier: number; displayTier: number; players: Player[] }
   | { kind: "empty"; anchorId: string; displayTier: number };
 
 interface Props {
+  columns: ColumnDef[];
   grouped: boolean;
   display: DisplayGroup[];
   flat: Player[];
   positionalRanks: Record<string, number>;
   vorById: Record<string, number | null>;
+  sortKey: SortKey | null;
+  sortAsc: boolean;
+  onSort: (key: SortKey) => void;
   dispatch: Dispatch<Action>;
   reorderable: boolean;
   onAddTier: (playerId: string, startsTier: boolean) => void;
@@ -33,11 +39,15 @@ interface Props {
 }
 
 export function PlayerTable({
+  columns,
   grouped,
   display,
   flat,
   positionalRanks,
   vorById,
+  sortKey,
+  sortAsc,
+  onSort,
   dispatch,
   reorderable,
   onAddTier,
@@ -46,9 +56,8 @@ export function PlayerTable({
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
   );
+  const colSpan = columns.length;
 
-  // Only player rows are sortable; empty-tier dividers are plain droppables
-  // (registered in EmptyTier). Tiers are reordered by moving players, not tiers.
   const orderedIds: string[] = [];
   if (grouped) {
     for (const g of display) {
@@ -62,8 +71,6 @@ export function PlayerTable({
     const active = String(e.active.id);
     const over = e.over ? String(e.over.id) : null;
     if (!over || active === over) return;
-
-    // Dropping a player into an empty tier slot → it becomes its own new tier.
     if (over.startsWith("empty:")) {
       const anchorId = over.slice(6);
       dispatch({
@@ -74,19 +81,19 @@ export function PlayerTable({
       onRemoveEmpty(anchorId);
       return;
     }
-
-    // Player onto player (re-tiers across a divider as before).
     dispatch({ type: "move", activeId: active, overId: over });
   };
 
-  const renderRow = (p: Player, startsTier: boolean) => (
+  const renderRow = (p: Player, startsTier: boolean, stripe: boolean) => (
     <PlayerRow
       key={p.id}
       player={p}
+      columns={columns}
       positionalRank={positionalRanks[p.id]}
       vor={vorById[p.id] ?? null}
       draggable={reorderable}
       startsTier={startsTier}
+      stripe={stripe}
       onAddTier={onAddTier}
       dispatch={dispatch}
     />
@@ -100,19 +107,12 @@ export function PlayerTable({
     >
       <table className="players">
         <thead>
-          <tr>
-            <th className="col-mover"></th>
-            <th className="col-draft">Draft</th>
-            <th className="col-flag">{"★/⚑"}</th>
-            <th className="col-rank">#</th>
-            <th className="col-name">Player</th>
-            <th className="col-pos">Pos</th>
-            <th className="col-team">Team</th>
-            <th className="col-adp">ADP</th>
-            <th className="col-vor">VOR</th>
-            <th className="col-bye">Bye</th>
-            <th className="col-notes">Notes</th>
-          </tr>
+          <ColumnHeader
+            columns={columns}
+            sortKey={sortKey}
+            sortAsc={sortAsc}
+            onSort={onSort}
+          />
         </thead>
         <tbody>
           <SortableContext
@@ -126,19 +126,21 @@ export function PlayerTable({
                       key={`empty:${g.anchorId}`}
                       anchorId={g.anchorId}
                       displayTier={g.displayTier}
+                      colSpan={colSpan}
                       onRemove={onRemoveEmpty}
                     />
                   ) : (
-                    <TierHeaderGroup
+                    <TierBlock
                       key={`tier:${g.tier}`}
                       group={g}
+                      colSpan={colSpan}
                       editable={reorderable}
                       dispatch={dispatch}
                       renderRow={renderRow}
                     />
                   ),
                 )
-              : flat.map((p) => renderRow(p, false))}
+              : flat.map((p, i) => renderRow(p, false, i % 2 === 1))}
           </SortableContext>
         </tbody>
       </table>
@@ -146,26 +148,30 @@ export function PlayerTable({
   );
 }
 
-function TierHeaderGroup({
+function TierBlock({
   group,
+  colSpan,
   editable,
   dispatch,
   renderRow,
 }: {
   group: Extract<DisplayGroup, { kind: "tier" }>;
+  colSpan: number;
   editable: boolean;
   dispatch: Dispatch<Action>;
-  renderRow: (p: Player, startsTier: boolean) => ReactNode;
+  renderRow: (p: Player, startsTier: boolean, stripe: boolean) => ReactNode;
 }) {
   return (
     <>
       <TierHeader
         tier={group.tier}
         displayTier={group.displayTier}
+        count={group.players.length}
+        colSpan={colSpan}
         editable={editable}
         onRemove={(t) => dispatch({ type: "removeTier", tier: t })}
       />
-      {group.players.map((p, i) => renderRow(p, i === 0))}
+      {group.players.map((p, i) => renderRow(p, i === 0, i % 2 === 1))}
     </>
   );
 }
