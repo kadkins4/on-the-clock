@@ -13,6 +13,12 @@ import { exportJson, importJson } from "./lib/storage";
 import { fetchEspnPlayers } from "./lib/fetchEspn";
 import { fetchAdp } from "./lib/fetchAdp";
 import { searchPlayers } from "./lib/search";
+import {
+  matchesPosFilter,
+  chipConfig,
+  toggleChip,
+  applyMacro,
+} from "./lib/posFilter";
 import type { Position, SortKey } from "./types";
 import { POSITIONS } from "./types";
 import { draftedByPosition } from "./lib/counts";
@@ -58,7 +64,8 @@ export default function App() {
     setIntroReplay((n) => n + 1);
   };
   const [search, setSearch] = useState("");
-  const [posFilter, setPosFilter] = useState<Position | "All">("All");
+  // Active position chips; empty = ALL (no filter). See lib/posFilter.
+  const [posFilter, setPosFilter] = useState<Set<Position>>(() => new Set());
   const [hideDrafted, setHideDrafted] = useState(false);
   const [byeFilter, setByeFilter] = useState<number | null>(null);
   const [hideK, setHideK] = useState(
@@ -102,13 +109,19 @@ export default function App() {
     setEmptyTiers([]);
   }, [currentLeague.id]);
 
-  // positions to show in the summary + filter chips (K / DST hidden separately)
+  // positions to show in the drafted-summary header (K / DST hidden separately)
   const shownPositions = useMemo(
     () =>
       POSITIONS.filter(
         (p) => !(hideK && p === "K") && !(hideDst && p === "DST"),
       ),
     [hideK, hideDst],
+  );
+
+  // which filter chips to render, derived from the league's roster (spec §4)
+  const chips = useMemo(
+    () => chipConfig(currentLeague.roster),
+    [currentLeague.roster],
   );
 
   // distinct bye weeks present, for the bye-week filter
@@ -128,7 +141,7 @@ export default function App() {
   const visible = useMemo(() => {
     const filtered = players.filter(
       (p) =>
-        (posFilter === "All" || p.position === posFilter) &&
+        matchesPosFilter(posFilter, p.position) &&
         (!hideDrafted || p.draftStatus === "available") &&
         !(hideK && p.position === "K") &&
         !(hideDst && p.position === "DST") &&
@@ -179,7 +192,7 @@ export default function App() {
   // Reordering/tier editing stays available with "hide drafted" / "hide K&DST"
   // on; only a position filter, search, or bye filter (a partial view) blocks it.
   const reorderable =
-    posFilter === "All" && search.trim() === "" && byeFilter === null;
+    posFilter.size === 0 && search.trim() === "" && byeFilter === null;
 
   // Drop empty-tier markers whose anchor is no longer the first player of a tier
   // (e.g. after a drag), so stale empties don't accumulate.
@@ -288,13 +301,13 @@ export default function App() {
   // saved hide-K/DST prefs, and scroll position are all left alone.
   const filtersActive =
     search !== "" ||
-    posFilter !== "All" ||
+    posFilter.size > 0 ||
     hideDrafted ||
     byeFilter !== null ||
     sortKey !== null;
   const onClearFilters = () => {
     setSearch("");
-    setPosFilter("All");
+    setPosFilter(new Set());
     setHideDrafted(false);
     setByeFilter(null);
     setSortKey(null);
@@ -304,14 +317,24 @@ export default function App() {
   const onToggleK = () => {
     setHideK((v) => {
       const next = !v;
-      if (next && posFilter === "K") setPosFilter("All");
+      if (next)
+        setPosFilter((prev) => {
+          const n = new Set(prev);
+          n.delete("K");
+          return n;
+        });
       return next;
     });
   };
   const onToggleDst = () => {
     setHideDst((v) => {
       const next = !v;
-      if (next && posFilter === "DST") setPosFilter("All");
+      if (next)
+        setPosFilter((prev) => {
+          const n = new Set(prev);
+          n.delete("DST");
+          return n;
+        });
       return next;
     });
   };
@@ -445,9 +468,10 @@ export default function App() {
       <Toolbar
         search={search}
         setSearch={setSearch}
-        positions={shownPositions}
-        posFilter={posFilter}
-        setPosFilter={setPosFilter}
+        posChips={chips}
+        activePos={posFilter}
+        onToggleChip={(p) => setPosFilter((prev) => toggleChip(prev, p))}
+        onApplyMacro={(m) => setPosFilter((prev) => applyMacro(prev, m))}
         hideDrafted={hideDrafted}
         setHideDrafted={setHideDrafted}
         byeFilter={byeFilter}
