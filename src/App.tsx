@@ -47,6 +47,8 @@ export default function App() {
   const {
     players,
     vorById,
+    projById,
+    lastById,
     dispatch,
     refresh,
     currentLeague,
@@ -186,8 +188,14 @@ export default function App() {
   );
   const flat = useMemo(
     () =>
-      grouped ? [] : sortPlayers(renderPlayers, sortKey!, sortAsc, vorById),
-    [grouped, renderPlayers, sortKey, sortAsc, vorById],
+      grouped
+        ? []
+        : sortPlayers(renderPlayers, sortKey!, sortAsc, {
+            vor: vorById,
+            proj: projById,
+            last: lastById,
+          }),
+    [grouped, renderPlayers, sortKey, sortAsc, vorById, projById, lastById],
   );
   // Reordering/tier editing stays available with "hide drafted" / "hide K&DST"
   // on; only a position filter, search, or bye filter (a partial view) blocks it.
@@ -538,6 +546,8 @@ export default function App() {
         flat={flat}
         positionalRanks={positionalRanks}
         vorById={vorById}
+        projById={projById}
+        lastById={lastById}
         sortKey={sortKey}
         sortAsc={sortAsc}
         onSort={onSort}
