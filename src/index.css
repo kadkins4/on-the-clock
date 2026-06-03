@@ -47,13 +47,6 @@ body {
   gap: 0.75rem;
   margin-bottom: 1rem;
 }
-.toolbar .search {
-  padding: 0.3rem 0.5rem;
-  background: var(--panel);
-  color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-}
 .chips {
   display: flex;
   gap: 0.25rem;
@@ -1268,16 +1261,6 @@ table.players th.sorted {
   color: var(--muted, #8b93a1);
   padding: 0 6px 4px;
 }
-.pickmenu-search {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 6px 8px;
-  border-radius: 6px;
-  border: 1px solid var(--border, #333);
-  background: #11141c;
-  color: var(--text, #e7e9ee);
-  margin-bottom: 6px;
-}
 .pickmenu-list {
   display: flex;
   flex-direction: column;
@@ -1450,4 +1433,67 @@ table.players th.sorted {
   font-size: 11px;
   color: #9aa4b2;
   padding: 4px 2px;
+}
+
+/* --- Search pill (board toolbar + mock replace menu) --- */
+.search-pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.search-pill .search-pill-icon {
+  position: absolute;
+  left: 10px;
+  width: 16px;
+  height: 16px;
+  color: var(--muted, #888);
+  pointer-events: none;
+}
+.search-pill .search-pill-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.3rem 1.6rem 0.3rem 2rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--text);
+  outline: none;
+}
+.search-pill .search-pill-input:focus {
+  border-color: var(--otc-accent);
+  box-shadow: 0 0 0 3px rgba(255, 107, 74, 0.13);
+}
+.search-pill .search-pill-clear {
+  position: absolute;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border: none;
+  background: none;
+  color: var(--muted, #888);
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1;
+}
+.search-pill .search-pill-clear:hover {
+  color: var(--text);
+}
+/* mock replace menu: let the pill fill the popover width */
+.pickmenu-replace .search-pill {
+  display: flex;
+  width: 100%;
+  margin-bottom: 6px;
+}
+
+/* --- Macro chips (All / FLEX / SFLEX) --- */
+.chip.macro {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.chip.macro.active {
+  background: var(--otc-accent);
+  border-color: var(--otc-accent);
+  color: #fff;
 }
