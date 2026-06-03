@@ -4,6 +4,11 @@ import seed from "../data/seed.json";
 import { withByeWeeks } from "./byes";
 import { normalizeTiers, orderByAdp } from "./ranking";
 import { migrateBoardToLeagues, activeTierList } from "./league";
+import {
+  sanitizeLayout,
+  DEFAULT_LAYOUT,
+  type ColumnLayout,
+} from "./columnLayout";
 
 const LISTS_KEY = "ff-cheat-sheet:lists:v1";
 const OLD_KEY = "ff-cheat-sheet:players:v2"; // pre-named-lists single board
@@ -141,4 +146,39 @@ function normalizeActiveList(l: League): League {
       t.id === active.id ? { ...t, board } : t,
     ),
   };
+}
+
+// --- Column layout (Phase 4) ---
+const COLUMNS_KEY = "otc:columns";
+const COL_SCOPE_KEY = "otc:columnScopePref";
+export type ColumnScopePref = "ask" | "all" | "this";
+
+export function loadColumnLayout(): ColumnLayout {
+  try {
+    const raw = localStorage.getItem(COLUMNS_KEY);
+    return raw ? sanitizeLayout(JSON.parse(raw)) : DEFAULT_LAYOUT;
+  } catch {
+    return DEFAULT_LAYOUT;
+  }
+}
+
+export function saveColumnLayout(layout: ColumnLayout): void {
+  try {
+    localStorage.setItem(COLUMNS_KEY, JSON.stringify(layout));
+  } catch {
+    /* ignore quota / availability */
+  }
+}
+
+export function loadColumnScopePref(): ColumnScopePref {
+  const v = localStorage.getItem(COL_SCOPE_KEY);
+  return v === "all" || v === "this" ? v : "ask";
+}
+
+export function saveColumnScopePref(p: ColumnScopePref): void {
+  try {
+    localStorage.setItem(COL_SCOPE_KEY, p);
+  } catch {
+    /* ignore */
+  }
 }
