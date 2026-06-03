@@ -830,10 +830,11 @@ table.players input:focus {
   letter-spacing: -0.02em;
   line-height: 1;
 }
-.otc-title span {
+/* Brand wordmark — colors live here so every instance matches the logo. */
+.otc-wordmark span {
   opacity: 0.78;
 }
-.otc-title strong {
+.otc-wordmark strong {
   color: #ff6b4a;
   font-weight: 800;
 }
@@ -841,14 +842,68 @@ table.players input:focus {
 /* --- Alpha banner --- */
 .otc-alpha {
   display: flex;
-  align-items: center;
-  gap: 10px;
+  flex-direction: column;
+  gap: 8px;
   margin: 0 0 0.6rem;
   padding: 7px 10px;
   border: 1px solid #ff6b4a55;
   background: #ff6b4a14;
   border-radius: 8px;
   font-size: 13px;
+}
+.otc-alpha-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.otc-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: #ff6b4a;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.otc-link:hover {
+  opacity: 0.85;
+}
+/* Inline suggestion box, opened from the alpha banner. */
+.otc-suggest {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 2px;
+}
+.otc-suggest-text,
+.otc-suggest-email {
+  width: 100%;
+  box-sizing: border-box;
+  background: #0b0e14;
+  border: 1px solid #ffffff22;
+  border-radius: 6px;
+  color: inherit;
+  font: inherit;
+  padding: 6px 8px;
+  resize: vertical;
+}
+.otc-suggest-text:focus,
+.otc-suggest-email:focus {
+  outline: none;
+  border-color: #ff6b4a88;
+}
+.otc-suggest-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.otc-suggest-err {
+  color: #ff6b4a;
+  opacity: 0.9;
+}
+.otc-suggest-done {
+  opacity: 0.9;
 }
 .otc-alpha-tag {
   flex: 0 0 auto;

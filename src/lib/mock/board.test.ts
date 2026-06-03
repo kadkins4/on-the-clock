@@ -6,7 +6,6 @@ import {
   buildBoardGrid,
   userPickMarkers,
 } from "./board";
-import type { MockState } from "./types";
 import { createMock, draftPlayer } from "./engine";
 import type { League, Player } from "../../types";
 

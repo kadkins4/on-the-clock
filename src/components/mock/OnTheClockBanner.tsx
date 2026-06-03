@@ -3,7 +3,7 @@ import type { MockState } from "../../lib/mock/types";
 
 interface Props {
   state: MockState;
-  status: string;
+  status: ReactNode;
   round: number;
   overall: number;
   isUser: boolean;

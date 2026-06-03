@@ -8,14 +8,6 @@ import { migrateBoardToLeagues, activeTierList } from "./league";
 const LISTS_KEY = "ff-cheat-sheet:lists:v1";
 const OLD_KEY = "ff-cheat-sheet:players:v2"; // pre-named-lists single board
 
-export function saveBoard(board: Board): void {
-  try {
-    localStorage.setItem(LISTS_KEY, JSON.stringify(board));
-  } catch {
-    // storage full / unavailable — ignore
-  }
-}
-
 function readBoard(): Board {
   try {
     const raw = localStorage.getItem(LISTS_KEY);
@@ -49,18 +41,6 @@ function readBoard(): Board {
   return {
     current: "My Board",
     lists: { "My Board": orderByAdp(seed as unknown as Player[]) },
-  };
-}
-
-export function loadBoard(): Board {
-  const board = readBoard();
-  // normalize the active list (tiers + bye weeks) for immediate use
-  return {
-    ...board,
-    lists: {
-      ...board.lists,
-      [board.current]: normalizeTiers(withByeWeeks(board.lists[board.current])),
-    },
   };
 }
 

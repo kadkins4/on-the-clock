@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import type { ReactNode } from "react";
 import type { MockState } from "../../lib/mock/types";
 import type { Player, Position } from "../../types";
 import { fallenBy, defaultValueThreshold } from "../../lib/draftValue";
@@ -14,6 +15,7 @@ import { userPickMarkers, formatPick } from "../../lib/mock/board";
 import { PickStrip } from "./PickStrip";
 import { DraftBoardGrid } from "./DraftBoardGrid";
 import { OnTheClockBanner } from "./OnTheClockBanner";
+import { Wordmark } from "../Wordmark";
 
 interface Props {
   state: MockState;
@@ -157,14 +159,17 @@ export function MockDraft({
     setMenuFor(null);
   };
 
-  const status = isComplete(state)
-    ? "Draft complete"
-    : isUser
-    // TODO: On The Clock. should be the "logo" here. Match the colors exactly. In fact, let's make every instance of On The Clock. be the same as the logo
-      ? "You are now... On The Clock."
-      : paused
-        ? `Paused — Team ${onClock + 1}`
-        : `Team ${onClock + 1} picking…`;
+  const status: ReactNode = isComplete(state) ? (
+    "Draft complete"
+  ) : isUser ? (
+    <>
+      You are now... <Wordmark />
+    </>
+  ) : paused ? (
+    `Paused — Team ${onClock + 1}`
+  ) : (
+    `Team ${onClock + 1} picking…`
+  );
 
   const timerUi = (
     <span className="mock-timer-wrap">

@@ -19,6 +19,7 @@ import { PlayerTable, type DisplayGroup } from "./components/PlayerTable";
 import { MockMode } from "./components/mock/MockMode";
 import { Intro } from "./components/Intro";
 import { AlphaBanner } from "./components/AlphaBanner";
+import { Wordmark } from "./components/Wordmark";
 
 function download(filename: string, text: string, type: string) {
   const blob = new Blob([text], { type });
@@ -414,7 +415,7 @@ export default function App() {
             />
           </svg>
           <h1 className="otc-title">
-            <span>On The</span> <strong>Clock</strong><span>.</span>
+            <Wordmark />
           </h1>
         </button>
       </header>
