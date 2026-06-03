@@ -310,7 +310,6 @@ table.players input:focus {
   letter-spacing: 0;
 }
 .tier-tools {
-  float: right;
   display: inline-flex;
   gap: 0.4rem;
   align-items: center;

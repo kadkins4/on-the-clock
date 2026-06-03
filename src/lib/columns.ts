@@ -19,8 +19,11 @@ export interface ColumnDef {
   locked?: boolean; // un-hideable & un-movable (Phase 4 enforces; declared now)
   sortable: boolean;
   sortKey?: SortKey; // the key passed to sortPlayers; required when sortable
+  // align + width are scaffolding for the Phase 4 column manager (which will
+  // apply them dynamically). In Phase 1 the static `.col-<id>` CSS rules still
+  // own column width/alignment, so these are declared but not yet consumed.
   align: "l" | "c" | "r";
-  width: string; // CSS width applied to the column
+  width: string;
 }
 
 // The current board, 1:1 with today's hardcoded <thead>/<td> order.
