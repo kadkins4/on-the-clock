@@ -1,4 +1,5 @@
 import type { League, LeaguesState, Player } from "../types";
+import type { ColumnLayout } from "../lib/columnLayout";
 import { makeLeague, activeTierList } from "../lib/league";
 import {
   reassignOverallRanks,
@@ -103,7 +104,8 @@ export type LeagueAction =
       patch: Partial<
         Pick<League, "platform" | "scoring" | "tePremium" | "teams" | "roster">
       >;
-    };
+    }
+  | { type: "setLeagueColumns"; id: string; layout: ColumnLayout | null };
 
 // Tier-list actions operate on the *current* league's tier lists. switch/delete/
 // setDefault take a list id; add/duplicate/rename act on the active list.
@@ -210,6 +212,12 @@ export function leaguesReducer(
     }
     case "updateLeagueSettings":
       return mapLeague(state, action.id, (l) => ({ ...l, ...action.patch }));
+
+    case "setLeagueColumns":
+      return mapLeague(state, action.id, (l) => ({
+        ...l,
+        columnsOverride: action.layout,
+      }));
 
     case "switchTierList": {
       const current = state.leagues.find((l) => l.id === state.currentId);

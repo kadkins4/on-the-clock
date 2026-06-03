@@ -1,3 +1,5 @@
+import type { ColumnLayout } from "./lib/columnLayout";
+
 export type Position = "QB" | "RB" | "WR" | "TE" | "K" | "DST";
 export type Flag = "none" | "target" | "avoid";
 export type SortKey =
@@ -90,6 +92,7 @@ export interface League {
   tierLists: TierList[]; // replaces the old single `board`
   activeTierListId: string; // the list the board view shows/edits
   defaultTierListId: string; // marked "default"; a mock starts from this
+  columnsOverride?: ColumnLayout | null; // null/absent = inherit global layout
   updatedAt: number; // epoch ms; used by a later sync plan
 }
 

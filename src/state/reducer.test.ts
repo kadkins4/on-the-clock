@@ -79,6 +79,7 @@ import {
   activeTierList,
 } from "../lib/league";
 import type { LeaguesState } from "../types";
+import type { ColumnLayout } from "../lib/columnLayout";
 
 const mkPlayer = (id: string, rank: number): Player => ({
   id,
@@ -172,6 +173,21 @@ describe("leaguesReducer — league actions", () => {
     expect(next.leagues[0].scoring).toBe("half");
     expect(next.leagues[0].teams).toBe(14);
     expect(next.leagues[0].tePremium).toBe(true);
+  });
+
+  it("setLeagueColumns sets then clears the per-league override", () => {
+    const s = twoLeagues();
+    const id = s.leagues[0].id;
+    const layout: ColumnLayout = { order: [], hidden: ["vor"] };
+    const set = leaguesReducer(s, { type: "setLeagueColumns", id, layout });
+    expect(set.leagues[0].columnsOverride).toEqual(layout);
+    expect(set.leagues[1].columnsOverride ?? null).toBeNull(); // other untouched
+    const cleared = leaguesReducer(set, {
+      type: "setLeagueColumns",
+      id,
+      layout: null,
+    });
+    expect(cleared.leagues[0].columnsOverride).toBeNull();
   });
 });
 
