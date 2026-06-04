@@ -38,6 +38,52 @@
 
 ---
 
+## Integration corrections (Tasks 6–8) — supersede inline text where they conflict
+
+Discovered while wiring. Tasks 6, 7, 8 are tightly coupled (the app does not
+compile until all three land), so execute them as ONE unit ending in a single
+compiling, test-green commit, then review.
+
+**C1 — `applyDrag` no-op must preserve references.** In `src/lib/tierBreaks.ts`,
+the two early-return branches of `applyDrag` (the `activeId === overId` branch
+and the `from === -1 || over === -1` branch) must return the ORIGINAL arrays:
+`return { players, breaks };` (not `ordered(players)`/`sortedBreaks(breaks)`).
+This keeps referential equality so the reducer's no-op detection works. The
+existing tierBreaks "no-op" test still passes (it checks content).
+
+**C2 — convert `reducer.test.ts`.** `src/state/reducer.test.ts` has a
+`describe("rankingReducer", …)` block that calls `rankingReducer(Player[]): Player[]`.
+Since that becomes `boardReducer(BoardState): BoardState`, import `boardReducer`
+and wrap each call: `boardReducer({ players: <input>, breaks: [] }, action).players`,
+keeping the same assertions. The `leaguesReducer` describe blocks are unchanged.
+The "L4 no-op" test (`move` with activeId===overId expects `next === s`) must
+still pass — C1 guarantees it.
+
+**C3 — Tier-1 label via an explicit `topHeader` row (replaces the fiddly Task 7
+Step 2 special-case).** `DisplayRow` gains a third variant:
+
+```typescript
+export type DisplayRow =
+  | { kind: "topHeader"; displayTier: number; count: number }
+  | { kind: "break"; breakId: string; displayTier: number; count: number }
+  | {
+      kind: "player";
+      player: Player;
+      displayTier: number;
+      startsTier: boolean;
+      stripeIndex: number;
+    };
+```
+
+In App's display walk, when the first item is a player (i.e. tier 1 is NOT empty
+and has no break above it), prepend `{ kind: "topHeader", displayTier: 1, count: <run of leading players before the first break> }`. `topHeader` is NOT added to
+`itemIds` (it is not sortable). `PlayerTable` renders `topHeader` with the
+existing non-sortable `TierHeader` (editable=false, `onRemove` a no-op), `break`
+with `TierBreakRow`, and `player` with `PlayerRow`. This keeps the
+non-removable Tier-1 rule and removes the special-case branch.
+
+---
+
 ## Task 0: Commit the existing arrayMove fix as a baseline
 
 **Files:**
