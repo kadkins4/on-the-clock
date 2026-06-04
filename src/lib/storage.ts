@@ -3,6 +3,7 @@ import type { Board } from "../state/reducer";
 import seed from "../data/seed.json";
 import { withByeWeeks } from "./byes";
 import { normalizeTiers, orderByAdp } from "./ranking";
+import { breaksFromTiers, tiersFromBreaks } from "./tierBreaks";
 import { migrateBoardToLeagues, activeTierList } from "./league";
 import {
   sanitizeLayout,
@@ -141,11 +142,15 @@ export function loadLeagues(): LeaguesState {
 
 function normalizeActiveList(l: League): League {
   const active = activeTierList(l);
-  const board = normalizeTiers(withByeWeeks(active.board));
+  const normalized = normalizeTiers(withByeWeeks(active.board));
+  // Derive break boundaries from tier when absent so the board renders its
+  // tiers on first paint (before any edit re-derives them in the reducer).
+  const breaks = active.breaks ?? breaksFromTiers(normalized);
+  const board = tiersFromBreaks(normalized, breaks);
   return {
     ...l,
     tierLists: l.tierLists.map((t) =>
-      t.id === active.id ? { ...t, board } : t,
+      t.id === active.id ? { ...t, board, breaks } : t,
     ),
   };
 }
