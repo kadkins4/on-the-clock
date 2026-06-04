@@ -19,16 +19,34 @@ const player = (over: Partial<Player>): Player => ({
 });
 
 describe("blendAdp", () => {
-  it("averages available sources", () => {
-    expect(blendAdp({ espn: 10, ffc: 20 })).toBe(15);
+  it("weights consensus sources above single platforms", () => {
+    // fantasypros 3, ffc 2, yahoo 2, espn 1
+    expect(
+      blendAdp({ espn: 100, ffc: 130, fantasypros: 140, yahoo: 128 }, "WR"),
+    ).toBeCloseTo((100 * 1 + 130 * 2 + 140 * 3 + 128 * 2) / 8, 5);
+  });
+  it("weights espn below ffc for a two-source blend", () => {
+    expect(blendAdp({ espn: 10, ffc: 20 }, "RB")).toBeCloseTo(50 / 3, 5);
   });
   it("returns the single available source unchanged", () => {
-    expect(blendAdp({ espn: 12.34 })).toBe(12.34);
-    expect(blendAdp({ ffc: 8.5 })).toBe(8.5);
+    expect(blendAdp({ ffc: 8.5 }, "RB")).toBe(8.5);
   });
   it("returns null when nothing is available", () => {
-    expect(blendAdp({})).toBeNull();
-    expect(blendAdp({ espn: null, ffc: null })).toBeNull();
+    expect(blendAdp({}, "RB")).toBeNull();
+    expect(blendAdp({ espn: null, ffc: null }, "RB")).toBeNull();
+  });
+  it("floors a K/DST priced by espn only", () => {
+    expect(blendAdp({ espn: 83 }, "K")).toBe(100);
+    expect(blendAdp({ espn: 81 }, "DST")).toBe(100);
+  });
+  it("does NOT floor a K/DST once a consensus source agrees", () => {
+    expect(blendAdp({ espn: 83, ffc: 140 }, "DST")).toBeCloseTo(
+      (83 + 280) / 3,
+      5,
+    );
+  });
+  it("never floors offense", () => {
+    expect(blendAdp({ espn: 5 }, "RB")).toBe(5);
   });
 });
 

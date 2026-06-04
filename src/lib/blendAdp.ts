@@ -1,4 +1,4 @@
-import type { Player } from "../types";
+import type { Player, Position } from "../types";
 import { adpMatchKey, type NormalizedAdp } from "./ffcAdp";
 
 export interface AdpSources {
@@ -8,15 +8,44 @@ export interface AdpSources {
   yahoo?: number | null;
 }
 
-// Mean of available sources. Single source passes through unrounded so an
-// ESPN-only value stays identical to pre-blend behavior. (Scoring-weighting is
-// a deliberate v1.5 follow-up.)
-export function blendAdp(sources: AdpSources): number | null {
-  const vals = [sources.espn, sources.ffc].filter(
-    (v): v is number => v != null,
-  );
-  if (vals.length === 0) return null;
-  return vals.reduce((a, b) => a + b, 0) / vals.length;
+// Weighted blend. Consensus aggregates (FantasyPros, FFC) outrank single
+// platforms; ESPN is weighted lowest because it skews K/DST early.
+const WEIGHTS: Record<keyof AdpSources, number> = {
+  fantasypros: 3,
+  ffc: 2,
+  yahoo: 2,
+  espn: 1,
+};
+
+// K/DST priced by ESPN alone can't sort earlier than this (round ~9). Narrow
+// safety net for early-season before consensus sources price kickers.
+export const KDST_ADP_FLOOR = 100;
+
+export function blendAdp(
+  sources: AdpSources,
+  position: Position,
+): number | null {
+  let weight = 0;
+  let weighted = 0;
+  let consensusPresent = false; // any non-ESPN source
+  for (const key of [
+    "fantasypros",
+    "ffc",
+    "yahoo",
+    "espn",
+  ] as (keyof AdpSources)[]) {
+    const v = sources[key];
+    if (v == null) continue;
+    weighted += v * WEIGHTS[key];
+    weight += WEIGHTS[key];
+    if (key !== "espn") consensusPresent = true;
+  }
+  if (weight === 0) return null;
+  const adp = weighted / weight;
+  if ((position === "K" || position === "DST") && !consensusPresent) {
+    return Math.max(adp, KDST_ADP_FLOOR);
+  }
+  return adp;
 }
 
 // Non-destructive: match FFC ADP onto existing board players (by name+position,
