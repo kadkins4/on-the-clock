@@ -1885,6 +1885,46 @@ table.players th.sorted {
   background: #0d1017;
   border-left-color: #1b2130;
 }
+/* not-yet-made pick: faded silhouette placeholder */
+.bcg-cell.upcoming {
+  background: #0d1017;
+  border-left-color: #1b2130;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bcg-silhouette {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: #39414f;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+/* team currently on the clock: highlighted cell with the live timer */
+.bcg-cell.current {
+  background: #0f1a14;
+  border: 1px solid #34d399;
+  border-left: 3px solid #34d399;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: bcg-pulse 1.8s ease-in-out infinite;
+}
+.bcg-clock {
+  font-size: 14px;
+  font-weight: 800;
+  color: #7ff0bd;
+}
+@keyframes bcg-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 #34d39955;
+  }
+  50% {
+    box-shadow: 0 0 0 3px #34d39900;
+  }
+}
 .bcg-cell .bcg-pick {
   position: absolute;
   top: 4px;

@@ -318,6 +318,7 @@ export function MockDraft({
         canDraft={isUser && !revealing}
         onDraft={onDraft}
         onPickClick={(o) => setMenuFor(o)}
+        timer={isUser ? timerUi : undefined}
       />
       <PickStrip state={state} onPickClick={(o) => setMenuFor(o)} />
 
