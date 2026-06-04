@@ -1,12 +1,14 @@
 import type { MockSummaryResult } from "../../lib/mock/summary";
+import { formatPick } from "../../lib/mock/board";
 
 interface Props {
   summary: MockSummaryResult;
+  teams: number;
   onRestart: () => void;
   onExit: () => void;
 }
 
-export function MockSummary({ summary, onRestart, onExit }: Props) {
+export function MockSummary({ summary, teams, onRestart, onExit }: Props) {
   const counts = Object.entries(summary.positionCounts)
     .map(([pos, n]) => `${pos} ${n}`)
     .join(" · ");
@@ -19,7 +21,9 @@ export function MockSummary({ summary, onRestart, onExit }: Props) {
           <div key={p.id} className={`summary-card pos-${p.position}`}>
             <div className="summary-card-top">
               <span className="summary-pos">{p.position}</span>
-              <span className="summary-pick">#{p.overallPick}</span>
+              <span className="summary-pick">
+                {formatPick(p.overallPick, teams)}
+              </span>
             </div>
             <div className="summary-name">{p.name}</div>
             <div className="summary-meta">

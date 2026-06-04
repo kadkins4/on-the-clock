@@ -95,6 +95,7 @@ export function MockMode({ league, onExit, onSetValueFlags }: Props) {
     return (
       <MockSummary
         summary={mockSummary(state, userSlot - 1)}
+        teams={state.settings.teams}
         onRestart={() => setPhase("setup")}
         onExit={onExit}
       />
