@@ -1,0 +1,72 @@
+[
+  {
+    "player": {
+      "id": 4262921,
+      "fullName": "Sample Back",
+      "defaultPositionId": 2,
+      "proTeamId": 1,
+      "draftRanksByRankType": { "PPR": { "rank": 1 } },
+      "ownership": { "averageDraftPosition": 1.4 },
+      "injuryStatus": "ACTIVE",
+      "stats": [
+        {
+          "seasonId": 2026,
+          "statSourceId": 1,
+          "statSplitTypeId": 0,
+          "appliedTotal": 312.5,
+          "stats": {
+            "23": 1300,
+            "24": 1300,
+            "25": 11,
+            "53": 60,
+            "42": 500,
+            "43": 3
+          }
+        },
+        {
+          "seasonId": 2025,
+          "statSourceId": 0,
+          "statSplitTypeId": 0,
+          "appliedTotal": 298.1,
+          "stats": {
+            "23": 1250,
+            "24": 1250,
+            "25": 9,
+            "53": 54,
+            "42": 470,
+            "43": 2
+          }
+        }
+      ]
+    }
+  },
+  {
+    "player": {
+      "id": 3139477,
+      "fullName": "Sample Passer",
+      "defaultPositionId": 1,
+      "proTeamId": 12,
+      "draftRanksByRankType": { "PPR": { "rank": 2 } },
+      "ownership": { "averageDraftPosition": 12.2 },
+      "stats": [
+        {
+          "seasonId": 2026,
+          "statSourceId": 1,
+          "statSplitTypeId": 0,
+          "appliedTotal": 365.0,
+          "stats": { "3": 4500, "4": 35, "20": 9, "24": 300, "25": 3 }
+        }
+      ]
+    }
+  },
+  {
+    "player": {
+      "id": 15847,
+      "fullName": "Sample Kicker",
+      "defaultPositionId": 5,
+      "proTeamId": 25,
+      "draftRanksByRankType": { "PPR": { "rank": 180 } },
+      "ownership": { "averageDraftPosition": 175.0 }
+    }
+  }
+]

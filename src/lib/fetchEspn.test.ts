@@ -4,6 +4,7 @@ import {
   extractProjStats,
   mapEspnPlayers,
   mergeFetched,
+  validateEspnShape,
 } from "./fetchEspn";
 import { blendAdp } from "./blendAdp";
 import type { Player } from "../types";
@@ -342,5 +343,38 @@ describe("extractProjStats", () => {
 
   it("returns null when there is no projection line", () => {
     expect(extractProjStats({}, "RB")).toBeNull();
+  });
+});
+
+describe("validateEspnShape", () => {
+  function row(id: number, rank: number, adp = rank) {
+    return {
+      player: {
+        id,
+        fullName: `Player ${id}`,
+        defaultPositionId: 2, // RB
+        proTeamId: 1,
+        draftRanksByRankType: { PPR: { rank } },
+        ownership: { averageDraftPosition: adp },
+      },
+    };
+  }
+
+  it("accepts a healthy response (>=200 ranked rows)", () => {
+    const raw = Array.from({ length: 250 }, (_, i) => row(i + 1, i + 1));
+    expect(validateEspnShape(raw).ok).toBe(true);
+  });
+  it("rejects a non-array", () => {
+    expect(validateEspnShape({} as never).ok).toBe(false);
+  });
+  it("rejects too few ranked rows, with a fingerprint", () => {
+    const raw = Array.from({ length: 50 }, (_, i) => row(i + 1, i + 1));
+    const r = validateEspnShape(raw);
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.fingerprint).toContain("ranked=");
+  });
+  it("rejects when spot-checked rows lack required fields", () => {
+    const raw = Array.from({ length: 250 }, () => ({ player: { foo: 1 } }));
+    expect(validateEspnShape(raw).ok).toBe(false);
   });
 });

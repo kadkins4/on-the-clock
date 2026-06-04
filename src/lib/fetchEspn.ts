@@ -182,6 +182,71 @@ export function extractLastStats(
 
 // Mirror of scripts/fetch-espn.mjs: filter to ranked, known-position players,
 // sort by PPR rank, and assign a contiguous 1-based overall rank.
+export type ShapeResult =
+  | { ok: true; ranked: number }
+  | { ok: false; reason: string; fingerprint: string };
+
+export class EspnShapeError extends Error {
+  fingerprint: string;
+  constructor(reason: string, fingerprint: string) {
+    super(reason);
+    this.name = "EspnShapeError";
+    this.fingerprint = fingerprint;
+  }
+}
+
+const MIN_RANKED = 200; // healthy pulls return ~500; far fewer ⇒ shape change
+const SPOT_CHECK = 10;
+
+// Validate-at-the-boundary: a malformed ESPN payload must never reach state.
+export function validateEspnShape(rawPlayers: unknown): ShapeResult {
+  if (!Array.isArray(rawPlayers)) {
+    return { ok: false, reason: "not-array", fingerprint: "players=not-array" };
+  }
+  const rows = rawPlayers as EspnEntry[];
+  // count rows that carry a PPR rank (what we actually map)
+  let ranked = 0;
+  for (const e of rows) {
+    const p = e.player ?? (e as unknown as EspnPlayer);
+    if (p?.draftRanksByRankType?.PPR?.rank != null) ranked++;
+  }
+  if (ranked < MIN_RANKED) {
+    return {
+      ok: false,
+      reason: "too-few-ranked",
+      fingerprint: `ranked=${ranked} total=${rows.length}`,
+    };
+  }
+  // spot-check the first N mapped rows for required fields + sane ranges
+  let bad = 0;
+  let firstBad = "";
+  for (const e of rows.slice(0, SPOT_CHECK)) {
+    const p = e.player ?? (e as unknown as EspnPlayer);
+    const rank = p?.draftRanksByRankType?.PPR?.rank;
+    const adp = p?.ownership?.averageDraftPosition ?? 0;
+    const ok =
+      p &&
+      p.id != null &&
+      POS[p.defaultPositionId] != null &&
+      typeof rank === "number" &&
+      rank >= 1 &&
+      adp >= 0 &&
+      adp <= 400;
+    if (!ok) {
+      bad++;
+      if (!firstBad) firstBad = (JSON.stringify(p) ?? "null").slice(0, 120);
+    }
+  }
+  if (bad > SPOT_CHECK / 2) {
+    return {
+      ok: false,
+      reason: "rows-malformed",
+      fingerprint: `bad=${bad}/${SPOT_CHECK} first=${firstBad}`,
+    };
+  }
+  return { ok: true, ranked };
+}
+
 export function mapEspnPlayers(raw: EspnEntry[]): FetchedPlayer[] {
   const out: FetchedPlayer[] = [];
   for (const entry of raw) {
@@ -297,9 +362,14 @@ export async function fetchEspnPlayers(): Promise<FetchedPlayer[]> {
   }
   const data = await res.json();
   const raw: EspnEntry[] = Array.isArray(data.players) ? data.players : data;
+  const shape = validateEspnShape(raw);
+  if (!shape.ok) {
+    console.warn("ESPN shape guard tripped:", shape.reason, shape.fingerprint);
+    throw new EspnShapeError(shape.reason, shape.fingerprint);
+  }
   const mapped = mapEspnPlayers(raw);
   if (mapped.length === 0) {
-    throw new Error("ESPN returned no ranked players.");
+    throw new EspnShapeError("no-ranked", "mapped=0");
   }
   return mapped;
 }
