@@ -302,7 +302,7 @@ export function mergeFetched(
         name: f.name,
         position: f.position,
         team: f.team,
-        adp: blendAdp(sources),
+        adp: blendAdp(sources, f.position),
         adpSources: sources,
         projStats: f.projStats,
         lastStats: f.lastStats,
@@ -326,7 +326,7 @@ export function mergeFetched(
       overallRank: 0,
       byeWeek: null,
       tier: null, // normalizeTiers fills it from the player above
-      adp: blendAdp({ espn: f.adp }),
+      adp: blendAdp({ espn: f.adp }, f.position),
       adpSources: { espn: f.adp },
       projStats: f.projStats,
       lastStats: f.lastStats,

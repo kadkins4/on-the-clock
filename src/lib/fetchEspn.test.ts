@@ -235,7 +235,7 @@ describe("mergeFetched + adpSources", () => {
     ];
     const out = mergeFetched([keep], fetched);
     expect(out[0].adpSources).toEqual({ espn: 9, ffc: 7 });
-    expect(out[0].adp).toBe(blendAdp({ espn: 9, ffc: 7 })); // 8
+    expect(out[0].adp).toBe(blendAdp({ espn: 9, ffc: 7 }, "RB")); // weighted
     expect(out[0].notes).toBe("mine"); // curation preserved
   });
 
