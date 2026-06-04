@@ -10,6 +10,7 @@ export interface MockSettings {
   // so existing fixtures keep working; read sites default threshold to teams+2.
   valueThreshold?: number;
   valueFlagsEnabled?: boolean;
+  autoDraft?: boolean;
 }
 
 export interface DraftPick {

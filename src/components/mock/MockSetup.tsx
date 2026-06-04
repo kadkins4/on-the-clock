@@ -23,6 +23,7 @@ export function MockSetup({
   const [teams, setTeams] = useState(league.teams);
   const [userSlot, setUserSlot] = useState(1);
   const [thirdRoundReversal, setThirdRoundReversal] = useState(false);
+  const [autoDraft, setAutoDraft] = useState(false);
   const defaultList =
     league.tierLists.find((t) => t.id === league.defaultTierListId) ??
     league.tierLists[0];
@@ -79,6 +80,14 @@ export function MockSetup({
       <label>
         <input
           type="checkbox"
+          checked={autoDraft}
+          onChange={(e) => setAutoDraft(e.target.checked)}
+        />{" "}
+        Auto-draft my picks
+      </label>
+      <label>
+        <input
+          type="checkbox"
           checked={vfEnabled}
           onChange={(e) => setVfEnabled(e.target.checked)}
         />{" "}
@@ -114,6 +123,7 @@ export function MockSetup({
               thirdRoundReversal,
               valueThreshold: vfThreshold ?? defaultValueThreshold(teams),
               valueFlagsEnabled: vfEnabled,
+              autoDraft,
             });
           }}
         >

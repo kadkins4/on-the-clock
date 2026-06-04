@@ -254,3 +254,20 @@ describe("createMock value config", () => {
     expect(m.settings.valueFlagsEnabled).toBe(false);
   });
 });
+
+describe("createMock autoDraft setting", () => {
+  it("carries autoDraft: true through to state.settings", () => {
+    const l = makeLeague({ name: "T", teams: 10, board: [] });
+    const m = createMock(
+      l,
+      {
+        teams: 10,
+        userSlot: 1,
+        thirdRoundReversal: false,
+        autoDraft: true,
+      },
+      1,
+    );
+    expect(m.settings.autoDraft).toBe(true);
+  });
+});
