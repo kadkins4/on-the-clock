@@ -4,6 +4,7 @@ import {
   breaksFromTiers,
   tiersFromBreaks,
   buildItems,
+  applyDrag,
   type Item,
 } from "./tierBreaks";
 
@@ -95,5 +96,47 @@ describe("buildItems", () => {
     ]);
     const ids = items.map((i) => i.id);
     expect(ids).toEqual(["a", "b", "x", "y", "c"]);
+  });
+});
+
+describe("applyDrag", () => {
+  // [a b][break][c d]  (above=2)
+  const players = [P("a", 1, 1), P("b", 2, 1), P("c", 3, 2), P("d", 4, 2)];
+  const breaks = () => [{ id: "x", above: 2 }];
+
+  it("dragging the last player of tier1 onto the break moves the BREAK up, not the player order", () => {
+    const out = applyDrag(players, breaks(), "b", "x");
+    expect(out.players.map((p) => p.id)).toEqual(["a", "b", "c", "d"]);
+    expect(out.breaks.map((bk) => bk.above)).toEqual([1]);
+    expect(out.players.map((p) => p.tier)).toEqual([1, 2, 2, 2]);
+  });
+
+  it("dragging the first player of tier2 onto the break moves the break DOWN, player order unchanged", () => {
+    const out = applyDrag(players, breaks(), "c", "x");
+    expect(out.players.map((p) => p.id)).toEqual(["a", "b", "c", "d"]);
+    expect(out.breaks.map((bk) => bk.above)).toEqual([3]);
+    expect(out.players.map((p) => p.tier)).toEqual([1, 1, 1, 2]);
+  });
+
+  it("dragging a player fully past a neighbor reorders the players", () => {
+    const out = applyDrag(players, breaks(), "a", "c");
+    expect(out.players.map((p) => p.id)).toEqual(["b", "c", "a", "d"]);
+  });
+
+  it("dragging the only player out of its tier leaves an empty tier (adjacent breaks)", () => {
+    const three = [P("a", 1, 1), P("b", 2, 2), P("c", 3, 3)];
+    const br = [
+      { id: "x", above: 1 },
+      { id: "y", above: 2 },
+    ];
+    const out = applyDrag(three, br, "b", "x");
+    expect(out.players.map((p) => p.id)).toEqual(["a", "b", "c"]);
+    const aboves = out.breaks.map((bk) => bk.above).sort((m, n) => m - n);
+    expect(aboves).toEqual([2, 2]);
+  });
+
+  it("is a no-op when active === over", () => {
+    const out = applyDrag(players, breaks(), "a", "a");
+    expect(out.players.map((p) => p.id)).toEqual(["a", "b", "c", "d"]);
   });
 });
