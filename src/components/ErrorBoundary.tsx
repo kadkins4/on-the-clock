@@ -1,5 +1,5 @@
 import { Component, type ReactNode } from "react";
-import { pushErrorLog } from "../lib/storage";
+import { captureError } from "../lib/errorReport";
 
 interface Props {
   children: ReactNode;
@@ -18,7 +18,7 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error) {
-    pushErrorLog({
+    captureError({
       at: Date.now(),
       message: error.message,
       source: "boundary",

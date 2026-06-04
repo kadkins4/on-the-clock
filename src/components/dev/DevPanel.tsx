@@ -62,6 +62,10 @@ export function DevPanel({
 
       <section>
         <h2>Runtime errors ({errors.length})</h2>
+        <p className="muted">
+          Remote reporting:{" "}
+          {import.meta.env.VITE_FORMSPREE_ENDPOINT ? "on" : "off (local only)"}
+        </p>
         {errors.length > 0 && (
           <button onClick={onClearErrors}>Clear errors</button>
         )}
