@@ -1854,3 +1854,93 @@ table.players th.sorted {
 .otc-clockcard.you .occ-timer {
   color: #7ff0bd;
 }
+
+/* --- PickPool --- */
+.pickpool {
+  display: flex;
+  flex-direction: column;
+}
+.pp-tier {
+  padding: 6px 12px;
+  background: #10141d;
+  border-left: 3px solid #34d399;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #cfd6e2;
+}
+.pp-cnt {
+  color: #7c869a;
+  font-weight: 500;
+}
+.pp-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px 8px 9px;
+  border-left: 3px solid var(--c, #2a2f3a);
+  border-bottom: 1px solid #11151d;
+}
+.pp-row:hover {
+  background: #10141d;
+}
+.pp-pos {
+  font-size: 9.5px;
+  font-weight: 800;
+  color: #06080d;
+  background: var(--c, #888);
+  border-radius: 4px;
+  padding: 2px 5px;
+  min-width: 30px;
+  text-align: center;
+}
+.pp-name {
+  background: none;
+  border: none;
+  color: #eef1f6;
+  font-weight: 700;
+  font-size: 13.5px;
+  cursor: pointer;
+  padding: 0;
+}
+.pp-name:hover {
+  text-decoration: underline;
+}
+.pp-team {
+  font-size: 11px;
+  color: #8b93a4;
+}
+.pp-flag.target {
+  color: #34d399;
+}
+.pp-flag.avoid {
+  color: #f87171;
+}
+.pp-note {
+  cursor: pointer;
+}
+.pp-adp {
+  margin-left: auto;
+  font-size: 11px;
+  color: #8b93a4;
+  font-variant-numeric: tabular-nums;
+}
+.pp-draft {
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #245c39;
+  background: #11241a;
+  color: #7ff0bd;
+  border-radius: 7px;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+.pp-draft:disabled {
+  opacity: 0.4;
+  cursor: default;
+}

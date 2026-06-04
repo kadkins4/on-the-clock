@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { MockState } from "../../lib/mock/types";
-import type { Player, Position } from "../../types";
-import { fallenBy, defaultValueThreshold } from "../../lib/draftValue";
+import type { Position } from "../../types";
 import {
   available,
   bestAvailableId,
@@ -10,11 +9,7 @@ import {
   isComplete,
   teamRosterPositions,
 } from "../../lib/mock/engine";
-import {
-  userPickMarkers,
-  formatPick,
-  picksUntilUser,
-} from "../../lib/mock/board";
+import { formatPick, picksUntilUser } from "../../lib/mock/board";
 import { playPing } from "../../lib/sound";
 import { SearchPill } from "../SearchPill";
 import { PickStrip } from "./PickStrip";
@@ -22,6 +17,7 @@ import { DraftBoardGrid } from "./DraftBoardGrid";
 import { OnTheClockBanner } from "./OnTheClockBanner";
 import { StopwatchMark } from "./StopwatchMark";
 import { Avatar } from "./Avatar";
+import { PickPool } from "./PickPool";
 
 interface Props {
   state: MockState;
@@ -58,6 +54,7 @@ export function MockDraft({
 }: Props) {
   const [posFilter, setPosFilter] = useState<Position | "All">("All");
   const [boardOpen, setBoardOpen] = useState(false);
+  const [openPlayer, setOpenPlayer] = useState<string | null>(null);
   const [paused, setPaused] = useState(false);
   const [menuFor, setMenuFor] = useState<number | null>(null); // pick popover
   const [replaceSearch, setReplaceSearch] = useState("");
@@ -80,11 +77,6 @@ export function MockDraft({
   const overall = state.picks.length + 1;
   const round = Math.floor((overall - 1) / state.settings.teams) + 1;
   const picksAway = picksUntilUser(state, userTeamIndex);
-  const valThreshold =
-    state.settings.valueThreshold ??
-    defaultValueThreshold(state.settings.teams);
-  const valEnabled = state.settings.valueFlagsEnabled ?? true;
-
   const toggleMute = () =>
     setMuted((m) => {
       const next = !m;
@@ -152,45 +144,6 @@ export function MockDraft({
   );
 
   const myPositions = teamRosterPositions(state, userTeamIndex);
-
-  // Build the available list interleaved with "your pick" dotted lines. Each
-  // line is placed by the player's NATURAL position in the full board order, so
-  // it stays at its true round even when the list is filtered by position (a
-  // line sits just above the first visible player at/after that board slot).
-  type AvailRow =
-    | { kind: "line"; round: number; key: string }
-    | { kind: "player"; p: Player };
-  const availRows = useMemo<AvailRow[]>(() => {
-    const full = available(state);
-    const fullIndex = new Map(full.map((p, i) => [p.id, i]));
-    const markers = isComplete(state)
-      ? []
-      : userPickMarkers(state, userTeamIndex);
-    const rows: AvailRow[] = [];
-    let mi = 0;
-    for (const p of avail.slice(0, 100)) {
-      const f = fullIndex.get(p.id) ?? Infinity;
-      while (mi < markers.length && markers[mi].availIndex <= f) {
-        rows.push({
-          kind: "line",
-          round: markers[mi].round,
-          key: `m${markers[mi].overall}`,
-        });
-        mi += 1;
-      }
-      rows.push({ kind: "player", p });
-    }
-    // your later picks fall past the last visible player — show them trailing
-    while (mi < markers.length) {
-      rows.push({
-        kind: "line",
-        round: markers[mi].round,
-        key: `m${markers[mi].overall}`,
-      });
-      mi += 1;
-    }
-    return rows;
-  }, [state, avail, userTeamIndex]);
 
   // Undo / resume-from-here edit history, so pause the bots — otherwise they'd
   // immediately re-draft the slot you just cleared.
@@ -286,68 +239,13 @@ export function MockDraft({
         ))}
       </div>
 
-      {valEnabled && (
-        <div className="val-legend">
-          fallen past <span className="fall-rank">your rank</span>
-          <span className="fall-sep"> | </span>
-          <span className="fall-adp">ADP</span>
-        </div>
-      )}
-      <ul className="mock-available">
-        {availRows.map((row) =>
-          row.kind === "line" ? (
-            <li className="mock-pick-line" aria-hidden="true" key={row.key}>
-              <span className="mock-pick-line-label">R{row.round}</span>
-              <span className="mock-pick-line-rule" />
-            </li>
-          ) : (
-            <li key={row.p.id}>
-              <button
-                className="mock-draft-btn"
-                disabled={!isUser || revealing}
-                onClick={() => onDraft(row.p.id)}
-              >
-                Draft
-              </button>
-              <span className="mock-name-wrap">
-                <span className="val-fall">
-                  {valEnabled &&
-                    (() => {
-                      const adpFell = fallenBy(
-                        row.p.adp,
-                        overall,
-                        valThreshold,
-                      );
-                      const rankFell = fallenBy(
-                        row.p.overallRank,
-                        overall,
-                        valThreshold,
-                      );
-                      if (adpFell == null && rankFell == null) return null;
-                      // "rank | ADP" — each in color, "-" when that baseline
-                      // hasn't fallen past the threshold.
-                      return (
-                        <span
-                          title={`Fallen — rank ${rankFell ?? "—"}, ADP ${adpFell ?? "—"}`}
-                        >
-                          <span className="fall-rank">{rankFell ?? "-"}</span>
-                          <span className="fall-sep"> | </span>
-                          <span className="fall-adp">{adpFell ?? "-"}</span>
-                        </span>
-                      );
-                    })()}
-                </span>
-                <span className="mock-name">{row.p.name}</span>
-              </span>
-              <span className="mock-pos">{row.p.position}</span>
-              <span className="mock-team">{row.p.team}</span>
-              <span className="mock-adp num">
-                {row.p.adp == null ? "" : Number(row.p.adp.toFixed(1))}
-              </span>
-            </li>
-          ),
-        )}
-      </ul>
+      <PickPool
+        players={avail.slice(0, 100)}
+        canDraft={isUser && !revealing}
+        overall={overall}
+        onDraft={onDraft}
+        onOpenPlayer={(id) => setOpenPlayer(id)}
+      />
 
       <DraftBoardGrid
         state={state}
