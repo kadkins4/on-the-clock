@@ -1940,16 +1940,17 @@ table.players th.sorted {
 }
 .pp-tier {
   padding: 6px 12px;
-  background: #10141d;
-  border-left: 3px solid #34d399;
+  background: #1a1411;
+  border-left: 3px solid var(--otc-accent);
+  border-right: 3px solid var(--otc-accent);
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #cfd6e2;
+  color: #ffd9cf;
 }
 .pp-cnt {
-  color: #7c869a;
+  color: #b08778;
   font-weight: 500;
 }
 .pp-row {
@@ -1965,7 +1966,7 @@ table.players th.sorted {
 }
 .pp-pos {
   font-size: 9.5px;
-  font-weight: 800;
+  font-weight: 900;
   color: #06080d;
   background: var(--c, #888);
   border-radius: 4px;
@@ -2005,18 +2006,23 @@ table.players th.sorted {
   font-variant-numeric: tabular-nums;
 }
 .pp-draft {
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #245c39;
-  background: #11241a;
-  color: #7ff0bd;
-  border-radius: 7px;
-  font-size: 16px;
+  border: none;
+  background: #16a34a;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 18px;
   line-height: 1;
   cursor: pointer;
+  box-shadow: 0 1px 0 #0d6b32;
+  flex-shrink: 0;
+}
+.pp-draft:hover {
+  background: #15b150;
 }
 .pp-draft:disabled {
   opacity: 0.4;

@@ -57,6 +57,14 @@ export function PickPool({
               key={p.id}
               className={`pp-row pos-${p.position} flag-${p.flag}`}
             >
+              <button
+                className="pp-draft"
+                disabled={!canDraft}
+                title={`Draft ${p.name}`}
+                onClick={() => onDraft(p.id)}
+              >
+                ＋
+              </button>
               <span className="pp-pos">{p.position}</span>
               <button className="pp-name" onClick={() => onOpenPlayer(p.id)}>
                 {p.name}
@@ -90,14 +98,6 @@ export function PickPool({
               {extraCols.includes("bye") && (
                 <span className="pp-x">{p.byeWeek ?? "—"}</span>
               )}
-              <button
-                className="pp-draft"
-                disabled={!canDraft}
-                title={`Draft ${p.name}`}
-                onClick={() => onDraft(p.id)}
-              >
-                ＋
-              </button>
             </div>
           ))}
         </div>
