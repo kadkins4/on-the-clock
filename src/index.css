@@ -148,6 +148,149 @@ body {
   padding: 0.1rem 0.6rem 0.3rem;
 }
 
+/* ⚙ Columns trigger + manager popover (far right of the toolbar) */
+.columns-trigger {
+  position: relative;
+}
+.columns-btn {
+  cursor: pointer;
+  white-space: nowrap;
+}
+.columns-btn.active {
+  border-color: var(--text);
+}
+.col-manager {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.25rem);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  min-width: 13rem;
+  max-height: 70vh;
+  overflow-y: auto;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.35rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+}
+.col-manager-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.1rem 0.3rem 0.35rem;
+}
+.col-manager-title {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.col-manager-done {
+  font-size: 0.75rem;
+  padding: 0.1rem 0.45rem;
+  cursor: pointer;
+}
+.col-manager-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+}
+.col-manager-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.2rem 0.3rem;
+  border-radius: 4px;
+}
+.col-manager-row:hover {
+  background: var(--border);
+}
+.col-manager-grip {
+  cursor: grab;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1;
+  user-select: none;
+  touch-action: none;
+}
+.col-manager-grip.locked {
+  cursor: default;
+}
+.col-manager-label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  cursor: pointer;
+  flex: 1;
+}
+.col-manager-reset {
+  margin-top: 0.35rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+/* Scope prompt: apply column changes to all leagues vs just this one */
+.scope-prompt-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+}
+.scope-prompt {
+  min-width: 18rem;
+  max-width: 90vw;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+.scope-prompt-text {
+  margin: 0 0 0.75rem;
+  font-weight: 600;
+}
+.scope-prompt-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+.scope-prompt-btn {
+  flex: 1;
+  cursor: pointer;
+  padding: 0.45rem 0.6rem;
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+.scope-prompt-btn:hover {
+  background: var(--border);
+}
+.scope-prompt-remember {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.scope-prompt-cancel {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 0.2rem 0;
+}
+
 table.players {
   border-collapse: collapse;
   /* left gutter so the row-hover "+" (add tier) can poke out and stay clickable */
