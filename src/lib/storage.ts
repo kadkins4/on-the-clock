@@ -182,3 +182,62 @@ export function saveColumnScopePref(p: ColumnScopePref): void {
     /* ignore */
   }
 }
+
+// --- Dev diagnostics (Phase 5) ---
+const REFETCH_KEY = "otc:devRefetch";
+const ERRORS_KEY = "otc:devErrors";
+const MAX_ERRORS = 50;
+
+export interface RefetchResult {
+  ok: boolean;
+  at: number; // epoch ms
+  count?: number; // mapped/merged players on success
+  reason?: string; // failure reason
+  fingerprint?: string; // failure fingerprint
+}
+export interface LoggedError {
+  at: number;
+  message: string;
+  source: "onerror" | "unhandledrejection" | "boundary";
+  stack?: string;
+}
+
+export function loadRefetchResult(): RefetchResult | null {
+  try {
+    const raw = localStorage.getItem(REFETCH_KEY);
+    return raw ? (JSON.parse(raw) as RefetchResult) : null;
+  } catch {
+    return null;
+  }
+}
+export function saveRefetchResult(r: RefetchResult): void {
+  try {
+    localStorage.setItem(REFETCH_KEY, JSON.stringify(r));
+  } catch {
+    /* ignore */
+  }
+}
+export function loadErrorLog(): LoggedError[] {
+  try {
+    const raw = localStorage.getItem(ERRORS_KEY);
+    const arr = raw ? JSON.parse(raw) : [];
+    return Array.isArray(arr) ? (arr as LoggedError[]) : [];
+  } catch {
+    return [];
+  }
+}
+export function pushErrorLog(e: LoggedError): void {
+  try {
+    const next = [e, ...loadErrorLog()].slice(0, MAX_ERRORS);
+    localStorage.setItem(ERRORS_KEY, JSON.stringify(next));
+  } catch {
+    /* ignore */
+  }
+}
+export function clearErrorLog(): void {
+  try {
+    localStorage.removeItem(ERRORS_KEY);
+  } catch {
+    /* ignore */
+  }
+}
