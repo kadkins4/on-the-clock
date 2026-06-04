@@ -743,6 +743,11 @@ export function mapYahooAdp(json: unknown): NormalizedAdp[] {
 
 const TOKEN_URL = "https://api.login.yahoo.com/oauth2/get_token";
 
+// Must exactly match the redirect URI registered on the Yahoo app. Yahoo
+// deprecated "oob", so we register a dummy https URL and copy the auth code out
+// of the redirected address bar (no server actually listens here).
+export const YAHOO_REDIRECT_URI = "https://localhost:8080";
+
 // Exchange a stored refresh token for a short-lived access token.
 export async function refreshAccessToken(
   refreshToken: string,
@@ -752,7 +757,7 @@ export async function refreshAccessToken(
 ): Promise<string> {
   const body = new URLSearchParams({
     grant_type: "refresh_token",
-    redirect_uri: "oob",
+    redirect_uri: YAHOO_REDIRECT_URI,
     refresh_token: refreshToken,
   });
   const auth = Buffer.from(`${clientId}:${clientSecret}`).toString("base64");
@@ -1383,10 +1388,14 @@ Create `scripts/yahoo-auth.ts`:
 ```ts
 import { createInterface } from "node:readline/promises";
 import { appendFileSync } from "node:fs";
-import { refreshAccessToken } from "../src/lib/adpSources/yahoo";
+import {
+  refreshAccessToken,
+  YAHOO_REDIRECT_URI,
+} from "../src/lib/adpSources/yahoo";
 
 // One-time: exchange a Yahoo authorization code for a refresh token and append
 // the creds to .env.local. Set YAHOO_CLIENT_ID / YAHOO_CLIENT_SECRET first.
+// The registered redirect URI (YAHOO_REDIRECT_URI) must match the Yahoo app.
 const CLIENT_ID = process.env.YAHOO_CLIENT_ID;
 const CLIENT_SECRET = process.env.YAHOO_CLIENT_SECRET;
 
@@ -1399,11 +1408,16 @@ async function main() {
   }
   const authUrl =
     `https://api.login.yahoo.com/oauth2/request_auth?client_id=${CLIENT_ID}` +
-    `&redirect_uri=oob&response_type=code&language=en-us`;
+    `&redirect_uri=${encodeURIComponent(YAHOO_REDIRECT_URI)}` +
+    `&response_type=code&language=en-us`;
   console.log("\n1. Open this URL, sign in, and approve:\n\n" + authUrl + "\n");
+  console.log(
+    `2. Your browser will fail to load ${YAHOO_REDIRECT_URI} — that's expected.\n` +
+      "   Copy the `code=` value out of the address bar.\n",
+  );
 
   const rl = createInterface({ input: process.stdin, output: process.stdout });
-  const code = (await rl.question("2. Paste the code shown by Yahoo: ")).trim();
+  const code = (await rl.question("3. Paste the code: ")).trim();
   rl.close();
 
   const tokenRes = await fetch("https://api.login.yahoo.com/oauth2/get_token", {
@@ -1416,7 +1430,7 @@ async function main() {
     },
     body: new URLSearchParams({
       grant_type: "authorization_code",
-      redirect_uri: "oob",
+      redirect_uri: YAHOO_REDIRECT_URI,
       code,
     }).toString(),
   });
