@@ -718,6 +718,23 @@ export default function App() {
         />
       )}
       {toast && <div className="toast">{toast}</div>}
+      <footer
+        style={{
+          textAlign: "center",
+          padding: "24px 16px",
+          fontSize: "13px",
+          opacity: 0.55,
+        }}
+      >
+        <a
+          href="https://kendalladkins.dev/?utm_source=on-the-clock"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: "inherit", textDecoration: "none" }}
+        >
+          ← Built by Kendall Adkins
+        </a>
+      </footer>
     </div>
   );
 }
