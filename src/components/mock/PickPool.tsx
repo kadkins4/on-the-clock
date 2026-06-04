@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { Player } from "../../types";
 
 interface Props {
@@ -23,6 +24,11 @@ function groupByTier(
 
 export function PickPool({ players, canDraft, onDraft, onOpenPlayer }: Props) {
   const groups = groupByTier(players);
+  const [note, setNote] = useState<{
+    text: string;
+    x: number;
+    y: number;
+  } | null>(null);
   return (
     <div className="pickpool">
       {groups.map((g, i) => (
@@ -49,8 +55,16 @@ export function PickPool({ players, canDraft, onDraft, onOpenPlayer }: Props) {
               {p.notes?.trim() && (
                 <span
                   className="pp-note"
-                  title="Has a note"
-                  data-note={p.notes}
+                  title="Read note"
+                  onClick={(e) => {
+                    const r = (e.target as HTMLElement).getBoundingClientRect();
+                    const x = Math.min(r.left, window.innerWidth - 240);
+                    setNote({
+                      text: p.notes,
+                      x: Math.max(8, x),
+                      y: r.bottom + 6,
+                    });
+                  }}
                 >
                   📝
                 </span>
@@ -70,6 +84,15 @@ export function PickPool({ players, canDraft, onDraft, onOpenPlayer }: Props) {
           ))}
         </div>
       ))}
+      {note && (
+        <>
+          <div className="pp-note-scrim" onClick={() => setNote(null)} />
+          <div className="pp-note-pop" style={{ left: note.x, top: note.y }}>
+            <div className="pp-note-lbl">Your note</div>
+            {note.text}
+          </div>
+        </>
+      )}
     </div>
   );
 }
