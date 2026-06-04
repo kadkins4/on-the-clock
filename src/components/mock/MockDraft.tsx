@@ -60,6 +60,7 @@ export function MockDraft({
   const [extraCols, setExtraCols] = useState<PoolCol[]>(["bye"]);
   const [colMenuOpen, setColMenuOpen] = useState(false);
   const [paused, setPaused] = useState(false);
+  const [autoOn, setAutoOn] = useState(!!state.settings.autoDraft);
   const [menuFor, setMenuFor] = useState<number | null>(null); // pick popover
   const [replaceSearch, setReplaceSearch] = useState("");
   const [timerSec, setTimerSec] = useState<number | null>(30); // null = Off
@@ -138,6 +139,16 @@ export function MockDraft({
     const t = setTimeout(onBotTick, BOT_DELAY);
     return () => clearTimeout(t);
   }, [state, paused, onClock, userTeamIndex, onBotTick]);
+
+  // Auto-draft: when enabled and it's the user's live, unpaused, non-revealing,
+  // non-complete turn, pick the best available after BOT_DELAY (mirrors bot guards).
+  useEffect(() => {
+    if (!autoOn || !isUser || paused || revealing || isComplete(state)) return;
+    const id = bestAvailableId(state);
+    if (!id) return;
+    const t = setTimeout(() => onDraft(id), BOT_DELAY);
+    return () => clearTimeout(t);
+  }, [autoOn, isUser, paused, revealing, state, onDraft]);
 
   const avail = useMemo(
     () =>
