@@ -168,3 +168,48 @@ describe("removeBreak", () => {
     expect(out.players.map((p) => p.tier)).toEqual([1, 1]);
   });
 });
+
+describe("applyDrag — dragging a BREAK (Phase 2)", () => {
+  // players a..e; one break with 3 players above it (between c and d)
+  const players = () => [
+    P("a", 1, 1),
+    P("b", 2, 1),
+    P("c", 3, 1),
+    P("d", 4, 2),
+    P("e", 5, 2),
+  ];
+
+  it("dragging a break up onto a player drops its `above`; players don't reorder", () => {
+    // drag break x (above 3) onto player b => break lands above b => above 1
+    const out = applyDrag(players(), [{ id: "x", above: 3 }], "x", "b");
+    expect(out.players.map((p) => p.id)).toEqual(["a", "b", "c", "d", "e"]);
+    expect(out.breaks).toEqual([{ id: "x", above: 1 }]);
+    // a stays tier 1; b and c (the crossed players) are now tier 2
+    expect(out.players.map((p) => p.tier)).toEqual([1, 2, 2, 2, 2]);
+  });
+
+  it("dragging a break onto the first player makes an empty top tier (above 0)", () => {
+    const out = applyDrag(players(), [{ id: "x", above: 3 }], "x", "a");
+    expect(out.breaks).toEqual([{ id: "x", above: 0 }]);
+    expect(out.players.map((p) => p.tier)).toEqual([2, 2, 2, 2, 2]);
+  });
+
+  it("dragging a break onto another break leaves an empty tier (adjacent breaks)", () => {
+    // breaks x(above 2) and y(above 3); drag x onto y
+    const four = [P("a", 1, 1), P("b", 2, 1), P("c", 3, 2), P("d", 4, 3)];
+    const out = applyDrag(
+      four,
+      [
+        { id: "x", above: 2 },
+        { id: "y", above: 3 },
+      ],
+      "x",
+      "y",
+    );
+    expect(out.players.map((p) => p.id)).toEqual(["a", "b", "c", "d"]);
+    expect(out.breaks.map((b) => b.above).sort((m, n) => m - n)).toEqual([
+      3, 3,
+    ]);
+    expect(out.players.map((p) => p.tier)).toEqual([1, 1, 1, 3]);
+  });
+});
