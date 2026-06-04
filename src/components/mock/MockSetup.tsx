@@ -32,14 +32,14 @@ export function MockSetup({
   );
 
   return (
-    <div className="mock-setup">
+    <div className="mock-setup-card">
       <h2>Mock draft — {league.name}</h2>
       <p className="mock-sub">
         Scoring: {league.scoring.toUpperCase()} · bots use this league's roster
         settings
       </p>
       <label>
-        Teams{" "}
+        Teams
         <select
           value={teams}
           onChange={(e) => {
@@ -56,7 +56,7 @@ export function MockSetup({
         </select>
       </label>
       <label>
-        Your slot{" "}
+        Your slot
         <select
           value={userSlot}
           onChange={(e) => setUserSlot(Number(e.target.value))}
@@ -85,7 +85,7 @@ export function MockSetup({
         Highlight reaches &amp; values
       </label>
       <label>
-        Threshold (picks off ADP/rank){" "}
+        Threshold (picks off ADP/rank)
         <input
           type="number"
           min={1}

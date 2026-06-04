@@ -712,6 +712,38 @@ table.players th.sorted {
 }
 
 /* --- Mock draft --- */
+.mock-setup-card {
+  max-width: 460px;
+  margin: 24px auto;
+  background: #10141d;
+  border: 1px solid #232938;
+  border-radius: 14px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.mock-setup-card h2 {
+  margin: 0 0 14px;
+}
+.mock-setup-card label {
+  display: block;
+  font-size: 12px;
+  color: #8b93a4;
+  margin: 12px 0 4px;
+}
+.mock-setup-card select,
+.mock-setup-card input[type="number"] {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+  background: #0d1017;
+  border: 1px solid #2b3242;
+  color: var(--text);
+  border-radius: 7px;
+  padding: 6px 10px;
+  font-size: 13px;
+}
 .mock-setup,
 .mock-summary {
   max-width: 32rem;
