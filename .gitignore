@@ -7,3 +7,8 @@ dist/
 
 # Playwright MCP scratch output
 .playwright-mcp/
+
+# Local env overrides — never commit secrets here. The tracked .env holds only
+# the public Formspree endpoint; per-machine/secret values go in .env*.local.
+.env.local
+.env.*.local
