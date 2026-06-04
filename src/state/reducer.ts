@@ -211,6 +211,7 @@ export function leaguesReducer(
           id,
           name: t.name,
           board: t.board.map((p) => ({ ...p })),
+          breaks: t.breaks?.map((b) => ({ ...b })),
           valueFlags: t.valueFlags,
         };
       });
