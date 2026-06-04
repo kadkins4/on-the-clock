@@ -1,6 +1,11 @@
 import { describe, it, expect } from "vitest";
 import type { Player } from "../types";
-import { breaksFromTiers, tiersFromBreaks } from "./tierBreaks";
+import {
+  breaksFromTiers,
+  tiersFromBreaks,
+  buildItems,
+  type Item,
+} from "./tierBreaks";
 
 // Minimal players: only id/overallRank/tier matter here.
 function P(id: string, rank: number, tier: number): Player {
@@ -57,5 +62,38 @@ describe("tiersFromBreaks", () => {
     const players = [P("a", 1, 1), P("b", 2, 2), P("c", 3, 2), P("d", 4, 3)];
     const out = tiersFromBreaks(players, breaksFromTiers(players));
     expect(out.map((p) => p.tier)).toEqual([1, 2, 2, 3]);
+  });
+});
+
+describe("buildItems", () => {
+  const players = [P("a", 1, 1), P("b", 2, 1), P("c", 3, 2)];
+
+  it("interleaves breaks before the player at their `above` index", () => {
+    const items = buildItems(players, [{ id: "x", above: 2 }]);
+    expect(items).toEqual<Item[]>([
+      { kind: "player", id: "a" },
+      { kind: "player", id: "b" },
+      { kind: "break", id: "x" },
+      { kind: "player", id: "c" },
+    ]);
+  });
+
+  it("emits a top break (above 0) before all players", () => {
+    const items = buildItems(players, [{ id: "t", above: 0 }]);
+    expect(items[0]).toEqual({ kind: "break", id: "t" });
+  });
+
+  it("emits a trailing break (above = N) after all players", () => {
+    const items = buildItems(players, [{ id: "z", above: 3 }]);
+    expect(items[items.length - 1]).toEqual({ kind: "break", id: "z" });
+  });
+
+  it("keeps duplicate breaks adjacent (empty tier)", () => {
+    const items = buildItems(players, [
+      { id: "x", above: 2 },
+      { id: "y", above: 2 },
+    ]);
+    const ids = items.map((i) => i.id);
+    expect(ids).toEqual(["a", "b", "x", "y", "c"]);
   });
 });

@@ -34,3 +34,28 @@ export function tiersFromBreaks(players: Player[], breaks: Break[]): Player[] {
     tier: 1 + sorted.filter((b) => b.above <= i).length,
   }));
 }
+
+export type Item =
+  | { kind: "player"; id: string }
+  | { kind: "break"; id: string };
+
+// Interleave players and breaks into one ordered dnd list. Breaks with the same
+// `above` keep their sorted order (stable, so duplicates stay adjacent).
+export function buildItems(players: Player[], breaks: Break[]): Item[] {
+  const list = ordered(players);
+  const sorted = sortedBreaks(breaks);
+  const items: Item[] = [];
+  let b = 0;
+  const flushBreaksAt = (idx: number) => {
+    while (b < sorted.length && sorted[b].above === idx) {
+      items.push({ kind: "break", id: sorted[b].id });
+      b++;
+    }
+  };
+  for (let i = 0; i < list.length; i++) {
+    flushBreaksAt(i);
+    items.push({ kind: "player", id: list[i].id });
+  }
+  flushBreaksAt(list.length); // trailing breaks
+  return items;
+}
