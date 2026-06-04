@@ -327,7 +327,9 @@ export function Toolbar(props: Props) {
                 props.onFetch();
               }}
             >
-              {props.fetching ? "Fetching…" : "Fetch players"}
+              {props.fetching
+                ? "Refetching…"
+                : "⟳ Refetch data (keeps your tiers)"}
             </button>
             <button
               className="menu-item"

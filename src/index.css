@@ -291,6 +291,60 @@ body {
   padding: 0.2rem 0;
 }
 
+/* Transient toast (refetch result, error-log cleared, …) */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 1.5rem;
+  transform: translateX(-50%);
+  z-index: 60;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.6rem 1rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  max-width: 90vw;
+}
+
+/* Gated /dev diagnostics panel */
+.dev-panel {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+.dev-panel .dev-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.dev-panel section {
+  margin: 1.25rem 0;
+  border-top: 1px solid var(--border);
+  padding-top: 0.75rem;
+}
+.dev-panel .dev-list {
+  margin: 0.25rem 0;
+  padding-left: 1.1rem;
+  font-size: 0.85rem;
+  max-height: 18rem;
+  overflow-y: auto;
+}
+.dev-panel .muted {
+  color: var(--muted);
+}
+.dev-panel .dev-danger {
+  color: #ff6b4a;
+  border-color: #ff6b4a;
+}
+.crash-fallback {
+  max-width: 28rem;
+  margin: 4rem auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
 table.players {
   border-collapse: collapse;
   /* left gutter so the row-hover "+" (add tier) can poke out and stay clickable */

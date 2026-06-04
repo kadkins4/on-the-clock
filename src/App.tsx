@@ -23,8 +23,13 @@ import {
   saveColumnLayout,
   loadColumnScopePref,
   saveColumnScopePref,
+  loadRefetchResult,
+  saveRefetchResult,
+  loadErrorLog,
+  clearErrorLog,
+  type RefetchResult,
 } from "./lib/storage";
-import { fetchEspnPlayers } from "./lib/fetchEspn";
+import { fetchEspnPlayers, EspnShapeError } from "./lib/fetchEspn";
 import { fetchAdp } from "./lib/fetchAdp";
 import { searchPlayers } from "./lib/search";
 import {
@@ -33,12 +38,14 @@ import {
   toggleChip,
   applyMacro,
 } from "./lib/posFilter";
-import type { Position, SortKey } from "./types";
+import type { Player, Position, SortKey } from "./types";
 import { POSITIONS } from "./types";
+import seed from "./data/seed.json";
 import { draftedByPosition } from "./lib/counts";
 import { Toolbar } from "./components/Toolbar";
 import { ColumnManager } from "./components/board/ColumnManager";
 import { ColumnScopePrompt } from "./components/board/ColumnScopePrompt";
+import { DevPanel } from "./components/dev/DevPanel";
 import { PlayerTable, type DisplayGroup } from "./components/PlayerTable";
 import { MockMode } from "./components/mock/MockMode";
 import { Intro } from "./components/Intro";
@@ -159,10 +166,22 @@ export default function App() {
   const [fetching, setFetching] = useState(false);
   const [adpStatus, setAdpStatus] = useState<string | null>(null);
   const [mockMode, setMockMode] = useState(false);
+  // Gated diagnostics (?dev=1) + the refetch guard result + a transient toast.
+  const devMode =
+    new URLSearchParams(window.location.search).get("dev") === "1";
+  const [refetchResult, setRefetchResult] = useState<RefetchResult | null>(
+    loadRefetchResult,
+  );
+  const [toast, setToast] = useState<string | null>(null);
   // Empty tiers are session-only: each entry is the id of the player the empty
   // tier sits directly above. Never persisted or exported.
   const [emptyTiers, setEmptyTiers] = useState<string[]>([]);
 
+  useEffect(() => {
+    if (!toast) return;
+    const t = setTimeout(() => setToast(null), 4000);
+    return () => clearTimeout(t);
+  }, [toast]);
   useEffect(() => {
     localStorage.setItem(HIDE_K_KEY, hideK ? "1" : "0");
   }, [hideK]);
@@ -317,19 +336,48 @@ export default function App() {
     if (fetching) return;
     if (
       !confirm(
-        "Fetch the latest players from ESPN?\n\nYour tiers, targets, draft picks and notes are kept. Player data (team, ADP, injuries) is refreshed and any new players are added.",
+        "Refetch the latest players from ESPN?\n\nKeeps your tiers, targets, draft picks and notes. Refreshes team, ADP, projections, last-season stats and injuries; adds any new players.",
       )
     )
       return;
     setFetching(true);
     try {
+      // The shape guard runs inside fetchEspnPlayers; we only dispatch on a
+      // clean pull, so a malformed ESPN response leaves the board untouched.
       const fetched = await fetchEspnPlayers();
       dispatch({ type: "merge", fetched });
+      const r: RefetchResult = {
+        ok: true,
+        at: Date.now(),
+        count: fetched.length,
+      };
+      setRefetchResult(r);
+      saveRefetchResult(r);
+      setToast(`Refetched ${fetched.length} players.`);
     } catch (err) {
-      alert("Fetch failed: " + (err as Error).message);
+      const shape = err instanceof EspnShapeError;
+      const r: RefetchResult = {
+        ok: false,
+        at: Date.now(),
+        reason: shape ? (err as EspnShapeError).message : "fetch-failed",
+        fingerprint: shape
+          ? (err as EspnShapeError).fingerprint
+          : String((err as Error).message ?? err),
+      };
+      setRefetchResult(r);
+      saveRefetchResult(r);
+      setToast(
+        shape
+          ? "Couldn't refresh — ESPN's data may have changed. Your board is unchanged."
+          : "Refetch failed. Your board is unchanged.",
+      );
     } finally {
       setFetching(false);
     }
+  };
+
+  const onResetBoard = () => {
+    dispatch({ type: "setAll", players: seed as unknown as Player[] });
   };
 
   const onRefreshAdp = async () => {
@@ -467,6 +515,26 @@ export default function App() {
       .replace(/[^\w.-]+/g, "-")
       .replace(/^-+|-+$/g, "")
       .toLowerCase() || "rankings";
+
+  if (devMode) {
+    return (
+      <div className="app">
+        <DevPanel
+          players={players}
+          refetch={refetchResult}
+          errors={loadErrorLog()}
+          onClearErrors={() => {
+            clearErrorLog();
+            setToast("Cleared error log.");
+          }}
+          onResetBoard={onResetBoard}
+          onClose={() => {
+            window.location.search = "";
+          }}
+        />
+      </div>
+    );
+  }
 
   if (mockMode) {
     return (
@@ -649,6 +717,7 @@ export default function App() {
           onCancel={() => setPendingLayout(null)}
         />
       )}
+      {toast && <div className="toast">{toast}</div>}
     </div>
   );
 }
