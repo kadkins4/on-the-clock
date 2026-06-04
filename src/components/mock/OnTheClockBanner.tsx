@@ -2,6 +2,9 @@ import { useState } from "react";
 import type { ReactNode } from "react";
 import type { MockState } from "../../lib/mock/types";
 import { OnTheClockReveal } from "./OnTheClockReveal";
+import { Avatar } from "./Avatar";
+import { currentTeamIndex } from "../../lib/mock/engine";
+import { formatPick } from "../../lib/mock/board";
 
 // Pick-clock durations for the settings cog. null = Off.
 const TIMER_OPTIONS: { value: number | null; label: string }[] = [
@@ -66,6 +69,8 @@ export function OnTheClockBanner({
   timer,
 }: Props) {
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const onClock = currentTeamIndex(state);
+  const team = state.teams[onClock];
 
   return (
     <div className="mock-banner">
@@ -83,6 +88,26 @@ export function OnTheClockBanner({
             )}
           </span>
         </div>
+
+        {!isComplete && team && (
+          <div className="otc-banner-team">
+            <Avatar
+              initials={team.initials}
+              color={team.color}
+              size={30}
+              ring={isUser}
+            />
+            <div className="obt-who">
+              <div className="obt-lbl">On the clock</div>
+              <div className="obt-name">
+                {team.name}{" "}
+                <span className="obt-pick">
+                  · {formatPick(overall, state.settings.teams)}
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="mock-banner-right">
           {isUser && !isComplete && timer}

@@ -803,9 +803,32 @@ table.players th.sorted {
 }
 .mock-banner-main {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 16px;
+}
+.otc-banner-team {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+}
+.obt-lbl {
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #34d399;
+}
+.obt-name {
+  font-weight: 800;
+  font-size: 15px;
+}
+.obt-pick {
+  font-size: 11px;
+  color: #8b93a4;
+  font-weight: 600;
 }
 .otc-banner-status {
   display: flex;
@@ -1965,42 +1988,6 @@ table.players th.sorted {
 }
 .pos-DST {
   --c: var(--pos-DST);
-}
-
-/* --- On-the-clock card --- */
-.otc-clockcard {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 14px;
-  background: #10141d;
-  border: 1px solid #232938;
-  border-radius: 12px;
-  margin: 8px 0;
-}
-.otc-clockcard.you {
-  background: #0f1a14;
-  border-color: #245c39;
-}
-.occ-who {
-  flex: 1;
-}
-.occ-name {
-  font-weight: 800;
-  font-size: 15px;
-}
-.occ-pick {
-  font-size: 11px;
-  color: #8b93a4;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-.occ-timer {
-  font-size: 22px;
-  font-weight: 800;
-}
-.otc-clockcard.you .occ-timer {
-  color: #7ff0bd;
 }
 
 /* --- PickPool --- */
