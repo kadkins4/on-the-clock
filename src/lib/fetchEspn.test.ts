@@ -377,4 +377,18 @@ describe("validateEspnShape", () => {
     const raw = Array.from({ length: 250 }, () => ({ player: { foo: 1 } }));
     expect(validateEspnShape(raw).ok).toBe(false);
   });
+  it("rejects mappable rows with out-of-range ADP (spot-check)", () => {
+    const raw = Array.from({ length: 250 }, (_, i) => row(i + 1, i + 1, 9999));
+    const r = validateEspnShape(raw);
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.reason).toBe("rows-malformed");
+  });
+  it("passes a healthy payload even when unranked rows come first", () => {
+    // mirrors the real ESPN order: junk/unranked rows precede ranked ones
+    const junk = Array.from({ length: 12 }, () => ({
+      player: { id: 0, active: false, defaultPositionId: 99 },
+    }));
+    const good = Array.from({ length: 250 }, (_, i) => row(i + 1, i + 1));
+    expect(validateEspnShape([...junk, ...good]).ok).toBe(true);
+  });
 });

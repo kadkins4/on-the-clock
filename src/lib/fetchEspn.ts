@@ -217,31 +217,29 @@ export function validateEspnShape(rawPlayers: unknown): ShapeResult {
       fingerprint: `ranked=${ranked} total=${rows.length}`,
     };
   }
-  // spot-check the first N mapped rows for required fields + sane ranges
+  // Spot-check the first N rows we'd actually map (ESPN's payload isn't sorted
+  // by rank and carries unranked/IDP rows, so we filter to mappable candidates —
+  // a PPR rank + a known position — then sanity-check id + ADP range on those).
+  let checked = 0;
   let bad = 0;
   let firstBad = "";
-  for (const e of rows.slice(0, SPOT_CHECK)) {
+  for (const e of rows) {
     const p = e.player ?? (e as unknown as EspnPlayer);
     const rank = p?.draftRanksByRankType?.PPR?.rank;
+    if (rank == null || POS[p?.defaultPositionId] == null) continue;
     const adp = p?.ownership?.averageDraftPosition ?? 0;
-    const ok =
-      p &&
-      p.id != null &&
-      POS[p.defaultPositionId] != null &&
-      typeof rank === "number" &&
-      rank >= 1 &&
-      adp >= 0 &&
-      adp <= 400;
+    const ok = p.id != null && rank >= 1 && adp >= 0 && adp <= 400;
     if (!ok) {
       bad++;
       if (!firstBad) firstBad = (JSON.stringify(p) ?? "null").slice(0, 120);
     }
+    if (++checked >= SPOT_CHECK) break;
   }
-  if (bad > SPOT_CHECK / 2) {
+  if (checked === 0 || bad > SPOT_CHECK / 2) {
     return {
       ok: false,
       reason: "rows-malformed",
-      fingerprint: `bad=${bad}/${SPOT_CHECK} first=${firstBad}`,
+      fingerprint: `bad=${bad}/${checked} first=${firstBad}`,
     };
   }
   return { ok: true, ranked };
