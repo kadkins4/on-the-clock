@@ -24,7 +24,12 @@ export interface Player {
   byeWeek: number | null;
   tier: number | null; // null = "Untiered" group
   adp: number | null; // blended (mean of available sources); board sorts on this
-  adpSources?: { espn?: number | null; ffc?: number | null };
+  adpSources?: {
+    espn?: number | null;
+    ffc?: number | null;
+    fantasypros?: number | null;
+    yahoo?: number | null;
+  };
   // Raw projected stat line (offensive players only) — scored at the league's
   // settings to produce projected points for VOR. K/DST have no line.
   projStats?: ProjStats | null;

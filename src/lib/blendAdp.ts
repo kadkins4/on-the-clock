@@ -4,6 +4,8 @@ import { adpMatchKey, type NormalizedAdp } from "./ffcAdp";
 export interface AdpSources {
   espn?: number | null;
   ffc?: number | null;
+  fantasypros?: number | null;
+  yahoo?: number | null;
 }
 
 // Mean of available sources. Single source passes through unrounded so an
