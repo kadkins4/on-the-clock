@@ -18,6 +18,7 @@ import { OnTheClockBanner } from "./OnTheClockBanner";
 import { StopwatchMark } from "./StopwatchMark";
 import { Avatar } from "./Avatar";
 import { PickPool, type PoolCol, POOL_COL_CAP } from "./PickPool";
+import { PlayerPanel } from "./PlayerPanel";
 
 interface Props {
   state: MockState;
@@ -268,6 +269,15 @@ export function MockDraft({
         onPickClick={(o) => setMenuFor(o)}
       />
       <PickStrip state={state} onPickClick={(o) => setMenuFor(o)} />
+
+      <PlayerPanel
+        player={
+          openPlayer
+            ? (state.pool.find((p) => p.id === openPlayer) ?? null)
+            : null
+        }
+        onClose={() => setOpenPlayer(null)}
+      />
 
       {/* Edit a made pick: resume from here, replace the player, or undo it. */}
       {menuFor != null && (
