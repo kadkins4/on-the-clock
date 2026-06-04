@@ -36,6 +36,13 @@ function adpDevApi(): Plugin {
 
 export default defineConfig({
   plugins: [react(), adpDevApi()],
+  build: {
+    // The mock-draft engine and ?dev=1 panel are code-split (see App.tsx). What
+    // remains in the main chunk is the framework baseline (React-DOM + dnd-kit
+    // for tier/column drag), which the board needs at first paint and isn't
+    // worth splitting further. Lift the advisory limit just above that baseline.
+    chunkSizeWarningLimit: 600,
+  },
   test: {
     environment: "jsdom",
   },

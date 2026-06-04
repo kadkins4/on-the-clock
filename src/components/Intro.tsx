@@ -112,17 +112,17 @@ export function Intro({ replay = 0 }: { replay?: number }) {
       className={`otc-intro ${phase === "leaving" ? "leaving" : ""}`}
       onClick={skip}
       role="presentation"
+      onAnimationEnd={
+        phase === "leaving"
+          ? (e) => {
+              // Only the cover's own fade-out ends the splash — not the child
+              // mark/type animations that also bubble an animationend here.
+              if (e.target === e.currentTarget) finish();
+            }
+          : undefined
+      }
     >
-      <div
-        className="otc-intro-panel"
-        onAnimationEnd={
-          phase === "leaving"
-            ? (e) => {
-                if (e.target === e.currentTarget) finish();
-              }
-            : undefined
-        }
-      >
+      <div className="otc-intro-panel">
         <svg
           className="otc-intro-mark"
           viewBox="0 0 64 64"

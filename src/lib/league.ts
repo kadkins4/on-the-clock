@@ -9,6 +9,7 @@ import type {
 } from "../types";
 import type { Board } from "../state/reducer";
 import { defaultValueThreshold } from "./draftValue";
+import { uid } from "./uid";
 
 // --- Tier-list accessors ----------------------------------------------------
 // Each falls back to the first list if the stored id has gone missing, so a
@@ -50,9 +51,9 @@ export function makeLeague(opts: {
   platform?: Platform;
   teams?: number;
 }): League {
-  const listId = crypto.randomUUID();
+  const listId = uid();
   return {
-    id: crypto.randomUUID(),
+    id: uid(),
     name: opts.name,
     platform: opts.platform ?? "other",
     scoring: opts.scoring ?? "ppr",

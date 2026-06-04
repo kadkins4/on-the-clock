@@ -1298,11 +1298,22 @@ table.players th.sorted {
 }
 
 /* --- Intro splash: typewriter + crisp stopwatch, fades to the board --- */
+.route-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  color: var(--muted, #8a90a2);
+  font-weight: 600;
+}
 .otc-intro {
   position: fixed;
   inset: 0;
   z-index: 200;
   cursor: pointer;
+  /* Opaque from the first painted frame so the board never flashes through
+     before the splash. Content (mark + type) animates in on its own below. */
+  background: #0b0e14;
 }
 .otc-intro-panel {
   position: absolute;
@@ -1312,10 +1323,9 @@ table.players th.sorted {
   align-items: center;
   justify-content: center;
   gap: 18px;
-  background: #0b0e14;
-  animation: otc-bg-in 0.3s ease;
 }
-.otc-intro.leaving .otc-intro-panel {
+/* Fade the whole opaque cover out on leave so the board is revealed smoothly. */
+.otc-intro.leaving {
   animation: otc-fade-out 0.42s ease forwards;
 }
 /* crisp stopwatch: ring draws, hands sweep into place */
@@ -1364,14 +1374,6 @@ table.players th.sorted {
   animation: otc-blink 0.9s steps(1) infinite;
 }
 
-@keyframes otc-bg-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
 @keyframes otc-fade-out {
   to {
     opacity: 0;
@@ -1401,7 +1403,7 @@ table.players th.sorted {
     animation-duration: 0.01s;
     animation-delay: 0s;
   }
-  .otc-intro.leaving .otc-intro-panel {
+  .otc-intro.leaving {
     animation-duration: 0.2s;
   }
   .otc-caret {

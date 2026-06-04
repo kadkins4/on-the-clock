@@ -9,6 +9,8 @@ import {
   DEFAULT_LAYOUT,
   type ColumnLayout,
 } from "./columnLayout";
+import { safeStorage } from "./safeStorage";
+import { uid } from "./uid";
 
 const LISTS_KEY = "ff-cheat-sheet:lists:v1";
 const OLD_KEY = "ff-cheat-sheet:players:v2"; // pre-named-lists single board
@@ -81,7 +83,7 @@ export function migrateLeaguesV1toV2(state: LeaguesState): LeaguesState {
     leagues: state.leagues.map((l) => {
       if (Array.isArray((l as { tierLists?: unknown }).tierLists)) return l;
       const { board = [], ...rest } = l as League & { board?: Player[] };
-      const id = crypto.randomUUID();
+      const id = uid();
       return {
         ...rest,
         tierLists: [{ id, name: "Default", board }],
@@ -171,7 +173,7 @@ export function saveColumnLayout(layout: ColumnLayout): void {
 }
 
 export function loadColumnScopePref(): ColumnScopePref {
-  const v = localStorage.getItem(COL_SCOPE_KEY);
+  const v = safeStorage.getItem(COL_SCOPE_KEY);
   return v === "all" || v === "this" ? v : "ask";
 }
 

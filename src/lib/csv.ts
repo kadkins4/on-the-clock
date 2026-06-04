@@ -1,5 +1,6 @@
 import type { Player, Position, Flag, DraftStatus } from "../types";
 import { POSITIONS } from "../types";
+import { uid } from "./uid";
 
 const HEADER = [
   "rank",
@@ -113,7 +114,7 @@ export function parseCsv(text: string): Player[] {
     const get = (idx: number) => (idx >= 0 && idx < f.length ? f[idx] : "");
     const rankVal = numOrNull(get(ci.rank));
     players.push({
-      id: crypto.randomUUID(),
+      id: uid(),
       name: get(ci.name).trim(),
       position: toPosition(get(ci.position)),
       team: get(ci.team).trim() || "FA",

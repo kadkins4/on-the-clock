@@ -1,6 +1,7 @@
 import type { League, LeaguesState, Player } from "../types";
 import type { ColumnLayout } from "../lib/columnLayout";
 import { makeLeague, activeTierList } from "../lib/league";
+import { uid } from "../lib/uid";
 import {
   reassignOverallRanks,
   moveAndRetier,
@@ -174,7 +175,7 @@ export function leaguesReducer(
       // remapping the active/default pointers onto the new ids.
       const idMap = new Map<string, string>();
       const tierLists = src.tierLists.map((t) => {
-        const id = crypto.randomUUID();
+        const id = uid();
         idMap.set(t.id, id);
         return {
           id,
@@ -231,7 +232,7 @@ export function leaguesReducer(
       const name = action.name.trim();
       const current = state.leagues.find((l) => l.id === state.currentId);
       if (!name || !current) return state;
-      const id = crypto.randomUUID();
+      const id = uid();
       const board = normalize(orderByAdp(seed as unknown as Player[]));
       return mapLeague(state, current.id, (l) => ({
         ...l,
@@ -243,7 +244,7 @@ export function leaguesReducer(
       const name = action.name.trim();
       const current = state.leagues.find((l) => l.id === state.currentId);
       if (!name || !current) return state;
-      const id = crypto.randomUUID();
+      const id = uid();
       const source = activeTierList(current);
       const board = source.board.map((p) => ({ ...p }));
       return mapLeague(state, current.id, (l) => ({

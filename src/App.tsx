@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, lazy, Suspense } from "react";
 import { useRankings } from "./state/useRankings";
 import { useDelayedHide } from "./state/useDelayedHide";
 import {
@@ -29,6 +29,7 @@ import {
   clearErrorLog,
   type RefetchResult,
 } from "./lib/storage";
+import { safeStorage } from "./lib/safeStorage";
 import { fetchEspnPlayers, EspnShapeError } from "./lib/fetchEspn";
 import { fetchAdp } from "./lib/fetchAdp";
 import { searchPlayers } from "./lib/search";
@@ -45,10 +46,18 @@ import { draftedByPosition } from "./lib/counts";
 import { Toolbar } from "./components/Toolbar";
 import { ColumnManager } from "./components/board/ColumnManager";
 import { ColumnScopePrompt } from "./components/board/ColumnScopePrompt";
-import { DevPanel } from "./components/dev/DevPanel";
 import { PlayerTable, type DisplayGroup } from "./components/PlayerTable";
-import { MockMode } from "./components/mock/MockMode";
 import { Intro } from "./components/Intro";
+
+// Split off the routes a first-time visitor doesn't hit on load: the whole
+// mock-draft engine (only on entering a mock) and the ?dev=1 diagnostics panel.
+// Keeps them out of the initial bundle.
+const MockMode = lazy(() =>
+  import("./components/mock/MockMode").then((m) => ({ default: m.MockMode })),
+);
+const DevPanel = lazy(() =>
+  import("./components/dev/DevPanel").then((m) => ({ default: m.DevPanel })),
+);
 import { AlphaBanner } from "./components/AlphaBanner";
 import { Wordmark } from "./components/Wordmark";
 
@@ -95,13 +104,13 @@ export default function App() {
   const [byeFilter, setByeFilter] = useState<number | null>(null);
   const [hideK, setHideK] = useState(
     () =>
-      localStorage.getItem(HIDE_K_KEY) === "1" ||
-      localStorage.getItem(OLD_HIDE_KDST_KEY) === "1",
+      safeStorage.getItem(HIDE_K_KEY) === "1" ||
+      safeStorage.getItem(OLD_HIDE_KDST_KEY) === "1",
   );
   const [hideDst, setHideDst] = useState(
     () =>
-      localStorage.getItem(HIDE_DST_KEY) === "1" ||
-      localStorage.getItem(OLD_HIDE_KDST_KEY) === "1",
+      safeStorage.getItem(HIDE_DST_KEY) === "1" ||
+      safeStorage.getItem(OLD_HIDE_KDST_KEY) === "1",
   );
   const [sortKey, setSortKey] = useState<SortKey | null>(null);
   const [sortAsc, setSortAsc] = useState(true);
@@ -183,10 +192,10 @@ export default function App() {
     return () => clearTimeout(t);
   }, [toast]);
   useEffect(() => {
-    localStorage.setItem(HIDE_K_KEY, hideK ? "1" : "0");
+    safeStorage.setItem(HIDE_K_KEY, hideK ? "1" : "0");
   }, [hideK]);
   useEffect(() => {
-    localStorage.setItem(HIDE_DST_KEY, hideDst ? "1" : "0");
+    safeStorage.setItem(HIDE_DST_KEY, hideDst ? "1" : "0");
   }, [hideDst]);
   // Session empty-tier markers are anchored by player id; clear them when the
   // active league changes so a stale anchor can't render a phantom empty tier.
@@ -519,19 +528,21 @@ export default function App() {
   if (devMode) {
     return (
       <div className="app">
-        <DevPanel
-          players={players}
-          refetch={refetchResult}
-          errors={loadErrorLog()}
-          onClearErrors={() => {
-            clearErrorLog();
-            setToast("Cleared error log.");
-          }}
-          onResetBoard={onResetBoard}
-          onClose={() => {
-            window.location.search = "";
-          }}
-        />
+        <Suspense fallback={<div className="route-loading">Loading…</div>}>
+          <DevPanel
+            players={players}
+            refetch={refetchResult}
+            errors={loadErrorLog()}
+            onClearErrors={() => {
+              clearErrorLog();
+              setToast("Cleared error log.");
+            }}
+            onResetBoard={onResetBoard}
+            onClose={() => {
+              window.location.search = "";
+            }}
+          />
+        </Suspense>
       </div>
     );
   }
@@ -539,13 +550,15 @@ export default function App() {
   if (mockMode) {
     return (
       <div className="app">
-        <MockMode
-          league={currentLeague}
-          onExit={() => setMockMode(false)}
-          onSetValueFlags={(listId, valueFlags) =>
-            dispatch({ type: "setListValueFlags", listId, valueFlags })
-          }
-        />
+        <Suspense fallback={<div className="route-loading">Loading…</div>}>
+          <MockMode
+            league={currentLeague}
+            onExit={() => setMockMode(false)}
+            onSetValueFlags={(listId, valueFlags) =>
+              dispatch({ type: "setListValueFlags", listId, valueFlags })
+            }
+          />
+        </Suspense>
       </div>
     );
   }
