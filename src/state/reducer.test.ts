@@ -82,6 +82,18 @@ describe("boardReducer", () => {
     expect(out.map((p) => p.id)).toEqual(["c", "a", "b"]);
     expect(out.map((p) => p.overallRank)).toEqual([1, 2, 3]);
   });
+
+  it("move with a break id as activeId re-tiers without reordering players", () => {
+    const out = boardReducer(
+      {
+        players: [mk("a", 1), mk("b", 2), mk("c", 3)],
+        breaks: [{ id: "br1", above: 2 }],
+      },
+      { type: "move", activeId: "br1", overId: "a" },
+    );
+    expect(out.players.map((p) => p.id)).toEqual(["a", "b", "c"]);
+    expect(out.breaks).toEqual([{ id: "br1", above: 0 }]);
+  });
 });
 
 import { leaguesReducer } from "./reducer";
