@@ -38,8 +38,12 @@ import {
   toggleChip,
   applyMacro,
 } from "./lib/posFilter";
-import type { Player, Position, SortKey } from "./types";
+import type { Break, Player, Position, SortKey } from "./types";
 import { POSITIONS } from "./types";
+
+// Stable empty-breaks fallback so the row memo doesn't re-run every render for
+// legacy boards whose `breaks` haven't been derived yet.
+const EMPTY_BREAKS: Break[] = [];
 import seed from "./data/seed.json";
 import { draftedByPosition } from "./lib/counts";
 import { Toolbar } from "./components/Toolbar";
@@ -284,7 +288,7 @@ export default function App() {
 
   const activeBreaks =
     currentLeague.tierLists.find((t) => t.id === activeTierListId)?.breaks ??
-    [];
+    EMPTY_BREAKS;
 
   // Breaks-driven interleaved row model replacing the old groups/display memos.
   const { rows, itemIds } = useMemo(() => {

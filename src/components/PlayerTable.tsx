@@ -118,11 +118,11 @@ export function PlayerTable({
             strategy={verticalListSortingStrategy}
           >
             {grouped
-              ? rows.map((r, i) => {
+              ? rows.map((r) => {
                   if (r.kind === "topHeader") {
                     return (
                       <TierHeader
-                        key={`topHeader-${i}`}
+                        key="topHeader"
                         tier={1}
                         displayTier={r.displayTier}
                         count={r.count}

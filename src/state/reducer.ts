@@ -288,7 +288,7 @@ export function leaguesReducer(
             id,
             name,
             board,
-            breaks: source.breaks,
+            breaks: source.breaks?.map((b) => ({ ...b })),
             valueFlags: source.valueFlags,
           },
         ],

@@ -18,7 +18,7 @@ function mk(id: string, over: number, tier: number | null = 1): Player {
   };
 }
 
-describe("rankingReducer", () => {
+describe("boardReducer", () => {
   const base = [mk("a", 1), mk("b", 2), mk("c", 3)];
 
   it("setAll sorts by rank and reassigns 1-based ranks", () => {
@@ -54,6 +54,16 @@ describe("rankingReducer", () => {
     ).players;
     expect(out.map((p) => p.id)).toEqual(["b", "c"]);
     expect(out.map((p) => p.overallRank)).toEqual([1, 2]);
+  });
+
+  it("remove shifts breaks below the removed player up by one", () => {
+    const out = boardReducer(
+      { players: base, breaks: [{ id: "br1", above: 2 }] },
+      { type: "remove", id: "a" },
+    );
+    // break sat above index 2 (before "c"); removing "a" (index 0) shifts it to 1
+    expect(out.players.map((p) => p.id)).toEqual(["b", "c"]);
+    expect(out.breaks).toEqual([{ id: "br1", above: 1 }]);
   });
 
   it("update can set draftStatus", () => {
@@ -236,7 +246,7 @@ describe("leaguesReducer — review fixes (M1/L4/M2)", () => {
 
   it("L4: a no-op delegated action returns the same state (no updatedAt bump)", () => {
     const s = twoLeagues();
-    // moveAndRetier with activeId === overId is a no-op (same board ref)
+    // applyDrag with activeId === overId returns the same refs (no-op)
     const next = leaguesReducer(s, {
       type: "move",
       activeId: "1",
