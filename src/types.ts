@@ -71,12 +71,21 @@ export interface RosterSettings {
   disabled: Position[]; // positions removed from this league entirely
 }
 
+// A tier boundary. `above` = how many players sit above this break in the
+// overall-rank ordering. Sorted by `above`; duplicates = an empty tier. The
+// stable `id` keeps duplicate breaks distinct and is the dnd-kit sortable id.
+export interface Break {
+  id: string;
+  above: number;
+}
+
 // A named ranking within a league. A league owns several (e.g. "Balanced",
 // "RB-heavy"); ids are stable so renaming can't orphan active/default pointers.
 export interface TierList {
   id: string;
   name: string;
   board: Player[];
+  breaks?: Break[]; // tier boundaries; source of truth. Absent => derive from tier.
   // Reach/value cue config for this list. Absent => enabled, auto threshold.
   valueFlags?: { enabled: boolean; threshold: number | null };
 }
