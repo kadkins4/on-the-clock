@@ -17,7 +17,7 @@ import { DraftBoardGrid } from "./DraftBoardGrid";
 import { OnTheClockBanner } from "./OnTheClockBanner";
 import { StopwatchMark } from "./StopwatchMark";
 import { Avatar } from "./Avatar";
-import { PickPool } from "./PickPool";
+import { PickPool, type PoolCol, POOL_COL_CAP } from "./PickPool";
 
 interface Props {
   state: MockState;
@@ -55,6 +55,7 @@ export function MockDraft({
   const [posFilter, setPosFilter] = useState<Position | "All">("All");
   const [boardOpen, setBoardOpen] = useState(false);
   const [openPlayer, setOpenPlayer] = useState<string | null>(null);
+  const [extraCols, setExtraCols] = useState<PoolCol[]>(["bye"]);
   const [paused, setPaused] = useState(false);
   const [menuFor, setMenuFor] = useState<number | null>(null); // pick popover
   const [replaceSearch, setReplaceSearch] = useState("");
@@ -144,6 +145,15 @@ export function MockDraft({
   );
 
   const myPositions = teamRosterPositions(state, userTeamIndex);
+
+  const toggleCol = (c: PoolCol) =>
+    setExtraCols((cur) =>
+      cur.includes(c)
+        ? cur.filter((x) => x !== c)
+        : cur.length >= POOL_COL_CAP
+          ? cur
+          : [...cur, c],
+    );
 
   // Undo / resume-from-here edit history, so pause the bots — otherwise they'd
   // immediately re-draft the slot you just cleared.
@@ -243,6 +253,8 @@ export function MockDraft({
         players={avail.slice(0, 100)}
         canDraft={isUser && !revealing}
         overall={overall}
+        extraCols={extraCols}
+        onToggleCol={toggleCol}
         onDraft={onDraft}
         onOpenPlayer={(id) => setOpenPlayer(id)}
       />

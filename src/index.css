@@ -1970,3 +1970,37 @@ table.players th.sorted {
   color: #7c869a;
   margin-bottom: 3px;
 }
+
+/* --- Pool optional columns --- */
+.pp-x {
+  font-size: 11px;
+  color: #8b93a4;
+  min-width: 30px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.pp-colbar {
+  display: flex;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: 11px;
+  color: #8b93a4;
+  align-items: center;
+}
+.pp-colbar button {
+  background: #10141d;
+  border: 1px solid #2b3242;
+  color: #aab2c2;
+  border-radius: 999px;
+  padding: 2px 9px;
+  cursor: pointer;
+}
+.pp-colbar button.on {
+  background: #16331f;
+  border-color: #245c39;
+  color: #7ff0bd;
+}
+.pp-colbar button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}

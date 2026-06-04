@@ -1,10 +1,15 @@
 import { useState } from "react";
 import type { Player } from "../../types";
 
+export type PoolCol = "bye" | "proj" | "vor";
+export const POOL_COL_CAP = 3;
+
 interface Props {
   players: Player[]; // already filtered by position chip, available
   canDraft: boolean;
   overall: number;
+  extraCols: PoolCol[];
+  onToggleCol: (c: PoolCol) => void;
   onDraft: (id: string) => void;
   onOpenPlayer: (id: string) => void;
 }
@@ -22,15 +27,45 @@ function groupByTier(
   return out;
 }
 
-export function PickPool({ players, canDraft, onDraft, onOpenPlayer }: Props) {
+export function PickPool({
+  players,
+  canDraft,
+  extraCols,
+  onToggleCol,
+  onDraft,
+  onOpenPlayer,
+}: Props) {
   const groups = groupByTier(players);
   const [note, setNote] = useState<{
     text: string;
     x: number;
     y: number;
   } | null>(null);
+
+  const atCap = extraCols.length >= POOL_COL_CAP;
+
   return (
     <div className="pickpool">
+      {/* Column toggle bar */}
+      <div className="pp-colbar">
+        <span>Columns:</span>
+        {(["bye", "proj", "vor"] as PoolCol[]).map((c) => {
+          const on = extraCols.includes(c);
+          const comingSoon = c === "proj" || c === "vor";
+          return (
+            <button
+              key={c}
+              className={on ? "on" : ""}
+              disabled={comingSoon || (!on && atCap)}
+              title={comingSoon ? "Coming soon" : undefined}
+              onClick={() => onToggleCol(c)}
+            >
+              {c === "bye" ? "Bye" : c === "proj" ? "Proj" : "VOR"}
+            </button>
+          );
+        })}
+      </div>
+
       {groups.map((g, i) => (
         <div key={i}>
           <div className="pp-tier">
@@ -72,6 +107,9 @@ export function PickPool({ players, canDraft, onDraft, onOpenPlayer }: Props) {
               <span className="pp-adp">
                 {p.adp == null ? "" : `ADP ${Number(p.adp.toFixed(1))}`}
               </span>
+              {extraCols.includes("bye") && (
+                <span className="pp-x">{p.byeWeek ?? "—"}</span>
+              )}
               <button
                 className="pp-draft"
                 disabled={!canDraft}
