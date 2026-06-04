@@ -53,8 +53,9 @@ export function MockDraft({
   onRewindTo,
 }: Props) {
   const [posFilter, setPosFilter] = useState<Position | "All">("All");
-  const [poolTab, setPoolTab] = useState<"board" | "queue">("board");
-  const [boardOpen, setBoardOpen] = useState(false);
+  const [poolTab, setPoolTab] = useState<"players" | "queue" | "board">(
+    "players",
+  );
   const [openPlayer, setOpenPlayer] = useState<string | null>(null);
   const [extraCols, setExtraCols] = useState<PoolCol[]>(["bye"]);
   const [paused, setPaused] = useState(false);
@@ -232,21 +233,12 @@ export function MockDraft({
         )}
       </div>
 
-      <div className="mock-boardtoggle">
-        <button
-          className={boardOpen ? "active" : ""}
-          onClick={() => setBoardOpen((v) => !v)}
-        >
-          {boardOpen ? "Hide board" : "Draft board"}
-        </button>
-      </div>
-
       <div className="pool-tabs">
         <button
-          className={poolTab === "board" ? "on" : ""}
-          onClick={() => setPoolTab("board")}
+          className={poolTab === "players" ? "on" : ""}
+          onClick={() => setPoolTab("players")}
         >
-          Board
+          Players
         </button>
         <button
           className={poolTab === "queue" ? "on" : ""}
@@ -254,9 +246,15 @@ export function MockDraft({
         >
           Queue
         </button>
+        <button
+          className={poolTab === "board" ? "on" : ""}
+          onClick={() => setPoolTab("board")}
+        >
+          Draft Board
+        </button>
       </div>
 
-      {poolTab === "board" && (
+      {poolTab === "players" && (
         <>
           <div className="chips">
             {POS_FILTERS.map((p) => (
@@ -292,15 +290,13 @@ export function MockDraft({
         </div>
       )}
 
-      <DraftBoardGrid
-        state={state}
-        open={boardOpen}
-        onClose={() => setBoardOpen(false)}
-        canDraft={isUser && !revealing}
-        onDraft={onDraft}
-        onPickClick={(o) => setMenuFor(o)}
-        timer={isUser ? timerUi : undefined}
-      />
+      {poolTab === "board" && (
+        <DraftBoardGrid
+          state={state}
+          onPickClick={(o) => setMenuFor(o)}
+          timer={isUser ? timerUi : undefined}
+        />
+      )}
       <PickStrip state={state} onPickClick={(o) => setMenuFor(o)} />
 
       <PlayerPanel
