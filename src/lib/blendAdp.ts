@@ -48,26 +48,41 @@ export function blendAdp(
   return adp;
 }
 
-// Non-destructive: match FFC ADP onto existing board players (by name+position,
-// DST by team), record it in adpSources.ffc, and recompute adp. Order, tiers,
-// flags, notes and draft status are untouched.
-export function applyFfcAdp(board: Player[], ffc: NormalizedAdp[]): Player[] {
-  const byKey = new Map<string, NormalizedAdp>();
-  for (const f of ffc) {
-    const key = adpMatchKey(f.position, f.name, f.team);
-    if (!byKey.has(key)) byKey.set(key, f); // first match wins on rare collisions
+export interface AdpInputs {
+  ffc?: NormalizedAdp[];
+  fantasypros?: NormalizedAdp[];
+  yahoo?: NormalizedAdp[];
+}
+
+function indexByKey(list?: NormalizedAdp[]): Map<string, NormalizedAdp> {
+  const m = new Map<string, NormalizedAdp>();
+  for (const a of list ?? []) {
+    const key = adpMatchKey(a.position, a.name, a.team);
+    if (!m.has(key)) m.set(key, a); // first match wins on rare collisions
   }
+  return m;
+}
+
+// Non-destructive: match each source's ADP onto board players (by name+position,
+// DST by team), record per-source values in adpSources, and recompute the
+// weighted adp. Order, tiers, flags, notes and draft status are untouched.
+export function applyAdp(board: Player[], inputs: AdpInputs): Player[] {
+  const ffcM = indexByKey(inputs.ffc);
+  const fpM = indexByKey(inputs.fantasypros);
+  const yM = indexByKey(inputs.yahoo);
   return board.map((p) => {
-    const match = byKey.get(adpMatchKey(p.position, p.name, p.team));
-    // Seed players carry `adp` but no adpSources yet — treat that existing
-    // number as the ESPN baseline so a first apply blends rather than discards.
+    const key = adpMatchKey(p.position, p.name, p.team);
+    // Seed players carry `adp` but no adpSources yet — treat the existing number
+    // as the ESPN baseline so a first apply blends rather than discards it.
     const espn = p.adpSources?.espn ?? p.adp;
-    const sources: AdpSources = {
-      espn,
-      ffc: match ? match.adp : (p.adpSources?.ffc ?? undefined),
-    };
-    if (sources.espn == null) delete sources.espn;
-    if (sources.ffc == null) delete sources.ffc;
-    return { ...p, adpSources: sources, adp: blendAdp(sources) };
+    const ffc = ffcM.get(key)?.adp ?? p.adpSources?.ffc;
+    const fantasypros = fpM.get(key)?.adp ?? p.adpSources?.fantasypros;
+    const yahoo = yM.get(key)?.adp ?? p.adpSources?.yahoo;
+    const sources: AdpSources = {};
+    if (espn != null) sources.espn = espn;
+    if (ffc != null) sources.ffc = ffc;
+    if (fantasypros != null) sources.fantasypros = fantasypros;
+    if (yahoo != null) sources.yahoo = yahoo;
+    return { ...p, adpSources: sources, adp: blendAdp(sources, p.position) };
   });
 }

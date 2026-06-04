@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { blendAdp, applyFfcAdp } from "./blendAdp";
+import { blendAdp, applyAdp } from "./blendAdp";
 import type { Player } from "../types";
 import type { NormalizedAdp } from "./ffcAdp";
 
@@ -50,8 +50,8 @@ describe("blendAdp", () => {
   });
 });
 
-describe("applyFfcAdp", () => {
-  it("matches by name+position, stores ffc, and reblends adp", () => {
+describe("applyAdp", () => {
+  it("matches by name+position, stores ffc, and reblends (weighted)", () => {
     const board: Player[] = [
       player({ id: "1", name: "A.J. Brown", position: "WR", adp: 14 }),
     ];
@@ -59,9 +59,29 @@ describe("applyFfcAdp", () => {
     const ffc: NormalizedAdp[] = [
       { name: "AJ Brown", position: "WR", team: "PHI", adp: 20 },
     ];
-    const out = applyFfcAdp(board, ffc);
+    const out = applyAdp(board, { ffc });
     expect(out[0].adpSources).toEqual({ espn: 14, ffc: 20 });
-    expect(out[0].adp).toBe(17);
+    expect(out[0].adp).toBeCloseTo((14 * 1 + 20 * 2) / 3, 5);
+  });
+
+  it("merges fantasypros and yahoo alongside ffc", () => {
+    const board: Player[] = [
+      player({ id: "1", name: "Bijan Robinson", position: "RB", adp: 2 }),
+    ];
+    const out = applyAdp(board, {
+      ffc: [{ name: "Bijan Robinson", position: "RB", team: "ATL", adp: 3 }],
+      fantasypros: [
+        { name: "Bijan Robinson", position: "RB", team: "ATL", adp: 4 },
+      ],
+      yahoo: [{ name: "Bijan Robinson", position: "RB", team: "ATL", adp: 5 }],
+    });
+    expect(out[0].adpSources).toEqual({
+      espn: 2,
+      ffc: 3,
+      fantasypros: 4,
+      yahoo: 5,
+    });
+    expect(out[0].adp).toBeCloseTo((2 + 6 + 12 + 10) / 8, 5);
   });
 
   it("matches DST by team, ignoring name spelling", () => {
@@ -69,32 +89,30 @@ describe("applyFfcAdp", () => {
       player({ id: "d", name: "Ravens D/ST", position: "DST", team: "BAL" }),
     ];
     board[0].adpSources = { espn: 130 };
-    const ffc: NormalizedAdp[] = [
-      { name: "Baltimore Defense", position: "DST", team: "BAL", adp: 132 },
-    ];
-    const out = applyFfcAdp(board, ffc);
+    const out = applyAdp(board, {
+      ffc: [
+        { name: "Baltimore Defense", position: "DST", team: "BAL", adp: 132 },
+      ],
+    });
     expect(out[0].adpSources?.ffc).toBe(132);
-    expect(out[0].adp).toBe(131);
+    expect(out[0].adp).toBeCloseTo((130 * 1 + 132 * 2) / 3, 5);
   });
 
-  it("treats an existing adp as the espn baseline when adpSources is absent (seed board)", () => {
-    // seed players have `adp` but no adpSources yet; a first Refresh ADP should
-    // blend FFC against that existing number, not discard it.
+  it("treats an existing adp as the espn baseline when adpSources is absent", () => {
     const board: Player[] = [
       player({ id: "1", name: "Bijan Robinson", position: "RB", adp: 2.3 }),
     ];
-    const ffc: NormalizedAdp[] = [
-      { name: "Bijan Robinson", position: "RB", team: "ATL", adp: 1.7 },
-    ];
-    const out = applyFfcAdp(board, ffc);
+    const out = applyAdp(board, {
+      ffc: [{ name: "Bijan Robinson", position: "RB", team: "ATL", adp: 1.7 }],
+    });
     expect(out[0].adpSources).toEqual({ espn: 2.3, ffc: 1.7 });
-    expect(out[0].adp).toBe(2);
+    expect(out[0].adp).toBeCloseTo((2.3 * 1 + 1.7 * 2) / 3, 5);
   });
 
-  it("leaves unmatched players' ffc unset and blend on espn only", () => {
+  it("leaves unmatched players on espn only", () => {
     const board: Player[] = [player({ id: "1", name: "Nobody Here", adp: 9 })];
     board[0].adpSources = { espn: 9 };
-    const out = applyFfcAdp(board, []);
+    const out = applyAdp(board, { ffc: [] });
     expect(out[0].adpSources).toEqual({ espn: 9 });
     expect(out[0].adp).toBe(9);
   });
@@ -110,7 +128,7 @@ describe("applyFfcAdp", () => {
         flag: "target",
       }),
     ];
-    const out = applyFfcAdp(board, []);
+    const out = applyAdp(board, { ffc: [] });
     expect(out.map((p) => p.id)).toEqual(["1", "2"]);
     expect(out[1].flag).toBe("target");
     expect(out[1].tier).toBe(2);

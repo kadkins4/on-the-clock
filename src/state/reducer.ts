@@ -18,7 +18,7 @@ import {
 } from "../lib/tierBreaks";
 import seed from "../data/seed.json";
 import { mergeFetched, type FetchedPlayer } from "../lib/fetchEspn";
-import { applyFfcAdp } from "../lib/blendAdp";
+import { applyAdp } from "../lib/blendAdp";
 import type { NormalizedAdp } from "../lib/ffcAdp";
 import { withByeWeeks } from "../lib/byes";
 
@@ -85,7 +85,7 @@ export function boardReducer(state: BoardState, action: Action): BoardState {
       return { players: merged, breaks: breaksFromTiers(merged) };
     }
     case "applyAdp": {
-      const next = applyFfcAdp(players, action.ffc);
+      const next = applyAdp(players, { ffc: action.ffc });
       return { players: next, breaks: breaksFromTiers(next) };
     }
     default:

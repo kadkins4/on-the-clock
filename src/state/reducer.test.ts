@@ -336,7 +336,7 @@ describe("leaguesReducer — applyAdp", () => {
     });
     const updated = activeBoard(next.leagues[0])[0];
     expect(updated.adpSources).toEqual({ espn: 10, ffc: 20 });
-    expect(updated.adp).toBe(15);
+    expect(updated.adp).toBeCloseTo((10 * 1 + 20 * 2) / 3, 5);
     expect(updated.id).toBe("1");
   });
 });
