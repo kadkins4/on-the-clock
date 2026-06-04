@@ -5,6 +5,8 @@ import {
   tiersFromBreaks,
   buildItems,
   applyDrag,
+  insertBreak,
+  removeBreak,
   type Item,
 } from "./tierBreaks";
 
@@ -138,5 +140,31 @@ describe("applyDrag", () => {
   it("is a no-op when active === over", () => {
     const out = applyDrag(players, breaks(), "a", "a");
     expect(out.players.map((p) => p.id)).toEqual(["a", "b", "c", "d"]);
+  });
+});
+
+describe("insertBreak", () => {
+  const players = [P("a", 1, 1), P("b", 2, 1), P("c", 3, 1)];
+
+  it("inserts a break above the given player (splitting a tier)", () => {
+    const out = insertBreak(players, [], "b"); // above index 1
+    expect(out.breaks.map((bk) => bk.above)).toEqual([1]);
+    expect(out.players.map((p) => p.tier)).toEqual([1, 2, 2]);
+  });
+
+  it("inserting above a player that already starts a tier creates an empty tier", () => {
+    const withBreak = [{ id: "x", above: 1 }];
+    const out = insertBreak(players, withBreak, "b"); // duplicate above=1
+    expect(out.breaks.map((bk) => bk.above).sort()).toEqual([1, 1]);
+    expect(out.players.map((p) => p.tier)).toEqual([1, 3, 3]);
+  });
+});
+
+describe("removeBreak", () => {
+  it("removes the break by id and re-derives tiers", () => {
+    const players = [P("a", 1, 1), P("b", 2, 2)];
+    const out = removeBreak(players, [{ id: "x", above: 1 }], "x");
+    expect(out.breaks).toEqual([]);
+    expect(out.players.map((p) => p.tier)).toEqual([1, 1]);
   });
 });

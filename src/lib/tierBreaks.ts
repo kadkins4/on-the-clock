@@ -110,3 +110,27 @@ export function applyDrag(
     breaks: sortedBreaks(newBreaks),
   };
 }
+
+// Insert a break directly above `abovePlayerId`. If a break already sits there,
+// the new (duplicate) break creates an empty tier.
+export function insertBreak(
+  players: Player[],
+  breaks: Break[],
+  abovePlayerId: string,
+): BoardState {
+  const list = ordered(players);
+  const idx = list.findIndex((p) => p.id === abovePlayerId);
+  if (idx === -1) return { players: list, breaks: sortedBreaks(breaks) };
+  const next = sortedBreaks([...breaks, { id: uid(), above: idx }]);
+  return { players: tiersFromBreaks(list, next), breaks: next };
+}
+
+// Remove a break by id (used by both populated-tier ✕ and empty-tier ✕).
+export function removeBreak(
+  players: Player[],
+  breaks: Break[],
+  breakId: string,
+): BoardState {
+  const next = sortedBreaks(breaks.filter((b) => b.id !== breakId));
+  return { players: tiersFromBreaks(players, next), breaks: next };
+}
