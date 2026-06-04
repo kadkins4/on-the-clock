@@ -882,9 +882,85 @@ table.players th.sorted {
   margin: 8px 0 4px;
 }
 .mock-myroster {
-  padding: 0.5rem 0;
-  font-size: 0.9rem;
-  opacity: 0.85;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: #c2c9d6;
+  min-height: 36px;
+  align-items: center;
+}
+.mock-myroster-empty {
+  color: #8b93a4;
+  font-size: 12px;
+}
+.mock-roster-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: 999px;
+  padding: 3px 8px 3px 5px;
+  background: color-mix(in srgb, var(--c, #2a2f3a) 18%, #10141d);
+  border: 1px solid color-mix(in srgb, var(--c, #2a2f3a) 50%, transparent);
+}
+.mrc-pos {
+  font-size: 9px;
+  font-weight: 800;
+  color: #06080d;
+  background: var(--c, #888);
+  border-radius: 999px;
+  padding: 1px 5px;
+}
+.mrc-name {
+  font-size: 11px;
+  font-weight: 600;
+  color: #eef1f6;
+}
+.summary-roster {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 8px;
+  margin: 4px 0;
+}
+.summary-card {
+  background: color-mix(in srgb, var(--c, #2a2f3a) 12%, #10141d);
+  border: 1px solid color-mix(in srgb, var(--c, #2a2f3a) 35%, transparent);
+  border-radius: 10px;
+  padding: 10px 12px;
+  border-left: 3px solid var(--c, #2a2f3a);
+}
+.summary-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.summary-pos {
+  font-size: 9.5px;
+  font-weight: 800;
+  color: #06080d;
+  background: var(--c, #888);
+  border-radius: 4px;
+  padding: 2px 5px;
+}
+.summary-pick {
+  font-size: 10px;
+  color: #8b93a4;
+  font-variant-numeric: tabular-nums;
+}
+.summary-name {
+  font-weight: 700;
+  font-size: 12.5px;
+  color: #eef1f6;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.summary-meta {
+  font-size: 10px;
+  color: #8b93a4;
+  margin-top: 2px;
 }
 .mock-available {
   list-style: none;

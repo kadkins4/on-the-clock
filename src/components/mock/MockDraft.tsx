@@ -226,8 +226,29 @@ export function MockDraft({
       )}
 
       <div className="mock-myroster">
-        Your team ({myPositions.length}):{" "}
-        {myPositions.length ? myPositions.join(" · ") : "—"}
+        {myPositions.length === 0 ? (
+          <span className="mock-myroster-empty">
+            Your picks will appear here
+          </span>
+        ) : (
+          state.picks
+            .filter((pk) => pk.teamIndex === userTeamIndex)
+            .map((pk) => {
+              const pl = state.pool.find((p) => p.id === pk.playerId);
+              if (!pl) return null;
+              return (
+                <span
+                  key={pk.overall}
+                  className={`mock-roster-chip pos-${pl.position}`}
+                >
+                  <span className="mrc-pos">{pl.position}</span>
+                  <span className="mrc-name">
+                    {pl.name.split(" ").slice(-1)[0]}
+                  </span>
+                </span>
+              );
+            })
+        )}
       </div>
 
       <div className="mock-boardtoggle">
