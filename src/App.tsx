@@ -3,7 +3,6 @@ import { useRankings } from "./state/useRankings";
 import { useDelayedHide } from "./state/useDelayedHide";
 import {
   computePositionalRanks,
-  groupByTier,
   sortPlayers,
   defaultSortAsc,
 } from "./lib/ranking";
@@ -46,7 +45,8 @@ import { draftedByPosition } from "./lib/counts";
 import { Toolbar } from "./components/Toolbar";
 import { ColumnManager } from "./components/board/ColumnManager";
 import { ColumnScopePrompt } from "./components/board/ColumnScopePrompt";
-import { PlayerTable, type DisplayGroup } from "./components/PlayerTable";
+import { PlayerTable, type DisplayRow } from "./components/PlayerTable";
+import { buildItems } from "./lib/tierBreaks";
 import { Intro } from "./components/Intro";
 
 // Split off the routes a first-time visitor doesn't hit on load: the whole
@@ -182,9 +182,6 @@ export default function App() {
     loadRefetchResult,
   );
   const [toast, setToast] = useState<string | null>(null);
-  // Empty tiers are session-only: each entry is the id of the player the empty
-  // tier sits directly above. Never persisted or exported.
-  const [emptyTiers, setEmptyTiers] = useState<string[]>([]);
 
   useEffect(() => {
     if (!toast) return;
@@ -197,11 +194,6 @@ export default function App() {
   useEffect(() => {
     safeStorage.setItem(HIDE_DST_KEY, hideDst ? "1" : "0");
   }, [hideDst]);
-  // Session empty-tier markers are anchored by player id; clear them when the
-  // active league changes so a stale anchor can't render a phantom empty tier.
-  useEffect(() => {
-    setEmptyTiers([]);
-  }, [currentLeague.id]);
 
   // positions to show in the drafted-summary header (K / DST hidden separately)
   const shownPositions = useMemo(
@@ -274,10 +266,6 @@ export default function App() {
   };
 
   const grouped = sortKey === null;
-  const groups = useMemo(
-    () => (grouped ? groupByTier(renderPlayers) : []),
-    [grouped, renderPlayers],
-  );
   const flat = useMemo(
     () =>
       grouped
@@ -294,52 +282,60 @@ export default function App() {
   const reorderable =
     posFilter.size === 0 && search.trim() === "" && byeFilter === null;
 
-  // Drop empty-tier markers whose anchor is no longer the first player of a tier
-  // (e.g. after a drag), so stale empties don't accumulate.
-  useEffect(() => {
-    if (!grouped || !reorderable) return;
-    const firstIds = new Set(groups.map((g) => g.players[0]?.id));
-    setEmptyTiers((prev) => {
-      const next = prev.filter((id) => firstIds.has(id));
-      return next.length === prev.length ? prev : next;
-    });
-  }, [groups, grouped, reorderable]);
+  const activeBreaks =
+    currentLeague.tierLists.find((t) => t.id === activeTierListId)?.breaks ??
+    [];
 
-  // Display model: real tiers interleaved with any session empty tiers, each
-  // labelled with a running display-tier number.
-  const display = useMemo<DisplayGroup[]>(() => {
-    if (!grouped) return [];
-    const out: DisplayGroup[] = [];
-    let dt = 0;
-    for (const g of groups) {
-      const firstId = g.players[0]?.id;
-      if (reorderable && firstId && emptyTiers.includes(firstId)) {
-        dt += 1;
-        out.push({ kind: "empty", anchorId: firstId, displayTier: dt });
+  // Breaks-driven interleaved row model replacing the old groups/display memos.
+  const { rows, itemIds } = useMemo(() => {
+    if (!grouped) return { rows: [] as DisplayRow[], itemIds: [] as string[] };
+    const items = buildItems(renderPlayers, activeBreaks);
+    const byId = new Map(renderPlayers.map((p) => [p.id, p]));
+    const rows: DisplayRow[] = [];
+    const itemIds: string[] = [];
+    let displayTier = 1;
+    let stripeIndex = 0;
+    let firstInTier = true;
+    for (let i = 0; i < items.length; i++) {
+      const it = items[i];
+      if (it.kind === "break") {
+        itemIds.push(it.id);
+        // count players in the tier BELOW this break (until next break or end)
+        let count = 0;
+        for (let j = i + 1; j < items.length && items[j].kind === "player"; j++)
+          count++;
+        displayTier += 1;
+        rows.push({ kind: "break", breakId: it.id, displayTier, count });
+        firstInTier = true;
+        stripeIndex = 0;
+      } else {
+        itemIds.push(it.id);
+        const player = byId.get(it.id)!;
+        rows.push({
+          kind: "player",
+          player,
+          displayTier,
+          startsTier: firstInTier,
+          stripeIndex,
+        });
+        firstInTier = false;
+        stripeIndex += 1;
       }
-      dt += 1;
-      out.push({
-        kind: "tier",
-        tier: g.tier as number,
-        displayTier: dt,
-        players: g.players,
-      });
     }
-    return out;
-  }, [grouped, groups, emptyTiers, reorderable]);
+    // If the first rendered row is a player (no break above tier 1), prepend
+    // a non-sortable topHeader for tier 1.
+    if (rows[0]?.kind === "player") {
+      const leadingCount = rows.filter(
+        (r) => r.kind === "player" && r.displayTier === 1,
+      ).length;
+      rows.unshift({ kind: "topHeader", displayTier: 1, count: leadingCount });
+    }
+    return { rows, itemIds };
+  }, [grouped, renderPlayers, activeBreaks]);
 
-  const onAddTier = (playerId: string, startsTier: boolean) => {
-    if (startsTier) {
-      setEmptyTiers((prev) =>
-        prev.includes(playerId) ? prev : [...prev, playerId],
-      );
-    } else {
-      dispatch({ type: "splitTier", playerId });
-    }
+  const onAddTier = (playerId: string) => {
+    dispatch({ type: "splitTier", playerId });
   };
-
-  const onRemoveEmpty = (anchorId: string) =>
-    setEmptyTiers((prev) => prev.filter((id) => id !== anchorId));
 
   const onFetch = async () => {
     if (fetching) return;
@@ -705,7 +701,8 @@ export default function App() {
       <PlayerTable
         columns={columns}
         grouped={grouped}
-        display={display}
+        rows={rows}
+        itemIds={itemIds}
         flat={flat}
         positionalRanks={positionalRanks}
         vorById={vorById}
@@ -717,7 +714,6 @@ export default function App() {
         dispatch={dispatch}
         reorderable={reorderable}
         onAddTier={onAddTier}
-        onRemoveEmpty={onRemoveEmpty}
       />
       {pending.length > 0 && (
         <button className="undo-bar" onClick={undoLast}>

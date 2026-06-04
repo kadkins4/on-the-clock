@@ -1,4 +1,6 @@
-import { useDroppable } from "@dnd-kit/core";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import type { CSSProperties } from "react";
 
 interface TierHeaderProps {
   tier: number;
@@ -42,39 +44,52 @@ export function TierHeader({
   );
 }
 
-interface EmptyTierProps {
-  anchorId: string;
+interface TierBreakRowProps {
+  breakId: string;
   displayTier: number;
+  count: number; // players in the tier BELOW this break
   colSpan: number;
-  onRemove: (anchorId: string) => void;
+  editable: boolean;
+  onRemove: (breakId: string) => void;
 }
 
-export function EmptyTier({
-  anchorId,
+// A tier boundary that participates in the sortable list. Phase 1: it shifts
+// when players are dragged past it, but has no drag handle of its own (no
+// listeners/attributes), so it can't be grabbed directly yet.
+export function TierBreakRow({
+  breakId,
   displayTier,
+  count,
   colSpan,
+  editable,
   onRemove,
-}: EmptyTierProps) {
-  const { setNodeRef, isOver } = useDroppable({ id: `empty:${anchorId}` });
+}: TierBreakRowProps) {
+  const { setNodeRef, transform, transition } = useSortable({ id: breakId });
+  const style: CSSProperties = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
   return (
-    <tr
-      ref={setNodeRef}
-      className={`tier-divider empty-tier${isOver ? " drop-over" : ""}`}
-    >
+    <tr ref={setNodeRef} style={style} className="tier-divider">
       <td colSpan={colSpan}>
         <div className="tier-banner">
-          <span className="tier-label">
-            Tier {displayTier} · empty — drop a player here
+          <span className="tier-label">Tier {displayTier}</span>
+          <span className="tier-count">
+            {count > 0
+              ? ` · ${count} player${count === 1 ? "" : "s"}`
+              : " · empty"}
           </span>
-          <span className="tier-tools">
-            <button
-              className="tier-remove"
-              title="Discard this empty tier"
-              onClick={() => onRemove(anchorId)}
-            >
-              ✕
-            </button>
-          </span>
+          {editable && (
+            <span className="tier-tools">
+              <button
+                className="tier-remove"
+                title="Remove this tier break"
+                onClick={() => onRemove(breakId)}
+              >
+                ✕
+              </button>
+            </span>
+          )}
         </div>
       </td>
     </tr>

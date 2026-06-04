@@ -82,13 +82,11 @@ export function applyDrag(
   activeId: string,
   overId: string,
 ): BoardState {
-  if (activeId === overId)
-    return { players: ordered(players), breaks: sortedBreaks(breaks) };
+  if (activeId === overId) return { players, breaks };
   const items = buildItems(players, breaks);
   const from = items.findIndex((it) => it.id === activeId);
   const over = items.findIndex((it) => it.id === overId);
-  if (from === -1 || over === -1)
-    return { players: ordered(players), breaks: sortedBreaks(breaks) };
+  if (from === -1 || over === -1) return { players, breaks };
 
   const moved = arrayMove(items, from, over);
   const byId = new Map(players.map((p) => [p.id, p]));

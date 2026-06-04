@@ -18,7 +18,7 @@ interface Props {
   draggable: boolean;
   startsTier: boolean;
   stripe: boolean; // zebra: true => the lighter band
-  onAddTier: (playerId: string, startsTier: boolean) => void;
+  onAddTier: (playerId: string) => void;
   dispatch: Dispatch<Action>;
 }
 

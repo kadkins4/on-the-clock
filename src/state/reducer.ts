@@ -1,17 +1,21 @@
 import type { League, LeaguesState, Player } from "../types";
+import type { Break } from "../types";
 import type { ColumnLayout } from "../lib/columnLayout";
 import { makeLeague, activeTierList } from "../lib/league";
 import { uid } from "../lib/uid";
 import {
   reassignOverallRanks,
-  moveAndRetier,
   normalizeTiers,
-  moveTier,
-  splitTierAt,
-  removeTier,
-  moveIntoNewTier,
   orderByAdp,
 } from "../lib/ranking";
+import {
+  applyDrag,
+  insertBreak,
+  removeBreak,
+  breaksFromTiers,
+  tiersFromBreaks,
+  type BoardState,
+} from "../lib/tierBreaks";
 import seed from "../data/seed.json";
 import { mergeFetched, type FetchedPlayer } from "../lib/fetchEspn";
 import { applyFfcAdp } from "../lib/blendAdp";
@@ -28,45 +32,62 @@ export type Action =
     }
   | { type: "remove"; id: string }
   | { type: "move"; activeId: string; overId: string }
-  | { type: "moveTier"; fromTier: number; toTier: number }
   | { type: "splitTier"; playerId: string }
-  | { type: "removeTier"; tier: number }
-  | { type: "moveIntoNewTier"; playerId: string; beforeId: string | null }
+  | { type: "removeBreak"; breakId: string }
   | { type: "merge"; fetched: FetchedPlayer[] }
   | { type: "applyAdp"; ffc: NormalizedAdp[] };
 
-export function rankingReducer(state: Player[], action: Action): Player[] {
+export function boardReducer(state: BoardState, action: Action): BoardState {
+  const { players, breaks } = state;
   switch (action.type) {
     case "setAll": {
-      // normalize gapped/unsorted external ranks into contiguous 1-based order,
-      // and ensure every player has a tier (no "Untiered" group).
       const sorted = action.players
         .slice()
         .sort((a, b) => a.overallRank - b.overallRank);
-      return normalizeTiers(withByeWeeks(reassignOverallRanks(sorted)));
+      const norm = normalizeTiers(withByeWeeks(reassignOverallRanks(sorted)));
+      return { players: norm, breaks: breaksFromTiers(norm) };
     }
-    case "add":
-      return normalizeTiers(reassignOverallRanks([...state, action.player]));
+    case "add": {
+      // New player appends at the end (below all breaks); breaks unchanged.
+      const next = reassignOverallRanks([...players, action.player]);
+      return { players: tiersFromBreaks(next, breaks), breaks };
+    }
     case "update":
-      return state.map((p) =>
-        p.id === action.id ? { ...p, ...action.patch } : p,
+      return {
+        players: players.map((p) =>
+          p.id === action.id ? { ...p, ...action.patch } : p,
+        ),
+        breaks,
+      };
+    case "remove": {
+      // Decrement `above` for breaks below the removed player's index.
+      const ordered = players
+        .slice()
+        .sort((a, b) => a.overallRank - b.overallRank);
+      const idx = ordered.findIndex((p) => p.id === action.id);
+      if (idx === -1) return state;
+      const next = reassignOverallRanks(
+        ordered.filter((p) => p.id !== action.id),
       );
-    case "remove":
-      return reassignOverallRanks(state.filter((p) => p.id !== action.id));
+      const shifted = breaks
+        .map((b) => (b.above > idx ? { ...b, above: b.above - 1 } : b))
+        .filter((b) => b.above <= next.length);
+      return { players: tiersFromBreaks(next, shifted), breaks: shifted };
+    }
     case "move":
-      return moveAndRetier(state, action.activeId, action.overId);
-    case "moveTier":
-      return moveTier(state, action.fromTier, action.toTier);
+      return applyDrag(players, breaks, action.activeId, action.overId);
     case "splitTier":
-      return splitTierAt(state, action.playerId);
-    case "removeTier":
-      return removeTier(state, action.tier);
-    case "moveIntoNewTier":
-      return moveIntoNewTier(state, action.playerId, action.beforeId);
-    case "merge":
-      return withByeWeeks(mergeFetched(state, action.fetched));
-    case "applyAdp":
-      return applyFfcAdp(state, action.ffc);
+      return insertBreak(players, breaks, action.playerId);
+    case "removeBreak":
+      return removeBreak(players, breaks, action.breakId);
+    case "merge": {
+      const merged = withByeWeeks(mergeFetched(players, action.fetched));
+      return { players: merged, breaks: breaksFromTiers(merged) };
+    }
+    case "applyAdp": {
+      const next = applyFfcAdp(players, action.ffc);
+      return { players: next, breaks: breaksFromTiers(next) };
+    }
     default:
       return state;
   }
@@ -76,18 +97,25 @@ export function rankingReducer(state: Player[], action: Action): Player[] {
 // The board holds several named player lists (e.g. PPR, Dynasty) and which one
 // is active. Player actions apply to the active list; list actions manage them.
 
+// Legacy migration type: the old multi-list board format stored in localStorage
+// before the leagues model. Kept here so storage.ts / league.ts can import it.
 export interface Board {
   current: string;
   lists: Record<string, Player[]>;
 }
 
-function normalize(players: Player[]): Player[] {
-  return normalizeTiers(withByeWeeks(players));
+function normalizeBoard(t: { board: Player[]; breaks?: Break[] }): {
+  board: Player[];
+  breaks: Break[];
+} {
+  const board = withByeWeeks(t.board);
+  const breaks = t.breaks ?? breaksFromTiers(normalizeTiers(board));
+  return { board: tiersFromBreaks(board, breaks), breaks };
 }
 
 // --- Leagues ----------------------------------------------------------------
 // A league is a player board plus its settings (scoring, teams, roster). Player
-// and tier actions delegate to rankingReducer on the active league's board;
+// and tier actions delegate to boardReducer on the active league's board;
 // league actions manage the league list and per-league settings.
 
 export type LeagueAction =
@@ -140,9 +168,11 @@ function normalizeActiveList(l: League): League {
   const activeId = activeTierList(l).id;
   return {
     ...l,
-    tierLists: l.tierLists.map((t) =>
-      t.id === activeId ? { ...t, board: normalize(t.board) } : t,
-    ),
+    tierLists: l.tierLists.map((t) => {
+      if (t.id !== activeId) return t;
+      const n = normalizeBoard(t);
+      return { ...t, board: n.board, breaks: n.breaks };
+    }),
   };
 }
 
@@ -233,10 +263,12 @@ export function leaguesReducer(
       const current = state.leagues.find((l) => l.id === state.currentId);
       if (!name || !current) return state;
       const id = uid();
-      const board = normalize(orderByAdp(seed as unknown as Player[]));
+      const seeded = withByeWeeks(orderByAdp(seed as unknown as Player[]));
+      const breaks = breaksFromTiers(normalizeTiers(seeded));
+      const board = tiersFromBreaks(seeded, breaks);
       return mapLeague(state, current.id, (l) => ({
         ...l,
-        tierLists: [...l.tierLists, { id, name, board }],
+        tierLists: [...l.tierLists, { id, name, board, breaks }],
         activeTierListId: id,
       }));
     }
@@ -251,7 +283,13 @@ export function leaguesReducer(
         ...l,
         tierLists: [
           ...l.tierLists,
-          { id, name, board, valueFlags: source.valueFlags },
+          {
+            id,
+            name,
+            board,
+            breaks: source.breaks,
+            valueFlags: source.valueFlags,
+          },
         ],
         activeTierListId: id,
       }));
@@ -316,12 +354,19 @@ export function leaguesReducer(
       const current = state.leagues.find((l) => l.id === state.currentId);
       if (!current) return state;
       const active = activeTierList(current);
-      const board = rankingReducer(active.board, action);
-      if (board === active.board) return state;
+      const before: BoardState = {
+        players: active.board,
+        breaks: active.breaks ?? breaksFromTiers(active.board),
+      };
+      const after = boardReducer(before, action);
+      if (after.players === before.players && after.breaks === before.breaks)
+        return state;
       return mapLeague(state, state.currentId, (l) => ({
         ...l,
         tierLists: l.tierLists.map((t) =>
-          t.id === active.id ? { ...t, board } : t,
+          t.id === active.id
+            ? { ...t, board: after.players, breaks: after.breaks }
+            : t,
         ),
         updatedAt: Date.now(),
       }));

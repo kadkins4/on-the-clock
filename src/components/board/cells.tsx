@@ -16,7 +16,7 @@ export interface CellCtx {
   rookie: boolean; // no NFL season yet → '25 cell shows "R" instead of "–"
   draggable: boolean;
   startsTier: boolean;
-  onAddTier: (playerId: string, startsTier: boolean) => void;
+  onAddTier: (playerId: string) => void;
   dispatch: Dispatch<Action>;
   dragAttributes: DraggableAttributes;
   dragListeners: SyntheticListenerMap | undefined;
@@ -64,7 +64,7 @@ export const CELL_RENDERERS: Record<
                 ? "Add an empty tier above this player"
                 : "Start a new tier here"
             }
-            onClick={() => ctx.onAddTier(p.id, ctx.startsTier)}
+            onClick={() => ctx.onAddTier(p.id)}
           >
             ＋
           </button>
