@@ -16,6 +16,12 @@
      Explicit colors (not opacity) so they stay consistent over any background. */
   --otc-ink: #b7b9bc;
   --otc-accent: #ff6b4a;
+  --pos-QB: #c084fc;
+  --pos-RB: #34d399;
+  --pos-WR: #38bdf8;
+  --pos-TE: #fb923c;
+  --pos-K: #9aa3b2;
+  --pos-DST: #9aa3b2;
 }
 body {
   margin: 1rem;
