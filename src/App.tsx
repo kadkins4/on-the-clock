@@ -7,9 +7,23 @@ import {
   sortPlayers,
   defaultSortAsc,
 } from "./lib/ranking";
-import { orderedColumns, DEFAULT_COLUMN_ORDER } from "./lib/columns";
+import type { ColumnId } from "./lib/columns";
+import {
+  resolveColumns,
+  toggleHidden,
+  reorder,
+  DEFAULT_LAYOUT,
+  type ColumnLayout,
+} from "./lib/columnLayout";
 import { toCsv, parseCsv } from "./lib/csv";
-import { exportJson, importJson } from "./lib/storage";
+import {
+  exportJson,
+  importJson,
+  loadColumnLayout,
+  saveColumnLayout,
+  loadColumnScopePref,
+  saveColumnScopePref,
+} from "./lib/storage";
 import { fetchEspnPlayers } from "./lib/fetchEspn";
 import { fetchAdp } from "./lib/fetchAdp";
 import { searchPlayers } from "./lib/search";
@@ -23,6 +37,8 @@ import type { Position, SortKey } from "./types";
 import { POSITIONS } from "./types";
 import { draftedByPosition } from "./lib/counts";
 import { Toolbar } from "./components/Toolbar";
+import { ColumnManager } from "./components/board/ColumnManager";
+import { ColumnScopePrompt } from "./components/board/ColumnScopePrompt";
 import { PlayerTable, type DisplayGroup } from "./components/PlayerTable";
 import { MockMode } from "./components/mock/MockMode";
 import { Intro } from "./components/Intro";
@@ -82,7 +98,55 @@ export default function App() {
   );
   const [sortKey, setSortKey] = useState<SortKey | null>(null);
   const [sortAsc, setSortAsc] = useState(true);
-  const columns = useMemo(() => orderedColumns(DEFAULT_COLUMN_ORDER), []);
+  // Column layout: a global default plus an optional per-league override. The
+  // effective layout the board renders is `override ?? global`. Edits route by
+  // the scope pref (all/this/ask) — see writeLayout/onLayoutChange below.
+  const [globalLayout, setGlobalLayout] = useState(loadColumnLayout);
+  const [scopePref, setScopePref] = useState(loadColumnScopePref);
+  const [columnsOpen, setColumnsOpen] = useState(false);
+  // Set while awaiting the scope choice (pref === "ask"); also the layout to write.
+  const [pendingLayout, setPendingLayout] = useState<ColumnLayout | null>(null);
+  const effectiveLayout = currentLeague.columnsOverride ?? globalLayout;
+  const columns = useMemo(
+    () => resolveColumns(effectiveLayout),
+    [effectiveLayout],
+  );
+
+  const writeLayout = (layout: ColumnLayout, scope: "all" | "this") => {
+    if (scope === "all") {
+      setGlobalLayout(layout);
+      saveColumnLayout(layout);
+      // clear any per-league override so the league inherits the new global
+      dispatch({
+        type: "setLeagueColumns",
+        id: currentLeague.id,
+        layout: null,
+      });
+    } else {
+      dispatch({ type: "setLeagueColumns", id: currentLeague.id, layout });
+    }
+  };
+
+  // Called by the manager on every edit. Routes by pref; "ask" defers via pendingLayout.
+  const onLayoutChange = (layout: ColumnLayout) => {
+    if (scopePref === "all") writeLayout(layout, "all");
+    else if (scopePref === "this") writeLayout(layout, "this");
+    else setPendingLayout(layout);
+  };
+
+  const onScopeChosen = (scope: "all" | "this", remember: boolean) => {
+    if (pendingLayout) writeLayout(pendingLayout, scope);
+    if (remember) {
+      setScopePref(scope);
+      saveColumnScopePref(scope);
+    }
+    setPendingLayout(null);
+  };
+
+  const onScopePrefChange = (p: "ask" | "all" | "this") => {
+    setScopePref(p);
+    saveColumnScopePref(p);
+  };
   const onSort = (key: SortKey) => {
     if (sortKey === key) {
       setSortAsc((a) => !a);
@@ -538,7 +602,25 @@ export default function App() {
         onExportCsv={() =>
           download(`${leagueSlug}-rankings.csv`, toCsv(players), "text/csv")
         }
-      />
+        scopePref={scopePref}
+        onScopePrefChange={onScopePrefChange}
+        onOpenColumns={() => setColumnsOpen((o) => !o)}
+        columnsOpen={columnsOpen}
+      >
+        {columnsOpen && (
+          <ColumnManager
+            layout={effectiveLayout}
+            onToggle={(id: ColumnId) =>
+              onLayoutChange(toggleHidden(effectiveLayout, id))
+            }
+            onReorder={(id: ColumnId, before: ColumnId) =>
+              onLayoutChange(reorder(effectiveLayout, id, before))
+            }
+            onReset={() => onLayoutChange(DEFAULT_LAYOUT)}
+            onClose={() => setColumnsOpen(false)}
+          />
+        )}
+      </Toolbar>
       <PlayerTable
         columns={columns}
         grouped={grouped}
@@ -560,6 +642,12 @@ export default function App() {
         <button className="undo-bar" onClick={undoLast}>
           Undo draft ({pending.length})
         </button>
+      )}
+      {pendingLayout !== null && (
+        <ColumnScopePrompt
+          onChoose={onScopeChosen}
+          onCancel={() => setPendingLayout(null)}
+        />
       )}
     </div>
   );

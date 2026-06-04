@@ -54,6 +54,11 @@ interface Props {
   onImport: () => void;
   onExportJson: () => void;
   onExportCsv: () => void;
+  scopePref: "ask" | "all" | "this";
+  onScopePrefChange: (p: "ask" | "all" | "this") => void;
+  onOpenColumns: () => void;
+  columnsOpen: boolean;
+  children?: ReactNode; // the column-manager popover, anchored to the ⚙ Columns trigger
 }
 
 export function Toolbar(props: Props) {
@@ -363,9 +368,40 @@ export function Toolbar(props: Props) {
             >
               Export CSV
             </button>
+            <div className="menu-sep" />
+            <label className="menu-label">
+              When I change columns{" "}
+              <select
+                className="menu-select"
+                value={props.scopePref}
+                onChange={(e) =>
+                  props.onScopePrefChange(
+                    e.target.value as "ask" | "all" | "this",
+                  )
+                }
+              >
+                <option value="ask">Ask each time</option>
+                <option value="all">Always all leagues</option>
+                <option value="this">Always this league</option>
+              </select>
+            </label>
           </>
         )}
       </SettingsMenu>
+      <div className="columns-trigger">
+        <button
+          className={props.columnsOpen ? "columns-btn active" : "columns-btn"}
+          title="Show, hide & reorder columns"
+          aria-label="Columns"
+          // Keep this mousedown from reaching the manager's document-level
+          // outside-click listener, so the click cleanly toggles the popover.
+          onMouseDown={(e) => e.stopPropagation()}
+          onClick={props.onOpenColumns}
+        >
+          ⚙ Columns
+        </button>
+        {props.children}
+      </div>
     </div>
   );
 }
