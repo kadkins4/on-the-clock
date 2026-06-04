@@ -21,6 +21,7 @@ import { PickStrip } from "./PickStrip";
 import { DraftBoardGrid } from "./DraftBoardGrid";
 import { OnTheClockBanner } from "./OnTheClockBanner";
 import { StopwatchMark } from "./StopwatchMark";
+import { Avatar } from "./Avatar";
 
 interface Props {
   state: MockState;
@@ -240,6 +241,24 @@ export function MockDraft({
         onExit={onExit}
         timer={timerUi}
       />
+
+      {!isComplete(state) && (
+        <div className={`otc-clockcard${isUser ? " you" : ""}`}>
+          <Avatar
+            initials={state.teams[onClock].initials}
+            color={state.teams[onClock].color}
+            size={34}
+            ring={isUser}
+          />
+          <div className="occ-who">
+            <div className="occ-name">{state.teams[onClock].name}</div>
+            <div className="occ-pick">
+              On the clock · {formatPick(overall, state.settings.teams)}
+            </div>
+          </div>
+          <div className="occ-timer">{timerUi}</div>
+        </div>
+      )}
 
       <div className="mock-myroster">
         Your team ({myPositions.length}):{" "}

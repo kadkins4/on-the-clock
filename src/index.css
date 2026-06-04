@@ -1818,3 +1818,39 @@ table.players th.sorted {
 .pos-DST {
   --c: var(--pos-DST);
 }
+
+/* --- On-the-clock card --- */
+.otc-clockcard {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: #10141d;
+  border: 1px solid #232938;
+  border-radius: 12px;
+  margin: 8px 0;
+}
+.otc-clockcard.you {
+  background: #0f1a14;
+  border-color: #245c39;
+}
+.occ-who {
+  flex: 1;
+}
+.occ-name {
+  font-weight: 800;
+  font-size: 15px;
+}
+.occ-pick {
+  font-size: 11px;
+  color: #8b93a4;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.occ-timer {
+  font-size: 22px;
+  font-weight: 800;
+}
+.otc-clockcard.you .occ-timer {
+  color: #7ff0bd;
+}
