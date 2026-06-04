@@ -66,8 +66,8 @@ export function MockDraft({
   const promptedRef = useRef(false);
   const [menuFor, setMenuFor] = useState<number | null>(null); // pick popover
   const [replaceSearch, setReplaceSearch] = useState("");
-  const [timerSec, setTimerSec] = useState<number | null>(30); // null = Off
-  const [remaining, setRemaining] = useState(30);
+  const [timerSec, setTimerSec] = useState<number | null>(20); // null = Off
+  const [remaining, setRemaining] = useState(20);
   // The "on the clock" reveal locks the clock + Draft for a beat so the
   // typewriter + glow can play before the user can act.
   const [revealing, setRevealing] = useState(false);

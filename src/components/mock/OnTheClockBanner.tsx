@@ -9,6 +9,7 @@ import { formatPick } from "../../lib/mock/board";
 // Pick-clock durations for the settings cog. null = Off.
 const TIMER_OPTIONS: { value: number | null; label: string }[] = [
   { value: 10, label: "0:10" },
+  { value: 20, label: "0:20" },
   { value: 30, label: "0:30" },
   { value: 45, label: "0:45" },
   { value: 60, label: "1:00" },

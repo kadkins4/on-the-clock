@@ -62,7 +62,9 @@ export function PickStrip({ state, onPickClick }: Props) {
               <span className="strip-pos">{c.position}</span>
             </>
           ) : (
-            <span className="strip-team">{c.teamLabel}</span>
+            <span className="strip-team">
+              {state.teams[c.teamIndex]?.name ?? c.teamLabel}
+            </span>
           )}
         </div>
       ))}
