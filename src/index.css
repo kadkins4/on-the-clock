@@ -599,6 +599,10 @@ table.players th.sorted {
   cursor: grab;
   color: var(--muted);
 }
+.tier-grip {
+  margin-right: 0.15rem;
+  font-size: 0.8rem;
+}
 .add-tier {
   position: absolute;
   top: 50%;

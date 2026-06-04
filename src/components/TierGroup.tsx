@@ -53,9 +53,9 @@ interface TierBreakRowProps {
   onRemove: (breakId: string) => void;
 }
 
-// A tier boundary that participates in the sortable list. Phase 1: it shifts
-// when players are dragged past it, but has no drag handle of its own (no
-// listeners/attributes), so it can't be grabbed directly yet.
+// A tier boundary that participates in the sortable list. When editable, it can
+// be grabbed by its ⠿ handle and dragged through the player list — only the
+// break moves, re-tiering the players it crosses (players never reorder).
 export function TierBreakRow({
   breakId,
   displayTier,
@@ -64,15 +64,33 @@ export function TierBreakRow({
   editable,
   onRemove,
 }: TierBreakRowProps) {
-  const { setNodeRef, transform, transition } = useSortable({ id: breakId });
+  const {
+    setNodeRef,
+    attributes,
+    listeners,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: breakId, disabled: !editable });
   const style: CSSProperties = {
     transform: CSS.Transform.toString(transform),
     transition,
+    opacity: isDragging ? 0.5 : 1,
   };
   return (
     <tr ref={setNodeRef} style={style} className="tier-divider">
       <td colSpan={colSpan}>
         <div className="tier-banner">
+          {editable && (
+            <span
+              className="tier-grip drag-handle"
+              title="Drag to move this tier break"
+              {...attributes}
+              {...listeners}
+            >
+              ⠿
+            </span>
+          )}
           <span className="tier-label">Tier {displayTier}</span>
           <span className="tier-count">
             {count > 0
