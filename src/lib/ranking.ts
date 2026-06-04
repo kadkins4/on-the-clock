@@ -118,37 +118,6 @@ export function sortPlayers(
   return players.slice().sort(cmp);
 }
 
-// Move `from` to `to`, matching @dnd-kit's arrayMove so the drop result lands
-// exactly where the drag preview showed it (dragging down lands below the
-// target; dragging up lands above it).
-function arrayMove<T>(arr: T[], from: number, to: number): T[] {
-  const copy = arr.slice();
-  const [el] = copy.splice(from, 1);
-  copy.splice(to, 0, el);
-  return copy;
-}
-
-// Reorder by dragging `activeId` onto `overId` in the overall-rank ordering,
-// reproducing the dnd-kit drag preview: the moved player lands ABOVE the target
-// when dragged up and BELOW it when dragged down, adopting the target's tier so
-// a cross-divider drop joins the tier it landed in.
-export function moveAndRetier(
-  players: Player[],
-  activeId: string,
-  overId: string,
-): Player[] {
-  const ordered = players.slice().sort((a, b) => a.overallRank - b.overallRank);
-  const fromIdx = ordered.findIndex((p) => p.id === activeId);
-  const overIdx = ordered.findIndex((p) => p.id === overId);
-  if (fromIdx === -1 || overIdx === -1 || activeId === overId) return players;
-  const overTier = ordered[overIdx].tier;
-  const reordered = arrayMove(ordered, fromIdx, overIdx).map((p) =>
-    p.id === activeId ? { ...p, tier: overTier } : p,
-  );
-  // Renumber so an emptied tier doesn't leave a gap in the sequence.
-  return fromBlocks(toBlocks(reassignOverallRanks(reordered)));
-}
-
 // --- Tier structure ---------------------------------------------------------
 // Tiers are contiguous blocks along the overall-rank ordering. These helpers
 // treat the ranked list as a sequence of adjacency blocks (one per tier) so
@@ -187,84 +156,6 @@ export function normalizeTiers(players: Player[]): Player[] {
     return { ...p, tier: current };
   });
   return fromBlocks(toBlocks(filled));
-}
-
-// Move the whole tier `fromTier` to the position currently held by `toTier`.
-export function moveTier(
-  players: Player[],
-  fromTier: number,
-  toTier: number,
-): Player[] {
-  const blocks = toBlocks(players);
-  const from = fromTier - 1;
-  const to = toTier - 1;
-  if (
-    from < 0 ||
-    from >= blocks.length ||
-    to < 0 ||
-    to >= blocks.length ||
-    from === to
-  )
-    return players;
-  const [blk] = blocks.splice(from, 1);
-  blocks.splice(to, 0, blk);
-  return fromBlocks(blocks);
-}
-
-// Start a new tier at `playerId` (the player and everything below it in its
-// current tier become a new tier). No-op if the player already starts a tier.
-export function splitTierAt(players: Player[], playerId: string): Player[] {
-  const blocks = toBlocks(players);
-  for (let i = 0; i < blocks.length; i++) {
-    const idx = blocks[i].findIndex((p) => p.id === playerId);
-    if (idx === -1) continue;
-    if (idx === 0) return players; // already a tier boundary
-    blocks.splice(i, 1, blocks[i].slice(0, idx), blocks[i].slice(idx));
-    return fromBlocks(blocks);
-  }
-  return players;
-}
-
-// Remove a tier: its players merge up into the tier above (or down into the
-// next tier if it is the top tier). Renumbers the rest.
-export function removeTier(players: Player[], tier: number): Player[] {
-  const blocks = toBlocks(players);
-  const i = tier - 1;
-  if (i < 0 || i >= blocks.length || blocks.length <= 1) return players;
-  if (i === 0) {
-    blocks[1] = [...blocks[0], ...blocks[1]];
-    blocks.splice(0, 1);
-  } else {
-    blocks[i - 1] = [...blocks[i - 1], ...blocks[i]];
-    blocks.splice(i, 1);
-  }
-  return fromBlocks(blocks);
-}
-
-// Move `playerId` to sit just above `beforeId` (or to the end when null) as its
-// own brand-new tier. Used when a player is dropped into an empty tier slot.
-export function moveIntoNewTier(
-  players: Player[],
-  playerId: string,
-  beforeId: string | null,
-): Player[] {
-  const ordered = players.slice().sort((a, b) => a.overallRank - b.overallRank);
-  const fromIdx = ordered.findIndex((p) => p.id === playerId);
-  if (fromIdx === -1) return players;
-  const [moved] = ordered.splice(fromIdx, 1);
-  const insertAt =
-    beforeId == null
-      ? ordered.length
-      : (() => {
-          const i = ordered.findIndex((p) => p.id === beforeId);
-          return i === -1 ? ordered.length : i;
-        })();
-  ordered.splice(insertAt, 0, moved);
-  let result = splitTierAt(reassignOverallRanks(ordered), playerId);
-  const idx = result.findIndex((p) => p.id === playerId);
-  const after = result[idx + 1];
-  if (after) result = splitTierAt(result, after.id);
-  return result;
 }
 
 // Default sort direction for a freshly-clicked header. Value-better numeric

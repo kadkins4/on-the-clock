@@ -4,12 +4,7 @@ import {
   computePositionalRanks,
   groupByTier,
   sortPlayers,
-  moveAndRetier,
   normalizeTiers,
-  moveTier,
-  splitTierAt,
-  removeTier,
-  moveIntoNewTier,
   orderByAdp,
   defaultSortAsc,
 } from "./ranking";
@@ -98,86 +93,6 @@ describe("sortPlayers", () => {
   });
 });
 
-describe("moveAndRetier", () => {
-  it("moves a player and adopts the tier of its new neighbor", () => {
-    const players = [
-      mk({ id: "a", tier: 1, overallRank: 1 }),
-      mk({ id: "b", tier: 1, overallRank: 2 }),
-      mk({ id: "c", tier: 2, overallRank: 3 }),
-    ];
-    const out = moveAndRetier(players, "c", "a");
-    expect(out.map((p) => p.id)).toEqual(["c", "a", "b"]);
-    expect(out.find((p) => p.id === "c")!.tier).toBe(1);
-    expect(out.map((p) => p.overallRank)).toEqual([1, 2, 3]);
-  });
-
-  it("renumbers tiers contiguously when a move empties a tier", () => {
-    const players = [
-      mk({ id: "a", tier: 1, overallRank: 1 }),
-      mk({ id: "b", tier: 2, overallRank: 2 }),
-      mk({ id: "c", tier: 3, overallRank: 3 }),
-    ];
-    // drag the only tier-2 player up onto a; tier 2 empties, tier 3 becomes 2
-    const out = moveAndRetier(players, "b", "a");
-    expect(out.map((p) => p.id)).toEqual(["b", "a", "c"]);
-    expect(out.map((p) => p.tier)).toEqual([1, 1, 2]);
-  });
-
-  it("dragging DOWN onto a player lands directly below it, joining its tier", () => {
-    const players = [
-      mk({ id: "a", tier: 1, overallRank: 1 }),
-      mk({ id: "b", tier: 1, overallRank: 2 }),
-      mk({ id: "c", tier: 2, overallRank: 3 }),
-      mk({ id: "d", tier: 2, overallRank: 4 }),
-    ];
-    // drag a down onto c (top of tier 2): a lands BELOW c (matching the drag
-    // preview), joining tier 2 — c stays the top of its tier, not bumped.
-    const out = moveAndRetier(players, "a", "c");
-    expect(out.map((p) => p.id)).toEqual(["b", "c", "a", "d"]);
-    expect(out.find((p) => p.id === "a")!.tier).toBe(2);
-    expect(out.map((p) => p.tier)).toEqual([1, 2, 2, 2]);
-  });
-
-  it("dragging DOWN within a tier moves below the target (no snap-back)", () => {
-    const players = [
-      mk({ id: "a", tier: 1, overallRank: 1 }),
-      mk({ id: "b", tier: 1, overallRank: 2 }),
-      mk({ id: "c", tier: 1, overallRank: 3 }),
-      mk({ id: "d", tier: 1, overallRank: 4 }),
-    ];
-    // drag b down onto its adjacent neighbor c: b should land just below c,
-    // not snap back to where it started.
-    const out = moveAndRetier(players, "b", "c");
-    expect(out.map((p) => p.id)).toEqual(["a", "c", "b", "d"]);
-  });
-
-  it("dragging DOWN across tiers joins below the target without bumping its top", () => {
-    const players = [
-      mk({ id: "a", tier: 1, overallRank: 1 }),
-      mk({ id: "b", tier: 1, overallRank: 2 }),
-      mk({ id: "c", tier: 2, overallRank: 3 }),
-      mk({ id: "d", tier: 2, overallRank: 4 }),
-    ];
-    // drag b down onto c (top of tier 2): b joins tier 2 below c.
-    const out = moveAndRetier(players, "b", "c");
-    expect(out.map((p) => p.id)).toEqual(["a", "c", "b", "d"]);
-    expect(out.map((p) => p.tier)).toEqual([1, 2, 2, 2]);
-  });
-
-  it("dragging UP onto a player still lands directly above it", () => {
-    const players = [
-      mk({ id: "a", tier: 1, overallRank: 1 }),
-      mk({ id: "b", tier: 1, overallRank: 2 }),
-      mk({ id: "c", tier: 2, overallRank: 3 }),
-      mk({ id: "d", tier: 2, overallRank: 4 }),
-    ];
-    // drag d up onto b: d lands above b, joining tier 1.
-    const out = moveAndRetier(players, "d", "b");
-    expect(out.map((p) => p.id)).toEqual(["a", "d", "b", "c"]);
-    expect(out.find((p) => p.id === "d")!.tier).toBe(1);
-  });
-});
-
 describe("normalizeTiers", () => {
   it("fills missing tiers from the player above and renumbers contiguously", () => {
     const players = [
@@ -192,90 +107,6 @@ describe("normalizeTiers", () => {
   it("defaults the top player to tier 1 when it has none", () => {
     const out = normalizeTiers([mk({ id: "a", tier: null, overallRank: 1 })]);
     expect(out[0].tier).toBe(1);
-  });
-});
-
-describe("moveTier", () => {
-  it("moves a whole tier block to a new position and renumbers", () => {
-    const players = [
-      mk({ id: "p1", tier: 1, overallRank: 1 }),
-      mk({ id: "p2", tier: 1, overallRank: 2 }),
-      mk({ id: "p3", tier: 2, overallRank: 3 }),
-      mk({ id: "p4", tier: 2, overallRank: 4 }),
-      mk({ id: "p5", tier: 3, overallRank: 5 }),
-      mk({ id: "p6", tier: 3, overallRank: 6 }),
-    ];
-    const out = moveTier(players, 3, 1); // tier 3 to the front
-    expect(out.map((p) => p.id)).toEqual(["p5", "p6", "p1", "p2", "p3", "p4"]);
-    expect(out.map((p) => p.tier)).toEqual([1, 1, 2, 2, 3, 3]);
-    expect(out.map((p) => p.overallRank)).toEqual([1, 2, 3, 4, 5, 6]);
-  });
-});
-
-describe("splitTierAt", () => {
-  it("starts a new tier at the given player", () => {
-    const players = [
-      mk({ id: "a", tier: 1, overallRank: 1 }),
-      mk({ id: "b", tier: 1, overallRank: 2 }),
-      mk({ id: "c", tier: 1, overallRank: 3 }),
-    ];
-    expect(splitTierAt(players, "b").map((p) => p.tier)).toEqual([1, 2, 2]);
-  });
-
-  it("is a no-op when the player already starts its tier", () => {
-    const players = [
-      mk({ id: "a", tier: 1, overallRank: 1 }),
-      mk({ id: "b", tier: 1, overallRank: 2 }),
-      mk({ id: "c", tier: 2, overallRank: 3 }),
-      mk({ id: "d", tier: 2, overallRank: 4 }),
-    ];
-    expect(splitTierAt(players, "c").map((p) => p.tier)).toEqual([1, 1, 2, 2]);
-  });
-});
-
-describe("removeTier", () => {
-  it("merges a tier up into the one above and renumbers", () => {
-    const players = [
-      mk({ id: "p1", tier: 1, overallRank: 1 }),
-      mk({ id: "p2", tier: 1, overallRank: 2 }),
-      mk({ id: "p3", tier: 2, overallRank: 3 }),
-      mk({ id: "p4", tier: 2, overallRank: 4 }),
-      mk({ id: "p5", tier: 3, overallRank: 5 }),
-    ];
-    expect(removeTier(players, 2).map((p) => p.tier)).toEqual([1, 1, 1, 1, 2]);
-  });
-
-  it("merges the top tier down when nothing is above it", () => {
-    const players = [
-      mk({ id: "p1", tier: 1, overallRank: 1 }),
-      mk({ id: "p2", tier: 2, overallRank: 2 }),
-      mk({ id: "p3", tier: 2, overallRank: 3 }),
-    ];
-    expect(removeTier(players, 1).map((p) => p.tier)).toEqual([1, 1, 1]);
-  });
-});
-
-describe("moveIntoNewTier", () => {
-  it("moves a player to a boundary as its own new tier", () => {
-    const players = [
-      mk({ id: "a", tier: 1, overallRank: 1 }),
-      mk({ id: "b", tier: 1, overallRank: 2 }),
-      mk({ id: "c", tier: 2, overallRank: 3 }),
-      mk({ id: "d", tier: 2, overallRank: 4 }),
-    ];
-    const out = moveIntoNewTier(players, "d", "c"); // d alone, before c
-    expect(out.map((p) => p.id)).toEqual(["a", "b", "d", "c"]);
-    expect(out.map((p) => p.tier)).toEqual([1, 1, 2, 3]);
-  });
-
-  it("moves a player into a new tier at the very end when beforeId is null", () => {
-    const players = [
-      mk({ id: "a", tier: 1, overallRank: 1 }),
-      mk({ id: "b", tier: 1, overallRank: 2 }),
-    ];
-    const out = moveIntoNewTier(players, "a", null);
-    expect(out.map((p) => p.id)).toEqual(["b", "a"]);
-    expect(out.map((p) => p.tier)).toEqual([1, 2]);
   });
 });
 
