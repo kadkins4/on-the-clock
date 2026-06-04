@@ -226,6 +226,16 @@ describe("bestAvailableId", () => {
   });
 });
 
+it("createMock generates one team identity per team, user flagged", () => {
+  const m = createMock(
+    league(board),
+    { teams: 10, userSlot: 4, thirdRoundReversal: false },
+    42,
+  );
+  expect(m.teams).toHaveLength(10);
+  expect(m.teams[3].isUser).toBe(true);
+});
+
 describe("createMock value config", () => {
   it("carries valueThreshold/enabled from the start settings", () => {
     const l = makeLeague({ name: "T", teams: 10, board: [] });

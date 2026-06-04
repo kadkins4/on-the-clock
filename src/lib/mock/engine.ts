@@ -5,6 +5,7 @@ import { buildDraftOrder } from "./order";
 import { openNeeds } from "./roster";
 import { botPick } from "./bot";
 import { makeRng } from "./rng";
+import { makeTeamIdentities } from "./teamIdentity";
 
 function rosterSize(r: League["roster"]): number {
   return (
@@ -35,6 +36,7 @@ export function createMock(
     scoring: league.scoring,
     roster: league.roster,
     settings: { ...settings, rounds },
+    teams: makeTeamIdentities(settings.teams, settings.userSlot, seed),
     order: buildDraftOrder(settings.teams, rounds, settings.thirdRoundReversal),
     picks: [],
     draftedIds: new Set(),

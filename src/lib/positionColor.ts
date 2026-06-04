@@ -1,4 +1,4 @@
-import type { Position } from "./types";
+import type { Position } from "../types";
 
 // Canonical fantasy position palette (dark theme). Single source of truth;
 // CSS mirrors these as --pos-* custom properties.

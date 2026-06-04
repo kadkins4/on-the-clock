@@ -1,4 +1,5 @@
 import type { Player, RosterSettings, Scoring } from "../../types";
+import type { TeamIdentity } from "./teamIdentity";
 
 export interface MockSettings {
   teams: number; // 8–16
@@ -24,6 +25,7 @@ export interface MockState {
   scoring: Scoring;
   roster: RosterSettings;
   settings: MockSettings;
+  teams: TeamIdentity[]; // generated team identities (name/avatar/isUser)
   order: number[]; // order[i] = teamIndex picking at overall pick (i+1)
   picks: DraftPick[]; // in pick order
   draftedIds: Set<string>;
