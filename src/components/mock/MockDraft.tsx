@@ -54,6 +54,7 @@ export function MockDraft({
   onRewindTo,
 }: Props) {
   const [posFilter, setPosFilter] = useState<Position | "All">("All");
+  const [poolTab, setPoolTab] = useState<"board" | "queue">("board");
   const [boardOpen, setBoardOpen] = useState(false);
   const [openPlayer, setOpenPlayer] = useState<string | null>(null);
   const [extraCols, setExtraCols] = useState<PoolCol[]>(["bye"]);
@@ -238,27 +239,56 @@ export function MockDraft({
         </button>
       </div>
 
-      <div className="chips">
-        {POS_FILTERS.map((p) => (
-          <button
-            key={p}
-            className={posFilter === p ? "chip active" : "chip"}
-            onClick={() => setPosFilter(p)}
-          >
-            {p}
-          </button>
-        ))}
+      <div className="pool-tabs">
+        <button
+          className={poolTab === "board" ? "on" : ""}
+          onClick={() => setPoolTab("board")}
+        >
+          Board
+        </button>
+        <button
+          className={poolTab === "queue" ? "on" : ""}
+          onClick={() => setPoolTab("queue")}
+        >
+          Queue
+        </button>
       </div>
 
-      <PickPool
-        players={avail.slice(0, 100)}
-        canDraft={isUser && !revealing}
-        overall={overall}
-        extraCols={extraCols}
-        onToggleCol={toggleCol}
-        onDraft={onDraft}
-        onOpenPlayer={(id) => setOpenPlayer(id)}
-      />
+      {poolTab === "board" && (
+        <>
+          <div className="chips">
+            {POS_FILTERS.map((p) => (
+              <button
+                key={p}
+                className={posFilter === p ? "chip active" : "chip"}
+                onClick={() => setPosFilter(p)}
+              >
+                {p}
+              </button>
+            ))}
+          </div>
+
+          <PickPool
+            players={avail.slice(0, 100)}
+            canDraft={isUser && !revealing}
+            overall={overall}
+            extraCols={extraCols}
+            onToggleCol={toggleCol}
+            onDraft={onDraft}
+            onOpenPlayer={(id) => setOpenPlayer(id)}
+          />
+        </>
+      )}
+
+      {poolTab === "queue" && (
+        <div className="queue-soon">
+          <span className="ppx-soon">Queue · Coming soon</span>
+          <p>
+            Add players to a queue and drag them up and down to plan your picks.
+            Landing soon.
+          </p>
+        </div>
+      )}
 
       <DraftBoardGrid
         state={state}

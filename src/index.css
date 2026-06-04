@@ -2098,3 +2098,27 @@ table.players th.sorted {
   background: #161c27;
   margin: 6px 0;
 }
+.pool-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 8px 12px 0;
+}
+.pool-tabs button {
+  background: none;
+  border: none;
+  color: #8b93a4;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 6px 10px;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+}
+.pool-tabs button.on {
+  color: #eef1f6;
+  border-bottom-color: #34d399;
+}
+.queue-soon {
+  padding: 24px 16px;
+  color: #8b93a4;
+  text-align: center;
+}
