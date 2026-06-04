@@ -1,6 +1,7 @@
 import type { MockState } from "../../lib/mock/types";
 import { buildBoardGrid, userColumnIndex } from "../../lib/mock/board";
 import { available } from "../../lib/mock/engine";
+import { Avatar } from "./Avatar";
 
 interface Props {
   state: MockState;
@@ -56,47 +57,53 @@ export function DraftBoardGrid({
       </div>
 
       <div className="board-scroll">
-        <table className="board-grid">
-          <thead>
-            <tr>
-              <th></th>
-              {Array.from({ length: teams }, (_, t) => (
-                <th key={t} className={t === userCol ? "user-col" : ""}>
-                  {t === userCol ? "You" : `T${t + 1}`}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {grid.map((row, r) => (
-              <tr key={r}>
-                <th className="round-label">R{r + 1}</th>
-                {row.map((cell, t) => (
-                  <td
-                    key={t}
-                    className={`board-cell ${t === userCol ? "user-col" : ""} ${
-                      cell ? `pos-${cell.position}` : "empty"
-                    } ${cell && onPickClick ? "clickable" : ""}`}
-                    role={cell && onPickClick ? "button" : undefined}
-                    onClick={
-                      cell && onPickClick
-                        ? () => onPickClick(cell.overall)
-                        : undefined
-                    }
-                  >
-                    {cell && (
-                      <>
-                        <span className="cell-pick">{cell.label}</span>
-                        <span className="cell-name">{cell.name}</span>
-                        <span className="cell-pos">{cell.position}</span>
-                      </>
-                    )}
-                  </td>
-                ))}
-              </tr>
+        <div className="board-cardgrid" style={{ ["--cols" as string]: teams }}>
+          <div className="bcg-teamrow">
+            {state.teams.map((t, i) => (
+              <div key={i} className={`bcg-team${t.isUser ? " you" : ""}`}>
+                <Avatar
+                  initials={t.initials}
+                  color={t.color}
+                  size={28}
+                  ring={t.isUser}
+                />
+                <span className="bcg-tname">{t.name}</span>
+              </div>
             ))}
-          </tbody>
-        </table>
+          </div>
+          {grid.map((row, r) => (
+            <div className="bcg-row" key={r}>
+              {row.map((cell, t) => (
+                <div
+                  key={t}
+                  className={
+                    "bcg-cell " +
+                    (cell ? `pos-${cell.position} done` : "empty") +
+                    (t === userCol ? " user-col" : "") +
+                    (cell && onPickClick ? " clickable" : "")
+                  }
+                  onClick={
+                    cell && onPickClick
+                      ? () => onPickClick(cell.overall)
+                      : undefined
+                  }
+                >
+                  {cell ? (
+                    <>
+                      <span className="bcg-pick">{cell.label}</span>
+                      <span className="bcg-name">{cell.name}</span>
+                      <span className="bcg-meta">{cell.position}</span>
+                    </>
+                  ) : (
+                    <span className="bcg-pick faded">
+                      {/* upcoming label */}
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -1733,3 +1733,88 @@ table.players th.sorted {
 .otc-avatar.ring {
   box-shadow: 0 0 0 2px #34d399;
 }
+
+/* --- Board card grid --- */
+.board-cardgrid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.bcg-teamrow,
+.bcg-row {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  gap: 6px;
+}
+.bcg-team {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 2px;
+}
+.bcg-team.you {
+  background: #0f1a14;
+  border-radius: 8px;
+}
+.bcg-tname {
+  font-size: 10px;
+  color: #c2c9d6;
+  max-width: 92px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.bcg-cell {
+  border-radius: 8px;
+  padding: 6px 7px;
+  min-height: 46px;
+  position: relative;
+  background: color-mix(in srgb, var(--c, #2a2f3a) 14%, #10141d);
+  border-left: 3px solid var(--c, #2a2f3a);
+}
+.bcg-cell.empty {
+  background: #0d1017;
+  border-left-color: #1b2130;
+}
+.bcg-cell .bcg-pick {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  font-size: 9px;
+  opacity: 0.6;
+}
+.bcg-name {
+  display: block;
+  font-weight: 700;
+  font-size: 11.5px;
+  color: #eef1f6;
+}
+.bcg-meta {
+  font-size: 9px;
+  color: #aab2c2;
+}
+.bcg-cell.user-col {
+  outline: 1px solid #245c39;
+}
+.bcg-cell.clickable {
+  cursor: pointer;
+}
+.pos-QB {
+  --c: var(--pos-QB);
+}
+.pos-RB {
+  --c: var(--pos-RB);
+}
+.pos-WR {
+  --c: var(--pos-WR);
+}
+.pos-TE {
+  --c: var(--pos-TE);
+}
+.pos-K {
+  --c: var(--pos-K);
+}
+.pos-DST {
+  --c: var(--pos-DST);
+}
