@@ -123,18 +123,58 @@ describe("moveAndRetier", () => {
     expect(out.map((p) => p.tier)).toEqual([1, 1, 2]);
   });
 
-  it("dragging DOWN onto a player lands directly above it, joining its tier", () => {
+  it("dragging DOWN onto a player lands directly below it, joining its tier", () => {
     const players = [
       mk({ id: "a", tier: 1, overallRank: 1 }),
       mk({ id: "b", tier: 1, overallRank: 2 }),
       mk({ id: "c", tier: 2, overallRank: 3 }),
       mk({ id: "d", tier: 2, overallRank: 4 }),
     ];
-    // drag a down onto c (top of tier 2): a lands ABOVE c (no swap), tier 2
+    // drag a down onto c (top of tier 2): a lands BELOW c (matching the drag
+    // preview), joining tier 2 — c stays the top of its tier, not bumped.
     const out = moveAndRetier(players, "a", "c");
-    expect(out.map((p) => p.id)).toEqual(["b", "a", "c", "d"]);
+    expect(out.map((p) => p.id)).toEqual(["b", "c", "a", "d"]);
     expect(out.find((p) => p.id === "a")!.tier).toBe(2);
     expect(out.map((p) => p.tier)).toEqual([1, 2, 2, 2]);
+  });
+
+  it("dragging DOWN within a tier moves below the target (no snap-back)", () => {
+    const players = [
+      mk({ id: "a", tier: 1, overallRank: 1 }),
+      mk({ id: "b", tier: 1, overallRank: 2 }),
+      mk({ id: "c", tier: 1, overallRank: 3 }),
+      mk({ id: "d", tier: 1, overallRank: 4 }),
+    ];
+    // drag b down onto its adjacent neighbor c: b should land just below c,
+    // not snap back to where it started.
+    const out = moveAndRetier(players, "b", "c");
+    expect(out.map((p) => p.id)).toEqual(["a", "c", "b", "d"]);
+  });
+
+  it("dragging DOWN across tiers joins below the target without bumping its top", () => {
+    const players = [
+      mk({ id: "a", tier: 1, overallRank: 1 }),
+      mk({ id: "b", tier: 1, overallRank: 2 }),
+      mk({ id: "c", tier: 2, overallRank: 3 }),
+      mk({ id: "d", tier: 2, overallRank: 4 }),
+    ];
+    // drag b down onto c (top of tier 2): b joins tier 2 below c.
+    const out = moveAndRetier(players, "b", "c");
+    expect(out.map((p) => p.id)).toEqual(["a", "c", "b", "d"]);
+    expect(out.map((p) => p.tier)).toEqual([1, 2, 2, 2]);
+  });
+
+  it("dragging UP onto a player still lands directly above it", () => {
+    const players = [
+      mk({ id: "a", tier: 1, overallRank: 1 }),
+      mk({ id: "b", tier: 1, overallRank: 2 }),
+      mk({ id: "c", tier: 2, overallRank: 3 }),
+      mk({ id: "d", tier: 2, overallRank: 4 }),
+    ];
+    // drag d up onto b: d lands above b, joining tier 1.
+    const out = moveAndRetier(players, "d", "b");
+    expect(out.map((p) => p.id)).toEqual(["a", "d", "b", "c"]);
+    expect(out.find((p) => p.id === "d")!.tier).toBe(1);
   });
 });
 

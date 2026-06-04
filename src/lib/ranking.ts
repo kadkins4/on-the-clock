@@ -118,24 +118,35 @@ export function sortPlayers(
   return players.slice().sort(cmp);
 }
 
-// Reorder by dragging `activeId` onto `overId` in the overall-rank ordering.
-// The moved player lands directly ABOVE the drop target and adopts the target's
-// tier — so dragging across a divider joins the tier you dropped onto, the same
-// way in both directions (no swap with the neighbor below the target).
+// Move `from` to `to`, matching @dnd-kit's arrayMove so the drop result lands
+// exactly where the drag preview showed it (dragging down lands below the
+// target; dragging up lands above it).
+function arrayMove<T>(arr: T[], from: number, to: number): T[] {
+  const copy = arr.slice();
+  const [el] = copy.splice(from, 1);
+  copy.splice(to, 0, el);
+  return copy;
+}
+
+// Reorder by dragging `activeId` onto `overId` in the overall-rank ordering,
+// reproducing the dnd-kit drag preview: the moved player lands ABOVE the target
+// when dragged up and BELOW it when dragged down, adopting the target's tier so
+// a cross-divider drop joins the tier it landed in.
 export function moveAndRetier(
   players: Player[],
   activeId: string,
   overId: string,
 ): Player[] {
   const ordered = players.slice().sort((a, b) => a.overallRank - b.overallRank);
-  const moved = ordered.find((p) => p.id === activeId);
-  const over = ordered.find((p) => p.id === overId);
-  if (!moved || !over || activeId === overId) return players;
-  const without = ordered.filter((p) => p.id !== activeId);
-  const overIdx = without.findIndex((p) => p.id === overId);
-  without.splice(overIdx, 0, { ...moved, tier: over.tier });
+  const fromIdx = ordered.findIndex((p) => p.id === activeId);
+  const overIdx = ordered.findIndex((p) => p.id === overId);
+  if (fromIdx === -1 || overIdx === -1 || activeId === overId) return players;
+  const overTier = ordered[overIdx].tier;
+  const reordered = arrayMove(ordered, fromIdx, overIdx).map((p) =>
+    p.id === activeId ? { ...p, tier: overTier } : p,
+  );
   // Renumber so an emptied tier doesn't leave a gap in the sequence.
-  return fromBlocks(toBlocks(reassignOverallRanks(without)));
+  return fromBlocks(toBlocks(reassignOverallRanks(reordered)));
 }
 
 // --- Tier structure ---------------------------------------------------------
