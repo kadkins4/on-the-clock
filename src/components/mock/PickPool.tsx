@@ -46,26 +46,6 @@ export function PickPool({
 
   return (
     <div className="pickpool">
-      {/* Column toggle bar */}
-      <div className="pp-colbar">
-        <span>Columns:</span>
-        {(["bye", "proj", "vor"] as PoolCol[]).map((c) => {
-          const on = extraCols.includes(c);
-          const comingSoon = c === "proj" || c === "vor";
-          return (
-            <button
-              key={c}
-              className={on ? "on" : ""}
-              disabled={comingSoon || (!on && atCap)}
-              title={comingSoon ? "Coming soon" : undefined}
-              onClick={() => onToggleCol(c)}
-            >
-              {c === "bye" ? "Bye" : c === "proj" ? "Proj" : "VOR"}
-            </button>
-          );
-        })}
-      </div>
-
       {groups.map((g, i) => (
         <div key={i}>
           <div className="pp-tier">

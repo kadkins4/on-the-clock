@@ -58,6 +58,7 @@ export function MockDraft({
   );
   const [openPlayer, setOpenPlayer] = useState<string | null>(null);
   const [extraCols, setExtraCols] = useState<PoolCol[]>(["bye"]);
+  const [colMenuOpen, setColMenuOpen] = useState(false);
   const [paused, setPaused] = useState(false);
   const [menuFor, setMenuFor] = useState<number | null>(null); // pick popover
   const [replaceSearch, setReplaceSearch] = useState("");
@@ -256,7 +257,7 @@ export function MockDraft({
 
       {poolTab === "players" && (
         <>
-          <div className="chips">
+          <div className="filters">
             {POS_FILTERS.map((p) => (
               <button
                 key={p}
@@ -266,6 +267,43 @@ export function MockDraft({
                 {p}
               </button>
             ))}
+            <div className="colbtn-wrap">
+              <button
+                className={`colbtn${colMenuOpen ? " active" : ""}`}
+                onClick={() => setColMenuOpen((o) => !o)}
+                aria-label="Columns"
+              >
+                ⚙ Columns
+              </button>
+              {colMenuOpen && (
+                <>
+                  <div
+                    className="colmenu-scrim"
+                    onClick={() => setColMenuOpen(false)}
+                  />
+                  <div className="colmenu">
+                    {(["bye", "proj", "vor"] as PoolCol[]).map((c) => {
+                      const on = extraCols.includes(c);
+                      const comingSoon = c === "proj" || c === "vor";
+                      return (
+                        <button
+                          key={c}
+                          className={on ? "on" : ""}
+                          disabled={
+                            comingSoon ||
+                            (!on && extraCols.length >= POOL_COL_CAP)
+                          }
+                          title={comingSoon ? "Coming soon" : undefined}
+                          onClick={() => toggleCol(c)}
+                        >
+                          {c === "bye" ? "Bye" : c === "proj" ? "Proj" : "VOR"}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </>
+              )}
+            </div>
           </div>
 
           <PickPool
