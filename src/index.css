@@ -2245,3 +2245,77 @@ table.players th.sorted {
   color: #8b93a4;
   text-align: center;
 }
+
+/* Missed-pick modal */
+.missed-scrim {
+  position: fixed;
+  inset: 0;
+  background: #0009;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.missed-modal {
+  background: #1b1f2a;
+  border: 1px solid #ff6b4a;
+  border-radius: 14px;
+  box-shadow: 0 16px 48px #000c;
+  padding: 28px 24px 20px;
+  width: min(360px, 92vw);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: center;
+}
+.missed-modal h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  color: #ff6b4a;
+}
+.missed-modal p {
+  margin: 0;
+  font-size: 14px;
+  color: #b0b7c3;
+  line-height: 1.5;
+}
+.missed-acts {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+.missed-acts .ghost {
+  flex: 1;
+  background: none;
+  border: 1px solid #444;
+  color: #c8cdd8;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.missed-acts .ghost:hover {
+  border-color: #888;
+  color: #eef1f6;
+}
+.missed-acts .primary {
+  flex: 1;
+  background: #16a34a;
+  border: none;
+  color: #fff;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 1px 0 #0d6b32;
+}
+.missed-acts .primary:hover {
+  background: #15b150;
+}
+.missed-count {
+  font-size: 12px;
+  color: #6b7280;
+}

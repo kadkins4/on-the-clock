@@ -61,6 +61,9 @@ export function MockDraft({
   const [colMenuOpen, setColMenuOpen] = useState(false);
   const [paused, setPaused] = useState(false);
   const [autoOn, setAutoOn] = useState(!!state.settings.autoDraft);
+  const [missed, setMissed] = useState(false);
+  const [missedLeft, setMissedLeft] = useState(25);
+  const promptedRef = useRef(false);
   const [menuFor, setMenuFor] = useState<number | null>(null); // pick popover
   const [replaceSearch, setReplaceSearch] = useState("");
   const [timerSec, setTimerSec] = useState<number | null>(30); // null = Off
@@ -121,11 +124,16 @@ export function MockDraft({
     if (remaining <= 0) {
       const id = bestAvailableId(state);
       if (id) onDraft(id);
+      // Show missed-pick popup once per draft session (only when not auto-drafting)
+      if (!autoOn && !promptedRef.current) {
+        promptedRef.current = true;
+        setMissed(true);
+      }
       return;
     }
     const t = setTimeout(() => setRemaining((s) => s - 1), 1000);
     return () => clearTimeout(t);
-  }, [timerSec, paused, isUser, revealing, remaining, state, onDraft]);
+  }, [timerSec, paused, isUser, revealing, remaining, state, onDraft, autoOn]);
 
   // Bots pick automatically while running. Pausing (or a dry pool that leaves a
   // bot with no legal pick) stops the timer so the draft can't spin or fight an
@@ -149,6 +157,22 @@ export function MockDraft({
     const t = setTimeout(() => onDraft(id), BOT_DELAY);
     return () => clearTimeout(t);
   }, [autoOn, isUser, paused, revealing, state, onDraft]);
+
+  // Missed-pick modal countdown: decrement missedLeft each second while modal is open;
+  // at 0, activate auto-draft and close the modal.
+  useEffect(() => {
+    if (!missed) {
+      setMissedLeft(25);
+      return;
+    }
+    if (missedLeft <= 0) {
+      setAutoOn(true);
+      setMissed(false);
+      return;
+    }
+    const t = setTimeout(() => setMissedLeft((s) => s - 1), 1000);
+    return () => clearTimeout(t);
+  }, [missed, missedLeft]);
 
   const avail = useMemo(
     () =>
@@ -356,6 +380,36 @@ export function MockDraft({
         }
         onClose={() => setOpenPlayer(null)}
       />
+
+      {/* Missed-pick modal */}
+      {missed && (
+        <div className="missed-scrim">
+          <div className="missed-modal">
+            <h3>⏰ You missed your pick</h3>
+            <p>
+              Your clock ran out. Keep drafting, or let auto-draft finish for
+              you?
+            </p>
+            <div className="missed-acts">
+              <button className="ghost" onClick={() => setMissed(false)}>
+                Keep drafting
+              </button>
+              <button
+                className="primary"
+                onClick={() => {
+                  setAutoOn(true);
+                  setMissed(false);
+                }}
+              >
+                Auto-draft the rest
+              </button>
+            </div>
+            <div className="missed-count">
+              Auto-drafts in {missedLeft}s if you don&apos;t choose…
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Edit a made pick: resume from here, replace the player, or undo it. */}
       {menuFor != null && (
