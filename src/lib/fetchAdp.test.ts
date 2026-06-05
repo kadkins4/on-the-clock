@@ -4,20 +4,25 @@ import { fetchAdp } from "./fetchAdp";
 afterEach(() => vi.restoreAllMocks());
 
 describe("fetchAdp", () => {
-  it("calls /api/adp with scoring + teams and returns players + meta", async () => {
+  it("calls /api/adp with scoring + teams and returns ffc + meta", async () => {
     const players = [{ name: "CMC", position: "RB", team: "SF", adp: 1.4 }];
     vi.stubGlobal(
       "fetch",
       vi.fn(async () => ({
         ok: true,
-        json: async () => ({ players, meta: { year: 2025, type: "PPR" } }),
+        json: async () => ({
+          ffc: players,
+          fantasypros: [],
+          yahoo: [],
+          meta: { year: 2025, type: "PPR", sources: ["ffc"] },
+        }),
       })),
     );
     const res = await fetchAdp("ppr", 12);
     expect(
       (globalThis.fetch as ReturnType<typeof vi.fn>).mock.calls[0][0],
     ).toBe("/api/adp?scoring=ppr&teams=12");
-    expect(res.players).toEqual(players);
+    expect(res.ffc).toEqual(players);
     expect(res.meta.year).toBe(2025);
   });
 
