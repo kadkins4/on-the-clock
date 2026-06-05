@@ -377,6 +377,10 @@ table.players td {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  /* default: static cells show the arrow, not the text caret. Editable cells
+     (rank, notes) opt back into the caret; clickable controls (buttons, drag
+     handle, sortable headers) set their own pointer/grab. */
+  cursor: default;
 }
 /* the mover cell must not clip the "+" that pokes above/left of the row */
 table.players td.mover,
@@ -476,6 +480,11 @@ table.players td.rank .rank-input::-webkit-outer-spin-button,
 table.players td.rank .rank-input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+/* editable cells: text caret signals "click and type". */
+table.players td.rank,
+table.players .notes {
+  cursor: text;
 }
 
 /* row state colors via a left accent + tint */
