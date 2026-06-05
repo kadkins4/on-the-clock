@@ -8,7 +8,8 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "fetch-adp": "tsx scripts/fetch-adp.ts"
+    "fetch-adp": "tsx scripts/fetch-adp.ts",
+    "yahoo-auth": "tsx scripts/yahoo-auth.ts"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
