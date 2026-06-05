@@ -64,6 +64,9 @@ const DevPanel = lazy(() =>
 );
 import { AlphaBanner } from "./components/AlphaBanner";
 import { Wordmark } from "./components/Wordmark";
+import { Header } from "./components/Header";
+import { InfoModal } from "./components/InfoModal";
+import { AboutContent, LogContent } from "./components/infoContent";
 
 function download(filename: string, text: string, type: string) {
   const blob = new Blob([text], { type });
@@ -186,6 +189,7 @@ export default function App() {
     loadRefetchResult,
   );
   const [toast, setToast] = useState<string | null>(null);
+  const [infoModal, setInfoModal] = useState<"about" | "log" | null>(null);
 
   useEffect(() => {
     if (!toast) return;
@@ -569,49 +573,13 @@ export default function App() {
     <div className="app">
       <Intro replay={introReplay} />
       <AlphaBanner />
-      <header className="otc-header">
-        <button
-          type="button"
-          className="otc-brand"
-          onClick={onBrandClick}
-          title="Refresh & replay intro"
-          aria-label="Refresh and replay intro"
-        >
-          <svg className="otc-logo" viewBox="0 0 64 64" width="30" height="30">
-            {/* <rect width="64" height="64" rx="15" fill="#14161f" /> */}
-            <circle
-              cx="32"
-              cy="34"
-              r="17"
-              fill="none"
-              stroke="#ff6b4a"
-              strokeWidth="4"
-            />
-            <rect x="26" y="9" width="12" height="5" rx="2.5" fill="#ff6b4a" />
-            <line
-              x1="32"
-              y1="34"
-              x2="32"
-              y2="23"
-              stroke="#fff"
-              strokeWidth="3.5"
-              strokeLinecap="round"
-            />
-            <line
-              x1="32"
-              y1="34"
-              x2="40"
-              y2="38"
-              stroke="#fff"
-              strokeWidth="3.5"
-              strokeLinecap="round"
-            />
-          </svg>
-          <h1 className="otc-title">
-            <Wordmark />
-          </h1>
-        </button>
-      </header>
+      <Header
+        onBrandClick={onBrandClick}
+        onAbout={() => setInfoModal("about")}
+        onLog={() => setInfoModal("log")}
+        onMock={() => setMockMode(true)}
+        onDraft={() => setToast("Live draft mode is coming soon!")}
+      />
       <div className="drafted-summary">
         {shownPositions.map((pos) => (
           <span key={pos} className="drafted-summary-item">
@@ -673,7 +641,6 @@ export default function App() {
         fetching={fetching}
         onRefreshAdp={onRefreshAdp}
         adpStatus={adpStatus}
-        onMock={() => setMockMode(true)}
         onImport={onImport}
         onExportJson={() =>
           download(
@@ -731,6 +698,14 @@ export default function App() {
           onChoose={onScopeChosen}
           onCancel={() => setPendingLayout(null)}
         />
+      )}
+      {infoModal && (
+        <InfoModal
+          title={infoModal === "about" ? <Wordmark /> : "What's new"}
+          onClose={() => setInfoModal(null)}
+        >
+          {infoModal === "about" ? <AboutContent /> : <LogContent />}
+        </InfoModal>
       )}
       {toast && <div className="toast">{toast}</div>}
       <footer
