@@ -94,6 +94,15 @@ describe("boardReducer", () => {
     expect(out.players.map((p) => p.id)).toEqual(["a", "b", "c"]);
     expect(out.breaks).toEqual([{ id: "br1", above: 0 }]);
   });
+
+  it("setRank moves a player to the given overall rank, shifting the rest", () => {
+    const out = boardReducer(
+      { players: base, breaks: [] },
+      { type: "setRank", id: "a", rank: 3 },
+    ).players;
+    expect(out.map((p) => p.id)).toEqual(["b", "c", "a"]);
+    expect(out.map((p) => p.overallRank)).toEqual([1, 2, 3]);
+  });
 });
 
 import { leaguesReducer } from "./reducer";

@@ -109,6 +109,28 @@ export function applyDrag(
   };
 }
 
+// Move a player to a target overall rank (1-based), shifting the players between
+// the old and new positions by one. Breaks stay put, so the moved player adopts
+// whichever tier band the destination rank falls in. Out-of-range ranks clamp
+// to 1..N; an unknown id or unchanged position returns the state untouched.
+export function moveToRank(
+  players: Player[],
+  breaks: Break[],
+  id: string,
+  rank: number,
+): BoardState {
+  const list = ordered(players);
+  const from = list.findIndex((p) => p.id === id);
+  if (from === -1) return { players, breaks };
+  const to = Math.max(0, Math.min(list.length - 1, Math.round(rank) - 1));
+  if (to === from) return { players, breaks };
+  const ranked = reassignOverallRanks(arrayMove(list, from, to));
+  return {
+    players: tiersFromBreaks(ranked, breaks),
+    breaks: sortedBreaks(breaks),
+  };
+}
+
 // Insert a break directly above `abovePlayerId`. If a break already sits there,
 // the new (duplicate) break creates an empty tier.
 export function insertBreak(

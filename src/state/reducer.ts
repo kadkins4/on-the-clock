@@ -10,6 +10,7 @@ import {
 } from "../lib/ranking";
 import {
   applyDrag,
+  moveToRank,
   insertBreak,
   removeBreak,
   breaksFromTiers,
@@ -32,6 +33,7 @@ export type Action =
     }
   | { type: "remove"; id: string }
   | { type: "move"; activeId: string; overId: string }
+  | { type: "setRank"; id: string; rank: number }
   | { type: "splitTier"; playerId: string }
   | { type: "removeBreak"; breakId: string }
   | { type: "merge"; fetched: FetchedPlayer[] }
@@ -81,6 +83,8 @@ export function boardReducer(state: BoardState, action: Action): BoardState {
     }
     case "move":
       return applyDrag(players, breaks, action.activeId, action.overId);
+    case "setRank":
+      return moveToRank(players, breaks, action.id, action.rank);
     case "splitTier":
       return insertBreak(players, breaks, action.playerId);
     case "removeBreak":

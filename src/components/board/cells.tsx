@@ -6,6 +6,7 @@ import type { Action } from "../../state/reducer";
 import type { ColumnId } from "../../lib/columns";
 import { nextDraftStatus } from "../../lib/draft";
 import { injuryBadge } from "../../lib/injury";
+import { RankCell } from "./RankCell";
 
 // Everything a cell renderer might need beyond the player itself.
 export interface CellCtx {
@@ -115,7 +116,7 @@ export const CELL_RENDERERS: Record<
       </td>
     );
   },
-  rank: (p) => <td className="rank num">{p.overallRank}</td>,
+  rank: (p, ctx) => <RankCell player={p} dispatch={ctx.dispatch} />,
   name: (p) => {
     const inj = injuryBadge(p.injuryStatus);
     return (

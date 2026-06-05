@@ -47,6 +47,11 @@ export function LogContent() {
         <ul className="otc-changelog">
           <li>
             <span className="otc-log-date">Jun 5, 2026</span>
+            Editable rank — double-click a player&rsquo;s rank to move them and
+            shift everyone else.
+          </li>
+          <li>
+            <span className="otc-log-date">Jun 5, 2026</span>
             New header with About and Log (road map &amp; change log) pages.
           </li>
           <li>

@@ -5,6 +5,7 @@ import {
   tiersFromBreaks,
   buildItems,
   applyDrag,
+  moveToRank,
   insertBreak,
   removeBreak,
   type Item,
@@ -211,5 +212,71 @@ describe("applyDrag — dragging a BREAK (Phase 2)", () => {
       3, 3,
     ]);
     expect(out.players.map((p) => p.tier)).toEqual([1, 1, 1, 3]);
+  });
+});
+
+describe("moveToRank", () => {
+  // moveToRank returns players already in rank order, so .map(id) reads the order.
+  const five = () => [
+    P("a", 1, 1),
+    P("b", 2, 1),
+    P("c", 3, 2),
+    P("d", 4, 2),
+    P("e", 5, 3),
+  ];
+  const ids = (s: { players: Player[] }) => s.players.map((p) => p.id);
+
+  it("moves a player down, shifting the rest up", () => {
+    const out = moveToRank(five(), [], "a", 4);
+    expect(ids(out)).toEqual(["b", "c", "d", "a", "e"]);
+    expect(out.players.map((p) => p.overallRank)).toEqual([1, 2, 3, 4, 5]);
+  });
+
+  it("moves a player up, shifting the rest down", () => {
+    expect(ids(moveToRank(five(), [], "e", 1))).toEqual([
+      "e",
+      "a",
+      "b",
+      "c",
+      "d",
+    ]);
+  });
+
+  it("clamps ranks above N and below 1", () => {
+    expect(ids(moveToRank(five(), [], "a", 99))).toEqual([
+      "b",
+      "c",
+      "d",
+      "e",
+      "a",
+    ]);
+    expect(ids(moveToRank(five(), [], "e", -3))).toEqual([
+      "e",
+      "a",
+      "b",
+      "c",
+      "d",
+    ]);
+  });
+
+  it("is a no-op for the same rank or an unknown id", () => {
+    expect(ids(moveToRank(five(), [], "a", 1))).toEqual([
+      "a",
+      "b",
+      "c",
+      "d",
+      "e",
+    ]);
+    const same = five();
+    expect(moveToRank(same, [], "zzz", 2).players).toBe(same);
+  });
+
+  it("keeps breaks fixed so a moved player adopts the destination tier", () => {
+    const breaks = [{ id: "x", above: 2 }]; // tier 1 = ranks 1-2, tier 2 = 3..5
+    const out = moveToRank(five(), breaks, "a", 4);
+    expect(out.breaks.map((b) => b.above)).toEqual([2]); // unchanged
+    const moved = out.players.find((p) => p.id === "a")!;
+    expect(moved.overallRank).toBe(4);
+    expect(moved.tier).toBe(2);
   });
 });

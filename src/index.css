@@ -466,6 +466,17 @@ table.players input:focus {
   border-color: var(--border);
   outline: none;
 }
+/* inline rank editor: centered, no number-spinner arrows in the narrow cell */
+table.players td.rank .rank-input {
+  text-align: center;
+  padding: 0;
+  -moz-appearance: textfield;
+}
+table.players td.rank .rank-input::-webkit-outer-spin-button,
+table.players td.rank .rank-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
 /* row state colors via a left accent + tint */
 .row td {
