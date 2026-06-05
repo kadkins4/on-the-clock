@@ -92,7 +92,7 @@ export const COLUMN_DEFS: ColumnDef[] = [
   },
   {
     // Last completed season (SEASON−1). Header tracks the year; bump on the
-    // yearly seed regen alongside fetch-espn's SEASON.
+    // yearly seed regen alongside the ESPN source's SEASON (scripts/adp/sources/espn.mjs).
     id: "last",
     label: "'25",
     sortable: true,

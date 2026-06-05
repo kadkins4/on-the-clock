@@ -180,7 +180,7 @@ export function extractLastStats(
   };
 }
 
-// Mirror of scripts/fetch-espn.mjs: filter to ranked, known-position players,
+// Mirror of scripts/adp/sources/espn.mjs: filter to ranked, known-position players,
 // sort by PPR rank, and assign a contiguous 1-based overall rank.
 export type ShapeResult =
   | { ok: true; ranked: number }
