@@ -7,7 +7,7 @@
     "overallRank": 1,
     "byeWeek": null,
     "tier": 1,
-    "adp": 1.6966666666666665,
+    "adp": 1.5725,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -32,14 +32,15 @@
       "fumblesLost": 3,
       "twoPt": 1
     },
-    "projPoints": 371.5727207,
+    "projPoints": 352.92395089,
     "notes": "",
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
       "espn": 2.08,
       "ffc": 1.8,
-      "fantasypros": 1.5
+      "fantasypros": 1.5,
+      "yahoo": 1.2
     }
   },
   {
@@ -50,7 +51,7 @@
     "overallRank": 2,
     "byeWeek": null,
     "tier": 1,
-    "adp": 2.7733333333333334,
+    "adp": 2.755,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -75,14 +76,15 @@
       "fumblesLost": 1,
       "twoPt": 0
     },
-    "projPoints": 375.02821331,
+    "projPoints": 358.58400746,
     "notes": "",
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
       "espn": 2.14,
       "ffc": 5,
-      "fantasypros": 1.5
+      "fantasypros": 1.5,
+      "yahoo": 2.7
     }
   },
   {
@@ -93,7 +95,7 @@
     "overallRank": 3,
     "byeWeek": null,
     "tier": 1,
-    "adp": 6.254999999999999,
+    "adp": 5.791249999999999,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -118,14 +120,15 @@
       "fumblesLost": 1,
       "twoPt": 0
     },
-    "projPoints": 377.75071688,
+    "projPoints": 356.74410109,
     "notes": "",
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
       "espn": 3.73,
       "ffc": 10.9,
-      "fantasypros": 4
+      "fantasypros": 4,
+      "yahoo": 4.4
     }
   },
   {
@@ -136,7 +139,7 @@
     "overallRank": 4,
     "byeWeek": null,
     "tier": 1,
-    "adp": 2.768333333333333,
+    "adp": 2.72625,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -161,14 +164,15 @@
       "fumblesLost": 1,
       "twoPt": 0
     },
-    "projPoints": 355.16783331,
+    "projPoints": 336.15614494,
     "notes": "",
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
       "espn": 4.81,
       "ffc": 1.4,
-      "fantasypros": 3
+      "fantasypros": 3,
+      "yahoo": 2.6
     }
   },
   {
@@ -179,7 +183,7 @@
     "overallRank": 5,
     "byeWeek": null,
     "tier": 1,
-    "adp": 6.526666666666667,
+    "adp": 6.3950000000000005,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -204,14 +208,15 @@
       "fumblesLost": 0,
       "twoPt": 0
     },
-    "projPoints": 366.13952135,
+    "projPoints": 351.52669594,
     "notes": "",
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
       "espn": 4.96,
       "ffc": 8.1,
-      "fantasypros": 6
+      "fantasypros": 6,
+      "yahoo": 6
     }
   },
   {
@@ -222,7 +227,7 @@
     "overallRank": 6,
     "byeWeek": null,
     "tier": 1,
-    "adp": 14.363333333333335,
+    "adp": 12.197500000000002,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -247,14 +252,15 @@
       "fumblesLost": 1,
       "twoPt": 0
     },
-    "projPoints": 346.67529085,
+    "projPoints": 326.40549263,
     "notes": "",
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
       "espn": 6.18,
       "ffc": 32.5,
-      "fantasypros": 5
+      "fantasypros": 5,
+      "yahoo": 5.7
     }
   },
   {
@@ -265,7 +271,7 @@
     "overallRank": 7,
     "byeWeek": null,
     "tier": 1,
-    "adp": 8.628333333333334,
+    "adp": 8.845,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -290,14 +296,15 @@
       "fumblesLost": 0,
       "twoPt": 0
     },
-    "projPoints": 341.75520023,
+    "projPoints": 324.33415367,
     "notes": "",
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 8.07,
+      "espn": 8.06,
       "ffc": 10.6,
-      "fantasypros": 7.5
+      "fantasypros": 7.5,
+      "yahoo": 9.5
     }
   },
   {
@@ -308,7 +315,7 @@
     "overallRank": 8,
     "byeWeek": null,
     "tier": 1,
-    "adp": 11.791666666666666,
+    "adp": 10.69375,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -333,14 +340,15 @@
       "fumblesLost": 1,
       "twoPt": 1
     },
-    "projPoints": 328.5092193,
+    "projPoints": 308.75896027,
     "notes": "",
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
       "espn": 8.25,
       "ffc": 20,
-      "fantasypros": 7.5
+      "fantasypros": 7.5,
+      "yahoo": 7.4
     }
   },
   {
@@ -351,7 +359,7 @@
     "overallRank": 9,
     "byeWeek": null,
     "tier": 1,
-    "adp": 13.451666666666666,
+    "adp": 13.4625,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -376,15 +384,16 @@
       "fumblesLost": 0,
       "twoPt": 0
     },
-    "projPoints": 311.74159377,
+    "projPoints": 295.44697482,
     "notes": "",
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
     "adpSources": {
-      "espn": 11.41,
+      "espn": 11.4,
       "ffc": 14.4,
-      "fantasypros": 13.5
+      "fantasypros": 13.5,
+      "yahoo": 13.5
     }
   },
   {
@@ -395,7 +404,7 @@
     "overallRank": 10,
     "byeWeek": null,
     "tier": 1,
-    "adp": 8.773333333333333,
+    "adp": 8.681249999999999,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -420,14 +429,15 @@
       "fumblesLost": 0,
       "twoPt": 0
     },
-    "projPoints": 311.61978044,
+    "projPoints": 294.93331793,
     "notes": "",
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 11.34,
+      "espn": 11.35,
       "ffc": 4.9,
-      "fantasypros": 10.5
+      "fantasypros": 10.5,
+      "yahoo": 8.4
     }
   },
   {
@@ -438,7 +448,7 @@
     "overallRank": 11,
     "byeWeek": null,
     "tier": 1,
-    "adp": 11.598333333333334,
+    "adp": 11.9475,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -468,9 +478,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 13.49,
+      "espn": 13.48,
       "ffc": 12.3,
-      "fantasypros": 10.5
+      "fantasypros": 10.5,
+      "yahoo": 13
     }
   },
   {
@@ -481,7 +492,7 @@
     "overallRank": 12,
     "byeWeek": null,
     "tier": 1,
-    "adp": 9.248333333333333,
+    "adp": 9.935,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -511,9 +522,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 12.59,
+      "espn": 12.58,
       "ffc": 4.2,
-      "fantasypros": 11.5
+      "fantasypros": 11.5,
+      "yahoo": 12
     }
   },
   {
@@ -524,7 +536,7 @@
     "overallRank": 13,
     "byeWeek": null,
     "tier": 2,
-    "adp": 19.03333333333333,
+    "adp": 16.75,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -556,7 +568,8 @@
     "adpSources": {
       "espn": 13.1,
       "ffc": 34.8,
-      "fantasypros": 10.5
+      "fantasypros": 10.5,
+      "yahoo": 9.9
     }
   },
   {
@@ -567,7 +580,7 @@
     "overallRank": 14,
     "byeWeek": null,
     "tier": 2,
-    "adp": 20.825,
+    "adp": 22.483333333333334,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -587,7 +600,8 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 17.3,
-      "fantasypros": 22
+      "fantasypros": 22,
+      "yahoo": 25.8
     }
   },
   {
@@ -598,7 +612,7 @@
     "overallRank": 15,
     "byeWeek": null,
     "tier": 2,
-    "adp": 16.834999999999997,
+    "adp": 16.674999999999997,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -628,9 +642,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 18.71,
+      "espn": 18.7,
       "ffc": 14.9,
-      "fantasypros": 17.5
+      "fantasypros": 17.5,
+      "yahoo": 16.2
     }
   },
   {
@@ -641,7 +656,7 @@
     "overallRank": 16,
     "byeWeek": null,
     "tier": 2,
-    "adp": 10.546666666666667,
+    "adp": 11.75875,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -671,9 +686,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 15.58,
+      "espn": 15.57,
       "ffc": 2.1,
-      "fantasypros": 14.5
+      "fantasypros": 14.5,
+      "yahoo": 15.4
     }
   },
   {
@@ -684,7 +700,7 @@
     "overallRank": 17,
     "byeWeek": null,
     "tier": 2,
-    "adp": 49.46666666666667,
+    "adp": 45.697500000000005,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -715,9 +731,10 @@
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
     "adpSources": {
-      "espn": 24.8,
+      "espn": 24.78,
       "ffc": 94,
-      "fantasypros": 28
+      "fantasypros": 28,
+      "yahoo": 34.4
     }
   },
   {
@@ -728,7 +745,7 @@
     "overallRank": 18,
     "byeWeek": null,
     "tier": 2,
-    "adp": 17.323333333333334,
+    "adp": 18.2675,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -753,14 +770,15 @@
       "fumblesLost": 3,
       "twoPt": 0
     },
-    "projPoints": 279.37455096,
+    "projPoints": 254.25983531,
     "notes": "",
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
       "espn": 18.14,
       "ffc": 11.4,
-      "fantasypros": 21
+      "fantasypros": 21,
+      "yahoo": 21.1
     }
   },
   {
@@ -771,7 +789,7 @@
     "overallRank": 19,
     "byeWeek": null,
     "tier": 2,
-    "adp": 18.776666666666667,
+    "adp": 19.00625,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -801,9 +819,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 24.06,
+      "espn": 24.05,
       "ffc": 9.8,
-      "fantasypros": 23
+      "fantasypros": 23,
+      "yahoo": 19.7
     }
   },
   {
@@ -814,7 +833,7 @@
     "overallRank": 20,
     "byeWeek": null,
     "tier": 2,
-    "adp": 25.036666666666665,
+    "adp": 23.72625,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -844,9 +863,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 21.32,
+      "espn": 21.31,
       "ffc": 41.2,
-      "fantasypros": 15.5
+      "fantasypros": 15.5,
+      "yahoo": 19.8
     }
   },
   {
@@ -857,7 +877,7 @@
     "overallRank": 21,
     "byeWeek": null,
     "tier": 2,
-    "adp": 22.418333333333333,
+    "adp": 23.337500000000002,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -888,9 +908,10 @@
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
     "adpSources": {
-      "espn": 27.31,
+      "espn": 27.3,
       "ffc": 7.1,
-      "fantasypros": 31
+      "fantasypros": 31,
+      "yahoo": 26.1
     }
   },
   {
@@ -901,7 +922,7 @@
     "overallRank": 22,
     "byeWeek": null,
     "tier": 2,
-    "adp": 24.834999999999997,
+    "adp": 24.175,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -931,9 +952,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 20.61,
+      "espn": 20.6,
       "ffc": 32.7,
-      "fantasypros": 21
+      "fantasypros": 21,
+      "yahoo": 22.2
     }
   },
   {
@@ -944,7 +966,7 @@
     "overallRank": 23,
     "byeWeek": null,
     "tier": 2,
-    "adp": 28.051666666666666,
+    "adp": 28.66125,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -974,9 +996,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 28.11,
+      "espn": 28.09,
       "ffc": 16.1,
-      "fantasypros": 36
+      "fantasypros": 36,
+      "yahoo": 30.5
     }
   },
   {
@@ -987,7 +1010,7 @@
     "overallRank": 24,
     "byeWeek": null,
     "tier": 2,
-    "adp": 23.03833333333333,
+    "adp": 22.178749999999997,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -1019,7 +1042,8 @@
     "adpSources": {
       "espn": 23.73,
       "ffc": 26.5,
-      "fantasypros": 20.5
+      "fantasypros": 20.5,
+      "yahoo": 19.6
     }
   },
   {
@@ -1030,7 +1054,7 @@
     "overallRank": 25,
     "byeWeek": null,
     "tier": 3,
-    "adp": 18.291666666666668,
+    "adp": 17.916249999999998,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -1060,9 +1084,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 27.25,
+      "espn": 27.23,
       "ffc": 19.5,
-      "fantasypros": 14.5
+      "fantasypros": 14.5,
+      "yahoo": 16.8
     }
   },
   {
@@ -1073,7 +1098,7 @@
     "overallRank": 26,
     "byeWeek": null,
     "tier": 3,
-    "adp": 43.37833333333333,
+    "adp": 39.8075,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -1103,9 +1128,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 33.47,
+      "espn": 33.46,
       "ffc": 71.4,
-      "fantasypros": 28
+      "fantasypros": 28,
+      "yahoo": 29.1
     }
   },
   {
@@ -1116,7 +1142,7 @@
     "overallRank": 27,
     "byeWeek": null,
     "tier": 3,
-    "adp": 36.25,
+    "adp": 37.035,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -1146,9 +1172,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 32.3,
+      "espn": 32.28,
       "ffc": 49.1,
-      "fantasypros": 29
+      "fantasypros": 29,
+      "yahoo": 39.4
     }
   },
   {
@@ -1159,7 +1186,7 @@
     "overallRank": 28,
     "byeWeek": null,
     "tier": 3,
-    "adp": 36.43666666666667,
+    "adp": 32.8775,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -1191,7 +1218,8 @@
     "adpSources": {
       "espn": 27.42,
       "ffc": 59.6,
-      "fantasypros": 24
+      "fantasypros": 24,
+      "yahoo": 22.2
     }
   },
   {
@@ -1202,7 +1230,7 @@
     "overallRank": 29,
     "byeWeek": null,
     "tier": 3,
-    "adp": 22.911666666666665,
+    "adp": 24.7325,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -1232,9 +1260,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 28.57,
+      "espn": 28.56,
       "ffc": 17.7,
-      "fantasypros": 24.5
+      "fantasypros": 24.5,
+      "yahoo": 30.2
     }
   },
   {
@@ -1245,7 +1274,7 @@
     "overallRank": 30,
     "byeWeek": null,
     "tier": 3,
-    "adp": 28.40166666666667,
+    "adp": 26.6,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -1275,9 +1304,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 27.11,
+      "espn": 27.1,
       "ffc": 46.9,
-      "fantasypros": 16.5
+      "fantasypros": 16.5,
+      "yahoo": 21.2
     }
   },
   {
@@ -1288,7 +1318,7 @@
     "overallRank": 31,
     "byeWeek": null,
     "tier": 3,
-    "adp": 38.419999999999995,
+    "adp": 38.987500000000004,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -1318,9 +1348,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 37.82,
+      "espn": 37.8,
       "ffc": 41.6,
-      "fantasypros": 36.5
+      "fantasypros": 36.5,
+      "yahoo": 40.7
     }
   },
   {
@@ -1331,7 +1362,7 @@
     "overallRank": 32,
     "byeWeek": null,
     "tier": 3,
-    "adp": 41.776666666666664,
+    "adp": 40.052499999999995,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -1362,9 +1393,10 @@
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
     "adpSources": {
-      "espn": 40.56,
+      "espn": 40.52,
       "ffc": 47.3,
-      "fantasypros": 38.5
+      "fantasypros": 38.5,
+      "yahoo": 34.9
     }
   },
   {
@@ -1375,7 +1407,7 @@
     "overallRank": 33,
     "byeWeek": null,
     "tier": 3,
-    "adp": 37.62833333333334,
+    "adp": 36.045,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -1405,9 +1437,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 37.47,
+      "espn": 37.46,
       "ffc": 45.4,
-      "fantasypros": 32.5
+      "fantasypros": 32.5,
+      "yahoo": 31.3
     }
   },
   {
@@ -1418,7 +1451,7 @@
     "overallRank": 34,
     "byeWeek": null,
     "tier": 3,
-    "adp": 57.47666666666667,
+    "adp": 52.705,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -1448,9 +1481,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 36.66,
+      "espn": 36.64,
       "ffc": 101.6,
-      "fantasypros": 35
+      "fantasypros": 35,
+      "yahoo": 38.4
     }
   },
   {
@@ -1461,7 +1495,7 @@
     "overallRank": 35,
     "byeWeek": null,
     "tier": 3,
-    "adp": 30.060000000000002,
+    "adp": 30.91875,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -1491,9 +1525,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 36.36,
+      "espn": 36.35,
       "ffc": 24,
-      "fantasypros": 32
+      "fantasypros": 32,
+      "yahoo": 33.5
     }
   },
   {
@@ -1504,7 +1539,7 @@
     "overallRank": 36,
     "byeWeek": null,
     "tier": 3,
-    "adp": 57.815,
+    "adp": 53.25874999999999,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -1534,9 +1569,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 42.99,
+      "espn": 42.97,
       "ffc": 104.7,
-      "fantasypros": 31.5
+      "fantasypros": 31.5,
+      "yahoo": 39.6
     }
   },
   {
@@ -1547,7 +1583,7 @@
     "overallRank": 37,
     "byeWeek": null,
     "tier": 4,
-    "adp": 44.26166666666666,
+    "adp": 44.545,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -1577,9 +1613,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 44.87,
+      "espn": 44.86,
       "ffc": 57.1,
-      "fantasypros": 35.5
+      "fantasypros": 35.5,
+      "yahoo": 45.4
     }
   },
   {
@@ -1590,7 +1627,7 @@
     "overallRank": 38,
     "byeWeek": null,
     "tier": 4,
-    "adp": 45.14666666666667,
+    "adp": 49.53,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -1620,9 +1657,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 53.28,
+      "espn": 53.24,
       "ffc": 36.8,
-      "fantasypros": 48
+      "fantasypros": 48,
+      "yahoo": 62.7
     }
   },
   {
@@ -1633,7 +1671,7 @@
     "overallRank": 39,
     "byeWeek": null,
     "tier": 4,
-    "adp": 72.5,
+    "adp": 65.89874999999999,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -1664,9 +1702,10 @@
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
     "adpSources": {
-      "espn": 42.1,
+      "espn": 42.09,
       "ffc": 131.2,
-      "fantasypros": 43.5
+      "fantasypros": 43.5,
+      "yahoo": 46.1
     }
   },
   {
@@ -1677,7 +1716,7 @@
     "overallRank": 40,
     "byeWeek": null,
     "tier": 4,
-    "adp": 34.06333333333333,
+    "adp": 34.42,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -1707,9 +1746,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 50.18,
+      "espn": 50.16,
       "ffc": 21.6,
-      "fantasypros": 37
+      "fantasypros": 37,
+      "yahoo": 35.5
     }
   },
   {
@@ -1720,7 +1760,7 @@
     "overallRank": 41,
     "byeWeek": null,
     "tier": 4,
-    "adp": 26.12,
+    "adp": 24.191249999999997,
     "projStats": {
       "passYds": 3944.962898,
       "passTD": 26.21511448,
@@ -1745,14 +1785,15 @@
       "fumblesLost": 3,
       "twoPt": 1
     },
-    "projPoints": 369.13716888,
+    "projPoints": null,
     "notes": "",
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 23.82,
+      "espn": 23.83,
       "ffc": 23.7,
-      "fantasypros": 28.5
+      "fantasypros": 28.5,
+      "yahoo": 18.4
     }
   },
   {
@@ -1763,7 +1804,7 @@
     "overallRank": 42,
     "byeWeek": null,
     "tier": 4,
-    "adp": 40.23166666666667,
+    "adp": 41.948750000000004,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -1795,7 +1836,8 @@
     "adpSources": {
       "espn": 43.99,
       "ffc": 26.7,
-      "fantasypros": 48
+      "fantasypros": 48,
+      "yahoo": 47.1
     }
   },
   {
@@ -1806,7 +1848,7 @@
     "overallRank": 43,
     "byeWeek": null,
     "tier": 4,
-    "adp": 40.595,
+    "adp": 42.01875,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -1837,9 +1879,10 @@
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
     "adpSources": {
-      "espn": 52.37,
+      "espn": 52.35,
       "ffc": 17.6,
-      "fantasypros": 52
+      "fantasypros": 52,
+      "yahoo": 46.3
     }
   },
   {
@@ -1850,7 +1893,7 @@
     "overallRank": 44,
     "byeWeek": null,
     "tier": 4,
-    "adp": 60.4275,
+    "adp": 65.54833333333333,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -1869,8 +1912,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 57.21,
-      "fantasypros": 61.5
+      "espn": 57.19,
+      "fantasypros": 61.5,
+      "yahoo": 75.8
     }
   },
   {
@@ -1881,7 +1925,7 @@
     "overallRank": 45,
     "byeWeek": null,
     "tier": 4,
-    "adp": 77.13666666666667,
+    "adp": 67.24875,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -1911,9 +1955,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 44.12,
+      "espn": 44.09,
       "ffc": 147.1,
-      "fantasypros": 41.5
+      "fantasypros": 41.5,
+      "yahoo": 37.6
     }
   },
   {
@@ -1924,7 +1969,7 @@
     "overallRank": 46,
     "byeWeek": null,
     "tier": 4,
-    "adp": 77.55333333333333,
+    "adp": 72.56375,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -1955,9 +2000,10 @@
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
     "adpSources": {
-      "espn": 54.42,
+      "espn": 54.41,
       "ffc": 125.2,
-      "fantasypros": 53.5
+      "fantasypros": 53.5,
+      "yahoo": 57.6
     }
   },
   {
@@ -1968,7 +2014,7 @@
     "overallRank": 47,
     "byeWeek": null,
     "tier": 4,
-    "adp": 39.34833333333333,
+    "adp": 37.48625,
     "projStats": {
       "passYds": 3884.500851,
       "passTD": 25.91158903,
@@ -1993,14 +2039,15 @@
       "fumblesLost": 3,
       "twoPt": 1
     },
-    "projPoints": 322.01944203,
+    "projPoints": null,
     "notes": "",
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
       "espn": 36.89,
       "ffc": 23.1,
-      "fantasypros": 51
+      "fantasypros": 51,
+      "yahoo": 31.9
     }
   },
   {
@@ -2011,7 +2058,7 @@
     "overallRank": 48,
     "byeWeek": null,
     "tier": 4,
-    "adp": 36.35,
+    "adp": 38.28625,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -2041,9 +2088,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 57.8,
+      "espn": 57.79,
       "ffc": 23.9,
-      "fantasypros": 37.5
+      "fantasypros": 37.5,
+      "yahoo": 44.1
     }
   },
   {
@@ -2054,7 +2102,7 @@
     "overallRank": 49,
     "byeWeek": null,
     "tier": 5,
-    "adp": 57.096666666666664,
+    "adp": 56.292500000000004,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -2084,9 +2132,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 51.88,
+      "espn": 51.84,
       "ffc": 84.6,
-      "fantasypros": 40.5
+      "fantasypros": 40.5,
+      "yahoo": 53.9
     }
   },
   {
@@ -2097,7 +2146,7 @@
     "overallRank": 50,
     "byeWeek": null,
     "tier": 5,
-    "adp": 57.07,
+    "adp": 56.155,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -2127,9 +2176,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 61.32,
+      "espn": 61.34,
       "ffc": 64.8,
-      "fantasypros": 50.5
+      "fantasypros": 50.5,
+      "yahoo": 53.4
     }
   },
   {
@@ -2140,7 +2190,7 @@
     "overallRank": 51,
     "byeWeek": null,
     "tier": 5,
-    "adp": 73.07166666666666,
+    "adp": 67.1775,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -2170,9 +2220,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 47.03,
+      "espn": 47.02,
       "ffc": 98.2,
-      "fantasypros": 65
+      "fantasypros": 65,
+      "yahoo": 49.5
     }
   },
   {
@@ -2183,7 +2234,7 @@
     "overallRank": 52,
     "byeWeek": null,
     "tier": 5,
-    "adp": 51.86333333333334,
+    "adp": 52.3475,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -2215,7 +2266,8 @@
     "adpSources": {
       "espn": 58.58,
       "ffc": 51.3,
-      "fantasypros": 50
+      "fantasypros": 50,
+      "yahoo": 53.8
     }
   },
   {
@@ -2226,7 +2278,7 @@
     "overallRank": 53,
     "byeWeek": null,
     "tier": 5,
-    "adp": 57.14833333333333,
+    "adp": 57.912499999999994,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -2256,9 +2308,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 67.99,
+      "espn": 68,
       "ffc": 61.7,
-      "fantasypros": 50.5
+      "fantasypros": 50.5,
+      "yahoo": 60.2
     }
   },
   {
@@ -2269,7 +2322,7 @@
     "overallRank": 54,
     "byeWeek": null,
     "tier": 5,
-    "adp": 61.62,
+    "adp": 64.28333333333333,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -2288,8 +2341,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 61.98,
-      "fantasypros": 61.5
+      "espn": 62,
+      "fantasypros": 61.5,
+      "yahoo": 69.6
     }
   },
   {
@@ -2300,7 +2354,7 @@
     "overallRank": 55,
     "byeWeek": null,
     "tier": 5,
-    "adp": 52.07666666666666,
+    "adp": 55.565,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -2330,9 +2384,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 65.76,
+      "espn": 65.82,
       "ffc": 44.6,
-      "fantasypros": 52.5
+      "fantasypros": 52.5,
+      "yahoo": 66
     }
   },
   {
@@ -2343,7 +2398,7 @@
     "overallRank": 56,
     "byeWeek": null,
     "tier": 5,
-    "adp": 84.09500000000001,
+    "adp": 77.39875,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -2373,9 +2428,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 73.47,
+      "espn": 73.49,
       "ffc": 150.3,
-      "fantasypros": 43.5
+      "fantasypros": 43.5,
+      "yahoo": 57.3
     }
   },
   {
@@ -2386,7 +2442,7 @@
     "overallRank": 57,
     "byeWeek": null,
     "tier": 5,
-    "adp": 51.465,
+    "adp": 51.475,
     "projStats": {
       "passYds": 3854.303291,
       "passTD": 22.36077477,
@@ -2411,14 +2467,15 @@
       "fumblesLost": 2,
       "twoPt": 1
     },
-    "projPoints": 318.47480026,
+    "projPoints": null,
     "notes": "",
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 52.49,
+      "espn": 52.5,
       "ffc": 31.4,
-      "fantasypros": 64.5
+      "fantasypros": 64.5,
+      "yahoo": 51.5
     }
   },
   {
@@ -2429,7 +2486,7 @@
     "overallRank": 58,
     "byeWeek": null,
     "tier": 5,
-    "adp": 66.31666666666668,
+    "adp": 67.39125,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -2459,9 +2516,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 72.8,
+      "espn": 72.83,
       "ffc": 79.3,
-      "fantasypros": 55.5
+      "fantasypros": 55.5,
+      "yahoo": 70.6
     }
   },
   {
@@ -2472,7 +2530,7 @@
     "overallRank": 59,
     "byeWeek": null,
     "tier": 5,
-    "adp": 58.876666666666665,
+    "adp": 63.411249999999995,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -2502,9 +2560,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 78.86,
+      "espn": 78.89,
       "ffc": 38.2,
-      "fantasypros": 66
+      "fantasypros": 66,
+      "yahoo": 77
     }
   },
   {
@@ -2515,7 +2574,7 @@
     "overallRank": 60,
     "byeWeek": null,
     "tier": 5,
-    "adp": 94.19166666666666,
+    "adp": 88.195,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -2545,9 +2604,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 75.15,
+      "espn": 75.16,
       "ffc": 150.5,
-      "fantasypros": 63
+      "fantasypros": 63,
+      "yahoo": 70.2
     }
   },
   {
@@ -2558,7 +2618,7 @@
     "overallRank": 61,
     "byeWeek": null,
     "tier": 6,
-    "adp": 56.76666666666667,
+    "adp": 55.753750000000004,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -2588,9 +2648,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 68.4,
+      "espn": 68.43,
       "ffc": 58.1,
-      "fantasypros": 52
+      "fantasypros": 52,
+      "yahoo": 52.7
     }
   },
   {
@@ -2601,7 +2662,7 @@
     "overallRank": 62,
     "byeWeek": null,
     "tier": 6,
-    "adp": 80.4975,
+    "adp": 75.56666666666666,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -2631,8 +2692,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 63.99,
-      "fantasypros": 86
+      "espn": 64,
+      "fantasypros": 86,
+      "yahoo": 65.7
     }
   },
   {
@@ -2643,7 +2705,7 @@
     "overallRank": 63,
     "byeWeek": null,
     "tier": 6,
-    "adp": 56.18833333333333,
+    "adp": 57.51875,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -2673,9 +2735,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 71.13,
+      "espn": 71.15,
       "ffc": 59.5,
-      "fantasypros": 49
+      "fantasypros": 49,
+      "yahoo": 61.5
     }
   },
   {
@@ -2686,7 +2749,7 @@
     "overallRank": 64,
     "byeWeek": null,
     "tier": 6,
-    "adp": 60.528333333333336,
+    "adp": 61.823750000000004,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -2716,9 +2779,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 77.57,
+      "espn": 77.59,
       "ffc": 40.8,
-      "fantasypros": 68
+      "fantasypros": 68,
+      "yahoo": 65.7
     }
   },
   {
@@ -2729,7 +2793,7 @@
     "overallRank": 65,
     "byeWeek": null,
     "tier": 6,
-    "adp": 92.21000000000001,
+    "adp": 102.07666666666667,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -2759,8 +2823,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 85.34,
-      "fantasypros": 94.5
+      "espn": 85.36,
+      "fantasypros": 94.5,
+      "yahoo": 121.8
     }
   },
   {
@@ -2771,7 +2836,7 @@
     "overallRank": 66,
     "byeWeek": null,
     "tier": 6,
-    "adp": 74.505,
+    "adp": 77.505,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -2791,8 +2856,9 @@
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
     "adpSources": {
-      "espn": 88.02,
-      "fantasypros": 70
+      "espn": 88.03,
+      "fantasypros": 70,
+      "yahoo": 83.5
     }
   },
   {
@@ -2803,7 +2869,7 @@
     "overallRank": 67,
     "byeWeek": null,
     "tier": 6,
-    "adp": 74.98833333333333,
+    "adp": 66.445,
     "projStats": {
       "passYds": 4094.139879,
       "passTD": 26.94755404,
@@ -2828,14 +2894,15 @@
       "fumblesLost": 3,
       "twoPt": 2
     },
-    "projPoints": 318.9526541,
+    "projPoints": null,
     "notes": "",
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 50.03,
+      "espn": 50.06,
       "ffc": 107.7,
-      "fantasypros": 61.5
+      "fantasypros": 61.5,
+      "yahoo": 40.8
     }
   },
   {
@@ -2846,7 +2913,7 @@
     "overallRank": 68,
     "byeWeek": null,
     "tier": 6,
-    "adp": 49.781666666666666,
+    "adp": 48.463750000000005,
     "projStats": {
       "passYds": 4120.420361,
       "passTD": 32.93624589,
@@ -2871,14 +2938,15 @@
       "fumblesLost": 0,
       "twoPt": 0
     },
-    "projPoints": 303.9136725,
+    "projPoints": null,
     "notes": "",
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 56.89,
+      "espn": 56.91,
       "ffc": 30.9,
-      "fantasypros": 60
+      "fantasypros": 60,
+      "yahoo": 44.5
     }
   },
   {
@@ -2889,7 +2957,7 @@
     "overallRank": 69,
     "byeWeek": null,
     "tier": 6,
-    "adp": 58.620000000000005,
+    "adp": 57.34,
     "projStats": {
       "passYds": 3779.187429,
       "passTD": 23.52031104,
@@ -2914,14 +2982,15 @@
       "fumblesLost": 4,
       "twoPt": 0
     },
-    "projPoints": 320.34178867,
+    "projPoints": null,
     "notes": "",
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
       "espn": 60.92,
       "ffc": 37.4,
-      "fantasypros": 72
+      "fantasypros": 72,
+      "yahoo": 53.5
     }
   },
   {
@@ -2932,7 +3001,7 @@
     "overallRank": 70,
     "byeWeek": null,
     "tier": 6,
-    "adp": 78.9575,
+    "adp": 78.70833333333333,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -2963,8 +3032,9 @@
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
     "adpSources": {
-      "espn": 87.83,
-      "fantasypros": 76
+      "espn": 87.85,
+      "fantasypros": 76,
+      "yahoo": 78.2
     }
   },
   {
@@ -2975,7 +3045,7 @@
     "overallRank": 71,
     "byeWeek": null,
     "tier": 6,
-    "adp": 107.15333333333332,
+    "adp": 98.6425,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -3005,9 +3075,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 68.12,
+      "espn": 68.14,
       "ffc": 144.9,
-      "fantasypros": 95
+      "fantasypros": 95,
+      "yahoo": 73.1
     }
   },
   {
@@ -3018,7 +3089,7 @@
     "overallRank": 72,
     "byeWeek": null,
     "tier": 6,
-    "adp": 63.30833333333333,
+    "adp": 69.65625,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -3050,7 +3121,8 @@
     "adpSources": {
       "espn": 84.45,
       "ffc": 38.2,
-      "fantasypros": 73
+      "fantasypros": 73,
+      "yahoo": 88.7
     }
   },
   {
@@ -3061,7 +3133,7 @@
     "overallRank": 73,
     "byeWeek": null,
     "tier": 7,
-    "adp": 50.968333333333334,
+    "adp": 55.18,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -3091,9 +3163,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 80.01,
+      "espn": 80.04,
       "ffc": 28.9,
-      "fantasypros": 56
+      "fantasypros": 56,
+      "yahoo": 67.8
     }
   },
   {
@@ -3104,7 +3177,7 @@
     "overallRank": 74,
     "byeWeek": null,
     "tier": 7,
-    "adp": 70.485,
+    "adp": 75.56625,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -3134,9 +3207,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 88.21,
+      "espn": 88.23,
       "ffc": 48.1,
-      "fantasypros": 79.5
+      "fantasypros": 79.5,
+      "yahoo": 90.8
     }
   },
   {
@@ -3147,7 +3221,7 @@
     "overallRank": 75,
     "byeWeek": null,
     "tier": 7,
-    "adp": 73.765,
+    "adp": 78.62375,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -3179,7 +3253,8 @@
     "adpSources": {
       "espn": 89.49,
       "ffc": 57.3,
-      "fantasypros": 79.5
+      "fantasypros": 79.5,
+      "yahoo": 93.2
     }
   },
   {
@@ -3190,7 +3265,7 @@
     "overallRank": 76,
     "byeWeek": null,
     "tier": 7,
-    "adp": 98.95166666666667,
+    "adp": 103.26375,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -3222,7 +3297,8 @@
     "adpSources": {
       "espn": 95.11,
       "ffc": 64.8,
-      "fantasypros": 123
+      "fantasypros": 123,
+      "yahoo": 116.2
     }
   },
   {
@@ -3233,7 +3309,7 @@
     "overallRank": 77,
     "byeWeek": null,
     "tier": 7,
-    "adp": 80.83833333333332,
+    "adp": 77.1575,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -3264,9 +3340,10 @@
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
     "adpSources": {
-      "espn": 74.33,
+      "espn": 74.36,
       "ffc": 63.6,
-      "fantasypros": 94.5
+      "fantasypros": 94.5,
+      "yahoo": 66.1
     }
   },
   {
@@ -3277,7 +3354,7 @@
     "overallRank": 78,
     "byeWeek": null,
     "tier": 7,
-    "adp": 82.7575,
+    "adp": 77.27,
     "projStats": {
       "passYds": 3688.962722,
       "passTD": 20.89628182,
@@ -3302,13 +3379,14 @@
       "fumblesLost": 2,
       "twoPt": 1
     },
-    "projPoints": 13.47990546,
+    "projPoints": null,
     "notes": "",
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 71.53,
-      "fantasypros": 86.5
+      "espn": 71.52,
+      "fantasypros": 86.5,
+      "yahoo": 66.3
     }
   },
   {
@@ -3319,7 +3397,7 @@
     "overallRank": 79,
     "byeWeek": null,
     "tier": 7,
-    "adp": 65.5075,
+    "adp": 68.20333333333333,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -3349,8 +3427,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 95.53,
-      "fantasypros": 55.5
+      "espn": 95.52,
+      "fantasypros": 55.5,
+      "yahoo": 73.6
     }
   },
   {
@@ -3361,7 +3440,7 @@
     "overallRank": 80,
     "byeWeek": null,
     "tier": 7,
-    "adp": 75.84166666666667,
+    "adp": 76.08,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -3391,9 +3470,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 91.55,
+      "espn": 91.54,
       "ffc": 76,
-      "fantasypros": 70.5
+      "fantasypros": 70.5,
+      "yahoo": 76.8
     }
   },
   {
@@ -3404,7 +3484,7 @@
     "overallRank": 81,
     "byeWeek": null,
     "tier": 7,
-    "adp": 97.41666666666667,
+    "adp": 97.81625000000001,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -3434,9 +3514,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 102.8,
+      "espn": 102.83,
       "ffc": 102.1,
-      "fantasypros": 92.5
+      "fantasypros": 92.5,
+      "yahoo": 99
     }
   },
   {
@@ -3447,7 +3528,7 @@
     "overallRank": 82,
     "byeWeek": null,
     "tier": 7,
-    "adp": 90.97166666666665,
+    "adp": 98.0275,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -3477,9 +3558,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 104.63,
+      "espn": 104.62,
       "ffc": 73.6,
-      "fantasypros": 98
+      "fantasypros": 98,
+      "yahoo": 119.2
     }
   },
   {
@@ -3490,7 +3572,7 @@
     "overallRank": 83,
     "byeWeek": null,
     "tier": 7,
-    "adp": 79.99,
+    "adp": 88.79333333333334,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -3521,7 +3603,8 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 103.96,
-      "fantasypros": 72
+      "fantasypros": 72,
+      "yahoo": 106.4
     }
   },
   {
@@ -3532,7 +3615,7 @@
     "overallRank": 84,
     "byeWeek": null,
     "tier": 7,
-    "adp": 58.629999999999995,
+    "adp": 68.37125,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -3562,9 +3645,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 100.88,
+      "espn": 100.87,
       "ffc": 15.2,
-      "fantasypros": 73.5
+      "fantasypros": 73.5,
+      "yahoo": 97.6
     }
   },
   {
@@ -3575,7 +3659,7 @@
     "overallRank": 85,
     "byeWeek": null,
     "tier": 8,
-    "adp": 95.3275,
+    "adp": 101.78833333333334,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -3605,8 +3689,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 103.81,
-      "fantasypros": 92.5
+      "espn": 103.83,
+      "fantasypros": 92.5,
+      "yahoo": 114.7
     }
   },
   {
@@ -3617,7 +3702,7 @@
     "overallRank": 86,
     "byeWeek": null,
     "tier": 8,
-    "adp": 111.02499999999999,
+    "adp": 115.24499999999999,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -3647,9 +3732,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 109.65,
+      "espn": 109.66,
       "ffc": 114,
-      "fantasypros": 109.5
+      "fantasypros": 109.5,
+      "yahoo": 127.9
     }
   },
   {
@@ -3660,7 +3746,7 @@
     "overallRank": 87,
     "byeWeek": null,
     "tier": 8,
-    "adp": 114.7225,
+    "adp": 118.74833333333333,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -3691,7 +3777,8 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 106.39,
-      "fantasypros": 117.5
+      "fantasypros": 117.5,
+      "yahoo": 126.8
     }
   },
   {
@@ -3702,7 +3789,7 @@
     "overallRank": 88,
     "byeWeek": null,
     "tier": 8,
-    "adp": 89.78999999999999,
+    "adp": 87.36,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -3733,7 +3820,8 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 98.16,
-      "fantasypros": 87
+      "fantasypros": 87,
+      "yahoo": 82.5
     }
   },
   {
@@ -3744,7 +3832,7 @@
     "overallRank": 89,
     "byeWeek": null,
     "tier": 8,
-    "adp": 102.70166666666667,
+    "adp": 102.9775,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -3774,9 +3862,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 105.71,
+      "espn": 105.72,
       "ffc": 94,
-      "fantasypros": 107.5
+      "fantasypros": 107.5,
+      "yahoo": 103.8
     }
   },
   {
@@ -3787,7 +3876,7 @@
     "overallRank": 90,
     "byeWeek": null,
     "tier": 8,
-    "adp": 127.13166666666666,
+    "adp": 127.55250000000001,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -3812,15 +3901,16 @@
       "fumblesLost": 0,
       "twoPt": 0
     },
-    "projPoints": 100.37930129,
+    "projPoints": 213.35698231,
     "notes": "",
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
     "adpSources": {
-      "espn": 115.79,
+      "espn": 115.82,
       "ffc": 70,
-      "fantasypros": 169
+      "fantasypros": 169,
+      "yahoo": 128.8
     }
   },
   {
@@ -3831,7 +3921,7 @@
     "overallRank": 91,
     "byeWeek": null,
     "tier": 8,
-    "adp": 88.905,
+    "adp": 88.84166666666665,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -3851,8 +3941,9 @@
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
     "adpSources": {
-      "espn": 100.62,
-      "fantasypros": 85
+      "espn": 100.65,
+      "fantasypros": 85,
+      "yahoo": 88.7
     }
   },
   {
@@ -3863,7 +3954,7 @@
     "overallRank": 92,
     "byeWeek": null,
     "tier": 8,
-    "adp": 97.205,
+    "adp": 94.78375,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -3893,9 +3984,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 106.53,
+      "espn": 106.57,
       "ffc": 122.1,
-      "fantasypros": 77.5
+      "fantasypros": 77.5,
+      "yahoo": 87.5
     }
   },
   {
@@ -3906,7 +3998,7 @@
     "overallRank": 93,
     "byeWeek": null,
     "tier": 8,
-    "adp": 94.82833333333333,
+    "adp": 98.72125000000001,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -3938,7 +4030,8 @@
     "adpSources": {
       "espn": 118.37,
       "ffc": 78.3,
-      "fantasypros": 98
+      "fantasypros": 98,
+      "yahoo": 110.4
     }
   },
   {
@@ -3949,7 +4042,7 @@
     "overallRank": 94,
     "byeWeek": null,
     "tier": 8,
-    "adp": 103.55,
+    "adp": 110.48625000000001,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -3979,9 +4072,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 116,
+      "espn": 115.99,
       "ffc": 74.9,
-      "fantasypros": 118.5
+      "fantasypros": 118.5,
+      "yahoo": 131.3
     }
   },
   {
@@ -3992,7 +4086,7 @@
     "overallRank": 95,
     "byeWeek": null,
     "tier": 8,
-    "adp": 96.72500000000001,
+    "adp": 95.945,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -4022,9 +4116,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 88.75,
+      "espn": 88.76,
       "ffc": 65.8,
-      "fantasypros": 120
+      "fantasypros": 120,
+      "yahoo": 93.6
     }
   },
   {
@@ -4035,7 +4130,7 @@
     "overallRank": 96,
     "byeWeek": null,
     "tier": 8,
-    "adp": 96.97749999999999,
+    "adp": 93.81833333333333,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -4066,7 +4161,8 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 114.91,
-      "fantasypros": 91
+      "fantasypros": 91,
+      "yahoo": 87.5
     }
   },
   {
@@ -4077,7 +4173,7 @@
     "overallRank": 97,
     "byeWeek": null,
     "tier": 9,
-    "adp": 78.89833333333333,
+    "adp": 80.85000000000001,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -4107,9 +4203,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 111.09,
+      "espn": 111.1,
       "ffc": 63.4,
-      "fantasypros": 78.5
+      "fantasypros": 78.5,
+      "yahoo": 86.7
     }
   },
   {
@@ -4120,7 +4217,7 @@
     "overallRank": 98,
     "byeWeek": null,
     "tier": 9,
-    "adp": 123.5175,
+    "adp": 125.88000000000001,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -4139,8 +4236,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 123.57,
-      "fantasypros": 123.5
+      "espn": 123.58,
+      "fantasypros": 123.5,
+      "yahoo": 130.6
     }
   },
   {
@@ -4151,7 +4249,7 @@
     "overallRank": 99,
     "byeWeek": null,
     "tier": 9,
-    "adp": 98.285,
+    "adp": 97.65666666666668,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -4182,7 +4280,8 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 114.14,
-      "fantasypros": 93
+      "fantasypros": 93,
+      "yahoo": 96.4
     }
   },
   {
@@ -4193,7 +4292,7 @@
     "overallRank": 100,
     "byeWeek": null,
     "tier": 9,
-    "adp": 110.225,
+    "adp": 115.35166666666667,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -4223,8 +4322,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 128.9,
-      "fantasypros": 104
+      "espn": 128.91,
+      "fantasypros": 104,
+      "yahoo": 125.6
     }
   },
   {
@@ -4235,7 +4335,7 @@
     "overallRank": 101,
     "byeWeek": null,
     "tier": 9,
-    "adp": 105.4375,
+    "adp": 103.09166666666665,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -4266,7 +4366,8 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 123.25,
-      "fantasypros": 99.5
+      "fantasypros": 99.5,
+      "yahoo": 98.4
     }
   },
   {
@@ -4277,7 +4378,7 @@
     "overallRank": 102,
     "byeWeek": null,
     "tier": 9,
-    "adp": 104.30666666666667,
+    "adp": 108.05375,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -4307,9 +4408,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 127.04,
+      "espn": 127.03,
       "ffc": 100.9,
-      "fantasypros": 99
+      "fantasypros": 99,
+      "yahoo": 119.3
     }
   },
   {
@@ -4320,7 +4422,7 @@
     "overallRank": 103,
     "byeWeek": null,
     "tier": 9,
-    "adp": 87.42500000000001,
+    "adp": 91.0025,
     "projStats": {
       "passYds": 4180.747233,
       "passTD": 27.07305769,
@@ -4345,14 +4447,15 @@
       "fumblesLost": 2,
       "twoPt": 1
     },
-    "projPoints": 21.11922236,
+    "projPoints": null,
     "notes": "",
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 99.45,
+      "espn": 99.52,
       "ffc": 69.3,
-      "fantasypros": 95.5
+      "fantasypros": 95.5,
+      "yahoo": 101.7
     }
   },
   {
@@ -4363,7 +4466,7 @@
     "overallRank": 104,
     "byeWeek": null,
     "tier": 9,
-    "adp": 93.85333333333334,
+    "adp": 101.86625000000001,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -4394,9 +4497,10 @@
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
     "adpSources": {
-      "espn": 127.02,
+      "espn": 127.03,
       "ffc": 49.3,
-      "fantasypros": 112.5
+      "fantasypros": 112.5,
+      "yahoo": 125.9
     }
   },
   {
@@ -4407,7 +4511,7 @@
     "overallRank": 105,
     "byeWeek": null,
     "tier": 9,
-    "adp": 84.29,
+    "adp": 83.0525,
     "projStats": {
       "passYds": 4112.133837,
       "passTD": 29.65592978,
@@ -4432,14 +4536,15 @@
       "fumblesLost": 2,
       "twoPt": 3
     },
-    "projPoints": 17.50632608,
+    "projPoints": null,
     "notes": "",
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 92.84,
+      "espn": 92.92,
       "ffc": 87.2,
-      "fantasypros": 79.5
+      "fantasypros": 79.5,
+      "yahoo": 79.3
     }
   },
   {
@@ -4450,7 +4555,7 @@
     "overallRank": 106,
     "byeWeek": null,
     "tier": 9,
-    "adp": 117.235,
+    "adp": 119.89333333333333,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -4480,8 +4585,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 128.44,
-      "fantasypros": 113.5
+      "espn": 128.46,
+      "fantasypros": 113.5,
+      "yahoo": 125.2
     }
   },
   {
@@ -4492,7 +4598,7 @@
     "overallRank": 107,
     "byeWeek": null,
     "tier": 9,
-    "adp": 92.24166666666667,
+    "adp": 94.085,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -4523,9 +4629,10 @@
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
     "adpSources": {
-      "espn": 93.85,
+      "espn": 93.88,
       "ffc": 43.8,
-      "fantasypros": 124
+      "fantasypros": 124,
+      "yahoo": 99.6
     }
   },
   {
@@ -4536,7 +4643,7 @@
     "overallRank": 108,
     "byeWeek": null,
     "tier": 9,
-    "adp": 126.44666666666666,
+    "adp": 119.6175,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -4566,9 +4673,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 102.88,
+      "espn": 102.94,
       "ffc": 129.9,
-      "fantasypros": 132
+      "fantasypros": 132,
+      "yahoo": 99.1
     }
   },
   {
@@ -4579,7 +4687,7 @@
     "overallRank": 109,
     "byeWeek": null,
     "tier": 10,
-    "adp": 120.81666666666666,
+    "adp": 117.0925,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -4609,9 +4717,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 107.5,
+      "espn": 107.54,
       "ffc": 119.7,
-      "fantasypros": 126
+      "fantasypros": 126,
+      "yahoo": 105.9
     }
   },
   {
@@ -4622,7 +4731,7 @@
     "overallRank": 110,
     "byeWeek": null,
     "tier": 10,
-    "adp": 111.32333333333334,
+    "adp": 116.5175,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -4654,7 +4763,8 @@
     "adpSources": {
       "espn": 133.84,
       "ffc": 84.8,
-      "fantasypros": 121.5
+      "fantasypros": 121.5,
+      "yahoo": 132.1
     }
   },
   {
@@ -4665,7 +4775,7 @@
     "overallRank": 111,
     "byeWeek": null,
     "tier": 10,
-    "adp": 122.045,
+    "adp": 119.2325,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -4696,9 +4806,10 @@
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
     "adpSources": {
-      "espn": 133.27,
+      "espn": 133.26,
       "ffc": 110.5,
-      "fantasypros": 126
+      "fantasypros": 126,
+      "yahoo": 110.8
     }
   },
   {
@@ -4709,7 +4820,7 @@
     "overallRank": 112,
     "byeWeek": null,
     "tier": 10,
-    "adp": 142.4725,
+    "adp": 138.84833333333333,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -4740,7 +4851,8 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 140.89,
-      "fantasypros": 143
+      "fantasypros": 143,
+      "yahoo": 131.6
     }
   },
   {
@@ -4751,7 +4863,7 @@
     "overallRank": 113,
     "byeWeek": null,
     "tier": 10,
-    "adp": 153.63666666666666,
+    "adp": 146.97375,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -4781,9 +4893,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 144.92,
+      "espn": 144.89,
       "ffc": 156.7,
-      "fantasypros": 154.5
+      "fantasypros": 154.5,
+      "yahoo": 127
     }
   },
   {
@@ -4794,7 +4907,7 @@
     "overallRank": 114,
     "byeWeek": null,
     "tier": 10,
-    "adp": 108.91166666666668,
+    "adp": 113.1575,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -4824,9 +4937,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 142.47,
+      "espn": 142.46,
       "ffc": 111.5,
-      "fantasypros": 96
+      "fantasypros": 96,
+      "yahoo": 125.9
     }
   },
   {
@@ -4837,7 +4951,7 @@
     "overallRank": 115,
     "byeWeek": null,
     "tier": 10,
-    "adp": 142.96666666666667,
+    "adp": 138.50375,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -4868,9 +4982,10 @@
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
     "adpSources": {
-      "espn": 138.2,
+      "espn": 138.23,
       "ffc": 100.3,
-      "fantasypros": 173
+      "fantasypros": 173,
+      "yahoo": 125.1
     }
   },
   {
@@ -4881,7 +4996,7 @@
     "overallRank": 116,
     "byeWeek": null,
     "tier": 10,
-    "adp": 121.64666666666666,
+    "adp": 123.03375,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -4911,9 +5026,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 142.08,
+      "espn": 142.07,
       "ffc": 68.9,
-      "fantasypros": 150
+      "fantasypros": 150,
+      "yahoo": 127.2
     }
   },
   {
@@ -4924,7 +5040,7 @@
     "overallRank": 117,
     "byeWeek": null,
     "tier": 10,
-    "adp": 101.77666666666666,
+    "adp": 97.76,
     "projStats": {
       "passYds": 3928.809951,
       "passTD": 24.76879837,
@@ -4949,14 +5065,15 @@
       "fumblesLost": 3,
       "twoPt": 1
     },
-    "projPoints": 18.95199932,
+    "projPoints": null,
     "notes": "",
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 116.46,
+      "espn": 116.48,
       "ffc": 127.1,
-      "fantasypros": 80
+      "fantasypros": 80,
+      "yahoo": 85.7
     }
   },
   {
@@ -4967,7 +5084,7 @@
     "overallRank": 118,
     "byeWeek": null,
     "tier": 10,
-    "adp": 107.1575,
+    "adp": 114.60666666666667,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -4997,8 +5114,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 142.13,
-      "fantasypros": 95.5
+      "espn": 142.14,
+      "fantasypros": 95.5,
+      "yahoo": 129.5
     }
   },
   {
@@ -5009,7 +5127,7 @@
     "overallRank": 119,
     "byeWeek": null,
     "tier": 10,
-    "adp": 122.39,
+    "adp": 124.70166666666667,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -5039,8 +5157,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 141.56,
-      "fantasypros": 116
+      "espn": 141.61,
+      "fantasypros": 116,
+      "yahoo": 129.3
     }
   },
   {
@@ -5051,7 +5170,7 @@
     "overallRank": 120,
     "byeWeek": null,
     "tier": 10,
-    "adp": 100.55166666666666,
+    "adp": 90.2175,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -5082,9 +5201,10 @@
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
     "adpSources": {
-      "espn": 110.91,
+      "espn": 110.94,
       "ffc": 115.7,
-      "fantasypros": 87
+      "fantasypros": 87,
+      "yahoo": 59.2
     }
   },
   {
@@ -5095,7 +5215,7 @@
     "overallRank": 121,
     "byeWeek": null,
     "tier": 11,
-    "adp": 125.16166666666665,
+    "adp": 125.74624999999999,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -5127,7 +5247,8 @@
     "adpSources": {
       "espn": 149.17,
       "ffc": 27.9,
-      "fantasypros": 182
+      "fantasypros": 182,
+      "yahoo": 127.5
     }
   },
   {
@@ -5138,7 +5259,7 @@
     "overallRank": 122,
     "byeWeek": null,
     "tier": 11,
-    "adp": 138.35,
+    "adp": 136.8683333333333,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -5168,8 +5289,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 158.9,
-      "fantasypros": 131.5
+      "espn": 158.91,
+      "fantasypros": 131.5,
+      "yahoo": 133.9
     }
   },
   {
@@ -5180,7 +5302,7 @@
     "overallRank": 123,
     "byeWeek": null,
     "tier": 11,
-    "adp": 122.00333333333333,
+    "adp": 123.705,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -5210,9 +5332,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 152.72,
+      "espn": 152.74,
       "ffc": 105.9,
-      "fantasypros": 122.5
+      "fantasypros": 122.5,
+      "yahoo": 128.8
     }
   },
   {
@@ -5223,7 +5346,7 @@
     "overallRank": 124,
     "byeWeek": null,
     "tier": 11,
-    "adp": 158.1925,
+    "adp": 148.83,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -5242,8 +5365,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 157.27,
-      "fantasypros": 158.5
+      "espn": 157.28,
+      "fantasypros": 158.5,
+      "yahoo": 130.1
     }
   },
   {
@@ -5254,7 +5378,7 @@
     "overallRank": 125,
     "byeWeek": null,
     "tier": 11,
-    "adp": 84.23166666666667,
+    "adp": 80.99875,
     "projStats": {
       "passYds": 3820.83184,
       "passTD": 25.25405464,
@@ -5286,7 +5410,8 @@
     "adpSources": {
       "espn": 101.79,
       "ffc": 98.3,
-      "fantasypros": 69
+      "fantasypros": 69,
+      "yahoo": 71.3
     }
   },
   {
@@ -5297,7 +5422,7 @@
     "overallRank": 126,
     "byeWeek": null,
     "tier": 11,
-    "adp": 131.83333333333334,
+    "adp": 132.45,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -5329,7 +5454,8 @@
     "adpSources": {
       "espn": 161.6,
       "ffc": 130.2,
-      "fantasypros": 123
+      "fantasypros": 123,
+      "yahoo": 134.3
     }
   },
   {
@@ -5340,7 +5466,7 @@
     "overallRank": 127,
     "byeWeek": null,
     "tier": 11,
-    "adp": 152.845,
+    "adp": 152.8475,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -5370,7 +5496,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 164.38,
+      "espn": 164.39,
       "fantasypros": 149
     }
   },
@@ -5382,7 +5508,7 @@
     "overallRank": 128,
     "byeWeek": null,
     "tier": 11,
-    "adp": 95.80166666666666,
+    "adp": 96.7325,
     "projStats": {
       "passYds": 3870.910365,
       "passTD": 26.32079278,
@@ -5413,9 +5539,10 @@
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
     "adpSources": {
-      "espn": 121.81,
+      "espn": 121.86,
       "ffc": 69,
-      "fantasypros": 105
+      "fantasypros": 105,
+      "yahoo": 99.5
     }
   },
   {
@@ -5426,7 +5553,7 @@
     "overallRank": 129,
     "byeWeek": null,
     "tier": 11,
-    "adp": 128.6575,
+    "adp": 122.53333333333335,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -5456,8 +5583,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 127.63,
-      "fantasypros": 129
+      "espn": 127.6,
+      "fantasypros": 129,
+      "yahoo": 110.3
     }
   },
   {
@@ -5468,7 +5596,7 @@
     "overallRank": 130,
     "byeWeek": null,
     "tier": 11,
-    "adp": 132.5425,
+    "adp": 132.26166666666666,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -5499,7 +5627,8 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 162.67,
-      "fantasypros": 122.5
+      "fantasypros": 122.5,
+      "yahoo": 131.7
     }
   },
   {
@@ -5510,7 +5639,7 @@
     "overallRank": 131,
     "byeWeek": null,
     "tier": 11,
-    "adp": 148.88666666666666,
+    "adp": 148.885,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -5541,7 +5670,7 @@
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
     "adpSources": {
-      "espn": 166.32,
+      "espn": 166.31,
       "ffc": 57.5,
       "fantasypros": 204
     }
@@ -5554,16 +5683,17 @@
     "overallRank": 132,
     "byeWeek": null,
     "tier": 11,
-    "adp": 119.32,
+    "adp": 105.954,
     "projStats": null,
     "lastStats": null,
-    "projPoints": 17251.12091794,
+    "projPoints": null,
     "notes": "",
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 83.56,
-      "ffc": 137.2
+      "espn": 83.57,
+      "ffc": 137.2,
+      "yahoo": 85.9
     }
   },
   {
@@ -5574,7 +5704,7 @@
     "overallRank": 133,
     "byeWeek": null,
     "tier": 12,
-    "adp": 152.08166666666668,
+    "adp": 146.23624999999998,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -5606,7 +5736,8 @@
     "adpSources": {
       "espn": 164.99,
       "ffc": 154,
-      "fantasypros": 146.5
+      "fantasypros": 146.5,
+      "yahoo": 128.7
     }
   },
   {
@@ -5617,7 +5748,7 @@
     "overallRank": 134,
     "byeWeek": null,
     "tier": 12,
-    "adp": 129.24,
+    "adp": 119.65750000000001,
     "projStats": null,
     "lastStats": null,
     "projPoints": null,
@@ -5625,9 +5756,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 82.84,
+      "espn": 82.86,
       "ffc": 136.3,
-      "fantasypros": 140
+      "fantasypros": 140,
+      "yahoo": 90.9
     }
   },
   {
@@ -5638,7 +5770,7 @@
     "overallRank": 135,
     "byeWeek": null,
     "tier": 12,
-    "adp": 127.64666666666666,
+    "adp": 122.235,
     "projStats": null,
     "lastStats": null,
     "projPoints": null,
@@ -5648,7 +5780,8 @@
     "adpSources": {
       "espn": 89.48,
       "ffc": 102.7,
-      "fantasypros": 157
+      "fantasypros": 157,
+      "yahoo": 106
     }
   },
   {
@@ -5659,7 +5792,7 @@
     "overallRank": 136,
     "byeWeek": null,
     "tier": 12,
-    "adp": 82.185,
+    "adp": 85.5625,
     "projStats": {
       "passYds": 3992.562135,
       "passTD": 26.14032307,
@@ -5690,9 +5823,10 @@
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
     "adpSources": {
-      "espn": 108.81,
+      "espn": 108.8,
       "ffc": 51.9,
-      "fantasypros": 93.5
+      "fantasypros": 93.5,
+      "yahoo": 95.7
     }
   },
   {
@@ -5703,7 +5837,7 @@
     "overallRank": 137,
     "byeWeek": null,
     "tier": 12,
-    "adp": 135.3033333333333,
+    "adp": 135.305,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -5733,7 +5867,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 166.32,
+      "espn": 166.33,
       "ffc": 56.5,
       "fantasypros": 177.5
     }
@@ -5746,7 +5880,7 @@
     "overallRank": 138,
     "byeWeek": null,
     "tier": 12,
-    "adp": 95.81333333333333,
+    "adp": 87.6625,
     "projStats": {
       "passYds": 3846.190868,
       "passTD": 25.51253199,
@@ -5776,9 +5910,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 127.28,
+      "espn": 127.3,
       "ffc": 109.8,
-      "fantasypros": 76
+      "fantasypros": 76,
+      "yahoo": 63.2
     }
   },
   {
@@ -5832,7 +5967,7 @@
     "overallRank": 140,
     "byeWeek": null,
     "tier": 12,
-    "adp": 140.0725,
+    "adp": 128.425,
     "projStats": null,
     "lastStats": null,
     "projPoints": null,
@@ -5840,8 +5975,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 98.29,
-      "fantasypros": 154
+      "espn": 98.35,
+      "fantasypros": 154,
+      "yahoo": 105.1
     }
   },
   {
@@ -5852,7 +5988,7 @@
     "overallRank": 141,
     "byeWeek": null,
     "tier": 12,
-    "adp": 95.745,
+    "adp": 97.64166666666667,
     "projStats": {
       "passYds": 4282.031501,
       "passTD": 34.92596974,
@@ -5882,8 +6018,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 99.48,
-      "fantasypros": 94.5
+      "espn": 99.55,
+      "fantasypros": 94.5,
+      "yahoo": 101.4
     }
   },
   {
@@ -5894,7 +6031,7 @@
     "overallRank": 142,
     "byeWeek": null,
     "tier": 12,
-    "adp": 133.45000000000002,
+    "adp": 132.6875,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -5926,7 +6063,8 @@
     "adpSources": {
       "espn": 149.5,
       "ffc": 75.1,
-      "fantasypros": 167
+      "fantasypros": 167,
+      "yahoo": 130.4
     }
   },
   {
@@ -5937,7 +6075,7 @@
     "overallRank": 143,
     "byeWeek": null,
     "tier": 12,
-    "adp": 135.115,
+    "adp": 133.2375,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -5967,9 +6105,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 163.19,
+      "espn": 163.2,
       "ffc": 102.5,
-      "fantasypros": 147.5
+      "fantasypros": 147.5,
+      "yahoo": 127.6
     }
   },
   {
@@ -5980,7 +6119,7 @@
     "overallRank": 144,
     "byeWeek": null,
     "tier": 12,
-    "adp": 170.0825,
+    "adp": 157.155,
     "projStats": null,
     "lastStats": null,
     "projPoints": null,
@@ -5989,7 +6128,8 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 122.33,
-      "fantasypros": 186
+      "fantasypros": 186,
+      "yahoo": 131.3
     }
   },
   {
@@ -6000,16 +6140,17 @@
     "overallRank": 145,
     "byeWeek": null,
     "tier": 13,
-    "adp": 134.4,
+    "adp": 132.796,
     "projStats": null,
     "lastStats": null,
-    "projPoints": 16131.64561192,
+    "projPoints": 161.70910514,
     "notes": "",
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 111.2,
-      "ffc": 146
+      "espn": 111.18,
+      "ffc": 146,
+      "yahoo": 130.4
     }
   },
   {
@@ -6020,7 +6161,7 @@
     "overallRank": 146,
     "byeWeek": null,
     "tier": 13,
-    "adp": 152.56666666666666,
+    "adp": 148.57875,
     "projStats": null,
     "lastStats": null,
     "projPoints": null,
@@ -6028,9 +6169,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 122.6,
+      "espn": 122.63,
       "ffc": 111.4,
-      "fantasypros": 190
+      "fantasypros": 190,
+      "yahoo": 136.6
     }
   },
   {
@@ -6041,7 +6183,7 @@
     "overallRank": 147,
     "byeWeek": null,
     "tier": 13,
-    "adp": 151.67499999999998,
+    "adp": 144.83375,
     "projStats": null,
     "lastStats": null,
     "projPoints": null,
@@ -6049,9 +6191,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 130.65,
+      "espn": 130.67,
       "ffc": 107.7,
-      "fantasypros": 188
+      "fantasypros": 188,
+      "yahoo": 124.3
     }
   },
   {
@@ -6062,7 +6205,7 @@
     "overallRank": 148,
     "byeWeek": null,
     "tier": 13,
-    "adp": 152.83166666666668,
+    "adp": 143.54000000000002,
     "projStats": null,
     "lastStats": null,
     "projPoints": null,
@@ -6070,9 +6213,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 103.99,
+      "espn": 103.92,
       "ffc": 151.5,
-      "fantasypros": 170
+      "fantasypros": 170,
+      "yahoo": 115.7
     }
   },
   {
@@ -6083,7 +6227,7 @@
     "overallRank": 149,
     "byeWeek": null,
     "tier": 13,
-    "adp": 170.5025,
+    "adp": 155.00333333333333,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -6113,8 +6257,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 167.51,
-      "fantasypros": 171.5
+      "espn": 167.52,
+      "fantasypros": 171.5,
+      "yahoo": 124
     }
   },
   {
@@ -6125,7 +6270,7 @@
     "overallRank": 150,
     "byeWeek": null,
     "tier": 13,
-    "adp": 159.715,
+    "adp": 152.8375,
     "projStats": null,
     "lastStats": null,
     "projPoints": null,
@@ -6133,9 +6278,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 136.29,
+      "espn": 136.3,
       "ffc": 115.5,
-      "fantasypros": 197
+      "fantasypros": 197,
+      "yahoo": 132.2
     }
   },
   {
@@ -6146,16 +6292,17 @@
     "overallRank": 151,
     "byeWeek": null,
     "tier": 13,
-    "adp": 149.47666666666666,
+    "adp": 136.356,
     "projStats": null,
     "lastStats": null,
-    "projPoints": 15055.40043824,
+    "projPoints": null,
     "notes": "",
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 125.43,
-      "ffc": 161.5
+      "espn": 125.38,
+      "ffc": 161.5,
+      "yahoo": 116.7
     }
   },
   {
@@ -6166,15 +6313,16 @@
     "overallRank": 152,
     "byeWeek": null,
     "tier": 13,
-    "adp": 121.94,
+    "adp": 127.05333333333333,
     "projStats": null,
     "lastStats": null,
-    "projPoints": 15855.04521269,
+    "projPoints": null,
     "notes": "",
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 121.94
+      "espn": 121.96,
+      "yahoo": 129.6
     }
   },
   {
@@ -6216,7 +6364,7 @@
     "overallRank": 154,
     "byeWeek": null,
     "tier": 13,
-    "adp": 205.72,
+    "adp": 205.7175,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -6236,7 +6384,7 @@
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
     "adpSources": {
-      "espn": 168.88,
+      "espn": 168.87,
       "fantasypros": 218
     }
   },
@@ -6248,7 +6396,7 @@
     "overallRank": 155,
     "byeWeek": null,
     "tier": 13,
-    "adp": 149.63,
+    "adp": 141.86166666666668,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -6268,8 +6416,9 @@
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
     "adpSources": {
-      "espn": 139.52,
-      "fantasypros": 153
+      "espn": 139.57,
+      "fantasypros": 153,
+      "yahoo": 126.3
     }
   },
   {
@@ -6280,15 +6429,16 @@
     "overallRank": 156,
     "byeWeek": null,
     "tier": 13,
-    "adp": 138.4,
+    "adp": 137.81666666666666,
     "projStats": null,
     "lastStats": null,
-    "projPoints": 16807.20625964,
+    "projPoints": null,
     "notes": "",
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 138.4
+      "espn": 138.45,
+      "yahoo": 137.5
     }
   },
   {
@@ -6342,7 +6492,7 @@
     "overallRank": 158,
     "byeWeek": null,
     "tier": 14,
-    "adp": 128.78,
+    "adp": 129.58625,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -6372,9 +6522,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 167.58,
+      "espn": 167.59,
       "ffc": 81.3,
-      "fantasypros": 147.5
+      "fantasypros": 147.5,
+      "yahoo": 132
     }
   },
   {
@@ -6385,15 +6536,16 @@
     "overallRank": 159,
     "byeWeek": null,
     "tier": 14,
-    "adp": 146.24,
+    "adp": 144.15666666666667,
     "projStats": null,
     "lastStats": null,
-    "projPoints": 15623.86356069,
+    "projPoints": null,
     "notes": "",
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 146.24
+      "espn": 146.27,
+      "yahoo": 143.1
     }
   },
   {
@@ -6404,7 +6556,7 @@
     "overallRank": 160,
     "byeWeek": null,
     "tier": 14,
-    "adp": 121.63,
+    "adp": 123.22333333333331,
     "projStats": {
       "passYds": 3887.013065,
       "passTD": 20.2792234,
@@ -6434,8 +6586,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 158.02,
-      "fantasypros": 109.5
+      "espn": 158.04,
+      "fantasypros": 109.5,
+      "yahoo": 126.4
     }
   },
   {
@@ -6446,16 +6599,17 @@
     "overallRank": 161,
     "byeWeek": null,
     "tier": 14,
-    "adp": 141.09666666666666,
+    "adp": 135.702,
     "projStats": null,
     "lastStats": null,
-    "projPoints": 14762.11081489,
+    "projPoints": null,
     "notes": "",
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 135.29,
-      "ffc": 144
+      "espn": 135.31,
+      "ffc": 144,
+      "yahoo": 127.6
     }
   },
   {
@@ -6466,7 +6620,7 @@
     "overallRank": 162,
     "byeWeek": null,
     "tier": 14,
-    "adp": 120.56,
+    "adp": 119.475,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -6496,9 +6650,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 138.46,
+      "espn": 138.5,
       "ffc": 87.7,
-      "fantasypros": 136.5
+      "fantasypros": 136.5,
+      "yahoo": 116.2
     }
   },
   {
@@ -6509,16 +6664,17 @@
     "overallRank": 163,
     "byeWeek": null,
     "tier": 14,
-    "adp": 146.64666666666668,
+    "adp": 142.34600000000003,
     "projStats": null,
     "lastStats": null,
-    "projPoints": 15294.60248194,
+    "projPoints": null,
     "notes": "",
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 150.34,
-      "ffc": 144.8
+      "espn": 150.33,
+      "ffc": 144.8,
+      "yahoo": 135.9
     }
   },
   {
@@ -6529,7 +6685,7 @@
     "overallRank": 164,
     "byeWeek": null,
     "tier": 14,
-    "adp": 166.10333333333332,
+    "adp": 157.205,
     "projStats": null,
     "lastStats": null,
     "projPoints": null,
@@ -6537,9 +6693,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 154.22,
+      "espn": 154.24,
       "ffc": 140.7,
-      "fantasypros": 187
+      "fantasypros": 187,
+      "yahoo": 130.5
     }
   },
   {
@@ -6550,7 +6707,7 @@
     "overallRank": 165,
     "byeWeek": null,
     "tier": 14,
-    "adp": 132.99333333333334,
+    "adp": 121.81625,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -6580,9 +6737,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 154.06,
+      "espn": 154.03,
       "ffc": 139.7,
-      "fantasypros": 121.5
+      "fantasypros": 121.5,
+      "yahoo": 88.3
     }
   },
   {
@@ -6593,7 +6751,7 @@
     "overallRank": 166,
     "byeWeek": null,
     "tier": 14,
-    "adp": 108.14166666666667,
+    "adp": 106.50625000000001,
     "projStats": {
       "passYds": 3345.208518,
       "passTD": 19.41597809,
@@ -6625,7 +6783,8 @@
     "adpSources": {
       "espn": 155.35,
       "ffc": 82.5,
-      "fantasypros": 109.5
+      "fantasypros": 109.5,
+      "yahoo": 101.6
     }
   },
   {
@@ -6636,7 +6795,7 @@
     "overallRank": 167,
     "byeWeek": null,
     "tier": 14,
-    "adp": 176.1475,
+    "adp": 163.035,
     "projStats": null,
     "lastStats": null,
     "projPoints": null,
@@ -6644,8 +6803,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 152.59,
-      "fantasypros": 184
+      "espn": 152.61,
+      "fantasypros": 184,
+      "yahoo": 136.8
     }
   },
   {
@@ -6656,7 +6816,7 @@
     "overallRank": 168,
     "byeWeek": null,
     "tier": 14,
-    "adp": 147.88,
+    "adp": 143.38666666666666,
     "projStats": {
       "passYds": 3742.868091,
       "passTD": 19.60137261,
@@ -6688,7 +6848,8 @@
     "injuryStatus": "QUESTIONABLE",
     "adpSources": {
       "espn": 167.02,
-      "fantasypros": 141.5
+      "fantasypros": 141.5,
+      "yahoo": 134.4
     }
   },
   {
@@ -6699,7 +6860,7 @@
     "overallRank": 169,
     "byeWeek": null,
     "tier": 15,
-    "adp": 183.75,
+    "adp": 167.96166666666667,
     "projStats": null,
     "lastStats": null,
     "projPoints": null,
@@ -6707,8 +6868,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 159,
-      "fantasypros": 192
+      "espn": 158.97,
+      "fantasypros": 192,
+      "yahoo": 136.4
     }
   },
   {
@@ -6719,15 +6881,16 @@
     "overallRank": 170,
     "byeWeek": null,
     "tier": 15,
-    "adp": 154.86,
+    "adp": 139.15333333333334,
     "projStats": null,
     "lastStats": null,
-    "projPoints": 14918.64265883,
+    "projPoints": 148.39266247,
     "notes": "",
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 154.86
+      "espn": 154.86,
+      "yahoo": 131.3
     }
   },
   {
@@ -6738,15 +6901,16 @@
     "overallRank": 171,
     "byeWeek": null,
     "tier": 15,
-    "adp": 159.84,
+    "adp": 148.21333333333334,
     "projStats": null,
     "lastStats": null,
-    "projPoints": 14958.85115004,
+    "projPoints": null,
     "notes": "",
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 159.84
+      "espn": 159.84,
+      "yahoo": 142.4
     }
   },
   {
@@ -6757,7 +6921,7 @@
     "overallRank": 172,
     "byeWeek": null,
     "tier": 15,
-    "adp": 164.79500000000002,
+    "adp": 153.29666666666665,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -6777,7 +6941,8 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 167.18,
-      "fantasypros": 164
+      "fantasypros": 164,
+      "yahoo": 130.3
     }
   },
   {
@@ -6831,7 +6996,7 @@
     "overallRank": 174,
     "byeWeek": null,
     "tier": 15,
-    "adp": 182.795,
+    "adp": 170.99874999999997,
     "projStats": null,
     "lastStats": null,
     "projPoints": null,
@@ -6839,9 +7004,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 156.37,
+      "espn": 156.39,
       "ffc": 143.2,
-      "fantasypros": 218
+      "fantasypros": 218,
+      "yahoo": 135.6
     }
   },
   {
@@ -6852,7 +7018,7 @@
     "overallRank": 175,
     "byeWeek": null,
     "tier": 15,
-    "adp": 165.29,
+    "adp": 152.22666666666666,
     "projStats": null,
     "lastStats": null,
     "projPoints": null,
@@ -6860,7 +7026,8 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 165.29
+      "espn": 165.28,
+      "yahoo": 145.7
     }
   },
   {
@@ -6871,7 +7038,7 @@
     "overallRank": 176,
     "byeWeek": null,
     "tier": 15,
-    "adp": 164.13,
+    "adp": 147.78,
     "projStats": null,
     "lastStats": null,
     "projPoints": null,
@@ -6879,7 +7046,8 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 164.13
+      "espn": 164.14,
+      "yahoo": 139.6
     }
   },
   {
@@ -6890,7 +7058,7 @@
     "overallRank": 177,
     "byeWeek": null,
     "tier": 15,
-    "adp": 160.77,
+    "adp": 148.52,
     "projStats": null,
     "lastStats": null,
     "projPoints": null,
@@ -6898,7 +7066,8 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 160.77
+      "espn": 160.76,
+      "yahoo": 142.4
     }
   },
   {
@@ -6909,7 +7078,7 @@
     "overallRank": 178,
     "byeWeek": null,
     "tier": 15,
-    "adp": 141.50833333333333,
+    "adp": 138.5825,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -6940,9 +7109,10 @@
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
     "adpSources": {
-      "espn": 168.95,
+      "espn": 168.96,
       "ffc": 40.8,
-      "fantasypros": 199.5
+      "fantasypros": 199.5,
+      "yahoo": 129.8
     }
   },
   {
@@ -6953,7 +7123,7 @@
     "overallRank": 179,
     "byeWeek": null,
     "tier": 15,
-    "adp": 122.59666666666668,
+    "adp": 124.84375,
     "projStats": null,
     "lastStats": {
       "passYds": 0,
@@ -6972,9 +7142,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 160.48,
+      "espn": 160.45,
       "ffc": 79.8,
-      "fantasypros": 138.5
+      "fantasypros": 138.5,
+      "yahoo": 131.6
     }
   },
   {
@@ -6985,7 +7156,7 @@
     "overallRank": 180,
     "byeWeek": null,
     "tier": 15,
-    "adp": 176.195,
+    "adp": 162.73166666666665,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -7004,8 +7175,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 169.28,
-      "fantasypros": 178.5
+      "espn": 169.29,
+      "fantasypros": 178.5,
+      "yahoo": 135.8
     }
   },
   {
@@ -7016,7 +7188,7 @@
     "overallRank": 181,
     "byeWeek": null,
     "tier": 16,
-    "adp": 188.03,
+    "adp": 171.38833333333332,
     "projStats": null,
     "lastStats": null,
     "projPoints": null,
@@ -7024,8 +7196,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 164.12,
-      "fantasypros": 196
+      "espn": 164.13,
+      "fantasypros": 196,
+      "yahoo": 138.1
     }
   },
   {
@@ -7120,7 +7293,7 @@
     "overallRank": 184,
     "byeWeek": null,
     "tier": 16,
-    "adp": 117.95166666666667,
+    "adp": 121.03875,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -7152,7 +7325,8 @@
     "adpSources": {
       "espn": 167.31,
       "ffc": 72.2,
-      "fantasypros": 132
+      "fantasypros": 132,
+      "yahoo": 130.3
     }
   },
   {
@@ -7163,7 +7337,7 @@
     "overallRank": 185,
     "byeWeek": null,
     "tier": 16,
-    "adp": 184.7,
+    "adp": 165.135,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -7182,8 +7356,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 168.8,
-      "fantasypros": 190
+      "espn": 168.81,
+      "fantasypros": 190,
+      "yahoo": 126
     }
   },
   {
@@ -7194,7 +7369,7 @@
     "overallRank": 186,
     "byeWeek": null,
     "tier": 16,
-    "adp": 157.845,
+    "adp": 146.83666666666667,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -7224,8 +7399,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 160.38,
-      "fantasypros": 157
+      "espn": 160.42,
+      "fantasypros": 157,
+      "yahoo": 124.8
     }
   },
   {
@@ -7236,7 +7412,7 @@
     "overallRank": 187,
     "byeWeek": null,
     "tier": 16,
-    "adp": 109.12166666666667,
+    "adp": 110.69125,
     "projStats": {
       "passYds": 4207.985379,
       "passTD": 28.92632056,
@@ -7268,7 +7444,8 @@
     "adpSources": {
       "espn": 153.53,
       "ffc": 96.1,
-      "fantasypros": 103
+      "fantasypros": 103,
+      "yahoo": 115.4
     }
   },
   {
@@ -7279,7 +7456,7 @@
     "overallRank": 188,
     "byeWeek": null,
     "tier": 16,
-    "adp": 100.39333333333333,
+    "adp": 107.2475,
     "projStats": {
       "passYds": 3823.566067,
       "passTD": 24.61000235,
@@ -7309,9 +7486,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 160.86,
+      "espn": 160.88,
       "ffc": 52,
-      "fantasypros": 112.5
+      "fantasypros": 112.5,
+      "yahoo": 127.8
     }
   },
   {
@@ -7322,7 +7500,7 @@
     "overallRank": 189,
     "byeWeek": null,
     "tier": 16,
-    "adp": 135.66,
+    "adp": 129.37333333333333,
     "projStats": {
       "passYds": 3584.515424,
       "passTD": 13.03851989,
@@ -7353,7 +7531,8 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 167.64,
-      "fantasypros": 125
+      "fantasypros": 125,
+      "yahoo": 116.8
     }
   },
   {
@@ -7406,7 +7585,7 @@
     "overallRank": 191,
     "byeWeek": null,
     "tier": 16,
-    "adp": 150.82999999999998,
+    "adp": 142.95333333333335,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -7437,7 +7616,8 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 165.32,
-      "fantasypros": 146
+      "fantasypros": 146,
+      "yahoo": 127.2
     }
   },
   {
@@ -7448,7 +7628,7 @@
     "overallRank": 192,
     "byeWeek": null,
     "tier": 16,
-    "adp": 156.79,
+    "adp": 145.55833333333334,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -7478,8 +7658,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 168.16,
-      "fantasypros": 153
+      "espn": 168.15,
+      "fantasypros": 153,
+      "yahoo": 123.1
     }
   },
   {
@@ -7608,7 +7789,7 @@
     "overallRank": 196,
     "byeWeek": null,
     "tier": 17,
-    "adp": 190.175,
+    "adp": 190.1725,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -7638,7 +7819,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 169.7,
+      "espn": 169.69,
       "fantasypros": 197
     }
   },
@@ -7650,7 +7831,7 @@
     "overallRank": 197,
     "byeWeek": null,
     "tier": 17,
-    "adp": 205.6525,
+    "adp": 181.40166666666664,
     "projStats": null,
     "lastStats": null,
     "projPoints": null,
@@ -7659,7 +7840,8 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 165.61,
-      "fantasypros": 219
+      "fantasypros": 219,
+      "yahoo": 132.9
     }
   },
   {
@@ -7712,7 +7894,7 @@
     "overallRank": 199,
     "byeWeek": null,
     "tier": 17,
-    "adp": 189.645,
+    "adp": 167.05999999999997,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -7742,8 +7924,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 169.08,
-      "fantasypros": 196.5
+      "espn": 169.06,
+      "fantasypros": 196.5,
+      "yahoo": 121.9
     }
   },
   {
@@ -7827,7 +8010,7 @@
     "overallRank": 202,
     "byeWeek": null,
     "tier": 17,
-    "adp": 207.965,
+    "adp": 207.9625,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -7858,7 +8041,7 @@
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
     "adpSources": {
-      "espn": 168.86,
+      "espn": 168.85,
       "fantasypros": 221
     }
   },
@@ -7870,7 +8053,7 @@
     "overallRank": 203,
     "byeWeek": null,
     "tier": 17,
-    "adp": 122.12166666666667,
+    "adp": 122.17,
     "projStats": {
       "passYds": 3993.199306,
       "passTD": 25.05816892,
@@ -7900,9 +8083,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 164.43,
+      "espn": 164.46,
       "ffc": 119.9,
-      "fantasypros": 109.5
+      "fantasypros": 109.5,
+      "yahoo": 122.3
     }
   },
   {
@@ -7913,7 +8097,7 @@
     "overallRank": 204,
     "byeWeek": null,
     "tier": 17,
-    "adp": 143.8875,
+    "adp": 138.45833333333334,
     "projStats": {
       "passYds": 3754.152328,
       "passTD": 16.42349278,
@@ -7944,7 +8128,8 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 167.55,
-      "fantasypros": 136
+      "fantasypros": 136,
+      "yahoo": 127.6
     }
   },
   {
@@ -7955,7 +8140,7 @@
     "overallRank": 205,
     "byeWeek": null,
     "tier": 18,
-    "adp": 139.29166666666666,
+    "adp": 135.495,
     "projStats": {
       "passYds": 3945.894711,
       "passTD": 21.37672157,
@@ -7985,9 +8170,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 167.85,
+      "espn": 167.86,
       "ffc": 129.2,
-      "fantasypros": 136.5
+      "fantasypros": 136.5,
+      "yahoo": 124.1
     }
   },
   {
@@ -7998,7 +8184,7 @@
     "overallRank": 206,
     "byeWeek": null,
     "tier": 18,
-    "adp": 149.54666666666665,
+    "adp": 144.8825,
     "projStats": null,
     "lastStats": {
       "passYds": 0,
@@ -8018,9 +8204,10 @@
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
     "adpSources": {
-      "espn": 162.48,
+      "espn": 162.46,
       "ffc": 26.9,
-      "fantasypros": 227
+      "fantasypros": 227,
+      "yahoo": 130.9
     }
   },
   {
@@ -8031,7 +8218,7 @@
     "overallRank": 207,
     "byeWeek": null,
     "tier": 18,
-    "adp": 132.6916666666667,
+    "adp": 132.06875,
     "projStats": null,
     "lastStats": {
       "passYds": 0,
@@ -8052,7 +8239,8 @@
     "adpSources": {
       "espn": 168.55,
       "ffc": 67.8,
-      "fantasypros": 164
+      "fantasypros": 164,
+      "yahoo": 130.2
     }
   },
   {
@@ -8063,7 +8251,7 @@
     "overallRank": 208,
     "byeWeek": null,
     "tier": 18,
-    "adp": 166.76500000000001,
+    "adp": 158.375,
     "projStats": null,
     "lastStats": {
       "passYds": 0,
@@ -8083,9 +8271,10 @@
     "draftStatus": "available",
     "injuryStatus": "OUT",
     "adpSources": {
-      "espn": 169.09,
+      "espn": 169.1,
       "ffc": 143.5,
-      "fantasypros": 181.5
+      "fantasypros": 181.5,
+      "yahoo": 133.2
     }
   },
   {
@@ -8096,7 +8285,7 @@
     "overallRank": 209,
     "byeWeek": null,
     "tier": 18,
-    "adp": 208.7725,
+    "adp": 183.91333333333333,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -8126,8 +8315,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 169.09,
-      "fantasypros": 222
+      "espn": 169.08,
+      "fantasypros": 222,
+      "yahoo": 134.2
     }
   },
   {
@@ -8138,7 +8328,7 @@
     "overallRank": 210,
     "byeWeek": null,
     "tier": 18,
-    "adp": 172.475,
+    "adp": 158.54999999999998,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -8169,7 +8359,8 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.4,
-      "fantasypros": 173.5
+      "fantasypros": 173.5,
+      "yahoo": 130.7
     }
   },
   {
@@ -8380,7 +8571,7 @@
     "overallRank": 216,
     "byeWeek": null,
     "tier": 18,
-    "adp": 184.13,
+    "adp": 167.58833333333334,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -8399,8 +8590,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 169.52,
-      "fantasypros": 189
+      "espn": 169.53,
+      "fantasypros": 189,
+      "yahoo": 134.5
     }
   },
   {
@@ -8484,7 +8676,7 @@
     "overallRank": 219,
     "byeWeek": null,
     "tier": 19,
-    "adp": 147.9275,
+    "adp": 137.585,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -8515,7 +8707,8 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 168.71,
-      "fantasypros": 141
+      "fantasypros": 141,
+      "yahoo": 116.9
     }
   },
   {
@@ -8526,7 +8719,7 @@
     "overallRank": 220,
     "byeWeek": null,
     "tier": 19,
-    "adp": 155.8825,
+    "adp": 146.55666666666664,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -8556,8 +8749,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 169.03,
-      "fantasypros": 151.5
+      "espn": 169.04,
+      "fantasypros": 151.5,
+      "yahoo": 127.9
     }
   },
   {
@@ -8568,7 +8762,7 @@
     "overallRank": 221,
     "byeWeek": null,
     "tier": 19,
-    "adp": 143.5125,
+    "adp": 136.545,
     "projStats": {
       "passYds": 4011.679464,
       "passTD": 23.98583098,
@@ -8598,8 +8792,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 166.05,
-      "fantasypros": 136
+      "espn": 166.07,
+      "fantasypros": 136,
+      "yahoo": 122.6
     }
   },
   {
@@ -8610,7 +8805,7 @@
     "overallRank": 222,
     "byeWeek": null,
     "tier": 19,
-    "adp": 148.83333333333334,
+    "adp": 143.37625,
     "projStats": {
       "passYds": 3634.172951,
       "passTD": 20.34319358,
@@ -8640,9 +8835,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 169,
+      "espn": 169.01,
       "ffc": 141.5,
-      "fantasypros": 147
+      "fantasypros": 147,
+      "yahoo": 127
     }
   },
   {
@@ -8653,7 +8849,7 @@
     "overallRank": 223,
     "byeWeek": null,
     "tier": 19,
-    "adp": 168.46,
+    "adp": 153.405,
     "projStats": {
       "passYds": 3052.341232,
       "passTD": 14.18029831,
@@ -8672,8 +8868,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 163.84,
-      "fantasypros": 170
+      "espn": 163.83,
+      "fantasypros": 170,
+      "yahoo": 123.3
     }
   },
   {
@@ -8684,7 +8881,7 @@
     "overallRank": 224,
     "byeWeek": null,
     "tier": 19,
-    "adp": 159.3625,
+    "adp": 149.375,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -8704,7 +8901,8 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.45,
-      "fantasypros": 156
+      "fantasypros": 156,
+      "yahoo": 129.4
     }
   },
   {
@@ -8715,7 +8913,7 @@
     "overallRank": 225,
     "byeWeek": null,
     "tier": 19,
-    "adp": 293.8275,
+    "adp": 293.825,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -8734,7 +8932,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 170.31,
+      "espn": 170.3,
       "fantasypros": 335
     }
   },
@@ -8746,7 +8944,7 @@
     "overallRank": 226,
     "byeWeek": null,
     "tier": 19,
-    "adp": 170.6525,
+    "adp": 157.335,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -8766,7 +8964,8 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.61,
-      "fantasypros": 171
+      "fantasypros": 171,
+      "yahoo": 130.7
     }
   },
   {
@@ -8808,7 +9007,7 @@
     "overallRank": 228,
     "byeWeek": null,
     "tier": 19,
-    "adp": 157.22,
+    "adp": 148.48,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -8839,7 +9038,8 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.88,
-      "fantasypros": 153
+      "fantasypros": 153,
+      "yahoo": 131
     }
   },
   {
@@ -9061,7 +9261,7 @@
     "overallRank": 234,
     "byeWeek": null,
     "tier": 20,
-    "adp": 176.58666666666667,
+    "adp": 176.585,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -9091,7 +9291,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 170.02,
+      "espn": 170.01,
       "ffc": 114,
       "fantasypros": 220.5
     }
@@ -9250,7 +9450,7 @@
     "overallRank": 239,
     "byeWeek": null,
     "tier": 20,
-    "adp": 173.24666666666667,
+    "adp": 164.46125,
     "projStats": null,
     "lastStats": null,
     "projPoints": null,
@@ -9258,9 +9458,10 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 167.28,
+      "espn": 167.29,
       "ffc": 121.1,
-      "fantasypros": 210
+      "fantasypros": 210,
+      "yahoo": 138.1
     }
   },
   {
@@ -9271,7 +9472,7 @@
     "overallRank": 240,
     "byeWeek": null,
     "tier": 20,
-    "adp": 167.22,
+    "adp": 150.26333333333335,
     "projStats": null,
     "lastStats": null,
     "projPoints": null,
@@ -9279,7 +9480,8 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 167.22
+      "espn": 167.19,
+      "yahoo": 141.8
     }
   },
   {
@@ -9290,7 +9492,7 @@
     "overallRank": 241,
     "byeWeek": null,
     "tier": 21,
-    "adp": 278.45,
+    "adp": 278.4475,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -9320,7 +9522,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 170.3,
+      "espn": 170.29,
       "fantasypros": 314.5
     }
   },
@@ -9417,7 +9619,7 @@
     "overallRank": 244,
     "byeWeek": null,
     "tier": 21,
-    "adp": 154.305,
+    "adp": 148.30166666666668,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -9447,8 +9649,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 170.22,
-      "fantasypros": 149
+      "espn": 170.21,
+      "fantasypros": 149,
+      "yahoo": 136.3
     }
   },
   {
@@ -9459,7 +9662,7 @@
     "overallRank": 245,
     "byeWeek": null,
     "tier": 21,
-    "adp": 336.5525,
+    "adp": 336.55,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -9489,7 +9692,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 170.21,
+      "espn": 170.2,
       "fantasypros": 392
     }
   },
@@ -9703,7 +9906,7 @@
     "overallRank": 251,
     "byeWeek": null,
     "tier": 21,
-    "adp": 223.75,
+    "adp": 223.74833333333333,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -9733,7 +9936,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 170.1,
+      "espn": 170.09,
       "ffc": 149.7,
       "fantasypros": 291
     }
@@ -9787,7 +9990,7 @@
     "overallRank": 253,
     "byeWeek": null,
     "tier": 22,
-    "adp": 230.7975,
+    "adp": 197.63166666666666,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -9818,7 +10021,8 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.19,
-      "fantasypros": 251
+      "fantasypros": 251,
+      "yahoo": 131.3
     }
   },
   {
@@ -9934,7 +10138,7 @@
     "overallRank": 257,
     "byeWeek": null,
     "tier": 22,
-    "adp": 156.89,
+    "adp": 152.57,
     "projStats": null,
     "lastStats": null,
     "projPoints": null,
@@ -9942,8 +10146,9 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 168.27,
-      "ffc": 151.2
+      "espn": 168.25,
+      "ffc": 151.2,
+      "yahoo": 146.1
     }
   },
   {
@@ -9954,7 +10159,7 @@
     "overallRank": 258,
     "byeWeek": null,
     "tier": 22,
-    "adp": 169.67,
+    "adp": 169.66,
     "projStats": null,
     "lastStats": null,
     "projPoints": null,
@@ -9962,7 +10167,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 169.67
+      "espn": 169.66
     }
   },
   {
@@ -9973,7 +10178,7 @@
     "overallRank": 259,
     "byeWeek": null,
     "tier": 22,
-    "adp": 178.8675,
+    "adp": 162.97833333333332,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -10005,7 +10210,8 @@
     "injuryStatus": "QUESTIONABLE",
     "adpSources": {
       "espn": 169.47,
-      "fantasypros": 182
+      "fantasypros": 182,
+      "yahoo": 131.2
     }
   },
   {
@@ -10143,7 +10349,7 @@
     "overallRank": 263,
     "byeWeek": null,
     "tier": 22,
-    "adp": 277.0625,
+    "adp": 277.065,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -10162,7 +10368,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 169.25,
+      "espn": 169.26,
       "fantasypros": 313
     }
   },
@@ -10278,7 +10484,7 @@
     "overallRank": 267,
     "byeWeek": null,
     "tier": 23,
-    "adp": 169.655,
+    "adp": 156.80333333333334,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -10309,7 +10515,8 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.12,
-      "fantasypros": 169.5
+      "fantasypros": 169.5,
+      "yahoo": 131.1
     }
   },
   {
@@ -10363,7 +10570,7 @@
     "overallRank": 269,
     "byeWeek": null,
     "tier": 23,
-    "adp": 164.9725,
+    "adp": 146.64833333333334,
     "projStats": {
       "passYds": 3764.35055,
       "passTD": 19.97238974,
@@ -10394,7 +10601,8 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.39,
-      "fantasypros": 163.5
+      "fantasypros": 163.5,
+      "yahoo": 110
     }
   },
   {
@@ -10742,7 +10950,7 @@
     "overallRank": 278,
     "byeWeek": null,
     "tier": 24,
-    "adp": 170.28,
+    "adp": 170.27,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -10772,7 +10980,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 170.28
+      "espn": 170.27
     }
   },
   {
@@ -11096,7 +11304,7 @@
     "overallRank": 287,
     "byeWeek": null,
     "tier": 24,
-    "adp": 195.93,
+    "adp": 173.75333333333333,
     "projStats": null,
     "lastStats": null,
     "projPoints": null,
@@ -11105,7 +11313,8 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 168.72,
-      "fantasypros": 205
+      "fantasypros": 205,
+      "yahoo": 129.4
     }
   },
   {
@@ -11116,7 +11325,7 @@
     "overallRank": 288,
     "byeWeek": null,
     "tier": 24,
-    "adp": 168.99,
+    "adp": 169,
     "projStats": null,
     "lastStats": null,
     "projPoints": null,
@@ -11124,7 +11333,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 168.99
+      "espn": 169
     }
   },
   {
@@ -11281,7 +11490,7 @@
     "overallRank": 293,
     "byeWeek": null,
     "tier": 25,
-    "adp": 154.47333333333333,
+    "adp": 147.68,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -11313,7 +11522,8 @@
     "adpSources": {
       "espn": 169.14,
       "ffc": 73.6,
-      "fantasypros": 203.5
+      "fantasypros": 203.5,
+      "yahoo": 127.3
     }
   },
   {
@@ -11493,7 +11703,7 @@
     "overallRank": 298,
     "byeWeek": null,
     "tier": 25,
-    "adp": 188.09333333333333,
+    "adp": 172.77,
     "projStats": null,
     "lastStats": null,
     "projPoints": null,
@@ -11503,7 +11713,8 @@
     "adpSources": {
       "espn": 167.96,
       "ffc": 139.8,
-      "fantasypros": 227
+      "fantasypros": 227,
+      "yahoo": 126.8
     }
   },
   {
@@ -11534,7 +11745,7 @@
     "overallRank": 300,
     "byeWeek": null,
     "tier": 25,
-    "adp": 208.9775,
+    "adp": 208.98,
     "projStats": null,
     "lastStats": null,
     "projPoints": null,
@@ -11542,7 +11753,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 169.91,
+      "espn": 169.92,
       "fantasypros": 222
     }
   },
@@ -11574,7 +11785,7 @@
     "overallRank": 302,
     "byeWeek": null,
     "tier": 26,
-    "adp": 214.875,
+    "adp": 214.8775,
     "projStats": {
       "passYds": 1623.261291,
       "passTD": 7.142247114,
@@ -11604,7 +11815,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 169.5,
+      "espn": 169.51,
       "fantasypros": 230
     }
   },
@@ -11865,7 +12076,7 @@
     "overallRank": 309,
     "byeWeek": null,
     "tier": 26,
-    "adp": 170.27,
+    "adp": 170.26,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -11895,7 +12106,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 170.27
+      "espn": 170.26
     }
   },
   {
@@ -11936,7 +12147,7 @@
     "overallRank": 311,
     "byeWeek": null,
     "tier": 26,
-    "adp": 215.4225,
+    "adp": 215.4175,
     "projStats": {
       "passYds": 1884.262587,
       "passTD": 9.469548833,
@@ -11967,7 +12178,7 @@
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
     "adpSources": {
-      "espn": 170.19,
+      "espn": 170.17,
       "fantasypros": 230.5
     }
   },
@@ -12390,7 +12601,7 @@
     "overallRank": 322,
     "byeWeek": null,
     "tier": 27,
-    "adp": 170.17,
+    "adp": 170.16,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -12420,7 +12631,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 170.17
+      "espn": 170.16
     }
   },
   {
@@ -12474,7 +12685,7 @@
     "overallRank": 324,
     "byeWeek": null,
     "tier": 27,
-    "adp": 208.1925,
+    "adp": 181.36166666666668,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -12494,7 +12705,8 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.77,
-      "fantasypros": 221
+      "fantasypros": 221,
+      "yahoo": 127.7
     }
   },
   {
@@ -12871,7 +13083,7 @@
     "overallRank": 334,
     "byeWeek": null,
     "tier": 28,
-    "adp": 170.18,
+    "adp": 170.17,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -12901,7 +13113,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 170.18
+      "espn": 170.17
     }
   },
   {
@@ -12954,7 +13166,7 @@
     "overallRank": 336,
     "byeWeek": null,
     "tier": 28,
-    "adp": 238.2725,
+    "adp": 238.27,
     "projStats": {
       "passYds": 162.8804189,
       "passTD": 0.864010263,
@@ -12984,7 +13196,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 170.09,
+      "espn": 170.08,
       "fantasypros": 261
     }
   },
@@ -13069,7 +13281,7 @@
     "overallRank": 339,
     "byeWeek": null,
     "tier": 29,
-    "adp": 295.2675,
+    "adp": 295.265,
     "projStats": null,
     "lastStats": {
       "passYds": 9,
@@ -13088,7 +13300,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 170.07,
+      "espn": 170.06,
       "fantasypros": 337
     }
   },
@@ -13370,7 +13582,7 @@
     "overallRank": 347,
     "byeWeek": null,
     "tier": 29,
-    "adp": 169.54,
+    "adp": 142.11333333333334,
     "projStats": null,
     "lastStats": null,
     "projPoints": null,
@@ -13378,7 +13590,8 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 169.54
+      "espn": 169.54,
+      "yahoo": 128.4
     }
   },
   {
@@ -13409,7 +13622,7 @@
     "overallRank": 349,
     "byeWeek": null,
     "tier": 30,
-    "adp": 169.78,
+    "adp": 169.77,
     "projStats": null,
     "lastStats": null,
     "projPoints": null,
@@ -13417,7 +13630,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 169.78
+      "espn": 169.77
     }
   },
   {
@@ -13466,7 +13679,7 @@
     "overallRank": 352,
     "byeWeek": null,
     "tier": 30,
-    "adp": 168.95,
+    "adp": 153.58333333333334,
     "projStats": null,
     "lastStats": null,
     "projPoints": null,
@@ -13474,7 +13687,8 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 168.95
+      "espn": 168.95,
+      "yahoo": 145.9
     }
   },
   {
@@ -13659,7 +13873,7 @@
     "overallRank": 362,
     "byeWeek": null,
     "tier": 31,
-    "adp": 220.2075,
+    "adp": 220.2125,
     "projStats": null,
     "lastStats": null,
     "projPoints": null,
@@ -13667,7 +13881,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 166.83,
+      "espn": 166.85,
       "fantasypros": 238
     }
   },
@@ -13699,7 +13913,7 @@
     "overallRank": 364,
     "byeWeek": null,
     "tier": 31,
-    "adp": 204.4,
+    "adp": 183.20000000000002,
     "projStats": null,
     "lastStats": null,
     "projPoints": null,
@@ -13708,7 +13922,8 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.6,
-      "fantasypros": 216
+      "fantasypros": 216,
+      "yahoo": 140.8
     }
   },
   {
@@ -13739,7 +13954,7 @@
     "overallRank": 366,
     "byeWeek": null,
     "tier": 31,
-    "adp": 178.775,
+    "adp": 167.58125,
     "projStats": null,
     "lastStats": null,
     "projPoints": null,
@@ -13749,7 +13964,8 @@
     "adpSources": {
       "espn": 169.25,
       "ffc": 130.7,
-      "fantasypros": 214
+      "fantasypros": 214,
+      "yahoo": 134
     }
   },
   {
@@ -13780,7 +13996,7 @@
     "overallRank": 368,
     "byeWeek": null,
     "tier": 31,
-    "adp": 270.45,
+    "adp": 270.445,
     "projStats": null,
     "lastStats": null,
     "projPoints": null,
@@ -13788,7 +14004,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 169.8,
+      "espn": 169.78,
       "fantasypros": 304
     }
   },
@@ -14010,7 +14226,7 @@
     "overallRank": 374,
     "byeWeek": null,
     "tier": 32,
-    "adp": 269.775,
+    "adp": 269.7725,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -14029,7 +14245,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 170.1,
+      "espn": 170.09,
       "fantasypros": 303
     }
   },
@@ -14156,7 +14372,7 @@
     "overallRank": 378,
     "byeWeek": null,
     "tier": 32,
-    "adp": 291.525,
+    "adp": 291.5225,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -14186,7 +14402,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 170.1,
+      "espn": 170.09,
       "fantasypros": 332
     }
   },
@@ -14326,7 +14542,7 @@
     "overallRank": 382,
     "byeWeek": null,
     "tier": 32,
-    "adp": 170.16,
+    "adp": 170.15,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -14356,7 +14572,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 170.16
+      "espn": 170.15
     }
   },
   {
@@ -14806,7 +15022,7 @@
     "overallRank": 394,
     "byeWeek": null,
     "tier": 33,
-    "adp": 254.8525,
+    "adp": 254.8475,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -14836,7 +15052,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 167.41,
+      "espn": 167.39,
       "fantasypros": 284
     }
   },
@@ -14921,7 +15137,7 @@
     "overallRank": 397,
     "byeWeek": null,
     "tier": 34,
-    "adp": 170.1,
+    "adp": 170.09,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -14951,7 +15167,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 170.1
+      "espn": 170.09
     }
   },
   {
@@ -15044,7 +15260,7 @@
     "overallRank": 400,
     "byeWeek": null,
     "tier": 34,
-    "adp": 206.685,
+    "adp": 206.68,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -15063,7 +15279,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 169.74,
+      "espn": 169.72,
       "fantasypros": 219
     }
   },
@@ -15075,7 +15291,7 @@
     "overallRank": 401,
     "byeWeek": null,
     "tier": 34,
-    "adp": 277.225,
+    "adp": 277.22249999999997,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -15094,7 +15310,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 169.9,
+      "espn": 169.89,
       "fantasypros": 313
     }
   },
@@ -15106,7 +15322,7 @@
     "overallRank": 402,
     "byeWeek": null,
     "tier": 34,
-    "adp": 245.7425,
+    "adp": 245.74,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -15136,7 +15352,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 169.97,
+      "espn": 169.96,
       "fantasypros": 271
     }
   },
@@ -17407,7 +17623,7 @@
     "overallRank": 460,
     "byeWeek": null,
     "tier": 39,
-    "adp": 170.11,
+    "adp": 170.1,
     "projStats": {
       "passYds": 153.3719021,
       "passTD": 0.85851442,
@@ -17437,7 +17653,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 170.11
+      "espn": 170.1
     }
   },
   {
@@ -17489,7 +17705,7 @@
     "overallRank": 462,
     "byeWeek": null,
     "tier": 39,
-    "adp": 170.1,
+    "adp": 170.09,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -17519,7 +17735,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 170.1
+      "espn": 170.09
     }
   },
   {
@@ -17612,7 +17828,7 @@
     "overallRank": 465,
     "byeWeek": null,
     "tier": 39,
-    "adp": 272.365,
+    "adp": 272.3675,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -17631,7 +17847,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 169.96,
+      "espn": 169.97,
       "fantasypros": 306.5
     }
   },
@@ -18012,7 +18228,7 @@
     "overallRank": 476,
     "byeWeek": null,
     "tier": 40,
-    "adp": 169.97,
+    "adp": 169.98,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -18042,7 +18258,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 169.97
+      "espn": 169.98
     }
   },
   {
@@ -18916,7 +19132,7 @@
     "overallRank": 499,
     "byeWeek": null,
     "tier": 42,
-    "adp": 169.86,
+    "adp": 169.84,
     "projStats": {
       "passYds": 0,
       "passTD": 0,
@@ -18946,7 +19162,7 @@
     "flag": "none",
     "draftStatus": "available",
     "adpSources": {
-      "espn": 169.86
+      "espn": 169.84
     }
   },
   {
