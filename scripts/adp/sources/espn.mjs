@@ -1,8 +1,5 @@
-// Re-pull ESPN fantasy rankings and regenerate src/data/seed.json.
-// Run: npm run fetch-espn
-import { writeFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
-import { dirname, join } from "node:path";
+// ESPN fantasy rankings source: fetch + parse + rank/tier the player universe.
+// Exposes fetchEspnUniverse() returning the ranked player array (no side effects).
 
 const SEASON = 2026;
 const LIMIT = 500;
@@ -120,73 +117,69 @@ const TEAM = {
   34: "HOU",
 };
 
-const url = `https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/${SEASON}/players?view=kona_player_info`;
-const filter = {
-  players: {
-    limit: LIMIT,
-    sortDraftRanks: { sortPriority: 100, sortAsc: true, value: "PPR" },
-  },
-};
+// Fetch the ESPN PPR player universe and return the ranked/tiered top slice.
+export async function fetchEspnUniverse() {
+  const url = `https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/${SEASON}/players?view=kona_player_info`;
+  const filter = {
+    players: {
+      limit: LIMIT,
+      sortDraftRanks: { sortPriority: 100, sortAsc: true, value: "PPR" },
+    },
+  };
 
-const res = await fetch(url, {
-  headers: {
-    "x-fantasy-filter": JSON.stringify(filter),
-    accept: "application/json",
-  },
-});
-if (!res.ok) {
-  console.error(`ESPN request failed: ${res.status} ${res.statusText}`);
-  process.exit(1);
-}
-
-const data = await res.json();
-const raw = Array.isArray(data.players) ? data.players : data;
-
-const players = [];
-for (const entry of raw) {
-  const p = entry.player ?? entry;
-  const position = POS[p.defaultPositionId];
-  if (!position) continue;
-  const pprRank = p.draftRanksByRankType?.PPR?.rank ?? null;
-  if (pprRank === null) continue; // skip unranked players
-  players.push({
-    id: String(p.id),
-    name: p.fullName ?? `${p.firstName ?? ""} ${p.lastName ?? ""}`.trim(),
-    position,
-    team: TEAM[p.proTeamId] ?? "FA",
-    overallRank: pprRank,
-    byeWeek: null,
-    tier: null,
-    adp: p.ownership?.averageDraftPosition ?? null,
-    projStats: extractProjStats(p, position),
-    lastStats: extractLastStats(p, position),
-    projPoints: projRow(p)?.appliedTotal ?? null,
-    notes: "",
-    flag: "none",
-    draftStatus: "available",
-    ...(p.injuryStatus && p.injuryStatus !== "ACTIVE"
-      ? { injuryStatus: p.injuryStatus }
-      : {}),
+  const res = await fetch(url, {
+    headers: {
+      "x-fantasy-filter": JSON.stringify(filter),
+      accept: "application/json",
+    },
   });
-}
+  if (!res.ok) {
+    throw new Error(`ESPN request failed: ${res.status} ${res.statusText}`);
+  }
 
-players.sort(
-  (a, b) => a.overallRank - b.overallRank || Number(a.id) - Number(b.id),
-);
-const top = players.slice(0, LIMIT);
-top.forEach((p, i) => {
-  p.overallRank = i + 1;
-  p.tier = Math.floor(i / TIER_SIZE) + 1;
-});
+  const data = await res.json();
+  const raw = Array.isArray(data.players) ? data.players : data;
 
-if (top.length === 0) {
-  console.error(
-    "No ranked players returned from ESPN — refusing to write an empty seed.",
+  const players = [];
+  for (const entry of raw) {
+    const p = entry.player ?? entry;
+    const position = POS[p.defaultPositionId];
+    if (!position) continue;
+    const pprRank = p.draftRanksByRankType?.PPR?.rank ?? null;
+    if (pprRank === null) continue; // skip unranked players
+    players.push({
+      id: String(p.id),
+      name: p.fullName ?? `${p.firstName ?? ""} ${p.lastName ?? ""}`.trim(),
+      position,
+      team: TEAM[p.proTeamId] ?? "FA",
+      overallRank: pprRank,
+      byeWeek: null,
+      tier: null,
+      adp: p.ownership?.averageDraftPosition ?? null,
+      projStats: extractProjStats(p, position),
+      lastStats: extractLastStats(p, position),
+      projPoints: projRow(p)?.appliedTotal ?? null,
+      notes: "",
+      flag: "none",
+      draftStatus: "available",
+      ...(p.injuryStatus && p.injuryStatus !== "ACTIVE"
+        ? { injuryStatus: p.injuryStatus }
+        : {}),
+    });
+  }
+
+  players.sort(
+    (a, b) => a.overallRank - b.overallRank || Number(a.id) - Number(b.id),
   );
-  process.exit(1);
-}
+  const top = players.slice(0, LIMIT);
+  top.forEach((p, i) => {
+    p.overallRank = i + 1;
+    p.tier = Math.floor(i / TIER_SIZE) + 1;
+  });
 
-const here = dirname(fileURLToPath(import.meta.url));
-const out = join(here, "..", "src", "data", "seed.json");
-writeFileSync(out, JSON.stringify(top, null, 2) + "\n");
-console.log(`Wrote ${top.length} players to ${out}`);
+  if (top.length === 0) {
+    throw new Error("No ranked players returned from ESPN");
+  }
+
+  return top;
+}
