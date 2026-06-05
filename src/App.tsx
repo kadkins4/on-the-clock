@@ -63,10 +63,8 @@ const DevPanel = lazy(() =>
   import("./components/dev/DevPanel").then((m) => ({ default: m.DevPanel })),
 );
 import { AlphaBanner } from "./components/AlphaBanner";
-import { Wordmark } from "./components/Wordmark";
 import { Header } from "./components/Header";
-import { InfoModal } from "./components/InfoModal";
-import { AboutContent, LogContent } from "./components/infoContent";
+import { InfoPage } from "./components/InfoPage";
 
 function download(filename: string, text: string, type: string) {
   const blob = new Blob([text], { type });
@@ -189,7 +187,7 @@ export default function App() {
     loadRefetchResult,
   );
   const [toast, setToast] = useState<string | null>(null);
-  const [infoModal, setInfoModal] = useState<"about" | "log" | null>(null);
+  const [view, setView] = useState<"board" | "about" | "log">("board");
 
   useEffect(() => {
     if (!toast) return;
@@ -574,155 +572,164 @@ export default function App() {
       <Intro replay={introReplay} />
       <AlphaBanner />
       <Header
-        onBrandClick={onBrandClick}
-        onAbout={() => setInfoModal("about")}
-        onLog={() => setInfoModal("log")}
-        onMock={() => setMockMode(true)}
-        onDraft={() => setToast("Live draft mode is coming soon!")}
+        onBrandClick={() => {
+          onBrandClick();
+          setView("board");
+        }}
+        onAbout={() => setView("about")}
+        onLog={() => setView("log")}
       />
-      <div className="drafted-summary">
-        {shownPositions.map((pos) => (
-          <span key={pos} className="drafted-summary-item">
-            {pos} <b>{drafted[pos].drafted}</b>
-            <span className="mine-count">({drafted[pos].mine})</span>
-          </span>
-        ))}
-      </div>
-      <Toolbar
-        search={search}
-        setSearch={setSearch}
-        posChips={chips}
-        activePos={posFilter}
-        onToggleChip={(p) => setPosFilter((prev) => toggleChip(prev, p))}
-        onApplyMacro={(m) => setPosFilter((prev) => applyMacro(prev, m))}
-        hideDrafted={hideDrafted}
-        setHideDrafted={setHideDrafted}
-        byeFilter={byeFilter}
-        setByeFilter={setByeFilter}
-        byeWeeks={byeWeeks}
-        grouped={grouped}
-        onBackToTiers={onBackToTiers}
-        filtersActive={filtersActive}
-        onClearFilters={onClearFilters}
-        currentLeagueId={currentLeague.id}
-        leagues={leagues.map((l) => ({
-          id: l.id,
-          name: l.name,
-          scoring: l.scoring,
-        }))}
-        onSwitchLeague={(id) => dispatch({ type: "switchLeague", id })}
-        onAddLeague={onAddLeague}
-        onDuplicateLeague={onDuplicateLeague}
-        onRenameLeague={onRenameLeague}
-        onDeleteLeague={onDeleteLeague}
-        tierLists={tierLists}
-        activeTierListId={activeTierListId}
-        defaultTierListId={defaultTierListId}
-        onSwitchTierList={(id) => dispatch({ type: "switchTierList", id })}
-        onAddTierList={onAddTierList}
-        onDuplicateTierList={onDuplicateTierList}
-        onRenameTierList={onRenameTierList}
-        onDeleteTierList={onDeleteTierList}
-        onSetDefaultTierList={() =>
-          dispatch({ type: "setDefaultTierList", id: activeTierListId })
-        }
-        onScoringChange={(scoring) =>
-          dispatch({
-            type: "updateLeagueSettings",
-            id: currentLeague.id,
-            patch: { scoring },
-          })
-        }
-        hideK={hideK}
-        onToggleK={onToggleK}
-        hideDst={hideDst}
-        onToggleDst={onToggleDst}
-        onFetch={onFetch}
-        fetching={fetching}
-        onRefreshAdp={onRefreshAdp}
-        adpStatus={adpStatus}
-        onImport={onImport}
-        onExportJson={() =>
-          download(
-            `${leagueSlug}-rankings.json`,
-            exportJson(players),
-            "application/json",
-          )
-        }
-        onExportCsv={() =>
-          download(`${leagueSlug}-rankings.csv`, toCsv(players), "text/csv")
-        }
-        scopePref={scopePref}
-        onScopePrefChange={onScopePrefChange}
-        onOpenColumns={() => setColumnsOpen((o) => !o)}
-        columnsOpen={columnsOpen}
-      >
-        {columnsOpen && (
-          <ColumnManager
-            layout={effectiveLayout}
-            onToggle={(id: ColumnId) =>
-              onLayoutChange(toggleHidden(effectiveLayout, id))
+      {view !== "board" ? (
+        <InfoPage page={view} onBack={() => setView("board")} />
+      ) : (
+        <>
+          <div className="drafted-summary">
+            <div className="drafted-summary-counts">
+              {shownPositions.map((pos) => (
+                <span key={pos} className="drafted-summary-item">
+                  {pos} <b>{drafted[pos].drafted}</b>
+                  <span className="mine-count">({drafted[pos].mine})</span>
+                </span>
+              ))}
+            </div>
+            <div className="drafted-summary-actions">
+              <button
+                type="button"
+                className="otc-btn"
+                onClick={() => setMockMode(true)}
+              >
+                Mock
+              </button>
+              <button
+                type="button"
+                className="otc-btn otc-btn-soon"
+                aria-disabled="true"
+              >
+                Draft
+              </button>
+            </div>
+          </div>
+          <Toolbar
+            search={search}
+            setSearch={setSearch}
+            posChips={chips}
+            activePos={posFilter}
+            onToggleChip={(p) => setPosFilter((prev) => toggleChip(prev, p))}
+            onApplyMacro={(m) => setPosFilter((prev) => applyMacro(prev, m))}
+            hideDrafted={hideDrafted}
+            setHideDrafted={setHideDrafted}
+            byeFilter={byeFilter}
+            setByeFilter={setByeFilter}
+            byeWeeks={byeWeeks}
+            grouped={grouped}
+            onBackToTiers={onBackToTiers}
+            filtersActive={filtersActive}
+            onClearFilters={onClearFilters}
+            currentLeagueId={currentLeague.id}
+            leagues={leagues.map((l) => ({
+              id: l.id,
+              name: l.name,
+              scoring: l.scoring,
+            }))}
+            onSwitchLeague={(id) => dispatch({ type: "switchLeague", id })}
+            onAddLeague={onAddLeague}
+            onDuplicateLeague={onDuplicateLeague}
+            onRenameLeague={onRenameLeague}
+            onDeleteLeague={onDeleteLeague}
+            tierLists={tierLists}
+            activeTierListId={activeTierListId}
+            defaultTierListId={defaultTierListId}
+            onSwitchTierList={(id) => dispatch({ type: "switchTierList", id })}
+            onAddTierList={onAddTierList}
+            onDuplicateTierList={onDuplicateTierList}
+            onRenameTierList={onRenameTierList}
+            onDeleteTierList={onDeleteTierList}
+            onSetDefaultTierList={() =>
+              dispatch({ type: "setDefaultTierList", id: activeTierListId })
             }
-            onReorder={(id: ColumnId, before: ColumnId) =>
-              onLayoutChange(reorder(effectiveLayout, id, before))
+            onScoringChange={(scoring) =>
+              dispatch({
+                type: "updateLeagueSettings",
+                id: currentLeague.id,
+                patch: { scoring },
+              })
             }
-            onReset={() => onLayoutChange(DEFAULT_LAYOUT)}
-            onClose={() => setColumnsOpen(false)}
+            hideK={hideK}
+            onToggleK={onToggleK}
+            hideDst={hideDst}
+            onToggleDst={onToggleDst}
+            onFetch={onFetch}
+            fetching={fetching}
+            onRefreshAdp={onRefreshAdp}
+            adpStatus={adpStatus}
+            onImport={onImport}
+            onExportJson={() =>
+              download(
+                `${leagueSlug}-rankings.json`,
+                exportJson(players),
+                "application/json",
+              )
+            }
+            onExportCsv={() =>
+              download(`${leagueSlug}-rankings.csv`, toCsv(players), "text/csv")
+            }
+            scopePref={scopePref}
+            onScopePrefChange={onScopePrefChange}
+            onOpenColumns={() => setColumnsOpen((o) => !o)}
+            columnsOpen={columnsOpen}
+          >
+            {columnsOpen && (
+              <ColumnManager
+                layout={effectiveLayout}
+                onToggle={(id: ColumnId) =>
+                  onLayoutChange(toggleHidden(effectiveLayout, id))
+                }
+                onReorder={(id: ColumnId, before: ColumnId) =>
+                  onLayoutChange(reorder(effectiveLayout, id, before))
+                }
+                onReset={() => onLayoutChange(DEFAULT_LAYOUT)}
+                onClose={() => setColumnsOpen(false)}
+              />
+            )}
+          </Toolbar>
+          <PlayerTable
+            columns={columns}
+            grouped={grouped}
+            rows={rows}
+            itemIds={itemIds}
+            flat={flat}
+            positionalRanks={positionalRanks}
+            vorById={vorById}
+            projById={projById}
+            lastById={lastById}
+            sortKey={sortKey}
+            sortAsc={sortAsc}
+            onSort={onSort}
+            dispatch={dispatch}
+            reorderable={reorderable}
+            onAddTier={onAddTier}
           />
-        )}
-      </Toolbar>
-      <PlayerTable
-        columns={columns}
-        grouped={grouped}
-        rows={rows}
-        itemIds={itemIds}
-        flat={flat}
-        positionalRanks={positionalRanks}
-        vorById={vorById}
-        projById={projById}
-        lastById={lastById}
-        sortKey={sortKey}
-        sortAsc={sortAsc}
-        onSort={onSort}
-        dispatch={dispatch}
-        reorderable={reorderable}
-        onAddTier={onAddTier}
-      />
-      {pending.length > 0 && (
-        <button className="undo-bar" onClick={undoLast}>
-          Undo draft ({pending.length})
-        </button>
-      )}
-      {pendingLayout !== null && (
-        <ColumnScopePrompt
-          onChoose={onScopeChosen}
-          onCancel={() => setPendingLayout(null)}
-        />
-      )}
-      {infoModal && (
-        <InfoModal
-          title={infoModal === "about" ? <Wordmark /> : "What's new"}
-          onClose={() => setInfoModal(null)}
-        >
-          {infoModal === "about" ? <AboutContent /> : <LogContent />}
-        </InfoModal>
+          {pending.length > 0 && (
+            <button className="undo-bar" onClick={undoLast}>
+              Undo draft ({pending.length})
+            </button>
+          )}
+          {pendingLayout !== null && (
+            <ColumnScopePrompt
+              onChoose={onScopeChosen}
+              onCancel={() => setPendingLayout(null)}
+            />
+          )}
+        </>
       )}
       {toast && <div className="toast">{toast}</div>}
-      <footer
-        style={{
-          textAlign: "center",
-          padding: "24px 16px",
-          fontSize: "13px",
-          opacity: 0.55,
-        }}
-      >
+      <footer className="otc-footer">
         <a
           href="https://kendalladkins.dev/?utm_source=on-the-clock"
           target="_blank"
           rel="noopener noreferrer"
-          style={{ color: "inherit", textDecoration: "none" }}
         >
-          ← Built by Kendall Adkins
+          Built by Kendall Adkins
         </a>
       </footer>
     </div>

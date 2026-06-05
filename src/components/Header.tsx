@@ -1,21 +1,16 @@
 import { Wordmark } from "./Wordmark";
 
-// The app header: brand (logo + wordmark + tagline), a divider, the About/Log
-// info links, then the Mock / Draft actions. Presentational — every action is a
-// handler passed down from App. Clicking the brand keeps the old refresh +
-// replay-intro behavior.
+// The app header band: brand (logo + wordmark + tagline) on the left, the
+// About / Log nav links on the right. Presentational — actions are handler
+// props. Mock / Draft live on the counts row below the header, not here.
 export function Header({
   onBrandClick,
   onAbout,
   onLog,
-  onMock,
-  onDraft,
 }: {
   onBrandClick: () => void;
   onAbout: () => void;
   onLog: () => void;
-  onMock: () => void;
-  onDraft: () => void;
 }) {
   return (
     <header className="otc-header">
@@ -62,7 +57,7 @@ export function Header({
           <span className="otc-tagline">draft day cheat sheet</span>
         </span>
       </button>
-      <span className="otc-header-divider" aria-hidden="true" />
+      <span className="otc-header-spacer" />
       <nav className="otc-header-links">
         <button type="button" className="otc-navlink" onClick={onAbout}>
           About
@@ -71,19 +66,6 @@ export function Header({
           Log
         </button>
       </nav>
-      <span className="otc-header-spacer" />
-      <div className="otc-header-actions">
-        <button type="button" className="otc-btn" onClick={onMock}>
-          Mock
-        </button>
-        <button
-          type="button"
-          className="otc-btn otc-btn-primary"
-          onClick={onDraft}
-        >
-          Draft
-        </button>
-      </div>
     </header>
   );
 }

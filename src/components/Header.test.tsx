@@ -9,8 +9,6 @@ function setup(over: Partial<React.ComponentProps<typeof Header>> = {}) {
     onBrandClick: vi.fn(),
     onAbout: vi.fn(),
     onLog: vi.fn(),
-    onMock: vi.fn(),
-    onDraft: vi.fn(),
     ...over,
   };
   render(<Header {...props} />);
@@ -18,25 +16,19 @@ function setup(over: Partial<React.ComponentProps<typeof Header>> = {}) {
 }
 
 describe("Header", () => {
-  it("renders the tagline, links and action buttons", () => {
+  it("renders the tagline and nav links", () => {
     setup();
     expect(screen.getByText("draft day cheat sheet")).toBeTruthy();
     expect(screen.getByRole("button", { name: "About" })).toBeTruthy();
     expect(screen.getByRole("button", { name: "Log" })).toBeTruthy();
-    expect(screen.getByRole("button", { name: "Mock" })).toBeTruthy();
-    expect(screen.getByRole("button", { name: "Draft" })).toBeTruthy();
   });
 
-  it("fires the matching handler for each action", () => {
+  it("fires the matching handler for each nav link", () => {
     const p = setup();
     fireEvent.click(screen.getByRole("button", { name: "About" }));
     fireEvent.click(screen.getByRole("button", { name: "Log" }));
-    fireEvent.click(screen.getByRole("button", { name: "Mock" }));
-    fireEvent.click(screen.getByRole("button", { name: "Draft" }));
     expect(p.onAbout).toHaveBeenCalledTimes(1);
     expect(p.onLog).toHaveBeenCalledTimes(1);
-    expect(p.onMock).toHaveBeenCalledTimes(1);
-    expect(p.onDraft).toHaveBeenCalledTimes(1);
   });
 
   it("fires onBrandClick from the brand button", () => {
