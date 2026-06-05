@@ -50,7 +50,6 @@ interface Props {
   fetching: boolean;
   onRefreshAdp: () => void;
   adpStatus: string | null;
-  onMock: () => void;
   onImport: () => void;
   onExportJson: () => void;
   onExportCsv: () => void;
@@ -152,16 +151,6 @@ export function Toolbar(props: Props) {
       <SettingsMenu>
         {(close) => (
           <>
-            <button
-              className="menu-item"
-              onClick={() => {
-                close();
-                props.onMock();
-              }}
-            >
-              🏈 Mock draft…
-            </button>
-            <div className="menu-sep" />
             <div className="menu-label">Leagues</div>
             {props.leagues.map((lg) => (
               <button

@@ -57,7 +57,6 @@ function renderToolbar(
     fetching: false,
     onRefreshAdp: noop,
     adpStatus: null,
-    onMock: noop,
     onImport: noop,
     onExportJson: noop,
     onExportCsv: noop,
