@@ -25,6 +25,8 @@ interface Props {
   onBackToTiers: () => void;
   filtersActive: boolean;
   onClearFilters: () => void;
+  onUndo: () => void;
+  canUndo: boolean;
   currentLeagueId: string;
   leagues: { id: string; name: string; scoring: Scoring }[];
   onSwitchLeague: (id: string) => void;
@@ -147,6 +149,14 @@ export function Toolbar(props: Props) {
         title="Reset search, position, bye & sort (keeps your league and tier list)"
       >
         Clear filters
+      </button>
+      <button
+        className="undo-btn"
+        onClick={props.onUndo}
+        disabled={!props.canUndo}
+        title="Undo last change (⌘Z / Ctrl+Z)"
+      >
+        ↺ Undo
       </button>
       <SettingsMenu>
         {(close) => (

@@ -88,6 +88,8 @@ export default function App() {
     lastById,
     dispatch,
     refresh,
+    undo,
+    canUndo,
     currentLeague,
     leagues,
     tierLists,
@@ -194,6 +196,25 @@ export default function App() {
     const t = setTimeout(() => setToast(null), 4000);
     return () => clearTimeout(t);
   }, [toast]);
+  // Cmd/Ctrl+Z undoes the last board edit — but only when not typing in a field,
+  // so the browser's native text undo still works inside the rank/notes inputs.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "z" || e.shiftKey || !(e.metaKey || e.ctrlKey)) return;
+      const el = document.activeElement;
+      const tag = el?.tagName;
+      if (
+        tag === "INPUT" ||
+        tag === "TEXTAREA" ||
+        (el as HTMLElement | null)?.isContentEditable
+      )
+        return;
+      e.preventDefault();
+      undo();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [undo]);
   useEffect(() => {
     safeStorage.setItem(HIDE_K_KEY, hideK ? "1" : "0");
   }, [hideK]);
@@ -625,6 +646,8 @@ export default function App() {
             onBackToTiers={onBackToTiers}
             filtersActive={filtersActive}
             onClearFilters={onClearFilters}
+            onUndo={undo}
+            canUndo={canUndo}
             currentLeagueId={currentLeague.id}
             leagues={leagues.map((l) => ({
               id: l.id,

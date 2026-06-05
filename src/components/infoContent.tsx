@@ -47,6 +47,11 @@ export function LogContent() {
         <ul className="otc-changelog">
           <li>
             <span className="otc-log-date">Jun 5, 2026</span>
+            Undo — reverse recent board edits with the Undo button or
+            &#8984;Z&nbsp;/&nbsp;Ctrl+Z.
+          </li>
+          <li>
+            <span className="otc-log-date">Jun 5, 2026</span>
             Editable rank — double-click a player&rsquo;s rank to move them and
             shift everyone else.
           </li>

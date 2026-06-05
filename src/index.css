@@ -90,11 +90,13 @@ body {
   padding: 0.25rem 0.5rem;
 }
 
-.toolbar button.clear-filters {
+.toolbar button.clear-filters,
+.toolbar button.undo-btn {
   cursor: pointer;
   white-space: nowrap;
 }
-.toolbar button.clear-filters:disabled {
+.toolbar button.clear-filters:disabled,
+.toolbar button.undo-btn:disabled {
   opacity: 0.4;
   cursor: default;
 }

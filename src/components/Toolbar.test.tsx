@@ -32,6 +32,8 @@ function renderToolbar(
     onBackToTiers: noop,
     filtersActive: false,
     onClearFilters: noop,
+    onUndo: noop,
+    canUndo: false,
     currentLeagueId: "l1",
     leagues: [{ id: "l1", name: "L", scoring: "ppr" as const }],
     onSwitchLeague: noop,
