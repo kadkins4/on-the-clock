@@ -333,6 +333,8 @@ describe("leaguesReducer — applyAdp", () => {
     const next = leaguesReducer(base, {
       type: "applyAdp",
       ffc: [{ name: "AJ Brown", position: "WR", team: "PHI", adp: 20 }],
+      fantasypros: [],
+      yahoo: [],
     });
     const updated = activeBoard(next.leagues[0])[0];
     expect(updated.adpSources).toEqual({ espn: 10, ffc: 20 });

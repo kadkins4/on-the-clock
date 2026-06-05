@@ -35,7 +35,12 @@ export type Action =
   | { type: "splitTier"; playerId: string }
   | { type: "removeBreak"; breakId: string }
   | { type: "merge"; fetched: FetchedPlayer[] }
-  | { type: "applyAdp"; ffc: NormalizedAdp[] };
+  | {
+      type: "applyAdp";
+      ffc: NormalizedAdp[];
+      fantasypros: NormalizedAdp[];
+      yahoo: NormalizedAdp[];
+    };
 
 export function boardReducer(state: BoardState, action: Action): BoardState {
   const { players, breaks } = state;
@@ -85,7 +90,11 @@ export function boardReducer(state: BoardState, action: Action): BoardState {
       return { players: merged, breaks: breaksFromTiers(merged) };
     }
     case "applyAdp": {
-      const next = applyAdp(players, { ffc: action.ffc });
+      const next = applyAdp(players, {
+        ffc: action.ffc,
+        fantasypros: action.fantasypros,
+        yahoo: action.yahoo,
+      });
       return { players: next, breaks: breaksFromTiers(next) };
     }
     default:

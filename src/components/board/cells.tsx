@@ -38,10 +38,13 @@ function upd(
 
 function adpTitle(p: Player): string | undefined {
   if (!p.adpSources) return undefined;
+  const s = p.adpSources;
   return (
     [
-      p.adpSources.espn != null && `ESPN ${p.adpSources.espn.toFixed(1)}`,
-      p.adpSources.ffc != null && `FFC ${p.adpSources.ffc.toFixed(1)}`,
+      s.espn != null && `ESPN ${s.espn.toFixed(1)}`,
+      s.ffc != null && `FFC ${s.ffc.toFixed(1)}`,
+      s.fantasypros != null && `FP ${s.fantasypros.toFixed(1)}`,
+      s.yahoo != null && `Yahoo ${s.yahoo.toFixed(1)}`,
     ]
       .filter(Boolean)
       .join(" · ") || undefined

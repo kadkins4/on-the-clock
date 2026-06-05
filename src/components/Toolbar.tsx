@@ -338,7 +338,7 @@ export function Toolbar(props: Props) {
                 props.onRefreshAdp();
               }}
             >
-              Refresh ADP (ESPN + FFC)
+              Refresh ADP
             </button>
             {props.adpStatus && (
               <div className="menu-hint">{props.adpStatus}</div>

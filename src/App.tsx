@@ -392,12 +392,14 @@ export default function App() {
   const onRefreshAdp = async () => {
     setAdpStatus("Loading ADP…");
     try {
-      const { players: ffc, meta } = await fetchAdp(
+      const { ffc, fantasypros, yahoo, meta } = await fetchAdp(
         currentLeague.scoring,
         currentLeague.teams,
       );
-      dispatch({ type: "applyAdp", ffc });
-      setAdpStatus(`ADP: ESPN + FFC ${meta.type ?? ""} (${meta.year})`.trim());
+      dispatch({ type: "applyAdp", ffc, fantasypros, yahoo });
+      setAdpStatus(
+        `ADP: ${meta.sources.join(" + ")} ${meta.type ?? ""} (${meta.year})`.trim(),
+      );
     } catch (err) {
       setAdpStatus("ADP refresh failed");
       alert("ADP refresh failed: " + (err as Error).message);
