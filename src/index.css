@@ -1243,12 +1243,14 @@ table.players th.sorted {
 .otc-header {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin: 0 0 0.4rem;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 0 0 0.6rem;
 }
 .otc-brand {
   display: inline-flex;
   align-items: center;
+  gap: 5px;
   padding: 0;
   background: none;
   border: none;
@@ -1285,6 +1287,144 @@ table.players th.sorted {
 .otc-wordmark strong {
   color: var(--otc-accent);
   font-weight: 800;
+}
+
+/* --- Header: tagline, divider, links, actions --- */
+.otc-brand-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.otc-tagline {
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-top: 4px;
+  text-transform: lowercase;
+}
+.otc-header-divider {
+  width: 1px;
+  height: 30px;
+  background: var(--border);
+  margin: 0 4px;
+}
+.otc-header-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.otc-navlink {
+  font: inherit;
+  font-size: 13px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: #ffffff33;
+  padding: 6px 6px;
+  transition: 0.14s ease;
+}
+.otc-navlink:hover {
+  color: var(--text);
+  text-decoration-color: var(--otc-accent);
+}
+.otc-header-spacer {
+  flex: 1;
+}
+.otc-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.otc-btn {
+  font: inherit;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: 0.14s ease;
+}
+.otc-btn:hover {
+  border-color: #3a4150;
+  background: #1c2029;
+}
+.otc-btn-primary {
+  background: var(--otc-accent);
+  border-color: var(--otc-accent);
+  color: #1a0f0a;
+  font-weight: 650;
+}
+.otc-btn-primary:hover {
+  background: #ff7d5f;
+  border-color: #ff7d5f;
+}
+
+/* --- Info modal (About / Log) --- */
+.otc-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: #000a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  padding: 20px;
+}
+.otc-modal {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  max-width: 460px;
+  width: 100%;
+  padding: 18px 22px 20px;
+}
+.otc-modal-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.otc-modal-title {
+  margin: 0;
+  font-size: 17px;
+}
+.otc-modal-x {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 18px;
+  cursor: pointer;
+  line-height: 1;
+}
+.otc-modal-x:hover {
+  color: var(--text);
+}
+.otc-modal-body {
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+.otc-modal-body ul {
+  padding-left: 18px;
+}
+.otc-log {
+  list-style: none;
+  padding-left: 0;
+}
+.otc-log b {
+  color: var(--text);
+}
+.otc-log-next {
+  margin-top: 8px;
+  color: var(--otc-accent);
 }
 
 /* --- Alpha banner --- */
