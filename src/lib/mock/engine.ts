@@ -26,7 +26,9 @@ export function createMock(
   seed: number,
 ): MockState {
   const rounds = rosterSize(league.roster);
-  // a mock drafts from the league's default tier list
+  // a mock drafts from the league's default tier list; the pool is kept
+  // ADP-sorted because the bots pick by ADP (the user-facing list re-sorts
+  // by board order via availableByBoard)
   const pool = defaultBoard(league)
     .filter((pl) => !league.roster.disabled.includes(pl.position))
     .map((pl) => ({ ...pl }))
@@ -54,6 +56,13 @@ export function currentTeamIndex(m: MockState): number {
 
 export function available(m: MockState): Player[] {
   return m.pool.filter((pl) => !m.draftedIds.has(pl.id));
+}
+
+// Undrafted players in the user's board order (overallRank). The pool itself
+// stays ADP-sorted for the bots; this is the user-facing view, where tier
+// groups must come out contiguous.
+export function availableByBoard(m: MockState): Player[] {
+  return available(m).sort((a, b) => a.overallRank - b.overallRank);
 }
 
 // The user's best still-available player by board rank (lowest overallRank).
@@ -103,7 +112,9 @@ export function botPickId(m: MockState): string {
   const recentPositions = m.picks
     .slice(-6)
     .map((pk) => byId.get(pk.playerId)!.position);
-  return botPick(available(m), needs, round, rng, recentPositions);
+  // this team's remaining picks, counting the one on the clock
+  const picksLeft = m.settings.rounds - round + 1;
+  return botPick(available(m), needs, round, rng, recentPositions, picksLeft);
 }
 
 // Swap the player drafted at pick `overall` (1-based). Frees the old player

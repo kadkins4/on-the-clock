@@ -3,6 +3,7 @@ import {
   createMock,
   currentTeamIndex,
   available,
+  availableByBoard,
   draftPlayer,
   botPickId,
   undoLastPick,
@@ -101,6 +102,32 @@ describe("draftPlayer + available", () => {
   });
 });
 
+describe("availableByBoard", () => {
+  it("returns undrafted players in board (overallRank) order, not ADP order", () => {
+    // board order a,b,c,d but ADP order disagrees (pool is sorted by ADP)
+    const divergent = [
+      { ...p("a", "RB", 30), overallRank: 1 },
+      { ...p("b", "WR", 5), overallRank: 2 },
+      { ...p("c", "QB", 40), overallRank: 3 },
+      { ...p("d", "RB", 10), overallRank: 4 },
+    ];
+    let m = createMock(
+      league(divergent),
+      { teams: 2, userSlot: 1, thirdRoundReversal: false },
+      1,
+    );
+    expect(m.pool.map((pl) => pl.id)).toEqual(["b", "d", "a", "c"]); // ADP
+    expect(availableByBoard(m).map((pl) => pl.id)).toEqual([
+      "a",
+      "b",
+      "c",
+      "d",
+    ]);
+    m = draftPlayer(m, "b");
+    expect(availableByBoard(m).map((pl) => pl.id)).toEqual(["a", "c", "d"]);
+  });
+});
+
 describe("replacePick", () => {
   const start = () =>
     createMock(
@@ -168,6 +195,44 @@ describe("botPickId", () => {
     // userSlot 2 → team index 1; team 0 (a bot) is on the clock first
     const id = botPickId(m);
     expect(available(m).some((pl) => pl.id === id)).toBe(true);
+  });
+
+  it("never drafts K/DST early, even at a juicy ADP", () => {
+    const kdstLeague: League = {
+      ...league([
+        p("k1", "K", 1), // best ADP in the pool
+        p("dst1", "DST", 2),
+        p("rb1", "RB", 3),
+        p("wr1", "WR", 4),
+        p("rb2", "RB", 5),
+        p("wr2", "WR", 6),
+        p("qb1", "QB", 7),
+        p("qb2", "QB", 8),
+        p("k2", "K", 9),
+        p("dst2", "DST", 10),
+      ]),
+      roster: {
+        QB: 1,
+        RB: 1,
+        WR: 1,
+        TE: 0,
+        FLEX: 0,
+        SUPERFLEX: 0,
+        K: 1,
+        DST: 1,
+        bench: 0,
+        disabled: ["TE"],
+      },
+    };
+    // 5 rounds; with K+DST open (+1 slack) bots may take them from round 3 on
+    const m = createMock(
+      kdstLeague,
+      { teams: 2, userSlot: 2, thirdRoundReversal: false },
+      7,
+    );
+    const id = botPickId(m); // round 1: 5 picks left > 3
+    const picked = m.pool.find((pl) => pl.id === id)!;
+    expect(["K", "DST"]).not.toContain(picked.position);
   });
 });
 

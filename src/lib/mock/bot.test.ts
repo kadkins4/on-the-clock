@@ -113,6 +113,34 @@ function mk(id: string, position: Player["position"], rank: number): Player {
   };
 }
 
+describe("botPick K/DST gating", () => {
+  // Skill starters all filled: the only open base needs are K and DST.
+  const drafted: Position[] = ["QB", "RB", "RB", "WR", "WR", "TE", "RB"];
+  const avail = [
+    mk("k1", "K", 1),
+    mk("dst1", "DST", 2),
+    mk("rb9", "RB", 3),
+    mk("wr9", "WR", 4),
+  ];
+
+  it("drafts bench skill players, not K/DST, while many picks remain", () => {
+    const needs = openNeeds(drafted, roster());
+    // round 8 of 14: 7 picks left, only K+DST needs open — must still wait
+    for (let seed = 1; seed <= 20; seed++) {
+      const id = botPick(avail, needs, 8, makeRng(seed), [], 7);
+      expect(["rb9", "wr9"]).toContain(id);
+    }
+  });
+
+  it("fills K/DST once remaining picks barely cover the open slots", () => {
+    const needs = openNeeds(drafted, roster());
+    for (let seed = 1; seed <= 20; seed++) {
+      const id = botPick(avail, needs, 13, makeRng(seed), [], 2);
+      expect(["k1", "dst1"]).toContain(id);
+    }
+  });
+});
+
 describe("botPick run-chasing", () => {
   function shareOfWr(recent: Player["position"][]): number {
     const avail = [mk("wr", "WR", 1), mk("rb", "RB", 2)];

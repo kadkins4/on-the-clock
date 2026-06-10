@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { MockState } from "../../lib/mock/types";
 import type { Position } from "../../types";
 import {
-  available,
+  availableByBoard,
   bestAvailableId,
   botPickId,
   currentTeamIndex,
@@ -176,7 +176,7 @@ export function MockDraft({
 
   const avail = useMemo(
     () =>
-      available(state).filter(
+      availableByBoard(state).filter(
         (p) => posFilter === "All" || p.position === posFilter,
       ),
     [state, posFilter],
@@ -446,7 +446,7 @@ export function MockDraft({
                 autoFocus
               />
               <div className="pickmenu-list">
-                {available(state)
+                {availableByBoard(state)
                   .filter((p) =>
                     p.name.toLowerCase().includes(replaceSearch.toLowerCase()),
                   )
