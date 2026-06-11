@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&amp;family=Barlow+Condensed:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #0B0E13; }
+    input::placeholder { color: #5C6470; }
+    @keyframes flapIn { 0% { transform: rotateX(95deg); opacity: 0.15; } 100% { transform: rotateX(0deg); opacity: 1; } }
+    @keyframes pulseDot { 0%, 100% { opacity: 1; } 50% { opacity: 0.15; } }
+    @keyframes splashIn { 0% { transform: scale(0.85) translateY(14px); opacity: 0; } 100% { transform: scale(1) translateY(0); opacity: 1; } }
+    @keyframes marqueeX { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  </style>
+</helmet>
+
+<div style="font-family:'Barlow Condensed',sans-serif; color:#ECEEF1; min-height:100vh; display:flex; flex-direction:column">
+
+  <!-- ============ APP BAR ============ -->
+  <div data-screen-label="App Bar" style="background:#0E1218; border-bottom:1px solid #1C232C; padding:14px 24px 0">
+    <div style="display:flex; align-items:center; gap:24px; flex-wrap:wrap">
+      <div style="flex:0 0 auto">
+        <div style="font-family:'Archivo',sans-serif; font-weight:800; font-size:19px; color:#ECEEF1">On The <span style="color:#FB5A2D">Clock</span>.</div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:2px; color:#5C6470; margin-top:1px">DRAFT ROOM · UNIFIED PROTOTYPE</div>
+      </div>
+      <div style="flex:1; display:flex; justify-content:center; min-width:240px">
+        <div style="display:flex; align-items:center; gap:11px; background:#12161D; border:1px solid {{ clockChipBorder }}; border-radius:999px; padding:7px 18px 7px 9px">
+          <span style="width:30px; height:30px; border-radius:50%; background:{{ clockAv }}; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:11px; color:#FFFFFF; flex:0 0 auto">{{ clockInit }}</span>
+          <div>
+            <div style="font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:2px; color:#2FC76D; font-weight:700">● ON THE CLOCK</div>
+            <div style="font-family:'Archivo',sans-serif; font-weight:700; font-size:14px; line-height:1.2">{{ clockTeam }} <span style="font-family:'IBM Plex Mono',monospace; font-weight:400; font-size:11px; color:#707A87">· {{ clockPick }}</span></div>
+          </div>
+        </div>
+      </div>
+      <div style="flex:0 0 auto; text-align:right">
+        <div style="font-family:'Archivo',sans-serif; font-weight:800; font-size:30px; line-height:1; letter-spacing:-1px">{{ timer }}</div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:9.5px; color:#707A87; margin-top:3px">{{ statusLine }}</div>
+      </div>
+    </div>
+
+    <!-- tabs + sim controls -->
+    <div style="display:flex; align-items:center; gap:6px; margin-top:12px; flex-wrap:wrap">
+      <sc-for list="{{ tabBtns }}" as="tb" hint-placeholder-count="4">
+        <button onClick="{{ tb.onClick }}" style="background:transparent; border:none; border-bottom:3px solid {{ tb.under }}; color:{{ tb.color }}; padding:9px 16px 11px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:15px; letter-spacing:1.5px; cursor:pointer">{{ tb.label }}</button>
+      </sc-for>
+      <div style="margin-left:auto; display:flex; align-items:center; gap:8px; flex-wrap:wrap; padding-bottom:8px">
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:2px; color:#FB5A2D">SIM</span>
+        <div style="display:flex; align-items:center; gap:2px; border:1px solid #2A323D; background:#161B23; border-radius:7px; padding:2px 4px">
+          <button onClick="{{ decTeams }}" style="background:transparent; border:none; color:#ECEEF1; font-size:15px; font-weight:700; cursor:pointer; padding:2px 7px; font-family:'Barlow Condensed',sans-serif">−</button>
+          <span style="font-weight:700; font-size:13px; letter-spacing:0.5px; min-width:58px; text-align:center">{{ teamCount }} TEAMS</span>
+          <button onClick="{{ incTeams }}" style="background:transparent; border:none; color:#ECEEF1; font-size:15px; font-weight:700; cursor:pointer; padding:2px 7px; font-family:'Barlow Condensed',sans-serif">+</button>
+        </div>
+        <div style="display:flex; border:1px solid #2A323D; background:#161B23; border-radius:7px; overflow:hidden">
+          <sc-for list="{{ fmtBtns }}" as="b" hint-placeholder-count="3">
+            <button onClick="{{ b.onClick }}" style="background:{{ b.bg }}; color:{{ b.color }}; border:none; padding:6px 11px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:12px; letter-spacing:1px; cursor:pointer">{{ b.label }}</button>
+          </sc-for>
+        </div>
+        <button onClick="{{ undo }}" style="background:#161B23; border:1px solid #2A323D; border-radius:7px; color:#ECEEF1; padding:6px 11px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:12px; letter-spacing:1px; cursor:pointer">⟲ UNDO</button>
+        <button onClick="{{ advance }}" style="background:#FB5A2D; border:1px solid #FB5A2D; border-radius:7px; color:#FFFFFF; padding:6px 13px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:12px; letter-spacing:1px; cursor:pointer">SIM PICK ▸</button>
+        <button onClick="{{ toggleAuto }}" style="background:{{ autoBg }}; border:1px solid #2A323D; border-radius:7px; color:#ECEEF1; padding:6px 11px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:12px; letter-spacing:1px; cursor:pointer">{{ autoLabel }}</button>
+        <button onClick="{{ resetDraft }}" style="background:transparent; border:1px solid #222933; border-radius:7px; color:#707A87; padding:6px 11px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:12px; letter-spacing:1px; cursor:pointer">RESET</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ CONTENT ============ -->
+  <div style="flex:1; max-width:1560px; width:100%; margin:0 auto; padding:18px 24px 24px; box-sizing:border-box">
+
+    <!-- ======== PLAYERS TAB ======== -->
+    <sc-if value="{{ tabPlayers }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="Players Tab">
+        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:12px">
+          <input value="{{ pSearch }}" onChange="{{ onPSearch }}" placeholder="Search players…" style="background:#161B23; border:1px solid #2A323D; border-radius:8px; color:#ECEEF1; padding:9px 14px; font-family:'Barlow Condensed',sans-serif; font-size:15px; width:240px; outline:none">
+          <div style="display:flex; gap:5px">
+            <sc-for list="{{ pChips }}" as="ch" hint-placeholder-count="7">
+              <button onClick="{{ ch.onClick }}" style="background:{{ ch.bg }}; color:{{ ch.color }}; border:1px solid {{ ch.border }}; border-radius:999px; padding:5px 13px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:12px; letter-spacing:1px; cursor:pointer">{{ ch.label }}</button>
+            </sc-for>
+          </div>
+          <button onClick="{{ toggleHide }}" style="background:{{ hideBg }}; color:{{ hideColor }}; border:1px solid #2A323D; border-radius:7px; padding:6px 12px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:12px; letter-spacing:1px; cursor:pointer">{{ hideLabel }}</button>
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:10px; color:#5C6470; margin-left:auto">★ adds to your queue · tap a name for the card</span>
+        </div>
+        <div style="background:#12161D; border:1px solid #222933; border-radius:12px; overflow:hidden">
+          <div style="display:grid; grid-template-columns:44px 36px minmax(170px,1.5fr) 64px 60px 60px 64px 52px 170px; gap:8px; padding:9px 14px; border-bottom:1px solid #222933; font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:1.5px; color:#5C6470">
+            <span>#</span><span>★</span><span>PLAYER</span><span>POS</span><span>TEAM</span><span>ADP</span><span>PROJ</span><span>BYE</span><span>STATUS</span>
+          </div>
+          <sc-for list="{{ pTiers }}" as="tier" hint-placeholder-count="3">
+            <div>
+              <div style="display:flex; align-items:center; gap:10px; padding:8px 14px; background:#0E1218; border-bottom:1px solid #1C232C">
+                <span style="width:3px; height:14px; background:#FB5A2D; border-radius:2px"></span>
+                <span style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:2px; color:#9AA3AE; font-weight:700">{{ tier.label }}</span>
+              </div>
+              <sc-for list="{{ tier.rows }}" as="row" hint-placeholder-count="6">
+                <div style="display:grid; grid-template-columns:44px 36px minmax(170px,1.5fr) 64px 60px 60px 64px 52px 170px; gap:8px; padding:8px 14px; border-bottom:1px solid #161B23; align-items:center; opacity:{{ row.opacity }}">
+                  <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#707A87">{{ row.rank }}</span>
+                  <button onClick="{{ row.onStar }}" style="background:transparent; border:none; color:{{ row.starColor }}; font-size:15px; cursor:pointer; padding:0; text-align:left">{{ row.star }}</button>
+                  <span onClick="{{ row.onOpen }}" style="font-weight:600; font-size:15px; cursor:pointer; color:#ECEEF1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ row.name }}</span>
+                  <span style="font-weight:700; font-size:13px; letter-spacing:0.5px; color:{{ row.posColor }}">{{ row.posLabel }}</span>
+                  <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#9AA3AE">{{ row.team }}</span>
+                  <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#9AA3AE">{{ row.adp }}</span>
+                  <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#9AA3AE">{{ row.proj }}</span>
+                  <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#707A87">{{ row.bye }}</span>
+                  <span style="display:flex; align-items:center; gap:8px">
+                    <span style="font-family:'IBM Plex Mono',monospace; font-size:10px; color:#707A87">{{ row.draftedLabel }}</span>
+                    <sc-if value="{{ row.available }}" hint-placeholder-val="{{ false }}">
+                      <button onClick="{{ row.onDraft }}" style="background:#FB5A2D; color:#FFFFFF; border:none; border-radius:5px; padding:4px 11px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:11px; letter-spacing:1.5px; cursor:pointer">DRAFT</button>
+                    </sc-if>
+                  </span>
+                </div>
+              </sc-for>
+            </div>
+          </sc-for>
+          <div style="padding:10px 14px; font-family:'IBM Plex Mono',monospace; font-size:10px; color:#5C6470; text-align:center">{{ pMoreLabel }}</div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ======== DRAFT TAB (the Desk) ======== -->
+    <sc-if value="{{ tabDraft }}" hint-placeholder-val="{{ true }}">
+      <div data-screen-label="Draft Tab — Desk" style="display:grid; grid-template-columns:280px minmax(0,1fr) 290px; gap:14px; align-items:start">
+
+        <!-- left: clock + queue + roster -->
+        <div style="display:flex; flex-direction:column; gap:14px">
+          <div style="background:#161B23; border:1px solid {{ clockPanelBorder }}; border-radius:12px; padding:18px; display:flex; flex-direction:column; gap:5px">
+            <span style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:2.5px; color:#2FC76D">● ON THE CLOCK</span>
+            <span style="font-family:'Archivo',sans-serif; font-weight:800; font-size:21px; line-height:1.2">{{ clockTeam }}</span>
+            <span style="font-family:'IBM Plex Mono',monospace; font-size:10px; color:#707A87">{{ statusLine }}</span>
+            <div style="font-family:'Archivo',sans-serif; font-weight:800; font-size:46px; margin:6px 0 0; line-height:1; letter-spacing:-1px">{{ timer }}</div>
+            <span style="font-family:'IBM Plex Mono',monospace; font-size:10px; color:#707A87; margin-top:8px">{{ nextUp }}</span>
+            <span style="font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:11px; letter-spacing:1.5px; color:#D9A53F; margin-top:4px">{{ youBanner }}</span>
+          </div>
+
+          <div style="background:#12161D; border:1px solid #222933; border-radius:12px; padding:14px">
+            <div style="display:flex; justify-content:space-between; align-items:baseline">
+              <span style="font-family:'Archivo',sans-serif; font-weight:700; font-size:13px">MY QUEUE</span>
+              <span style="font-family:'IBM Plex Mono',monospace; font-size:9px; color:#5C6470">★ from any list</span>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:5px; margin-top:9px">
+              <sc-for list="{{ myQueue }}" as="mq" hint-placeholder-count="3">
+                <div style="display:flex; align-items:center; gap:7px; background:#1A2029; border:1px solid #242C37; border-left:3px solid {{ mq.posColor }}; border-radius:6px; padding:6px 8px">
+                  <span style="flex:1; min-width:0; font-weight:600; font-size:13.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ mq.name }}</span>
+                  <span style="font-family:'IBM Plex Mono',monospace; font-size:9px; color:#707A87; flex:0 0 auto">{{ mq.sub }}</span>
+                  <button onClick="{{ mq.onDraft }}" style="background:#FB5A2D; color:#FFFFFF; border:none; border-radius:4px; padding:3px 8px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:10px; letter-spacing:1px; cursor:pointer; flex:0 0 auto">DRAFT</button>
+                  <button onClick="{{ mq.onRemove }}" style="background:transparent; border:none; color:#5C6470; font-size:13px; cursor:pointer; padding:0 2px; flex:0 0 auto">✕</button>
+                </div>
+              </sc-for>
+              <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; color:#3E4650; text-align:center; padding:4px">{{ queueEmptyLabel }}</div>
+            </div>
+          </div>
+
+          <div style="background:#12161D; border:1px solid #222933; border-radius:12px; padding:14px">
+            <div style="display:flex; justify-content:space-between; align-items:baseline">
+              <span style="font-family:'Archivo',sans-serif; font-weight:700; font-size:13px">MY ROSTER</span>
+              <span style="font-family:'IBM Plex Mono',monospace; font-size:9px; color:#D9A53F">{{ myNeeds }}</span>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:5px; margin-top:9px">
+              <sc-for list="{{ myRoster }}" as="pk" hint-placeholder-count="2">
+                <div onClick="{{ pk.onClick }}" style="display:flex; align-items:center; gap:8px; background:{{ pk.tint }}; border-left:3px solid {{ pk.posColor }}; border-radius:6px; padding:6px 8px; cursor:pointer">
+                  <span style="width:30px; text-align:center; background:{{ pk.posColor }}; color:{{ pk.posText }}; border-radius:3px; font-weight:700; font-size:9px; letter-spacing:1px; padding:2px 0; flex:0 0 auto">{{ pk.pos }}</span>
+                  <span style="flex:1; min-width:0; font-weight:600; font-size:13.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ pk.name }}</span>
+                  <span style="font-family:'IBM Plex Mono',monospace; font-size:9px; color:{{ pk.subc }}; flex:0 0 auto">{{ pk.meta }}</span>
+                </div>
+              </sc-for>
+              <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; color:#3E4650; text-align:center; padding:4px">{{ myEmptyLabel }}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- middle: best available -->
+        <div style="background:#12161D; border:1px solid #222933; border-radius:12px; padding:16px; min-width:0">
+          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap">
+            <span style="font-family:'Archivo',sans-serif; font-weight:700; font-size:15px">BEST AVAILABLE</span>
+            <input value="{{ search }}" onChange="{{ onSearch }}" placeholder="Search players…" style="background:#1A2029; border:1px solid #2A323D; border-radius:8px; color:#ECEEF1; padding:8px 13px; font-family:'Barlow Condensed',sans-serif; font-size:14px; flex:1; min-width:150px; outline:none">
+            <div style="display:flex; gap:5px">
+              <sc-for list="{{ chips }}" as="ch" hint-placeholder-count="5">
+                <button onClick="{{ ch.onClick }}" style="background:{{ ch.bg }}; color:{{ ch.color }}; border:1px solid {{ ch.border }}; border-radius:999px; padding:4px 12px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:12px; letter-spacing:1px; cursor:pointer">{{ ch.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:6px; margin-top:12px">
+            <sc-for list="{{ queue }}" as="q" hint-placeholder-count="8">
+              <div style="display:flex; align-items:center; gap:9px; background:#1A2029; border:1px solid #242C37; border-radius:7px; padding:8px 10px">
+                <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#707A87; width:24px; text-align:right; flex:0 0 auto">{{ q.rank }}</span>
+                <button onClick="{{ q.onStar }}" style="background:transparent; border:none; color:{{ q.starColor }}; font-size:15px; cursor:pointer; padding:0; flex:0 0 auto">{{ q.star }}</button>
+                <span style="width:34px; text-align:center; background:{{ q.posColor }}; color:{{ q.posText }}; border-radius:3px; font-weight:700; font-size:10px; letter-spacing:1px; padding:3px 0; flex:0 0 auto">{{ q.pos }}</span>
+                <span onClick="{{ q.onOpen }}" style="flex:1; min-width:0; font-weight:600; font-size:15px; cursor:pointer; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ q.name }}</span>
+                <span style="font-family:'IBM Plex Mono',monospace; font-size:10px; color:#707A87; flex:0 0 auto">{{ q.sub }}</span>
+                <span style="font-family:'IBM Plex Mono',monospace; font-size:10px; color:#9AA3AE; flex:0 0 auto">{{ q.adp }}</span>
+                <span style="font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:10px; color:#D9A53F; flex:0 0 auto">{{ q.price }}</span>
+                <button onClick="{{ q.onDraft }}" style="background:#FB5A2D; color:#FFFFFF; border:none; border-radius:5px; padding:5px 12px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:11px; letter-spacing:1.5px; cursor:pointer; flex:0 0 auto">DRAFT</button>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <!-- right: round strip -->
+        <div style="background:#12161D; border:1px solid #222933; border-radius:12px; padding:14px">
+          <div style="display:flex; justify-content:space-between; align-items:baseline">
+            <span style="font-family:'Archivo',sans-serif; font-weight:700; font-size:13px">ROUND {{ curRound }}</span>
+            <span style="font-family:'IBM Plex Mono',monospace; font-size:9px; color:#5C6470">tap for card</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:4px; margin-top:9px">
+            <sc-for list="{{ roundStrip }}" as="rp" hint-placeholder-count="10">
+              <div onClick="{{ rp.onClick }}" style="display:flex; align-items:center; gap:7px; background:{{ rp.bg }}; border-left:3px solid {{ rp.bar }}; border-radius:5px; padding:5px 8px; cursor:{{ rp.cursor }}; outline:{{ rp.outline }}; outline-offset:-1px">
+                <span style="font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:9.5px; width:30px; flex:0 0 auto; color:#707A87">{{ rp.pickShort }}</span>
+                <span style="font-weight:700; font-size:10.5px; letter-spacing:0.5px; width:26px; flex:0 0 auto; color:#9AA3AE">{{ rp.abbr }}</span>
+                <span style="flex:1; min-width:0; font-weight:600; font-size:12.5px; color:{{ rp.nameColor }}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ rp.name }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ======== BOARD TAB ======== -->
+    <sc-if value="{{ tabBoard }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="Board Tab">
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px">
+          <sc-for list="{{ boardBtns }}" as="bb" hint-placeholder-count="2">
+            <button onClick="{{ bb.onClick }}" style="background:{{ bb.bg }}; color:{{ bb.color }}; border:1px solid {{ bb.border }}; border-radius:8px; padding:7px 16px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:13px; letter-spacing:1.5px; cursor:pointer">{{ bb.label }}</button>
+          </sc-for>
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:10px; color:#5C6470; margin-left:8px">two takes on the board — pick one to keep, or keep the toggle</span>
+        </div>
+
+        <!-- wall -->
+        <sc-if value="{{ boardWall }}" hint-placeholder-val="{{ true }}">
+          <div style="background:#0E1218; border-radius:12px; padding:14px; border:1px solid #1C232C">
+            <div style="display:grid; grid-template-columns:44px repeat({{ teamCount }}, minmax(0,1fr)); gap:4px; margin-bottom:6px">
+              <div></div>
+              <sc-for list="{{ teams }}" as="team" hint-placeholder-count="10">
+                <div style="display:flex; flex-direction:column; align-items:center; gap:3px; padding:7px 2px; background:rgba(255,255,255,0.03); border-radius:6px; min-width:0; outline:{{ team.headOutline }}; outline-offset:-1px">
+                  <span style="width:22px; height:22px; border-radius:50%; background:{{ team.av }}; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:9px; color:#FFFFFF; letter-spacing:0.5px">{{ team.init }}</span>
+                  <span style="font-weight:700; font-size:11.5px; letter-spacing:0.5px; color:#ECEEF1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%">{{ team.name }}</span>
+                  <span style="font-family:'IBM Plex Mono',monospace; font-size:8.5px; color:#5C6470">{{ team.slotLabel }} {{ team.budgetLabel }}</span>
+                </div>
+              </sc-for>
+            </div>
+            <sc-for list="{{ board }}" as="round" hint-placeholder-count="4">
+              <div style="display:grid; grid-template-columns:44px repeat({{ teamCount }}, minmax(0,1fr)); gap:4px; margin-bottom:4px">
+                <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; color:#5C6470">
+                  <span style="font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:12px">{{ round.n }}</span>
+                  <span style="font-size:12px; color:#D9A53F; line-height:1">{{ round.dir }}</span>
+                </div>
+                <sc-for list="{{ round.cells }}" as="cell" hint-placeholder-count="10">
+                  <div onClick="{{ cell.onClick }}" style="position:relative; min-height:48px; border-radius:6px; padding:5px 7px 4px; border-left:4px solid {{ cell.bar }}; background:{{ cell.bg }}; outline:{{ cell.outline }}; outline-offset:-1px; cursor:{{ cell.cursor }}; overflow:hidden; min-width:0">
+                    <div style="display:flex; justify-content:space-between; align-items:baseline; gap:4px">
+                      <span style="font-weight:600; font-size:12.5px; line-height:1.05; color:{{ cell.nameColor }}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ cell.name }}</span>
+                      <span style="font-family:'IBM Plex Mono',monospace; font-size:8.5px; color:{{ cell.metaColor }}; flex:0 0 auto">{{ cell.meta }}</span>
+                    </div>
+                    <div style="font-family:'IBM Plex Mono',monospace; font-size:9.5px; color:{{ cell.subColor }}; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ cell.sub }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <!-- locker room -->
+        <sc-if value="{{ boardLocker }}" hint-placeholder-val="{{ false }}">
+          <div style="background:#0E1218; border:1px solid #1C232C; border-radius:12px; padding:16px; overflow-x:auto">
+            <div style="display:grid; grid-template-columns:repeat({{ teamCount }}, minmax(102px, 1fr)); gap:10px">
+              <sc-for list="{{ teams }}" as="team" hint-placeholder-count="10">
+                <div style="min-width:0; display:flex; flex-direction:column">
+                  <div style="background:#161B23; border:1px solid #242C37; border-radius:8px; padding:10px 4px; text-align:center; display:flex; flex-direction:column; align-items:center; gap:4px; outline:{{ team.headOutline }}; outline-offset:-1px">
+                    <span style="width:26px; height:26px; border-radius:50%; background:{{ team.av }}; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:10px; color:#FFFFFF">{{ team.init }}</span>
+                    <div style="font-weight:700; font-size:12.5px; letter-spacing:0.3px; color:#ECEEF1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%">{{ team.name }}</div>
+                    <div style="font-family:'IBM Plex Mono',monospace; font-size:9px; color:#5C6470">{{ team.slotLabel }}</div>
+                    <div style="font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:11px; color:#D9A53F">{{ team.budgetLabel }}</div>
+                  </div>
+                  <div style="display:flex; flex-direction:column; gap:4px; margin-top:8px">
+                    <sc-for list="{{ team.picks }}" as="pk" hint-placeholder-count="2">
+                      <div onClick="{{ pk.onClick }}" style="background:{{ pk.tint }}; border-left:3px solid {{ pk.posColor }}; border-radius:4px; padding:5px 6px; cursor:pointer">
+                        <div style="font-weight:600; font-size:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#ECEEF1">{{ pk.name }}</div>
+                        <div style="display:flex; justify-content:space-between; font-family:'IBM Plex Mono',monospace; font-size:9px; color:{{ pk.subc }}; margin-top:1px"><span>{{ pk.pos }}</span><span>{{ pk.meta }}</span></div>
+                      </div>
+                    </sc-for>
+                    <div style="font-family:'IBM Plex Mono',monospace; font-size:9px; color:#3E4650; text-align:center; padding:2px">{{ team.emptyLabel }}</div>
+                  </div>
+                  <div style="font-family:'IBM Plex Mono',monospace; font-size:8.5px; color:#5C6470; text-align:center; border-top:1px dashed #242C37; margin-top:4px; padding-top:5px; white-space:nowrap; overflow:hidden">{{ team.needs }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <!-- ======== TV MODE TAB ======== -->
+    <sc-if value="{{ tabTv }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="TV Mode">
+        <div style="background:#07090C; border:1px solid #1C232C; border-radius:16px; padding:34px 38px 0; overflow:hidden; box-shadow:inset 0 0 80px rgba(0,0,0,0.6)">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:24px; flex-wrap:wrap">
+            <div>
+              <div style="display:flex; align-items:center; gap:10px">
+                <span style="width:9px; height:9px; border-radius:50%; background:#2FC76D; animation:pulseDot 1.4s infinite"></span>
+                <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:3px; color:#2FC76D">LIVE · ON THE CLOCK</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:14px; margin-top:10px">
+                <span style="width:44px; height:44px; border-radius:50%; background:{{ clockAv }}; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:16px; color:#FFFFFF">{{ clockInit }}</span>
+                <span style="font-family:'Archivo',sans-serif; font-weight:800; font-size:38px; letter-spacing:-1px; line-height:1">{{ clockTeam }}</span>
+              </div>
+            </div>
+            <div style="text-align:center">
+              <div style="font-family:'Archivo',sans-serif; font-weight:800; font-size:21px; letter-spacing:2px; color:#ECEEF1">THE BIG BOARD<span style="color:#FB5A2D">.</span></div>
+              <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:2px; color:#707A87; margin-top:4px">ROUND {{ curRound }} OF 15 · {{ statusLine }}</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-family:'Archivo',sans-serif; font-weight:800; font-size:56px; line-height:1; letter-spacing:-2px">{{ timer }}</div>
+              <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:2px; color:#707A87; margin-top:4px">{{ nextUp }}</div>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:minmax(0,1.6fr) minmax(280px,1fr); gap:30px; margin-top:28px; align-items:start">
+            <div style="display:flex; flex-direction:column; gap:7px">
+              <sc-for list="{{ flipRows }}" as="row" hint-placeholder-count="10">
+                <div style="display:flex; align-items:center; gap:10px; padding:6px 10px; border-radius:6px; outline:{{ row.rowOutline }}">
+                  <span style="font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:13px; color:#707A87; width:44px; flex:0 0 auto">{{ row.pickShort }}</span>
+                  <span style="font-weight:700; font-size:14px; letter-spacing:1px; color:#9AA3AE; width:44px; flex:0 0 auto">{{ row.abbr }}</span>
+                  <div style="display:flex; gap:4px; flex:0 0 auto">
+                    <sc-for list="{{ row.tiles }}" as="tile" hint-placeholder-count="12">
+                      <span style="width:28px; height:38px; border-radius:4px; background:linear-gradient(#232A33, #181E26 48%, #10151B 52%, #1C222B); display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:19px; color:#ECEEF1; box-shadow:0 2px 0 rgba(0,0,0,0.7); animation:{{ tile.anim }}">{{ tile.ch }}</span>
+                    </sc-for>
+                  </div>
+                  <span style="width:46px; text-align:center; background:{{ row.posColor }}; color:{{ row.posText }}; border-radius:4px; font-weight:700; font-size:12px; letter-spacing:1px; padding:5px 0; flex:0 0 auto">{{ row.pos }}</span>
+                  <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:2px; color:#D9A53F; animation:pulseDot 1.4s infinite">{{ row.clock }}</span>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:14px">
+              {{ tvSplash }}
+              <div style="background:#0E1218; border:1px solid #1C232C; border-radius:12px; padding:16px">
+                <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:2px; color:#707A87; margin-bottom:10px">UP NEXT</div>
+                <div style="display:flex; flex-direction:column; gap:7px">
+                  <sc-for list="{{ tvUpNext }}" as="un" hint-placeholder-count="3">
+                    <div style="display:flex; align-items:center; gap:10px">
+                      <span style="width:26px; height:26px; border-radius:50%; background:{{ un.av }}; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:9px; color:#FFFFFF; flex:0 0 auto">{{ un.init }}</span>
+                      <span style="font-weight:600; font-size:15px; flex:1">{{ un.name }}</span>
+                      <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#707A87">{{ un.pickShort }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin:26px -38px 0; background:#0B0E13; border-top:1px solid #1C232C; padding:11px 0; overflow:hidden">
+            {{ tvTicker }}
+          </div>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; color:#5C6470; text-align:center; margin-top:10px">CAST VIEW — mirrors the draft for the room on a TV; never controls or affects anyone's phone or laptop</div>
+      </div>
+    </sc-if>
+  </div>
+
+  <!-- ============ BOTTOM PICK STRIP ============ -->
+  <div data-screen-label="Pick Strip" style="position:sticky; bottom:0; background:#0E1218; border-top:1px solid #1C232C; padding:10px 16px; overflow-x:auto">
+    <div style="display:flex; gap:7px; width:max-content">
+      <sc-for list="{{ pickStrip }}" as="ps" hint-placeholder-count="14">
+        <div onClick="{{ ps.onClick }}" style="width:118px; flex:0 0 auto; background:{{ ps.bg }}; border:1px solid {{ ps.border }}; border-radius:7px; padding:7px 9px; cursor:{{ ps.cursor }}">
+          <div style="display:flex; justify-content:space-between; font-family:'IBM Plex Mono',monospace; font-size:9px; color:#707A87"><span style="font-weight:700; color:{{ ps.pickColor }}">{{ ps.pickShort }}</span><span>{{ ps.tag }}</span></div>
+          <div style="font-weight:600; font-size:12.5px; color:{{ ps.nameColor }}; margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ ps.label }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============ PLAYER CARD OVERLAY ============ -->
+<sc-if value="{{ hasSelected }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed; inset:0; z-index:200; background:rgba(4,6,9,0.72); display:flex; align-items:center; justify-content:center; padding:20px">
+    <div style="width:320px; background:#161B23; border:1px solid #2A323D; border-radius:14px; padding:11px; box-shadow:0 30px 70px rgba(0,0,0,0.7); font-family:'Barlow Condensed',sans-serif; color:#ECEEF1">
+      <div style="border:3px solid {{ sel.posColor }}; border-radius:9px; background:#11151C; padding:14px; display:flex; flex-direction:column; gap:10px">
+        <div style="display:flex; justify-content:space-between; align-items:center">
+          <span style="background:{{ sel.posColor }}; color:{{ sel.posText }}; font-weight:700; font-size:12px; letter-spacing:2px; padding:3px 10px; border-radius:3px">{{ sel.pos }}</span>
+          <button onClick="{{ closeCard }}" style="background:transparent; border:1px solid #39424F; border-radius:5px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:11px; letter-spacing:1px; padding:3px 9px; cursor:pointer; color:#9AA3AE">✕ CLOSE</button>
+        </div>
+        <div style="font-family:'Archivo',sans-serif; font-weight:800; font-size:19px; line-height:1.15; background:#0B0E13; color:#ECEEF1; padding:10px 12px; border-radius:5px">{{ sel.name }}</div>
+        <div style="font-weight:600; font-size:14px; letter-spacing:0.5px; color:#B6BEC9">{{ sel.sub }}</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; border-top:1px dashed #2A323D; padding-top:10px; text-align:center; font-family:'IBM Plex Mono',monospace">
+          <div><div style="font-size:9px; letter-spacing:2px; color:#707A87">ADP</div><div style="font-weight:700; font-size:16px">{{ sel.adp }}</div></div>
+          <div><div style="font-size:9px; letter-spacing:2px; color:#707A87">PROJ</div><div style="font-weight:700; font-size:16px">{{ sel.proj }}</div></div>
+          <div><div style="font-size:9px; letter-spacing:2px; color:#707A87">VALUE</div><div style="font-weight:700; font-size:16px; color:#D9A53F">{{ sel.price }}</div></div>
+        </div>
+        <div style="background:{{ sel.tint }}; border-radius:5px; padding:7px 10px; font-family:'IBM Plex Mono',monospace; font-size:11px; text-align:center; color:{{ sel.statusColor }}">{{ sel.status }}</div>
+      </div>
+    </div>
+  </div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    teamCount: 12,
+    format: 'snake',
+    drafted: Array.from({ length: 27 }, (_, i) => i),
+    selected: null,
+    tab: 'draft',
+    boardView: 'wall',
+    queueFilter: 'ALL',
+    search: '',
+    pSearch: '',
+    pPos: 'ALL',
+    hideDrafted: false,
+    queueIds: [],
+    auto: false
+  };
+
+  POSC = {
+    QB:  { c: 'oklch(0.62 0.14 30)',  tint: 'oklch(0.26 0.04 30)',  subc: 'oklch(0.72 0.06 30)',  text: '#FFFFFF' },
+    RB:  { c: 'oklch(0.62 0.14 150)', tint: 'oklch(0.26 0.04 150)', subc: 'oklch(0.72 0.06 150)', text: '#FFFFFF' },
+    WR:  { c: 'oklch(0.62 0.14 250)', tint: 'oklch(0.26 0.04 250)', subc: 'oklch(0.72 0.06 250)', text: '#FFFFFF' },
+    TE:  { c: 'oklch(0.66 0.13 75)',  tint: 'oklch(0.27 0.05 75)',  subc: 'oklch(0.74 0.07 75)',  text: '#1A1407' },
+    K:   { c: 'oklch(0.62 0.14 310)', tint: 'oklch(0.26 0.04 310)', subc: 'oklch(0.72 0.06 310)', text: '#FFFFFF' },
+    DST: { c: 'oklch(0.62 0.14 200)', tint: 'oklch(0.26 0.04 200)', subc: 'oklch(0.72 0.06 200)', text: '#FFFFFF' }
+  };
+
+  AV = ['#D9A53F', 'oklch(0.6 0.17 300)', 'oklch(0.6 0.17 195)', 'oklch(0.6 0.17 150)', 'oklch(0.62 0.16 45)', 'oklch(0.6 0.17 250)', 'oklch(0.6 0.17 330)', 'oklch(0.6 0.17 20)', 'oklch(0.6 0.17 120)', 'oklch(0.6 0.17 270)', 'oklch(0.62 0.15 90)', 'oklch(0.6 0.17 210)', 'oklch(0.6 0.17 0)', 'oklch(0.6 0.17 170)'];
+
+  TEAMS14 = [
+    ['Your Team', 'YT'], ['Nabers Hood', 'NH'], ['Caleb Me Maybe', 'CM'],
+    ['London Calling', 'LC'], ['Chase the Bag', 'CB'], ['Kelce Grammer', 'KG'],
+    ['Puka Matata', 'PM'], ['CMC Hammer', 'CH'], ['Bijan Mustard', 'BM'],
+    ['Amon a Mission', 'AM'], ['Lamb Chops', 'LP'], ['Gibbs Me More', 'GM'],
+    ['Dak to the Future', 'DF'], ['Saquon of a Beach', 'SB']
+  ];
+
+  PLAYERS() {
+    if (this._players) return this._players;
+    const top = [
+      ["Ja'Marr Chase", 'WR', 'CIN', 10], ['Bijan Robinson', 'RB', 'ATL', 5], ['Justin Jefferson', 'WR', 'MIN', 6],
+      ['Jahmyr Gibbs', 'RB', 'DET', 8], ['Saquon Barkley', 'RB', 'PHI', 9], ['CeeDee Lamb', 'WR', 'DAL', 7],
+      ['Puka Nacua', 'WR', 'LAR', 8], ['Malik Nabers', 'WR', 'NYG', 14], ['Amon-Ra St. Brown', 'WR', 'DET', 8],
+      ['Christian McCaffrey', 'RB', 'SF', 14], ['Derrick Henry', 'RB', 'BAL', 7], ['Brian Thomas Jr.', 'WR', 'JAX', 8],
+      ['Drake London', 'WR', 'ATL', 5], ['Nico Collins', 'WR', 'HOU', 6], ['Ashton Jeanty', 'RB', 'LV', 8],
+      ['Brock Bowers', 'TE', 'LV', 8], ["De'Von Achane", 'RB', 'MIA', 12], ['Josh Jacobs', 'RB', 'GB', 5],
+      ['A.J. Brown', 'WR', 'PHI', 9], ['Jonathan Taylor', 'RB', 'IND', 11], ['Trey McBride', 'TE', 'ARI', 8],
+      ['Ladd McConkey', 'WR', 'LAC', 5], ['Bucky Irving', 'RB', 'TB', 9], ['Tyreek Hill', 'WR', 'MIA', 12],
+      ['Josh Allen', 'QB', 'BUF', 7], ['Lamar Jackson', 'QB', 'BAL', 7], ['Kyren Williams', 'RB', 'LAR', 8],
+      ['Garrett Wilson', 'WR', 'NYJ', 9], ['Tee Higgins', 'WR', 'CIN', 10], ['Jaxon Smith-Njigba', 'WR', 'SEA', 8],
+      ['Davante Adams', 'WR', 'LAR', 8], ['Terry McLaurin', 'WR', 'WAS', 12], ['James Cook', 'RB', 'BUF', 7],
+      ['Jayden Daniels', 'QB', 'WAS', 12], ['Chase Brown', 'RB', 'CIN', 10], ['Kenneth Walker III', 'RB', 'SEA', 8],
+      ['DK Metcalf', 'WR', 'PIT', 5], ['George Kittle', 'TE', 'SF', 14], ['Mike Evans', 'WR', 'TB', 9],
+      ['Marvin Harrison Jr.', 'WR', 'ARI', 8], ['Jalen Hurts', 'QB', 'PHI', 9], ['Chuba Hubbard', 'RB', 'CAR', 14],
+      ['Joe Burrow', 'QB', 'CIN', 10], ['Alvin Kamara', 'RB', 'NO', 11], ['Breece Hall', 'RB', 'NYJ', 9],
+      ['Xavier Worthy', 'WR', 'KC', 10], ['DeVonta Smith', 'WR', 'PHI', 9], ['Rashee Rice', 'WR', 'KC', 10],
+      ['Sam LaPorta', 'TE', 'DET', 8], ['Courtland Sutton', 'WR', 'DEN', 12], ['Zay Flowers', 'WR', 'BAL', 7],
+      ["D'Andre Swift", 'RB', 'CHI', 5], ['Jaylen Waddle', 'WR', 'MIA', 12], ['Calvin Ridley', 'WR', 'TEN', 10],
+      ['Aaron Jones', 'RB', 'MIN', 6], ['Patrick Mahomes', 'QB', 'KC', 10], ['Tony Pollard', 'RB', 'TEN', 10],
+      ['David Montgomery', 'RB', 'DET', 8], ['T.J. Hockenson', 'TE', 'MIN', 6], ['Travis Hunter', 'WR', 'JAX', 8]
+    ];
+    const list = top.map((t, i) => ({ idx: i, name: t[0], pos: t[1], team: t[2], bye: t[3], adp: i + 1 }));
+    const fn = ['T.', 'J.', 'M.', 'D.', 'C.', 'R.', 'B.', 'K.', 'A.', 'L.'];
+    const ln = ['Walker', 'Reed', 'Booker', 'Hayes', 'Carver', 'Mills', 'Doyle', 'Granger', 'Sosa', 'Whitfield', 'Mercer', 'Lang', 'Okafor', 'Pryor', 'Vance', 'Hollis', 'Beck', 'Tatum', 'Royce', 'Field'];
+    const ps = ['WR', 'RB', 'WR', 'RB', 'TE', 'QB', 'WR', 'RB', 'K', 'DST'];
+    const tm = ['DEN', 'CHI', 'NE', 'NO', 'TEN', 'CLE', 'NYG', 'CAR', 'SEA', 'PIT', 'GB', 'LAC', 'ARI', 'HOU'];
+    for (let i = 60; i < 240; i++) {
+      const j = i - 60;
+      const pos = ps[j % 10];
+      const team = tm[(j * 3) % 14];
+      list.push({
+        idx: i,
+        name: pos === 'DST' ? team + ' D/ST' : fn[(j * 7) % 10] + ' ' + ln[(j * 11 + Math.floor(j / 20)) % 20],
+        pos: pos, team: team, bye: 5 + (j % 10), adp: i + 1
+      });
+    }
+    const pr = {};
+    list.forEach(p => {
+      p.proj = Math.max(38, Math.round(372 - p.adp * 1.55 - (p.adp % 7) * 2));
+      p.price = Math.max(1, Math.round(72 * Math.exp(-p.adp / 22)));
+      pr[p.pos] = (pr[p.pos] || 0) + 1;
+      p.posLabel = p.pos + pr[p.pos];
+    });
+    this._players = list;
+    return list;
+  }
+
+  shortName(n) {
+    if (n.indexOf('D/ST') >= 0) return n;
+    const parts = n.split(' ');
+    if (parts.length < 2) return n;
+    return parts[0][0] + '. ' + parts.slice(1).join(' ');
+  }
+
+  surname(n) {
+    if (n.indexOf('D/ST') >= 0) return n.replace(' D/ST', ' DST').toUpperCase();
+    const parts = n.split(' ');
+    return (parts.length < 2 ? n : parts.slice(1).join(' ')).toUpperCase();
+  }
+
+  slotOf(overall, tc, fmt) {
+    const r = Math.floor(overall / tc), w = overall % tc;
+    return (fmt === 'snake' && r % 2 === 1) ? tc - 1 - w : w;
+  }
+
+  tierOf(adp) {
+    if (adp <= 10) return 1;
+    if (adp <= 24) return 2;
+    if (adp <= 40) return 3;
+    if (adp <= 60) return 4;
+    if (adp <= 90) return 5;
+    if (adp <= 140) return 6;
+    return 7;
+  }
+
+  noop = () => {};
+
+  decTeams = () => { this.setState(s => ({ teamCount: Math.max(6, s.teamCount - 1) })); };
+  incTeams = () => { this.setState(s => ({ teamCount: Math.min(14, s.teamCount + 1) })); };
+
+  advance = () => {
+    this.setState(s => {
+      if (s.drafted.length >= s.teamCount * 15) return null;
+      const has = new Set(s.drafted);
+      const next = this.PLAYERS().find(p => !has.has(p.idx));
+      return next ? { drafted: s.drafted.concat(next.idx) } : null;
+    });
+  };
+
+  pickIdx(idx) {
+    this.setState(s => {
+      if (s.drafted.length >= s.teamCount * 15 || s.drafted.indexOf(idx) >= 0) return null;
+      return { drafted: s.drafted.concat(idx) };
+    });
+  }
+
+  toggleQueue(idx) {
+    this.setState(s => {
+      const i = s.queueIds.indexOf(idx);
+      if (i >= 0) { const q = s.queueIds.slice(); q.splice(i, 1); return { queueIds: q }; }
+      return { queueIds: s.queueIds.concat(idx) };
+    });
+  }
+
+  undo = () => { this.setState(s => ({ drafted: s.drafted.slice(0, -1), selected: null })); };
+
+  resetDraft = () => {
+    this.stopAuto();
+    this.setState(s => ({ drafted: Array.from({ length: Math.min(27, s.teamCount * 15) }, (_, i) => i), selected: null }));
+  };
+
+  toggleAuto = () => {
+    if (this._timer) { this.stopAuto(); return; }
+    this._timer = setInterval(() => {
+      if (this.state.drafted.length >= this.state.teamCount * 15) { this.stopAuto(); return; }
+      this.advance();
+    }, 850);
+    this.setState({ auto: true });
+  };
+
+  stopAuto = () => {
+    if (this._timer) { clearInterval(this._timer); this._timer = null; }
+    if (this.state.auto) this.setState({ auto: false });
+  };
+
+  componentWillUnmount() { if (this._timer) clearInterval(this._timer); }
+
+  renderVals() {
+    const s = this.state;
+    const players = this.PLAYERS();
+    const tc = s.teamCount, ROUNDS = 15, total = tc * ROUNDS, fmt = s.format;
+    const isAuction = fmt === 'auction';
+    const drafted = s.drafted.slice(0, total);
+    const cur = drafted.length;
+    const POSC = this.POSC;
+
+    const teams = this.TEAMS14.slice(0, tc).map((t, i) => ({
+      key: 'team' + i, name: t[0], abbr: t[1],
+      init: t[1],
+      av: this.AV[i],
+      slotLabel: '#' + (i + 1), picks: [], spent: 0,
+      headOutline: i === 0 ? '1px solid #D9A53F' : '1px solid transparent'
+    }));
+
+    const draftedAt = {};
+    drafted.forEach((pi, overall) => {
+      const r = Math.floor(overall / tc);
+      const slot = this.slotOf(overall, tc, fmt);
+      const p = players[pi];
+      const pickShort = (r + 1) + '.' + String(overall % tc + 1).padStart(2, '0');
+      draftedAt[pi] = pickShort + ' · ' + teams[slot].abbr;
+      teams[slot].spent += p.price;
+      teams[slot].picks.push({
+        key: 'tp' + overall,
+        meta: isAuction ? '$' + p.price : 'R' + (r + 1),
+        name: this.shortName(p.name),
+        pos: p.pos, posColor: POSC[p.pos].c, tint: POSC[p.pos].tint,
+        subc: POSC[p.pos].subc, posText: POSC[p.pos].text,
+        onClick: () => this.setState({ selected: pi })
+      });
+    });
+
+    teams.forEach(t => {
+      t.budgetLabel = isAuction ? '$' + Math.max(0, 200 - t.spent) : '';
+      t.needs = ['QB', 'RB', 'WR', 'TE'].map(pp => pp + String(t.picks.filter(k => k.pos === pp).length)).join(' · ');
+      t.emptyLabel = t.picks.length ? '' : 'no picks yet';
+    });
+
+    const curSlot = cur < total ? this.slotOf(cur, tc, fmt) : -1;
+    const curRound = Math.min(ROUNDS, Math.floor(Math.min(cur, total - 1) / tc) + 1);
+    const clockTeamObj = curSlot >= 0 ? teams[curSlot] : null;
+    const youOnClock = curSlot === 0;
+
+    const board = [];
+    for (let r = 0; r < ROUNDS; r++) {
+      const cells = [];
+      for (let slot = 0; slot < tc; slot++) {
+        const w = (fmt === 'snake' && r % 2 === 1) ? tc - 1 - slot : slot;
+        const overall = r * tc + w;
+        const filled = overall < cur;
+        const isCur = overall === cur;
+        const p = filled ? players[drafted[overall]] : null;
+        const pi2 = filled ? drafted[overall] : -1;
+        const pickShort = (r + 1) + '.' + String(w + 1).padStart(2, '0');
+        cells.push({
+          key: 'c' + r + '-' + slot,
+          name: filled ? this.shortName(p.name) : (isCur ? 'ON THE CLOCK' : ''),
+          nameColor: filled ? '#ECEEF1' : '#2FC76D',
+          sub: filled ? (p.pos + ' · ' + p.team + ' · B' + p.bye) : (isCur ? pickShort : ''),
+          subColor: filled ? POSC[p.pos].subc : '#707A87',
+          meta: filled ? (isAuction ? pickShort + ' $' + p.price : pickShort) : (isCur ? '' : pickShort),
+          metaColor: filled ? 'rgba(236,238,241,0.4)' : '#3E4650',
+          bar: filled ? POSC[p.pos].c : 'transparent',
+          bg: filled ? POSC[p.pos].tint : (isCur ? 'rgba(217,165,63,0.07)' : 'rgba(255,255,255,0.02)'),
+          outline: isCur ? '2px dashed #D9A53F' : '1px solid rgba(255,255,255,0.05)',
+          cursor: filled ? 'pointer' : 'default',
+          onClick: filled ? () => this.setState({ selected: pi2 }) : this.noop
+        });
+      }
+      board.push({
+        key: 'r' + r, n: r + 1,
+        dir: isAuction ? '$' : (fmt === 'linear' ? '→' : (r % 2 ? '←' : '→')),
+        cells: cells
+      });
+    }
+
+    const has = new Set(drafted);
+    const qSet = new Set(s.queueIds);
+    const availAll = players.filter(p => !has.has(p.idx));
+    const sLow = s.search.trim().toLowerCase();
+    let avail = s.queueFilter === 'ALL' ? availAll : availAll.filter(p => p.pos === s.queueFilter);
+    if (sLow) avail = avail.filter(p => p.name.toLowerCase().indexOf(sLow) >= 0);
+    const queue = avail.slice(0, 9).map(p => ({
+      key: 'q' + p.idx,
+      rank: p.adp,
+      name: this.shortName(p.name),
+      pos: p.pos, posColor: POSC[p.pos].c, posText: POSC[p.pos].text,
+      sub: p.team + ' · BYE ' + p.bye,
+      adp: 'ADP ' + p.adp,
+      price: isAuction ? '$' + p.price : '',
+      star: qSet.has(p.idx) ? '★' : '☆',
+      starColor: qSet.has(p.idx) ? '#D9A53F' : '#5C6470',
+      onStar: () => this.toggleQueue(p.idx),
+      onDraft: () => this.pickIdx(p.idx),
+      onOpen: () => this.setState({ selected: p.idx })
+    }));
+    const chips = ['ALL', 'QB', 'RB', 'WR', 'TE'].map(l => ({
+      key: 'chip' + l, label: l,
+      bg: s.queueFilter === l ? '#FB5A2D' : 'transparent',
+      color: s.queueFilter === l ? '#FFFFFF' : '#9AA3AE',
+      border: s.queueFilter === l ? '#FB5A2D' : '#2A323D',
+      onClick: () => this.setState({ queueFilter: l })
+    }));
+
+    const myQueue = s.queueIds.filter(i => !has.has(i)).map(i => {
+      const p = players[i];
+      return {
+        key: 'mq' + i,
+        name: this.shortName(p.name),
+        posColor: POSC[p.pos].c,
+        sub: p.pos + ' · ADP ' + p.adp,
+        onDraft: () => this.pickIdx(i),
+        onRemove: () => this.toggleQueue(i)
+      };
+    });
+
+    const r0 = curRound - 1;
+    const roundStrip = [];
+    const flipRows = [];
+    for (let w = 0; w < tc; w++) {
+      const overall = r0 * tc + w;
+      const slot = (fmt === 'snake' && r0 % 2 === 1) ? tc - 1 - w : w;
+      const done = overall < cur;
+      const isCur = overall === cur;
+      const p = done ? players[drafted[overall]] : null;
+      const pi2 = done ? drafted[overall] : -1;
+      const pickShort = (r0 + 1) + '.' + String(w + 1).padStart(2, '0');
+      roundStrip.push({
+        key: 'rs' + overall,
+        pickShort: pickShort, abbr: teams[slot].abbr,
+        name: done ? this.shortName(p.name) : (isCur ? 'ON THE CLOCK' : '—'),
+        nameColor: done ? '#ECEEF1' : (isCur ? '#2FC76D' : '#3E4650'),
+        bg: done ? POSC[p.pos].tint : (isCur ? 'rgba(217,165,63,0.07)' : 'rgba(255,255,255,0.02)'),
+        bar: done ? POSC[p.pos].c : (isCur ? '#D9A53F' : '#242C37'),
+        outline: isCur ? '1px dashed #D9A53F' : '1px solid transparent',
+        cursor: done ? 'pointer' : 'default',
+        onClick: done ? () => this.setState({ selected: pi2 }) : this.noop
+      });
+      const label = done ? this.surname(p.name).slice(0, 12) : '';
+      const isNew = overall === cur - 1;
+      const tiles = [];
+      for (let i = 0; i < 12; i++) {
+        tiles.push({
+          key: 't' + overall + '-' + i,
+          ch: label[i] || '',
+          anim: isNew ? 'flapIn 0.4s ' + (i * 0.05).toFixed(2) + 's both' : 'none'
+        });
+      }
+      flipRows.push({
+        key: 'fr' + overall,
+        pickShort: pickShort, abbr: teams[slot].abbr,
+        tiles: tiles,
+        pos: done ? p.pos : '',
+        posColor: done ? POSC[p.pos].c : 'transparent',
+        posText: done ? POSC[p.pos].text : 'transparent',
+        rowOutline: isCur ? '1px dashed rgba(217,165,63,0.6)' : '1px solid transparent',
+        clock: isCur ? 'ON THE CLOCK' : ''
+      });
+    }
+
+    // players tab
+    const pLow = s.pSearch.trim().toLowerCase();
+    let pool = players;
+    if (s.pPos !== 'ALL') pool = pool.filter(p => p.pos === s.pPos);
+    if (pLow) pool = pool.filter(p => p.name.toLowerCase().indexOf(pLow) >= 0);
+    if (s.hideDrafted) pool = pool.filter(p => !has.has(p.idx));
+    const shown = pool.slice(0, 80);
+    const tierMap = {};
+    const pTiers = [];
+    shown.forEach(p => {
+      const t = this.tierOf(p.adp);
+      if (!tierMap[t]) { tierMap[t] = { key: 'tier' + t, label: 'TIER ' + t, rows: [] }; pTiers.push(tierMap[t]); }
+      const isDrafted = has.has(p.idx);
+      tierMap[t].rows.push({
+        key: 'pr' + p.idx,
+        rank: p.adp,
+        star: qSet.has(p.idx) ? '★' : '☆',
+        starColor: qSet.has(p.idx) ? '#D9A53F' : '#3E4650',
+        onStar: () => this.toggleQueue(p.idx),
+        name: p.name,
+        onOpen: () => this.setState({ selected: p.idx }),
+        posLabel: p.posLabel, posColor: POSC[p.pos].c,
+        team: p.team, adp: String(p.adp), proj: String(p.proj), bye: String(p.bye),
+        opacity: isDrafted ? '0.4' : '1',
+        available: !isDrafted,
+        draftedLabel: isDrafted ? draftedAt[p.idx] : '',
+        onDraft: () => this.pickIdx(p.idx)
+      });
+    });
+    const pChips = ['ALL', 'QB', 'RB', 'WR', 'TE', 'K', 'DST'].map(l => ({
+      key: 'pchip' + l, label: l,
+      bg: s.pPos === l ? '#FB5A2D' : 'transparent',
+      color: s.pPos === l ? '#FFFFFF' : '#9AA3AE',
+      border: s.pPos === l ? '#FB5A2D' : '#2A323D',
+      onClick: () => this.setState({ pPos: l })
+    }));
+
+    // tabs
+    const TABS = [['players', 'PLAYERS'], ['draft', 'DRAFT'], ['board', 'BOARD'], ['tv', 'TV MODE']];
+    const tabBtns = TABS.map(t => ({
+      key: 'tabb' + t[0], label: t[1],
+      under: s.tab === t[0] ? '#FB5A2D' : 'transparent',
+      color: s.tab === t[0] ? '#ECEEF1' : '#707A87',
+      onClick: () => this.setState({ tab: t[0] })
+    }));
+    const boardBtns = [['wall', 'THE WALL'], ['locker', 'LOCKER ROOM']].map(b => ({
+      key: 'bb' + b[0], label: b[1],
+      bg: s.boardView === b[0] ? '#FB5A2D' : '#161B23',
+      color: s.boardView === b[0] ? '#FFFFFF' : '#9AA3AE',
+      border: s.boardView === b[0] ? '#FB5A2D' : '#2A323D',
+      onClick: () => this.setState({ boardView: b[0] })
+    }));
+
+    const fmtBtns = ['snake', 'linear', 'auction'].map(f => ({
+      key: 'fmt' + f, label: f.toUpperCase(),
+      bg: f === fmt ? '#FB5A2D' : 'transparent',
+      color: f === fmt ? '#FFFFFF' : '#707A87',
+      onClick: () => this.setState({ format: f })
+    }));
+
+    const statusLine = cur < total
+      ? 'R' + (Math.floor(cur / tc) + 1) + ' · PICK ' + (cur + 1) + ' OF ' + total
+      : 'ALL ' + total + ' PICKS IN';
+    const nextTeams = [];
+    for (let k = 1; k <= 3; k++) {
+      const o = cur + k;
+      if (o < total) nextTeams.push(teams[this.slotOf(o, tc, fmt)]);
+    }
+
+    // pick strip (full draft)
+    const pickStrip = [];
+    for (let overall = 0; overall < total; overall++) {
+      const r = Math.floor(overall / tc);
+      const slot = this.slotOf(overall, tc, fmt);
+      const done = overall < cur;
+      const isCur = overall === cur;
+      const p = done ? players[drafted[overall]] : null;
+      const pi2 = done ? drafted[overall] : -1;
+      const isYou = slot === 0;
+      pickStrip.push({
+        key: 'ps' + overall,
+        pickShort: (r + 1) + '.' + String(overall % tc + 1).padStart(2, '0'),
+        tag: teams[slot].abbr,
+        label: done ? this.shortName(p.name) : (isCur ? 'ON THE CLOCK' : teams[slot].name),
+        nameColor: done ? '#ECEEF1' : (isCur ? '#2FC76D' : '#5C6470'),
+        pickColor: isYou ? '#D9A53F' : '#707A87',
+        bg: done ? POSC[p.pos].tint : (isCur ? 'rgba(217,165,63,0.07)' : '#12161D'),
+        border: isCur ? '#D9A53F' : (isYou ? 'rgba(217,165,63,0.45)' : '#222933'),
+        cursor: done ? 'pointer' : 'default',
+        onClick: done ? () => this.setState({ selected: pi2 }) : this.noop
+      });
+    }
+
+    // TV splash + ticker (React elements so animations survive re-renders)
+    const last = cur > 0 ? players[drafted[cur - 1]] : null;
+    let tvSplash;
+    if (last) {
+      const lo = cur - 1;
+      const lr = Math.floor(lo / tc), lslot = this.slotOf(lo, tc, fmt);
+      const lLabel = (lr + 1) + '.' + String(lo % tc + 1).padStart(2, '0');
+      tvSplash = React.createElement('div', { key: 'sp' + cur, style: { background: '#11151C', border: '1px solid #2A323D', borderLeft: '4px solid ' + POSC[last.pos].c, borderRadius: 12, padding: '20px 22px', animation: 'splashIn 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.2) both' } },
+        React.createElement('div', { style: { fontFamily: "'IBM Plex Mono', monospace", fontSize: 10, letterSpacing: 2, color: '#707A87' } }, 'LATEST PICK · ' + lLabel),
+        React.createElement('div', { style: { fontFamily: "'Archivo', sans-serif", fontWeight: 800, fontSize: 27, color: '#ECEEF1', margin: '8px 0 6px', lineHeight: 1.1 } }, last.name.toUpperCase()),
+        React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' } },
+          React.createElement('span', { style: { background: POSC[last.pos].c, color: POSC[last.pos].text, fontWeight: 700, fontSize: 12, letterSpacing: 2, padding: '3px 10px', borderRadius: 3, fontFamily: "'Barlow Condensed', sans-serif" } }, last.pos),
+          React.createElement('span', { style: { fontFamily: "'IBM Plex Mono', monospace", fontSize: 11, color: '#9AA3AE' } }, last.team + ' · BYE ' + last.bye),
+          React.createElement('span', { style: { fontFamily: "'IBM Plex Mono', monospace", fontSize: 11, color: '#D9A53F' } }, 'by ' + teams[lslot].name)
+        )
+      );
+    } else {
+      tvSplash = React.createElement('div', { key: 'sp0', style: { background: '#11151C', border: '1px dashed #2A323D', borderRadius: 12, padding: '20px 22px', fontFamily: "'IBM Plex Mono', monospace", fontSize: 11, color: '#5C6470', textAlign: 'center' } }, 'DRAFT OPENS SOON');
+    }
+
+    const tickItems = [];
+    for (let i = Math.max(0, cur - 10); i < cur; i++) {
+      const p = players[drafted[i]];
+      const r = Math.floor(i / tc);
+      tickItems.push({ label: (r + 1) + '.' + String(i % tc + 1).padStart(2, '0'), name: this.shortName(p.name).toUpperCase(), c: POSC[p.pos].c });
+    }
+    const tickSpan = (it, k) => React.createElement('span', { key: k, style: { display: 'flex', alignItems: 'center', gap: 8, flex: '0 0 auto' } },
+      React.createElement('span', { style: { fontFamily: "'IBM Plex Mono', monospace", fontSize: 11, color: '#707A87' } }, it.label),
+      React.createElement('span', { style: { width: 8, height: 8, borderRadius: 2, background: it.c } }),
+      React.createElement('span', { style: { fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: 15, color: '#ECEEF1', letterSpacing: 1 } }, it.name)
+    );
+    const oneRun = tickItems.length ? tickItems : [{ label: '—', name: 'THE BOARD IS SET', c: '#2A323D' }];
+    const tvTicker = React.createElement('div', { key: 'ticker', style: { display: 'flex', gap: 44, width: 'max-content', padding: '0 22px', animation: 'marqueeX 24s linear infinite' } },
+      oneRun.map((it, k) => tickSpan(it, 'a' + k)).concat(oneRun.map((it, k) => tickSpan(it, 'b' + k)))
+    );
+
+    let sel = null;
+    if (s.selected != null) {
+      const p = players[s.selected];
+      const di = drafted.indexOf(s.selected);
+      let status = '✓ STILL AVAILABLE';
+      let statusColor = '#2FC76D';
+      if (di >= 0) {
+        const r = Math.floor(di / tc), slot = this.slotOf(di, tc, fmt);
+        status = 'DRAFTED ' + (r + 1) + '.' + String(di % tc + 1).padStart(2, '0') + ' · ' + teams[slot].name.toUpperCase();
+        statusColor = POSC[p.pos].subc;
+      }
+      sel = {
+        name: p.name.toUpperCase(), pos: p.pos,
+        posColor: POSC[p.pos].c, tint: POSC[p.pos].tint, posText: POSC[p.pos].text,
+        sub: p.pos + ' — ' + p.team + ' · BYE ' + p.bye,
+        adp: String(p.adp), proj: String(p.proj), price: '$' + p.price,
+        status: status, statusColor: statusColor
+      };
+    }
+
+    const you = teams[0];
+    return {
+      teamCount: tc,
+      tabPlayers: s.tab === 'players', tabDraft: s.tab === 'draft',
+      tabBoard: s.tab === 'board', tabTv: s.tab === 'tv',
+      boardWall: s.boardView === 'wall', boardLocker: s.boardView === 'locker',
+      tabBtns: tabBtns, boardBtns: boardBtns, fmtBtns: fmtBtns,
+      decTeams: this.decTeams, incTeams: this.incTeams,
+      undo: this.undo, advance: this.advance,
+      toggleAuto: this.toggleAuto, resetDraft: this.resetDraft,
+      autoLabel: s.auto ? '◼ STOP' : '▶ AUTO',
+      autoBg: s.auto ? '#A93E26' : '#161B23',
+      statusLine: statusLine,
+      clockTeam: clockTeamObj ? clockTeamObj.name : 'Draft Complete',
+      clockPick: cur < total ? ((Math.floor(cur / tc) + 1) + '.' + String(cur % tc + 1).padStart(2, '0')) : '—',
+      clockAv: clockTeamObj ? clockTeamObj.av : '#2A323D',
+      clockInit: clockTeamObj ? clockTeamObj.init : '—',
+      clockChipBorder: youOnClock ? '#D9A53F' : '#242C37',
+      clockPanelBorder: youOnClock ? '#D9A53F' : '#242C37',
+      youBanner: youOnClock ? '★ YOU ARE NOW ON THE CLOCK' : '',
+      nextUp: nextTeams.length ? 'NEXT: ' + nextTeams.map(t => t.abbr).join(' → ') : '',
+      timer: cur < total ? '0:38' : '0:00',
+      curRound: curRound,
+      teams: teams, board: board,
+      queue: queue, chips: chips,
+      search: s.search,
+      onSearch: (e) => this.setState({ search: e.target.value }),
+      myQueue: myQueue,
+      queueEmptyLabel: myQueue.length ? '' : 'star players to build your queue',
+      myRoster: you.picks, myNeeds: you.needs,
+      myEmptyLabel: you.picks.length ? '' : 'your picks land here',
+      roundStrip: roundStrip, flipRows: flipRows,
+      pSearch: s.pSearch,
+      onPSearch: (e) => this.setState({ pSearch: e.target.value }),
+      pChips: pChips, pTiers: pTiers,
+      pMoreLabel: pool.length > 80 ? (pool.length - 80) + ' more players — search or filter to find them' : 'end of list',
+      hideLabel: s.hideDrafted ? '✓ HIDING DRAFTED' : 'HIDE DRAFTED',
+      hideBg: s.hideDrafted ? '#FB5A2D' : '#161B23',
+      hideColor: s.hideDrafted ? '#FFFFFF' : '#9AA3AE',
+      toggleHide: () => this.setState(st => ({ hideDrafted: !st.hideDrafted })),
+      pickStrip: pickStrip,
+      tvSplash: tvSplash, tvTicker: tvTicker,
+      tvUpNext: nextTeams.map((t, i) => ({ key: 'un' + i, name: t.name, init: t.init, av: t.av, pickShort: 'in ' + (i + 1) })),
+      hasSelected: !!sel, sel: sel || {},
+      closeCard: () => this.setState({ selected: null })
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&amp;family=Barlow+Condensed:wght@400;500;600;700&amp;family=Courier+Prime:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #DCD4BF; }
+    @keyframes flapIn { 0% { transform: rotateX(95deg); opacity: 0.15; } 100% { transform: rotateX(0deg); opacity: 1; } }
+    @keyframes pulseDot { 0%, 100% { opacity: 1; } 50% { opacity: 0.15; } }
+  </style>
+</helmet>
+
+<div style="font-family:'Barlow Condensed',sans-serif; color:#221C12; min-height:100vh; padding-bottom:90px">
+
+  <!-- ============ HEADER ============ -->
+  <div data-screen-label="Header" style="background:#221C12; color:#F4ECD7; padding:42px 32px 36px; border-bottom:4px solid #A93E26">
+    <div style="max-width:1480px; margin:0 auto; display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:24px">
+      <div>
+        <div style="font-family:'Courier Prime',monospace; font-size:12px; letter-spacing:3px; color:#C9A45C">FANTASY FOOTBALL ASSISTANT · DESIGN EXPLORATION 01</div>
+        <h1 style="font-family:'Alfa Slab One',serif; font-size:46px; font-weight:400; margin:10px 0 0; letter-spacing:1px">THE MOCK DRAFT BOARD</h1>
+        <div style="font-size:18px; color:rgba(244,236,215,0.75); margin-top:8px; max-width:660px">Four board concepts shown on desktop and phone, plus six player-card treatments — all running on one shared live mock-draft engine.</div>
+      </div>
+      <div style="font-family:'Courier Prime',monospace; font-size:12px; color:rgba(244,236,215,0.6); line-height:1.9; text-align:right">VINTAGE SERIES · EST. 2026<br>SNAKE · LINEAR · AUCTION<br>6–14 TEAMS</div>
+    </div>
+  </div>
+
+  <!-- ============ ASSUMPTIONS ============ -->
+  <div style="max-width:1480px; margin:24px auto 0; padding:0 32px">
+    <div style="background:#FBF8EF; border:1px solid #C6BA9D; border-radius:12px; padding:22px 26px; display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:26px; box-shadow:0 2px 10px rgba(56,42,16,0.08)">
+      <div>
+        <div style="font-family:'Courier Prime',monospace; font-size:11px; letter-spacing:2.5px; color:#A93E26; font-weight:700; margin-bottom:8px">ASSUMPTIONS</div>
+        <div style="font-size:14.5px; line-height:1.65; color:#473D28">15-round rosters, single-QB league. Sample player pool ordered by 2026 ADP. Position color is the primary at-a-glance layer — six hues, one chroma. Auction assumes $200 budgets. The pick timer is decorative in this mock.</div>
+      </div>
+      <div>
+        <div style="font-family:'Courier Prime',monospace; font-size:11px; letter-spacing:2.5px; color:#A93E26; font-weight:700; margin-bottom:8px">DESIGN REASONING</div>
+        <div style="font-size:14.5px; line-height:1.65; color:#473D28">Vintage card-and-felt direction: cream paper, dark ink, flat sticker tints on a dark board. Type is Alfa Slab One (display) + Barlow Condensed (names, UI) + Courier Prime (data). All four boards run the same engine so you can compare them apples-to-apples mid-draft.</div>
+      </div>
+      <div>
+        <div style="font-family:'Courier Prime',monospace; font-size:11px; letter-spacing:2.5px; color:#A93E26; font-weight:700; margin-bottom:8px">HOW TO REVIEW</div>
+        <div style="font-size:14.5px; line-height:1.65; color:#473D28">Use the dark control bar to resize the league (6–14), switch snake / linear / auction, and run the pick simulator. Tap any filled cell or row to open its player card. Mix &amp; match: pick one board concept + one card treatment.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 01 FOUNDATIONS ============ -->
+  <div data-screen-label="Foundations" style="max-width:1480px; margin:34px auto 0; padding:0 32px">
+    <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:12px">
+      <span style="font-family:'Courier Prime',monospace; font-size:13px; letter-spacing:3px; color:#A93E26; font-weight:700">01</span>
+      <h2 style="font-family:'Alfa Slab One',serif; font-size:24px; font-weight:400; margin:0; letter-spacing:1px">FOUNDATIONS</h2>
+    </div>
+    <div style="background:#FBF8EF; border:1px solid #C6BA9D; border-radius:12px; padding:24px 26px; display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:28px; box-shadow:0 2px 10px rgba(56,42,16,0.08)">
+      <div>
+        <div style="font-family:'Courier Prime',monospace; font-size:10px; letter-spacing:2.5px; color:#8A7A4D; margin-bottom:12px">TYPE</div>
+        <div style="font-family:'Alfa Slab One',serif; font-size:32px; line-height:1.1">DRAFT DAY</div>
+        <div style="font-family:'Courier Prime',monospace; font-size:10px; color:#8A7A4D; margin:2px 0 12px">ALFA SLAB ONE — headlines, names on banners</div>
+        <div style="font-weight:600; font-size:19px; letter-spacing:0.3px">Barlow Condensed — player names &amp; UI labels</div>
+        <div style="font-family:'Courier Prime',monospace; font-size:10px; color:#8A7A4D; margin:2px 0 12px">400–700, tight and tall like a stadium roster sheet</div>
+        <div style="font-family:'Courier Prime',monospace; font-size:14px">COURIER PRIME — ADP 10.04 · $42 · BYE 8</div>
+        <div style="font-family:'Courier Prime',monospace; font-size:10px; color:#8A7A4D; margin-top:2px">all numbers &amp; metadata, typewriter stat-sheet style</div>
+      </div>
+      <div>
+        <div style="font-family:'Courier Prime',monospace; font-size:10px; letter-spacing:2.5px; color:#8A7A4D; margin-bottom:12px">INKS</div>
+        <div style="display:flex; flex-direction:column; gap:7px">
+          <div style="display:flex; align-items:center; gap:10px"><span style="width:26px; height:26px; border-radius:5px; background:#FBF8EF; border:1px solid #C6BA9D"></span><span style="font-family:'Courier Prime',monospace; font-size:11px">PAPER — cards &amp; panels</span></div>
+          <div style="display:flex; align-items:center; gap:10px"><span style="width:26px; height:26px; border-radius:5px; background:#DCD4BF"></span><span style="font-family:'Courier Prime',monospace; font-size:11px">FELT — page ground</span></div>
+          <div style="display:flex; align-items:center; gap:10px"><span style="width:26px; height:26px; border-radius:5px; background:#221C12"></span><span style="font-family:'Courier Prime',monospace; font-size:11px">INK — text, headers, chrome</span></div>
+          <div style="display:flex; align-items:center; gap:10px"><span style="width:26px; height:26px; border-radius:5px; background:#262019"></span><span style="font-family:'Courier Prime',monospace; font-size:11px">BOARD — the dark wall</span></div>
+          <div style="display:flex; align-items:center; gap:10px"><span style="width:26px; height:26px; border-radius:5px; background:#A93E26"></span><span style="font-family:'Courier Prime',monospace; font-size:11px">VARSITY RED — actions, accents</span></div>
+          <div style="display:flex; align-items:center; gap:10px"><span style="width:26px; height:26px; border-radius:5px; background:#C9A45C"></span><span style="font-family:'Courier Prime',monospace; font-size:11px">BRASS — metadata on dark</span></div>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'Courier Prime',monospace; font-size:10px; letter-spacing:2.5px; color:#8A7A4D; margin-bottom:12px">POSITION KEY — one chroma, six hues</div>
+        <div style="display:flex; flex-direction:column; gap:7px">
+          <div style="display:flex; align-items:center; gap:8px"><span style="width:38px; text-align:center; background:oklch(0.52 0.13 30); color:#F6EFDC; border-radius:3px; font-weight:700; font-size:11px; letter-spacing:1px; padding:3px 0">QB</span><span style="width:26px; height:21px; border-radius:3px; background:oklch(0.93 0.035 30)"></span><span style="font-family:'Courier Prime',monospace; font-size:11px; color:#473D28">quarterback</span></div>
+          <div style="display:flex; align-items:center; gap:8px"><span style="width:38px; text-align:center; background:oklch(0.52 0.13 150); color:#F6EFDC; border-radius:3px; font-weight:700; font-size:11px; letter-spacing:1px; padding:3px 0">RB</span><span style="width:26px; height:21px; border-radius:3px; background:oklch(0.93 0.035 150)"></span><span style="font-family:'Courier Prime',monospace; font-size:11px; color:#473D28">running back</span></div>
+          <div style="display:flex; align-items:center; gap:8px"><span style="width:38px; text-align:center; background:oklch(0.52 0.13 250); color:#F6EFDC; border-radius:3px; font-weight:700; font-size:11px; letter-spacing:1px; padding:3px 0">WR</span><span style="width:26px; height:21px; border-radius:3px; background:oklch(0.93 0.035 250)"></span><span style="font-family:'Courier Prime',monospace; font-size:11px; color:#473D28">wide receiver</span></div>
+          <div style="display:flex; align-items:center; gap:8px"><span style="width:38px; text-align:center; background:oklch(0.56 0.13 75); color:#F6EFDC; border-radius:3px; font-weight:700; font-size:11px; letter-spacing:1px; padding:3px 0">TE</span><span style="width:26px; height:21px; border-radius:3px; background:oklch(0.93 0.045 75)"></span><span style="font-family:'Courier Prime',monospace; font-size:11px; color:#473D28">tight end</span></div>
+          <div style="display:flex; align-items:center; gap:8px"><span style="width:38px; text-align:center; background:oklch(0.52 0.13 310); color:#F6EFDC; border-radius:3px; font-weight:700; font-size:11px; letter-spacing:1px; padding:3px 0">K</span><span style="width:26px; height:21px; border-radius:3px; background:oklch(0.93 0.035 310)"></span><span style="font-family:'Courier Prime',monospace; font-size:11px; color:#473D28">kicker</span></div>
+          <div style="display:flex; align-items:center; gap:8px"><span style="width:38px; text-align:center; background:oklch(0.52 0.13 200); color:#F6EFDC; border-radius:3px; font-weight:700; font-size:11px; letter-spacing:1px; padding:3px 0">DST</span><span style="width:26px; height:21px; border-radius:3px; background:oklch(0.93 0.035 200)"></span><span style="font-family:'Courier Prime',monospace; font-size:11px; color:#473D28">defense / special teams</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 02 PLAYER CARDS ============ -->
+  <div data-screen-label="Player Cards" style="max-width:1480px; margin:38px auto 0; padding:0 32px">
+    <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:12px">
+      <span style="font-family:'Courier Prime',monospace; font-size:13px; letter-spacing:3px; color:#A93E26; font-weight:700">02</span>
+      <h2 style="font-family:'Alfa Slab One',serif; font-size:24px; font-weight:400; margin:0; letter-spacing:1px">PLAYER CARDS — SIX TREATMENTS</h2>
+      <span style="font-family:'Courier Prime',monospace; font-size:11px; color:#8A7A4D">one player object, six contexts</span>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(340px, 1fr)); gap:18px">
+
+      <!-- V1 Heritage card -->
+      <div style="background:#FBF8EF; border:1px solid #C6BA9D; border-radius:12px; padding:20px; box-shadow:0 2px 10px rgba(56,42,16,0.08)">
+        <div style="font-weight:700; font-size:16px; letter-spacing:0.5px">1 · THE HERITAGE CARD</div>
+        <div style="font-family:'Courier Prime',monospace; font-size:10px; color:#8A7A4D; margin:2px 0 16px">USE: tap-to-open detail, draft recap, share moment</div>
+        <div style="display:flex; justify-content:center">
+          <div style="width:292px; background:#F7F0DC; border:1px solid #B9AC8B; border-radius:10px; padding:10px; box-shadow:0 4px 0 #CDC0A0, 0 10px 20px rgba(56,42,16,0.14)">
+            <div style="border:3px solid oklch(0.52 0.13 250); border-radius:6px; background:#FBF6E7; padding:12px; display:flex; flex-direction:column; gap:9px">
+              <div style="display:flex; justify-content:space-between; align-items:center">
+                <span style="background:oklch(0.52 0.13 250); color:#F6EFDC; font-weight:700; font-size:11px; letter-spacing:2px; padding:3px 9px; border-radius:3px">WR</span>
+                <span style="font-family:'Courier Prime',monospace; font-size:10px; letter-spacing:2px; color:#8A7A4D">CINCINNATI · №1</span>
+              </div>
+              <div style="height:158px; border:1px solid #CFC3A3; border-radius:4px; background:repeating-linear-gradient(45deg, #EDE4CA 0 10px, #F4EDD9 10px 20px); display:flex; align-items:center; justify-content:center">
+                <span style="font-family:'Courier Prime',monospace; font-size:11px; color:#8A7A4D">[ player photo ]</span>
+              </div>
+              <div style="font-family:'Alfa Slab One',serif; font-size:19px; background:#221C12; color:#F6EFDC; padding:8px 10px; border-radius:3px; letter-spacing:0.5px">JA'MARR CHASE</div>
+              <div style="font-weight:600; font-size:13px; letter-spacing:0.5px">WR — CINCINNATI · BYE 10</div>
+              <div style="display:grid; grid-template-columns:1fr 1fr 1fr; border-top:1px dashed #B9AC8B; padding-top:9px; text-align:center; font-family:'Courier Prime',monospace">
+                <div><div style="font-size:9px; letter-spacing:2px; color:#8A7A4D">ADP</div><div style="font-weight:700; font-size:15px">1</div></div>
+                <div><div style="font-size:9px; letter-spacing:2px; color:#8A7A4D">PROJ</div><div style="font-weight:700; font-size:15px">368</div></div>
+                <div><div style="font-size:9px; letter-spacing:2px; color:#8A7A4D">TIER</div><div style="font-weight:700; font-size:15px">1</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- V2 Stat back -->
+      <div style="background:#FBF8EF; border:1px solid #C6BA9D; border-radius:12px; padding:20px; box-shadow:0 2px 10px rgba(56,42,16,0.08)">
+        <div style="font-weight:700; font-size:16px; letter-spacing:0.5px">2 · THE STAT BACK</div>
+        <div style="font-family:'Courier Prime',monospace; font-size:10px; color:#8A7A4D; margin:2px 0 16px">USE: flip side of the heritage card — history &amp; notes</div>
+        <div style="display:flex; justify-content:center">
+          <div style="width:292px; background:#D8C79E; border:1px solid #A08A5C; border-radius:10px; padding:10px; color:#4A3A22; box-shadow:0 4px 0 #B5A175, 0 10px 20px rgba(56,42,16,0.14)">
+            <div style="border:2px solid #6B5836; border-radius:6px; padding:14px; display:flex; flex-direction:column; gap:10px">
+              <div style="display:flex; justify-content:space-between; font-family:'Courier Prime',monospace; font-size:10px; letter-spacing:1.5px"><span>№ 1 OF 240</span><span>ALL-PRO SERIES</span></div>
+              <div style="font-family:'Alfa Slab One',serif; font-size:18px; color:#3B2D17; line-height:1.1">JA'MARR CHASE</div>
+              <div style="font-weight:600; font-size:13px; letter-spacing:0.5px; margin-top:-4px">WR — CINCINNATI BENGALS</div>
+              <div style="font-family:'Courier Prime',monospace; font-size:11.5px">
+                <div style="display:grid; grid-template-columns:1.1fr 1fr 1.2fr 0.8fr; font-weight:700; border-bottom:1px solid #6B5836; padding-bottom:4px"><span>YEAR</span><span>REC</span><span>YDS</span><span>TD</span></div>
+                <div style="display:grid; grid-template-columns:1.1fr 1fr 1.2fr 0.8fr; padding:5px 0; border-bottom:1px dashed #A08A5C"><span>'23</span><span>100</span><span>1216</span><span>7</span></div>
+                <div style="display:grid; grid-template-columns:1.1fr 1fr 1.2fr 0.8fr; padding:5px 0; border-bottom:1px dashed #A08A5C"><span>'24</span><span>127</span><span>1708</span><span>17</span></div>
+                <div style="display:grid; grid-template-columns:1.1fr 1fr 1.2fr 0.8fr; padding:5px 0"><span>'25</span><span>112</span><span>1455</span><span>12</span></div>
+              </div>
+              <div style="font-family:'Courier Prime',monospace; font-style:italic; font-size:11px; line-height:1.55; border-top:1px solid #6B5836; padding-top:9px">Alpha target share since day one. Elite after the catch. The pick that makes the rest of the room groan.</div>
+              <div style="font-family:'Courier Prime',monospace; font-size:8px; letter-spacing:2px; text-align:center; color:#7B6741">MOCK DRAFT CO. · PRINTED IN U.S.A.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- V4 Ticket + V5 minis stacked -->
+      <div style="background:#FBF8EF; border:1px solid #C6BA9D; border-radius:12px; padding:20px; box-shadow:0 2px 10px rgba(56,42,16,0.08)">
+        <div style="font-weight:700; font-size:16px; letter-spacing:0.5px">3 · THE PICK TICKET</div>
+        <div style="font-family:'Courier Prime',monospace; font-size:10px; color:#8A7A4D; margin:2px 0 16px">USE: pick confirmation toast, draft history rows</div>
+        <div style="display:flex; justify-content:center; margin-bottom:24px">
+          <div style="width:330px; display:flex; background:#F6EEDA; border:2px solid #221C12; border-radius:8px; overflow:hidden; box-shadow:0 6px 14px rgba(56,42,16,0.12)">
+            <div style="flex:1; padding:13px 16px; display:flex; flex-direction:column; gap:3px">
+              <span style="font-family:'Courier Prime',monospace; font-size:9px; letter-spacing:2px; color:#A93E26; font-weight:700">OFFICIAL DRAFT PICK · MOCK SERIES</span>
+              <span style="font-family:'Alfa Slab One',serif; font-size:19px">JAHMYR GIBBS</span>
+              <span style="font-weight:600; font-size:13px">RB — DETROIT · BYE 8</span>
+              <span style="font-family:'Courier Prime',monospace; font-size:10px; color:#8A7A4D">SELECTED BY CANTON COAL</span>
+            </div>
+            <div style="width:94px; border-left:2px dashed #221C12; background:oklch(0.93 0.035 150); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px; padding:10px 6px">
+              <span style="font-family:'Courier Prime',monospace; font-size:9px; letter-spacing:2px">ROUND</span>
+              <span style="font-family:'Alfa Slab One',serif; font-size:23px">2.03</span>
+              <span style="font-family:'Courier Prime',monospace; font-size:9px">PICK 15 O/A</span>
+            </div>
+          </div>
+        </div>
+        <div style="font-weight:700; font-size:16px; letter-spacing:0.5px">4 · THE BOARD STICKER</div>
+        <div style="font-family:'Courier Prime',monospace; font-size:10px; color:#8A7A4D; margin:2px 0 14px">USE: grid cells — six position colorways</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px">
+          <div style="background:oklch(0.93 0.035 30); border-left:4px solid oklch(0.52 0.13 30); border-radius:5px; padding:6px 8px; box-shadow:0 1px 0 rgba(56,42,16,0.25)"><div style="display:flex; justify-content:space-between; align-items:baseline"><span style="font-weight:600; font-size:13px">J. Allen</span><span style="font-family:'Courier Prime',monospace; font-size:9px; color:#8A7A4D">3.02</span></div><div style="font-family:'Courier Prime',monospace; font-size:10px; color:#6A5C3C; margin-top:2px">QB · BUF · B7</div></div>
+          <div style="background:oklch(0.93 0.035 150); border-left:4px solid oklch(0.52 0.13 150); border-radius:5px; padding:6px 8px; box-shadow:0 1px 0 rgba(56,42,16,0.25)"><div style="display:flex; justify-content:space-between; align-items:baseline"><span style="font-weight:600; font-size:13px">B. Robinson</span><span style="font-family:'Courier Prime',monospace; font-size:9px; color:#8A7A4D">1.02</span></div><div style="font-family:'Courier Prime',monospace; font-size:10px; color:#6A5C3C; margin-top:2px">RB · ATL · B5</div></div>
+          <div style="background:oklch(0.93 0.035 250); border-left:4px solid oklch(0.52 0.13 250); border-radius:5px; padding:6px 8px; box-shadow:0 1px 0 rgba(56,42,16,0.25)"><div style="display:flex; justify-content:space-between; align-items:baseline"><span style="font-weight:600; font-size:13px">J. Chase</span><span style="font-family:'Courier Prime',monospace; font-size:9px; color:#8A7A4D">1.01</span></div><div style="font-family:'Courier Prime',monospace; font-size:10px; color:#6A5C3C; margin-top:2px">WR · CIN · B10</div></div>
+          <div style="background:oklch(0.93 0.045 75); border-left:4px solid oklch(0.56 0.13 75); border-radius:5px; padding:6px 8px; box-shadow:0 1px 0 rgba(56,42,16,0.25)"><div style="display:flex; justify-content:space-between; align-items:baseline"><span style="font-weight:600; font-size:13px">B. Bowers</span><span style="font-family:'Courier Prime',monospace; font-size:9px; color:#8A7A4D">2.04</span></div><div style="font-family:'Courier Prime',monospace; font-size:10px; color:#6A5C3C; margin-top:2px">TE · LV · B8</div></div>
+          <div style="background:oklch(0.93 0.035 310); border-left:4px solid oklch(0.52 0.13 310); border-radius:5px; padding:6px 8px; box-shadow:0 1px 0 rgba(56,42,16,0.25)"><div style="display:flex; justify-content:space-between; align-items:baseline"><span style="font-weight:600; font-size:13px">C. Boswell</span><span style="font-family:'Courier Prime',monospace; font-size:9px; color:#8A7A4D">14.07</span></div><div style="font-family:'Courier Prime',monospace; font-size:10px; color:#6A5C3C; margin-top:2px">K · PIT · B5</div></div>
+          <div style="background:oklch(0.93 0.035 200); border-left:4px solid oklch(0.52 0.13 200); border-radius:5px; padding:6px 8px; box-shadow:0 1px 0 rgba(56,42,16,0.25)"><div style="display:flex; justify-content:space-between; align-items:baseline"><span style="font-weight:600; font-size:13px">PIT D/ST</span><span style="font-family:'Courier Prime',monospace; font-size:9px; color:#8A7A4D">15.04</span></div><div style="font-family:'Courier Prime',monospace; font-size:10px; color:#6A5C3C; margin-top:2px">DST · PIT · B5</div></div>
+        </div>
+      </div>
+
+      <!-- V3 Queue rows -->
+      <div style="background:#FBF8EF; border:1px solid #C6BA9D; border-radius:12px; padding:20px; box-shadow:0 2px 10px rgba(56,42,16,0.08)">
+        <div style="font-weight:700; font-size:16px; letter-spacing:0.5px">5 · THE QUEUE ROW</div>
+        <div style="font-family:'Courier Prime',monospace; font-size:10px; color:#8A7A4D; margin:2px 0 16px">USE: rankings list, best-available queue, search results</div>
+        <div style="display:flex; flex-direction:column; gap:6px">
+          <div style="display:flex; align-items:center; gap:10px; background:#F6F0DE; border:1px solid #E2D8BC; border-radius:6px; padding:9px 10px">
+            <span style="font-family:'Courier Prime',monospace; font-size:11px; color:#8A7A4D; width:22px; text-align:right">16</span>
+            <span style="width:34px; text-align:center; background:oklch(0.56 0.13 75); color:#F6EFDC; border-radius:3px; font-weight:700; font-size:10px; letter-spacing:1px; padding:3px 0">TE</span>
+            <span style="flex:1; min-width:0; font-weight:600; font-size:15px">B. Bowers</span>
+            <span style="font-family:'Courier Prime',monospace; font-size:10px; color:#8A7A4D">LV · BYE 8</span>
+            <span style="font-family:'Courier Prime',monospace; font-size:10px; color:#8A7A4D">ADP 16</span>
+            <button style="background:#A93E26; color:#F6EFDC; border:none; border-radius:4px; padding:5px 12px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:11px; letter-spacing:1.5px; cursor:pointer">DRAFT</button>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px; background:#F6F0DE; border:1px solid #E2D8BC; border-radius:6px; padding:9px 10px">
+            <span style="font-family:'Courier Prime',monospace; font-size:11px; color:#8A7A4D; width:22px; text-align:right">22</span>
+            <span style="width:34px; text-align:center; background:oklch(0.52 0.13 250); color:#F6EFDC; border-radius:3px; font-weight:700; font-size:10px; letter-spacing:1px; padding:3px 0">WR</span>
+            <span style="flex:1; min-width:0; font-weight:600; font-size:15px">L. McConkey</span>
+            <span style="font-family:'Courier Prime',monospace; font-size:10px; color:#8A7A4D">LAC · BYE 5</span>
+            <span style="font-family:'Courier Prime',monospace; font-size:10px; color:#8A7A4D">ADP 22</span>
+            <button style="background:#A93E26; color:#F6EFDC; border:none; border-radius:4px; padding:5px 12px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:11px; letter-spacing:1.5px; cursor:pointer">DRAFT</button>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px; background:#F6F0DE; border:1px solid #E2D8BC; border-radius:6px; padding:9px 10px">
+            <span style="font-family:'Courier Prime',monospace; font-size:11px; color:#8A7A4D; width:22px; text-align:right">23</span>
+            <span style="width:34px; text-align:center; background:oklch(0.52 0.13 150); color:#F6EFDC; border-radius:3px; font-weight:700; font-size:10px; letter-spacing:1px; padding:3px 0">RB</span>
+            <span style="flex:1; min-width:0; font-weight:600; font-size:15px">B. Irving</span>
+            <span style="font-family:'Courier Prime',monospace; font-size:10px; color:#8A7A4D">TB · BYE 9</span>
+            <span style="font-family:'Courier Prime',monospace; font-size:10px; color:#8A7A4D">ADP 23</span>
+            <button style="background:#A93E26; color:#F6EFDC; border:none; border-radius:4px; padding:5px 12px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:11px; letter-spacing:1.5px; cursor:pointer">DRAFT</button>
+          </div>
+        </div>
+        <div style="font-family:'Courier Prime',monospace; font-size:10px; color:#8A7A4D; margin-top:14px">↳ live version with working DRAFT buttons runs in Concept B below</div>
+      </div>
+
+      <!-- V6 Scouting sheet -->
+      <div style="grid-column:1 / -1; background:#FBF8EF; border:1px solid #C6BA9D; border-radius:12px; padding:20px; box-shadow:0 2px 10px rgba(56,42,16,0.08)">
+        <div style="font-weight:700; font-size:16px; letter-spacing:0.5px">6 · THE SCOUTING SHEET</div>
+        <div style="font-family:'Courier Prime',monospace; font-size:10px; color:#8A7A4D; margin:2px 0 16px">USE: expanded player view — research mode, pre-draft prep</div>
+        <div style="display:flex; gap:22px; background:#FBF6E7; border:1px solid #CFC3A3; border-radius:8px; padding:18px; flex-wrap:wrap; max-width:760px">
+          <div style="flex:0 0 170px; display:flex; flex-direction:column; gap:8px">
+            <div style="height:128px; border:1px solid #CFC3A3; border-radius:4px; background:repeating-linear-gradient(45deg, #EDE4CA 0 10px, #F4EDD9 10px 20px); display:flex; align-items:center; justify-content:center"><span style="font-family:'Courier Prime',monospace; font-size:10px; color:#8A7A4D">[ player photo ]</span></div>
+            <div style="font-family:'Alfa Slab One',serif; font-size:17px; line-height:1.15">PUKA NACUA</div>
+            <div style="display:flex; align-items:center; gap:8px">
+              <span style="width:34px; text-align:center; background:oklch(0.52 0.13 250); color:#F6EFDC; border-radius:3px; font-weight:700; font-size:10px; letter-spacing:1px; padding:3px 0">WR</span>
+              <span style="font-family:'Courier Prime',monospace; font-size:11px; color:#473D28">LAR · BYE 8 · ADP 7</span>
+            </div>
+          </div>
+          <div style="flex:1 1 300px; min-width:280px; display:flex; flex-direction:column; gap:11px">
+            <div>
+              <div style="display:flex; justify-content:space-between; font-family:'Courier Prime',monospace; font-size:10px; color:#473D28; margin-bottom:4px"><span>TARGET SHARE</span><span>27% · pos avg 19%</span></div>
+              <div style="position:relative; height:10px; background:#EAE0C4; border-radius:99px"><div style="position:absolute; inset:0 auto 0 0; width:86%; background:oklch(0.52 0.13 250); border-radius:99px"></div><div style="position:absolute; top:-2px; bottom:-2px; left:61%; width:2px; background:#221C12"></div></div>
+            </div>
+            <div>
+              <div style="display:flex; justify-content:space-between; font-family:'Courier Prime',monospace; font-size:10px; color:#473D28; margin-bottom:4px"><span>YARDS / GAME</span><span>88.4 · pos avg 54.1</span></div>
+              <div style="position:relative; height:10px; background:#EAE0C4; border-radius:99px"><div style="position:absolute; inset:0 auto 0 0; width:92%; background:oklch(0.52 0.13 250); border-radius:99px"></div><div style="position:absolute; top:-2px; bottom:-2px; left:56%; width:2px; background:#221C12"></div></div>
+            </div>
+            <div>
+              <div style="display:flex; justify-content:space-between; font-family:'Courier Prime',monospace; font-size:10px; color:#473D28; margin-bottom:4px"><span>RED ZONE LOOKS</span><span>1.4/gm · pos avg 1.1</span></div>
+              <div style="position:relative; height:10px; background:#EAE0C4; border-radius:99px"><div style="position:absolute; inset:0 auto 0 0; width:68%; background:oklch(0.52 0.13 250); border-radius:99px"></div><div style="position:absolute; top:-2px; bottom:-2px; left:54%; width:2px; background:#221C12"></div></div>
+            </div>
+            <div>
+              <div style="font-family:'Courier Prime',monospace; font-size:10px; color:#473D28; margin-bottom:5px">FIRST FIVE WEEKS</div>
+              <div style="display:flex; gap:6px">
+                <span style="background:oklch(0.92 0.05 150); border-radius:4px; padding:4px 8px; font-family:'Courier Prime',monospace; font-size:10px">W1 vs HOU</span>
+                <span style="background:oklch(0.92 0.05 150); border-radius:4px; padding:4px 8px; font-family:'Courier Prime',monospace; font-size:10px">W2 @ TEN</span>
+                <span style="background:oklch(0.92 0.07 85); border-radius:4px; padding:4px 8px; font-family:'Courier Prime',monospace; font-size:10px">W3 vs SF</span>
+                <span style="background:oklch(0.92 0.05 150); border-radius:4px; padding:4px 8px; font-family:'Courier Prime',monospace; font-size:10px">W4 @ ARI</span>
+                <span style="background:oklch(0.9 0.06 30); border-radius:4px; padding:4px 8px; font-family:'Courier Prime',monospace; font-size:10px">W5 vs DET</span>
+              </div>
+            </div>
+            <div style="font-family:'Courier Prime',monospace; font-style:italic; font-size:11px; line-height:1.55; border-top:1px dashed #B9AC8B; padding-top:9px">Scout's note: route savant — wins early, wins late. Soft opening slate; start him from Week 1.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 03 BOARDS HEADING ============ -->
+  <div style="max-width:1480px; margin:38px auto 0; padding:0 32px">
+    <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:12px">
+      <span style="font-family:'Courier Prime',monospace; font-size:13px; letter-spacing:3px; color:#A93E26; font-weight:700">03</span>
+      <h2 style="font-family:'Alfa Slab One',serif; font-size:24px; font-weight:400; margin:0; letter-spacing:1px">THE BOARDS — FOUR CONCEPTS</h2>
+      <span style="font-family:'Courier Prime',monospace; font-size:11px; color:#8A7A4D">one live engine · controls stick below as you scroll</span>
+    </div>
+  </div>
+
+  <!-- ============ CONTROL BAR (sticky) ============ -->
+  <div data-screen-label="Draft Controls" style="position:sticky; top:0; z-index:80; background:#221C12; border-top:1px solid rgba(244,236,215,0.15); border-bottom:3px solid #A93E26; box-shadow:0 8px 22px rgba(30,22,8,0.35)">
+    <div style="max-width:1480px; margin:0 auto; padding:10px 32px; display:flex; flex-wrap:wrap; align-items:center; gap:16px; color:#F4ECD7">
+      <span style="font-family:'Courier Prime',monospace; font-size:10px; letter-spacing:2.5px; color:#C9A45C">LIVE<br>ENGINE</span>
+      <div style="display:flex; align-items:center; gap:6px; border:1px solid rgba(244,236,215,0.3); border-radius:6px; padding:3px 6px">
+        <button onClick="{{ decTeams }}" style="background:transparent; border:none; color:#F4ECD7; font-size:18px; font-weight:700; cursor:pointer; padding:2px 8px; font-family:'Barlow Condensed',sans-serif">−</button>
+        <span style="font-weight:700; font-size:15px; letter-spacing:1px; min-width:70px; text-align:center">{{ teamCount }} TEAMS</span>
+        <button onClick="{{ incTeams }}" style="background:transparent; border:none; color:#F4ECD7; font-size:18px; font-weight:700; cursor:pointer; padding:2px 8px; font-family:'Barlow Condensed',sans-serif">+</button>
+      </div>
+      <div style="display:flex; border:1px solid rgba(244,236,215,0.3); border-radius:6px; overflow:hidden">
+        <sc-for list="{{ fmtBtns }}" as="b" hint-placeholder-count="3">
+          <button onClick="{{ b.onClick }}" style="background:{{ b.bg }}; color:{{ b.color }}; border:none; padding:8px 14px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:13px; letter-spacing:1.5px; cursor:pointer">{{ b.label }}</button>
+        </sc-for>
+      </div>
+      <div style="display:flex; gap:8px">
+        <button onClick="{{ undo }}" style="background:transparent; border:1px solid rgba(244,236,215,0.35); border-radius:6px; color:#F4ECD7; padding:8px 14px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:13px; letter-spacing:1.5px; cursor:pointer">⟲ UNDO</button>
+        <button onClick="{{ advance }}" style="background:#A93E26; border:1px solid #A93E26; border-radius:6px; color:#F6EFDC; padding:8px 16px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:13px; letter-spacing:1.5px; cursor:pointer">SIM PICK ▸</button>
+        <button onClick="{{ toggleAuto }}" style="background:{{ autoBg }}; border:1px solid rgba(244,236,215,0.35); border-radius:6px; color:#F4ECD7; padding:8px 14px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:13px; letter-spacing:1.5px; cursor:pointer">{{ autoLabel }}</button>
+        <button onClick="{{ resetDraft }}" style="background:transparent; border:1px solid rgba(244,236,215,0.2); border-radius:6px; color:rgba(244,236,215,0.6); padding:8px 14px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:13px; letter-spacing:1.5px; cursor:pointer">RESET</button>
+      </div>
+      <div style="margin-left:auto; text-align:right">
+        <div style="font-family:'Courier Prime',monospace; font-size:11px; color:#C9A45C">{{ statusLine }}</div>
+        <div style="font-weight:700; font-size:16px; letter-spacing:0.5px">ON THE CLOCK: {{ clockTeam }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ CONCEPT A — THE WALL ============ -->
+  <div data-screen-label="Concept A — The Wall" style="max-width:1480px; margin:28px auto 0; padding:0 32px">
+    <div style="background:#FBF8EF; border:1px solid #C6BA9D; border-radius:12px; padding:26px; box-shadow:0 2px 10px rgba(56,42,16,0.08)">
+      <div style="display:flex; flex-wrap:wrap; align-items:baseline; gap:14px">
+        <span style="font-family:'Courier Prime',monospace; font-size:11px; letter-spacing:2.5px; color:#A93E26; font-weight:700">CONCEPT A · THE FAMILIAR ONE</span>
+      </div>
+      <h3 style="font-family:'Alfa Slab One',serif; font-size:28px; font-weight:400; margin:6px 0 0; letter-spacing:1px">THE WALL</h3>
+      <div style="font-size:15px; line-height:1.6; color:#473D28; max-width:760px; margin-top:6px">The classic sticker wall every league knows — teams across, rounds down, snake arrows on the rail. Position tint + left bar makes runs jump out instantly. Tap any sticker for the player card. On the phone it's the same wall: sticky round rail, swipe sideways.</div>
+      <div style="font-family:'Courier Prime',monospace; font-size:10px; color:#8A7A4D; margin-top:6px">BEST FOR: full-league overview · spotting positional runs · the “war room wall” feeling</div>
+      <div style="display:flex; flex-wrap:wrap; gap:28px; margin-top:22px; align-items:flex-start">
+        <div style="flex:1 1 720px; min-width:0">
+          <div style="font-family:'Courier Prime',monospace; font-size:10px; letter-spacing:2px; color:#8A7A4D; margin-bottom:8px">DESKTOP</div>
+          <div style="background:#262019; border-radius:10px; padding:14px; border:1px solid #16120B; box-shadow:inset 0 0 0 1px rgba(246,239,220,0.06)">
+            <div style="display:grid; grid-template-columns:44px repeat({{ teamCount }}, minmax(0,1fr)); gap:4px; margin-bottom:6px">
+              <div></div>
+              <sc-for list="{{ teams }}" as="team" hint-placeholder-count="10">
+                <div style="text-align:center; padding:6px 2px 7px; background:rgba(246,239,220,0.07); border-radius:5px; min-width:0">
+                  <div style="font-weight:700; font-size:13px; letter-spacing:1px; color:#F4ECD7; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ team.abbr }}</div>
+                  <div style="font-family:'Courier Prime',monospace; font-size:9px; color:rgba(244,236,215,0.45)">{{ team.slotLabel }} {{ team.budgetLabel }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <sc-for list="{{ board }}" as="round" hint-placeholder-count="4">
+              <div style="display:grid; grid-template-columns:44px repeat({{ teamCount }}, minmax(0,1fr)); gap:4px; margin-bottom:4px">
+                <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; color:rgba(244,236,215,0.55)">
+                  <span style="font-family:'Courier Prime',monospace; font-weight:700; font-size:12px">{{ round.n }}</span>
+                  <span style="font-size:12px; color:#C9A45C; line-height:1">{{ round.dir }}</span>
+                </div>
+                <sc-for list="{{ round.cells }}" as="cell" hint-placeholder-count="10">
+                  <div onClick="{{ cell.onClick }}" style="position:relative; min-height:48px; border-radius:5px; padding:5px 7px 4px; border-left:4px solid {{ cell.bar }}; background:{{ cell.bg }}; outline:{{ cell.outline }}; outline-offset:-1px; box-shadow:{{ cell.shadow }}; cursor:{{ cell.cursor }}; overflow:hidden; min-width:0">
+                    <div style="display:flex; justify-content:space-between; align-items:baseline; gap:4px">
+                      <span style="font-weight:600; font-size:12.5px; line-height:1.05; color:{{ cell.nameColor }}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ cell.name }}</span>
+                      <span style="font-family:'Courier Prime',monospace; font-size:9px; color:{{ cell.metaColor }}; flex:0 0 auto">{{ cell.meta }}</span>
+                    </div>
+                    <div style="font-family:'Courier Prime',monospace; font-size:9.5px; color:{{ cell.subColor }}; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ cell.sub }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="flex:0 0 auto">
+          <div style="font-family:'Courier Prime',monospace; font-size:10px; letter-spacing:2px; color:#8A7A4D; margin-bottom:8px">PHONE</div>
+          <x-import component="IOSDevice" from="./ios-frame.jsx" dark="{{ true }}" hint-size="402px,874px">
+            <div style="background:#1B1610; min-height:100%; padding:64px 10px 44px; font-family:'Barlow Condensed',sans-serif; box-sizing:border-box">
+              <div style="display:flex; justify-content:space-between; align-items:baseline; padding:0 6px">
+                <span style="font-family:'Alfa Slab One',serif; font-size:18px; color:#F4ECD7; letter-spacing:1px">THE WALL</span>
+                <span style="font-family:'Courier Prime',monospace; font-size:9px; color:#C9A45C">{{ statusLine }}</span>
+              </div>
+              <div style="overflow-x:auto; margin-top:12px">
+                <div style="width:max-content; padding-bottom:8px">
+                  <div style="display:grid; grid-template-columns:30px repeat({{ teamCount }}, 86px); gap:3px; margin-bottom:4px">
+                    <div style="position:sticky; left:0; background:#1B1610; z-index:2"></div>
+                    <sc-for list="{{ teams }}" as="team" hint-placeholder-count="10">
+                      <div style="text-align:center; padding:5px 2px; background:rgba(246,239,220,0.07); border-radius:4px">
+                        <div style="font-weight:700; font-size:11px; letter-spacing:0.5px; color:#F4ECD7">{{ team.abbr }}</div>
+                        <div style="font-family:'Courier Prime',monospace; font-size:8px; color:rgba(244,236,215,0.45)">{{ team.slotLabel }} {{ team.budgetLabel }}</div>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <sc-for list="{{ board }}" as="round" hint-placeholder-count="4">
+                    <div style="display:grid; grid-template-columns:30px repeat({{ teamCount }}, 86px); gap:3px; margin-bottom:3px">
+                      <div style="position:sticky; left:0; background:#1B1610; z-index:2; display:flex; flex-direction:column; align-items:center; justify-content:center; color:rgba(244,236,215,0.55)">
+                        <span style="font-family:'Courier Prime',monospace; font-weight:700; font-size:10px">{{ round.n }}</span>
+                        <span style="font-size:10px; color:#C9A45C; line-height:1">{{ round.dir }}</span>
+                      </div>
+                      <sc-for list="{{ round.cells }}" as="cell" hint-placeholder-count="10">
+                        <div onClick="{{ cell.onClick }}" style="min-height:42px; border-radius:4px; padding:4px 6px 3px; border-left:3px solid {{ cell.bar }}; background:{{ cell.bg }}; outline:{{ cell.outline }}; outline-offset:-1px; cursor:{{ cell.cursor }}; overflow:hidden">
+                          <div style="display:flex; justify-content:space-between; align-items:baseline; gap:3px">
+                            <span style="font-weight:600; font-size:10.5px; line-height:1.05; color:{{ cell.nameColor }}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ cell.name }}</span>
+                            <span style="font-family:'Courier Prime',monospace; font-size:8px; color:{{ cell.metaColor }}; flex:0 0 auto">{{ cell.meta }}</span>
+                          </div>
+                          <div style="font-family:'Courier Prime',monospace; font-size:8.5px; color:{{ cell.subColor }}; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ cell.sub }}</div>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="font-family:'Courier Prime',monospace; font-size:9px; color:rgba(244,236,215,0.4); text-align:center; margin-top:8px">swipe sideways · round rail stays put</div>
+            </div>
+          </x-import>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ CONCEPT B — BROADCAST DESK ============ -->
+  <div data-screen-label="Concept B — Broadcast Desk" style="max-width:1480px; margin:28px auto 0; padding:0 32px">
+    <div style="background:#FBF8EF; border:1px solid #C6BA9D; border-radius:12px; padding:26px; box-shadow:0 2px 10px rgba(56,42,16,0.08)">
+      <span style="font-family:'Courier Prime',monospace; font-size:11px; letter-spacing:2.5px; color:#A93E26; font-weight:700">CONCEPT B · THE ONE YOU DRAFT FROM</span>
+      <h3 style="font-family:'Alfa Slab One',serif; font-size:28px; font-weight:400; margin:6px 0 0; letter-spacing:1px">THE BROADCAST DESK</h3>
+      <div style="font-size:15px; line-height:1.6; color:#473D28; max-width:760px; margin-top:6px">Not a wall — a workspace. The clock panel, the current round, and the best-available queue sit side by side, with a last-picks ticker on top. DRAFT buttons are live: make your pick straight from the queue. This is the screen you actually hold during your turn.</div>
+      <div style="font-family:'Courier Prime',monospace; font-size:10px; color:#8A7A4D; margin-top:6px">BEST FOR: making picks under the clock · phone-first drafting · queue management</div>
+      <div style="display:flex; flex-wrap:wrap; gap:28px; margin-top:22px; align-items:flex-start">
+        <div style="flex:1 1 720px; min-width:0">
+          <div style="font-family:'Courier Prime',monospace; font-size:10px; letter-spacing:2px; color:#8A7A4D; margin-bottom:8px">DESKTOP</div>
+          <div style="background:#EFE7D2; border:1px solid #D2C6A6; border-radius:10px; padding:14px">
+            <div style="display:flex; align-items:center; gap:12px; background:#221C12; border-radius:7px; padding:9px 14px; overflow:hidden">
+              <span style="width:8px; height:8px; border-radius:50%; background:#C8502E; animation:pulseDot 1.6s infinite; flex:0 0 auto"></span>
+              <span style="font-family:'Courier Prime',monospace; font-size:10px; letter-spacing:2px; color:#C9A45C; flex:0 0 auto">LAST PICKS</span>
+              <div style="display:flex; gap:18px; overflow:hidden">
+                <sc-for list="{{ ticker }}" as="t" hint-placeholder-count="5">
+                  <span style="display:flex; align-items:center; gap:6px; flex:0 0 auto; font-size:13px; color:#F4ECD7">
+                    <span style="font-family:'Courier Prime',monospace; font-size:10px; color:#C9A45C">{{ t.label }}</span>
+                    <span style="width:8px; height:8px; border-radius:2px; background:{{ t.posColor }}"></span>
+                    <span style="font-weight:600">{{ t.name }}</span>
+                  </span>
+                </sc-for>
+              </div>
+            </div>
+            <div style="display:grid; grid-template-columns:260px minmax(0,1fr) 330px; gap:12px; margin-top:12px">
+              <div style="background:#221C12; border-radius:8px; padding:18px; color:#F4ECD7; display:flex; flex-direction:column; gap:5px">
+                <span style="font-family:'Courier Prime',monospace; font-size:10px; letter-spacing:2.5px; color:#C9A45C">ON THE CLOCK</span>
+                <span style="font-family:'Alfa Slab One',serif; font-size:23px; line-height:1.15">{{ clockTeam }}</span>
+                <span style="font-family:'Courier Prime',monospace; font-size:10px; color:rgba(244,236,215,0.55)">{{ statusLine }}</span>
+                <div style="font-family:'Alfa Slab One',serif; font-size:54px; color:#E2A33C; margin:8px 0 0; line-height:1">{{ timer }}</div>
+                <span style="font-family:'Courier Prime',monospace; font-size:10px; color:rgba(244,236,215,0.55); margin-top:10px">{{ nextUp }}</span>
+              </div>
+              <div style="background:#FBF8EF; border:1px solid #D8CDB0; border-radius:8px; padding:14px; min-width:0">
+                <div style="display:flex; justify-content:space-between; align-items:baseline">
+                  <span style="font-weight:700; font-size:15px; letter-spacing:1.5px">ROUND {{ curRound }}</span>
+                  <span style="font-family:'Courier Prime',monospace; font-size:9px; color:#8A7A4D">tap a pick for its card</span>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:5px; margin-top:10px">
+                  <sc-for list="{{ roundStrip }}" as="rp" hint-placeholder-count="10">
+                    <div onClick="{{ rp.onClick }}" style="display:flex; align-items:center; gap:10px; background:{{ rp.bg }}; border-left:4px solid {{ rp.bar }}; border-radius:5px; padding:6px 10px; cursor:{{ rp.cursor }}">
+                      <span style="font-family:'Courier Prime',monospace; font-weight:700; font-size:11px; width:36px; flex:0 0 auto">{{ rp.pickShort }}</span>
+                      <span style="font-weight:700; font-size:12px; letter-spacing:1px; width:36px; flex:0 0 auto; color:#473D28">{{ rp.abbr }}</span>
+                      <span style="flex:1; min-width:0; font-weight:600; font-size:14px; color:{{ rp.nameColor }}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ rp.name }}</span>
+                      <span style="font-family:'Courier Prime',monospace; font-size:9px; color:#8A7A4D; flex:0 0 auto">{{ rp.sub }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="background:#FBF8EF; border:1px solid #D8CDB0; border-radius:8px; padding:14px">
+                <div style="font-weight:700; font-size:15px; letter-spacing:1.5px">BEST AVAILABLE</div>
+                <div style="display:flex; gap:6px; margin-top:9px">
+                  <sc-for list="{{ chips }}" as="ch" hint-placeholder-count="5">
+                    <button onClick="{{ ch.onClick }}" style="background:{{ ch.bg }}; color:{{ ch.color }}; border:1px solid #221C12; border-radius:999px; padding:3px 12px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:12px; letter-spacing:1px; cursor:pointer">{{ ch.label }}</button>
+                  </sc-for>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:5px; margin-top:10px">
+                  <sc-for list="{{ queue }}" as="q" hint-placeholder-count="6">
+                    <div style="display:flex; align-items:center; gap:7px; background:#F6F0DE; border:1px solid #E2D8BC; border-radius:5px; padding:6px 8px">
+                      <span style="font-family:'Courier Prime',monospace; font-size:10px; color:#8A7A4D; width:20px; text-align:right; flex:0 0 auto">{{ q.rank }}</span>
+                      <span style="width:30px; text-align:center; background:{{ q.posColor }}; color:#F6EFDC; border-radius:3px; font-weight:700; font-size:10px; letter-spacing:1px; padding:2px 0; flex:0 0 auto">{{ q.pos }}</span>
+                      <span onClick="{{ q.onOpen }}" style="flex:1; min-width:0; font-weight:600; font-size:13.5px; cursor:pointer; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ q.name }}</span>
+                      <span style="font-family:'Courier Prime',monospace; font-size:9px; color:#8A7A4D; flex:0 0 auto">{{ q.sub }}</span>
+                      <span style="font-family:'Courier Prime',monospace; font-weight:700; font-size:10px; color:#7B6741; flex:0 0 auto">{{ q.price }}</span>
+                      <button onClick="{{ q.onDraft }}" style="background:#A93E26; color:#F6EFDC; border:none; border-radius:4px; padding:4px 10px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:11px; letter-spacing:1.5px; cursor:pointer; flex:0 0 auto">DRAFT</button>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="flex:0 0 auto">
+          <div style="font-family:'Courier Prime',monospace; font-size:10px; letter-spacing:2px; color:#8A7A4D; margin-bottom:8px">PHONE</div>
+          <x-import component="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+            <div style="background:#F1EAD7; min-height:100%; padding:60px 12px 44px; font-family:'Barlow Condensed',sans-serif; color:#221C12; box-sizing:border-box">
+              <div style="background:#221C12; border-radius:10px; padding:12px 14px; color:#F4ECD7; display:flex; align-items:center; gap:12px">
+                <div style="flex:1; min-width:0">
+                  <div style="font-family:'Courier Prime',monospace; font-size:9px; letter-spacing:2px; color:#C9A45C">ON THE CLOCK</div>
+                  <div style="font-family:'Alfa Slab One',serif; font-size:17px; line-height:1.15; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ clockTeam }}</div>
+                  <div style="font-family:'Courier Prime',monospace; font-size:8.5px; color:rgba(244,236,215,0.55); margin-top:2px">{{ statusLine }}</div>
+                </div>
+                <div style="font-family:'Alfa Slab One',serif; font-size:34px; color:#E2A33C">{{ timer }}</div>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:baseline; margin-top:14px; padding:0 2px">
+                <span style="font-weight:700; font-size:14px; letter-spacing:1.5px">ROUND {{ curRound }}</span>
+                <span style="font-family:'Courier Prime',monospace; font-size:9px; color:#8A7A4D">{{ nextUp }}</span>
+              </div>
+              <div style="overflow-x:auto; margin-top:8px">
+                <div style="display:flex; gap:6px; width:max-content; padding-bottom:6px">
+                  <sc-for list="{{ roundStrip }}" as="rp" hint-placeholder-count="10">
+                    <div onClick="{{ rp.onClick }}" style="width:106px; background:{{ rp.bg }}; border-left:4px solid {{ rp.bar }}; border-radius:6px; padding:7px 8px; cursor:{{ rp.cursor }}; flex:0 0 auto">
+                      <div style="display:flex; justify-content:space-between; font-family:'Courier Prime',monospace; font-size:9px; color:#8A7A4D"><span style="font-weight:700">{{ rp.pickShort }}</span><span>{{ rp.abbr }}</span></div>
+                      <div style="font-weight:600; font-size:12.5px; color:{{ rp.nameColor }}; margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ rp.name }}</div>
+                      <div style="font-family:'Courier Prime',monospace; font-size:8.5px; color:#8A7A4D; margin-top:2px">{{ rp.sub }}</div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; padding:0 2px">
+                <span style="font-weight:700; font-size:14px; letter-spacing:1.5px">BEST AVAILABLE</span>
+                <div style="display:flex; gap:5px">
+                  <sc-for list="{{ chips }}" as="ch" hint-placeholder-count="5">
+                    <button onClick="{{ ch.onClick }}" style="background:{{ ch.bg }}; color:{{ ch.color }}; border:1px solid #221C12; border-radius:999px; padding:2px 9px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:11px; letter-spacing:0.5px; cursor:pointer">{{ ch.label }}</button>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="display:flex; flex-direction:column; gap:5px; margin-top:8px">
+                <sc-for list="{{ queue }}" as="q" hint-placeholder-count="6">
+                  <div style="display:flex; align-items:center; gap:7px; background:#FBF8EF; border:1px solid #E2D8BC; border-radius:6px; padding:8px 8px">
+                    <span style="width:30px; text-align:center; background:{{ q.posColor }}; color:#F6EFDC; border-radius:3px; font-weight:700; font-size:10px; letter-spacing:1px; padding:3px 0; flex:0 0 auto">{{ q.pos }}</span>
+                    <span onClick="{{ q.onOpen }}" style="flex:1; min-width:0; font-weight:600; font-size:14px; cursor:pointer; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ q.name }}</span>
+                    <span style="font-family:'Courier Prime',monospace; font-size:9px; color:#8A7A4D; flex:0 0 auto">{{ q.adp }}</span>
+                    <button onClick="{{ q.onDraft }}" style="background:#A93E26; color:#F6EFDC; border:none; border-radius:5px; padding:6px 11px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:11px; letter-spacing:1.5px; cursor:pointer; flex:0 0 auto">DRAFT</button>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </x-import>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ CONCEPT C — LOCKER ROOM ============ -->
+  <div data-screen-label="Concept C — Locker Room" style="max-width:1480px; margin:28px auto 0; padding:0 32px">
+    <div style="background:#FBF8EF; border:1px solid #C6BA9D; border-radius:12px; padding:26px; box-shadow:0 2px 10px rgba(56,42,16,0.08)">
+      <span style="font-family:'Courier Prime',monospace; font-size:11px; letter-spacing:2.5px; color:#A93E26; font-weight:700">CONCEPT C · ROSTER-FIRST</span>
+      <h3 style="font-family:'Alfa Slab One',serif; font-size:28px; font-weight:400; margin:6px 0 0; letter-spacing:1px">THE LOCKER ROOM</h3>
+      <div style="font-size:15px; line-height:1.6; color:#473D28; max-width:760px; margin-top:6px">Flips the board on its side: every team is a pennant with its roster hanging under it. You stop reading picks and start reading <i>teams</i> — who's RB-heavy, who skipped TE, who's hoarding budget. In auction mode each pennant shows remaining cash. On the phone, pennants become tabs.</div>
+      <div style="font-family:'Courier Prime',monospace; font-size:10px; color:#8A7A4D; margin-top:6px">BEST FOR: roster needs at a glance · auction budgets · post-draft recap</div>
+      <div style="display:flex; flex-wrap:wrap; gap:28px; margin-top:22px; align-items:flex-start">
+        <div style="flex:1 1 720px; min-width:0">
+          <div style="font-family:'Courier Prime',monospace; font-size:10px; letter-spacing:2px; color:#8A7A4D; margin-bottom:8px">DESKTOP</div>
+          <div style="background:#EFE7D2; border:1px solid #D2C6A6; border-radius:10px; padding:16px; overflow-x:auto">
+            <div style="display:grid; grid-template-columns:repeat({{ teamCount }}, minmax(102px, 1fr)); gap:10px">
+              <sc-for list="{{ teams }}" as="team" hint-placeholder-count="10">
+                <div style="min-width:0; display:flex; flex-direction:column">
+                  <div style="background:#221C12; color:#F4ECD7; clip-path:polygon(0 0, 100% 0, 100% 74%, 50% 100%, 0 74%); padding:9px 4px 24px; text-align:center">
+                    <div style="font-weight:700; font-size:15px; letter-spacing:2px">{{ team.abbr }}</div>
+                    <div style="font-family:'Courier Prime',monospace; font-size:9px; color:#C9A45C">{{ team.slotLabel }}</div>
+                    <div style="font-family:'Courier Prime',monospace; font-weight:700; font-size:11px; color:#E2A33C">{{ team.budgetLabel }}</div>
+                  </div>
+                  <div style="display:flex; flex-direction:column; gap:4px; margin-top:8px">
+                    <sc-for list="{{ team.picks }}" as="pk" hint-placeholder-count="2">
+                      <div onClick="{{ pk.onClick }}" style="background:{{ pk.tint }}; border-left:3px solid {{ pk.posColor }}; border-radius:4px; padding:5px 6px; cursor:pointer">
+                        <div style="font-weight:600; font-size:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ pk.name }}</div>
+                        <div style="display:flex; justify-content:space-between; font-family:'Courier Prime',monospace; font-size:9px; color:#6A5C3C; margin-top:1px"><span>{{ pk.pos }}</span><span>{{ pk.meta }}</span></div>
+                      </div>
+                    </sc-for>
+                    <div style="font-family:'Courier Prime',monospace; font-size:9px; color:#9A8C66; text-align:center; padding:2px">{{ team.emptyLabel }}</div>
+                  </div>
+                  <div style="font-family:'Courier Prime',monospace; font-size:8.5px; color:#8A7A4D; text-align:center; border-top:1px dashed #C6BA9D; margin-top:4px; padding-top:5px; white-space:nowrap; overflow:hidden">{{ team.needs }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+        <div style="flex:0 0 auto">
+          <div style="font-family:'Courier Prime',monospace; font-size:10px; letter-spacing:2px; color:#8A7A4D; margin-bottom:8px">PHONE</div>
+          <x-import component="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+            <div style="background:#F1EAD7; min-height:100%; padding:60px 12px 44px; font-family:'Barlow Condensed',sans-serif; color:#221C12; box-sizing:border-box">
+              <div style="display:flex; justify-content:space-between; align-items:baseline; padding:0 4px">
+                <span style="font-family:'Alfa Slab One',serif; font-size:18px; letter-spacing:1px">LOCKER ROOM</span>
+                <span style="font-family:'Courier Prime',monospace; font-size:9px; color:#8A7A4D">ROUND {{ curRound }}</span>
+              </div>
+              <div style="overflow-x:auto; margin-top:10px">
+                <div style="display:flex; gap:6px; width:max-content; padding:2px">
+                  <sc-for list="{{ teamTabs }}" as="tt" hint-placeholder-count="10">
+                    <button onClick="{{ tt.onClick }}" style="background:{{ tt.bg }}; color:{{ tt.color }}; border:1px solid #221C12; border-radius:999px; padding:5px 14px; flex:0 0 auto; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:12px; letter-spacing:1px; cursor:pointer">{{ tt.abbr }}</button>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="background:#FBF8EF; border:1px solid #D8CDB0; border-radius:10px; padding:14px; margin-top:10px">
+                <div style="display:flex; justify-content:space-between; align-items:center">
+                  <div>
+                    <div style="font-family:'Alfa Slab One',serif; font-size:17px; line-height:1.15">{{ activeTeam.name }}</div>
+                    <div style="font-family:'Courier Prime',monospace; font-size:9.5px; color:#8A7A4D; margin-top:2px">DRAFT SLOT {{ activeTeam.slotLabel }} · {{ activeTeam.needs }}</div>
+                  </div>
+                  <div style="font-family:'Courier Prime',monospace; font-weight:700; font-size:15px; color:#A93E26">{{ activeTeam.budgetLabel }}</div>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:6px; margin-top:12px">
+                  <sc-for list="{{ activeTeam.picks }}" as="pk" hint-placeholder-count="3">
+                    <div onClick="{{ pk.onClick }}" style="display:flex; align-items:center; gap:9px; background:{{ pk.tint }}; border-left:4px solid {{ pk.posColor }}; border-radius:6px; padding:9px 10px; cursor:pointer">
+                      <span style="width:34px; text-align:center; background:{{ pk.posColor }}; color:#F6EFDC; border-radius:3px; font-weight:700; font-size:10px; letter-spacing:1px; padding:3px 0; flex:0 0 auto">{{ pk.pos }}</span>
+                      <span style="flex:1; min-width:0; font-weight:600; font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">{{ pk.name }}</span>
+                      <span style="font-family:'Courier Prime',monospace; font-size:10px; color:#6A5C3C; flex:0 0 auto">{{ pk.meta }}</span>
+                    </div>
+                  </sc-for>
+                  <div style="font-family:'Courier Prime',monospace; font-size:10px; color:#9A8C66; text-align:center; padding:6px">{{ activeTeam.emptyLabel }}</div>
+                </div>
+              </div>
+              <div style="font-family:'Courier Prime',monospace; font-size:9px; color:#8A7A4D; text-align:center; margin-top:10px">tap a pennant tab to inspect any roster</div>
+            </div>
+          </x-import>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ CONCEPT D — FLIP BOARD ============ -->
+  <div data-screen-label="Concept D — Flip Board" style="max-width:1480px; margin:28px auto 0; padding:0 32px">
+    <div style="background:#FBF8EF; border:1px solid #C6BA9D; border-radius:12px; padding:26px; box-shadow:0 2px 10px rgba(56,42,16,0.08)">
+      <span style="font-family:'Courier Prime',monospace; font-size:11px; letter-spacing:2.5px; color:#A93E26; font-weight:700">CONCEPT D · THE WILD ONE</span>
+      <h3 style="font-family:'Alfa Slab One',serif; font-size:28px; font-weight:400; margin:6px 0 0; letter-spacing:1px">THE FLIP BOARD</h3>
+      <div style="font-size:15px; line-height:1.6; color:#473D28; max-width:760px; margin-top:6px">Draft night as a split-flap stadium departures board. The current round is the whole show: each pick clatters in letter by letter (hit SIM PICK ▸ above to watch). Pure theater for the live moment — pair it with Concept B's queue for actually making your pick.</div>
+      <div style="font-family:'Courier Prime',monospace; font-size:10px; color:#8A7A4D; margin-top:6px">BEST FOR: the live pick reveal · draft-party TV mode · big-moment drama</div>
+      <div style="display:flex; flex-wrap:wrap; gap:28px; margin-top:22px; align-items:flex-start">
+        <div style="flex:1 1 720px; min-width:0">
+          <div style="font-family:'Courier Prime',monospace; font-size:10px; letter-spacing:2px; color:#8A7A4D; margin-bottom:8px">DESKTOP / TV</div>
+          <div style="background:#15110A; border-radius:12px; padding:22px; border:6px solid #2E2517; box-shadow:inset 0 0 50px rgba(0,0,0,0.55)">
+            <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:10px">
+              <span style="font-family:'Alfa Slab One',serif; font-size:22px; color:#E8D9AE; letter-spacing:3px">THE BIG BOARD</span>
+              <span style="display:flex; align-items:center; gap:8px; font-family:'Courier Prime',monospace; font-size:11px; letter-spacing:1.5px; color:#C9A45C">
+                <span style="width:7px; height:7px; border-radius:50%; background:#C8502E; animation:pulseDot 1.4s infinite"></span>
+                ROUND {{ curRound }} · ON THE CLOCK: {{ clockAbbr }}
+              </span>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:6px; margin-top:18px">
+              <sc-for list="{{ flipRows }}" as="row" hint-placeholder-count="10">
+                <div style="display:flex; align-items:center; gap:9px; padding:5px 8px; border-radius:5px; outline:{{ row.rowOutline }}">
+                  <span style="font-family:'Courier Prime',monospace; font-weight:700; font-size:12px; color:#C9A45C; width:40px; flex:0 0 auto">{{ row.pickShort }}</span>
+                  <span style="font-weight:700; font-size:13px; letter-spacing:1px; color:#E8D9AE; width:42px; flex:0 0 auto">{{ row.abbr }}</span>
+                  <div style="display:flex; gap:3px; flex:0 0 auto">
+                    <sc-for list="{{ row.tiles }}" as="tile" hint-placeholder-count="12">
+                      <span style="width:24px; height:32px; border-radius:3px; background:linear-gradient(#352C1D, #281F13 48%, #1D150C 52%, #2A2114); display:flex; align-items:center; justify-content:center; font-family:'Courier Prime',monospace; font-weight:700; font-size:16px; color:#F2E3B6; box-shadow:0 1px 0 rgba(0,0,0,0.6); animation:{{ tile.anim }}">{{ tile.ch }}</span>
+                    </sc-for>
+                  </div>
+                  <span style="width:42px; text-align:center; background:{{ row.posColor }}; color:#F6EFDC; border-radius:3px; font-weight:700; font-size:11px; letter-spacing:1px; padding:4px 0; flex:0 0 auto">{{ row.pos }}</span>
+                  <span style="font-family:'Courier Prime',monospace; font-size:10px; letter-spacing:2px; color:#E2A33C; animation:pulseDot 1.4s infinite">{{ row.clock }}</span>
+                </div>
+              </sc-for>
+            </div>
+            <div style="font-family:'Courier Prime',monospace; font-size:9px; letter-spacing:2px; color:rgba(232,217,174,0.35); text-align:center; margin-top:16px">EVERY PICK FLIPS IN LIVE · MOCK DRAFT CO. STADIUM SERIES</div>
+          </div>
+        </div>
+        <div style="flex:0 0 auto">
+          <div style="font-family:'Courier Prime',monospace; font-size:10px; letter-spacing:2px; color:#8A7A4D; margin-bottom:8px">PHONE</div>
+          <x-import component="IOSDevice" from="./ios-frame.jsx" dark="{{ true }}" hint-size="402px,874px">
+            <div style="background:#15110A; min-height:100%; padding:64px 10px 44px; font-family:'Barlow Condensed',sans-serif; box-sizing:border-box">
+              <div style="display:flex; justify-content:space-between; align-items:baseline; padding:0 4px">
+                <span style="font-family:'Alfa Slab One',serif; font-size:16px; color:#E8D9AE; letter-spacing:2px">THE BIG BOARD</span>
+                <span style="font-family:'Courier Prime',monospace; font-size:9px; color:#C9A45C">RD {{ curRound }} · {{ clockAbbr }}</span>
+              </div>
+              <div style="display:flex; flex-direction:column; gap:5px; margin-top:14px">
+                <sc-for list="{{ flipRows }}" as="row" hint-placeholder-count="10">
+                  <div style="display:flex; align-items:center; gap:6px; padding:4px 5px; border-radius:4px; outline:{{ row.rowOutline }}">
+                    <span style="font-family:'Courier Prime',monospace; font-weight:700; font-size:9.5px; color:#C9A45C; width:28px; flex:0 0 auto">{{ row.pickShort }}</span>
+                    <span style="font-weight:700; font-size:10.5px; letter-spacing:0.5px; color:#E8D9AE; width:30px; flex:0 0 auto">{{ row.abbr }}</span>
+                    <div style="display:flex; gap:2px; flex:0 0 auto">
+                      <sc-for list="{{ row.tiles }}" as="tile" hint-placeholder-count="12">
+                        <span style="width:17px; height:24px; border-radius:2px; background:linear-gradient(#352C1D, #281F13 48%, #1D150C 52%, #2A2114); display:flex; align-items:center; justify-content:center; font-family:'Courier Prime',monospace; font-weight:700; font-size:11px; color:#F2E3B6; box-shadow:0 1px 0 rgba(0,0,0,0.6); animation:{{ tile.anim }}">{{ tile.ch }}</span>
+                      </sc-for>
+                    </div>
+                    <span style="width:28px; text-align:center; background:{{ row.posColor }}; color:#F6EFDC; border-radius:2px; font-weight:700; font-size:9px; letter-spacing:0.5px; padding:3px 0; flex:0 0 auto">{{ row.pos }}</span>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="font-family:'Courier Prime',monospace; font-size:8.5px; letter-spacing:2px; color:rgba(232,217,174,0.35); text-align:center; margin-top:14px">STADIUM SERIES · LIVE</div>
+            </div>
+          </x-import>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ NEXT STEPS ============ -->
+  <div style="max-width:1480px; margin:34px auto 0; padding:0 32px">
+    <div style="background:#221C12; color:#F4ECD7; border-radius:12px; padding:24px 28px">
+      <div style="font-family:'Courier Prime',monospace; font-size:11px; letter-spacing:2.5px; color:#C9A45C; margin-bottom:10px">NEXT STEPS</div>
+      <div style="font-size:15px; line-height:1.8; color:rgba(244,236,215,0.85); max-width:860px">1 — Tell me which board (or combination — e.g. Wall for overview + Broadcast Desk for your turn) and which card treatments to take forward. &nbsp;2 — I'll build the winner as a full standalone screen with real navigation between board / queue / roster views. &nbsp;3 — Then: real ADP data, working pick timer, reach/steal indicators, and keeper or trade states if you need them.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============ PLAYER CARD OVERLAY ============ -->
+<sc-if value="{{ hasSelected }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed; inset:0; z-index:200; background:rgba(20,15,6,0.62); display:flex; align-items:center; justify-content:center; padding:20px">
+    <div style="width:320px; background:#F7F0DC; border:1px solid #B9AC8B; border-radius:12px; padding:11px; box-shadow:0 30px 70px rgba(0,0,0,0.5); font-family:'Barlow Condensed',sans-serif; color:#221C12">
+      <div style="border:3px solid {{ sel.posColor }}; border-radius:8px; background:#FBF6E7; padding:14px; display:flex; flex-direction:column; gap:10px">
+        <div style="display:flex; justify-content:space-between; align-items:center">
+          <span style="background:{{ sel.posColor }}; color:#F6EFDC; font-weight:700; font-size:12px; letter-spacing:2px; padding:3px 10px; border-radius:3px">{{ sel.pos }}</span>
+          <button onClick="{{ closeCard }}" style="background:transparent; border:1px solid #221C12; border-radius:4px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:11px; letter-spacing:1px; padding:3px 9px; cursor:pointer; color:#221C12">✕ CLOSE</button>
+        </div>
+        <div style="font-family:'Alfa Slab One',serif; font-size:21px; line-height:1.15; background:#221C12; color:#F6EFDC; padding:10px 12px; border-radius:4px">{{ sel.name }}</div>
+        <div style="font-weight:600; font-size:14px; letter-spacing:0.5px">{{ sel.sub }}</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; border-top:1px dashed #B9AC8B; padding-top:10px; text-align:center; font-family:'Courier Prime',monospace">
+          <div><div style="font-size:9px; letter-spacing:2px; color:#8A7A4D">ADP</div><div style="font-weight:700; font-size:16px">{{ sel.adp }}</div></div>
+          <div><div style="font-size:9px; letter-spacing:2px; color:#8A7A4D">PROJ</div><div style="font-weight:700; font-size:16px">{{ sel.proj }}</div></div>
+          <div><div style="font-size:9px; letter-spacing:2px; color:#8A7A4D">VALUE</div><div style="font-weight:700; font-size:16px">{{ sel.price }}</div></div>
+        </div>
+        <div style="background:{{ sel.tint }}; border-radius:4px; padding:7px 10px; font-family:'Courier Prime',monospace; font-size:11px; text-align:center">{{ sel.status }}</div>
+      </div>
+    </div>
+  </div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    teamCount: 10,
+    format: 'snake',
+    drafted: Array.from({ length: 23 }, (_, i) => i),
+    selected: null,
+    tab: 0,
+    queueFilter: 'ALL',
+    auto: false
+  };
+
+  POSC = {
+    QB:  { c: 'oklch(0.52 0.13 30)',  tint: 'oklch(0.93 0.035 30)'  },
+    RB:  { c: 'oklch(0.52 0.13 150)', tint: 'oklch(0.93 0.035 150)' },
+    WR:  { c: 'oklch(0.52 0.13 250)', tint: 'oklch(0.93 0.035 250)' },
+    TE:  { c: 'oklch(0.56 0.13 75)',  tint: 'oklch(0.93 0.045 75)'  },
+    K:   { c: 'oklch(0.52 0.13 310)', tint: 'oklch(0.93 0.035 310)' },
+    DST: { c: 'oklch(0.52 0.13 200)', tint: 'oklch(0.93 0.035 200)' }
+  };
+
+  TEAMS14 = [
+    ['Mudtown Mules', 'MUD'], ['Canton Coal', 'COA'], ['Harbor Hawks', 'HRB'],
+    ['Rust City Rockets', 'RST'], ['Big Sky Bandits', 'SKY'], ['Twin Pines Trappers', 'PIN'],
+    ['Granite Gators', 'GRN'], ['Cedar Falls Comets', 'CDR'], ['Old Mill Owls', 'OWL'],
+    ['Prairie Kings', 'PRK'], ['Fort Knox Foxes', 'FOX'], ['Motor City Macks', 'MTR'],
+    ['Dust Bowl Drifters', 'DBD'], ['Bayou Bobcats', 'BAY']
+  ];
+
+  PLAYERS() {
+    if (this._players) return this._players;
+    const top = [
+      ["Ja'Marr Chase", 'WR', 'CIN', 10], ['Bijan Robinson', 'RB', 'ATL', 5], ['Justin Jefferson', 'WR', 'MIN', 6],
+      ['Jahmyr Gibbs', 'RB', 'DET', 8], ['Saquon Barkley', 'RB', 'PHI', 9], ['CeeDee Lamb', 'WR', 'DAL', 7],
+      ['Puka Nacua', 'WR', 'LAR', 8], ['Malik Nabers', 'WR', 'NYG', 14], ['Amon-Ra St. Brown', 'WR', 'DET', 8],
+      ['Christian McCaffrey', 'RB', 'SF', 14], ['Derrick Henry', 'RB', 'BAL', 7], ['Brian Thomas Jr.', 'WR', 'JAX', 8],
+      ['Drake London', 'WR', 'ATL', 5], ['Nico Collins', 'WR', 'HOU', 6], ['Ashton Jeanty', 'RB', 'LV', 8],
+      ['Brock Bowers', 'TE', 'LV', 8], ["De'Von Achane", 'RB', 'MIA', 12], ['Josh Jacobs', 'RB', 'GB', 5],
+      ['A.J. Brown', 'WR', 'PHI', 9], ['Jonathan Taylor', 'RB', 'IND', 11], ['Trey McBride', 'TE', 'ARI', 8],
+      ['Ladd McConkey', 'WR', 'LAC', 5], ['Bucky Irving', 'RB', 'TB', 9], ['Tyreek Hill', 'WR', 'MIA', 12],
+      ['Josh Allen', 'QB', 'BUF', 7], ['Lamar Jackson', 'QB', 'BAL', 7], ['Kyren Williams', 'RB', 'LAR', 8],
+      ['Garrett Wilson', 'WR', 'NYJ', 9], ['Tee Higgins', 'WR', 'CIN', 10], ['Jaxon Smith-Njigba', 'WR', 'SEA', 8],
+      ['Davante Adams', 'WR', 'LAR', 8], ['Terry McLaurin', 'WR', 'WAS', 12], ['James Cook', 'RB', 'BUF', 7],
+      ['Jayden Daniels', 'QB', 'WAS', 12], ['Chase Brown', 'RB', 'CIN', 10], ['Kenneth Walker III', 'RB', 'SEA', 8],
+      ['DK Metcalf', 'WR', 'PIT', 5], ['George Kittle', 'TE', 'SF', 14], ['Mike Evans', 'WR', 'TB', 9],
+      ['Marvin Harrison Jr.', 'WR', 'ARI', 8], ['Jalen Hurts', 'QB', 'PHI', 9], ['Chuba Hubbard', 'RB', 'CAR', 14],
+      ['Joe Burrow', 'QB', 'CIN', 10], ['Alvin Kamara', 'RB', 'NO', 11], ['Breece Hall', 'RB', 'NYJ', 9],
+      ['Xavier Worthy', 'WR', 'KC', 10], ['DeVonta Smith', 'WR', 'PHI', 9], ['Rashee Rice', 'WR', 'KC', 10],
+      ['Sam LaPorta', 'TE', 'DET', 8], ['Courtland Sutton', 'WR', 'DEN', 12], ['Zay Flowers', 'WR', 'BAL', 7],
+      ["D'Andre Swift", 'RB', 'CHI', 5], ['Jaylen Waddle', 'WR', 'MIA', 12], ['Calvin Ridley', 'WR', 'TEN', 10],
+      ['Aaron Jones', 'RB', 'MIN', 6], ['Patrick Mahomes', 'QB', 'KC', 10], ['Tony Pollard', 'RB', 'TEN', 10],
+      ['David Montgomery', 'RB', 'DET', 8], ['T.J. Hockenson', 'TE', 'MIN', 6], ['Travis Hunter', 'WR', 'JAX', 8]
+    ];
+    const list = top.map((t, i) => ({ idx: i, name: t[0], pos: t[1], team: t[2], bye: t[3], adp: i + 1 }));
+    const fn = ['T.', 'J.', 'M.', 'D.', 'C.', 'R.', 'B.', 'K.', 'A.', 'L.'];
+    const ln = ['Walker', 'Reed', 'Booker', 'Hayes', 'Carver', 'Mills', 'Doyle', 'Granger', 'Sosa', 'Whitfield', 'Mercer', 'Lang', 'Okafor', 'Pryor', 'Vance', 'Hollis', 'Beck', 'Tatum', 'Royce', 'Field'];
+    const ps = ['WR', 'RB', 'WR', 'RB', 'TE', 'QB', 'WR', 'RB', 'K', 'DST'];
+    const tm = ['DEN', 'CHI', 'NE', 'NO', 'TEN', 'CLE', 'NYG', 'CAR', 'SEA', 'PIT', 'GB', 'LAC', 'ARI', 'HOU'];
+    for (let i = 60; i < 240; i++) {
+      const j = i - 60;
+      const pos = ps[j % 10];
+      const team = tm[(j * 3) % 14];
+      list.push({
+        idx: i,
+        name: pos === 'DST' ? team + ' D/ST' : fn[(j * 7) % 10] + ' ' + ln[(j * 11 + Math.floor(j / 20)) % 20],
+        pos: pos, team: team, bye: 5 + (j % 10), adp: i + 1
+      });
+    }
+    list.forEach(p => {
+      p.proj = Math.max(38, Math.round(372 - p.adp * 1.55 - (p.adp % 7) * 2));
+      p.price = Math.max(1, Math.round(72 * Math.exp(-p.adp / 22)));
+    });
+    this._players = list;
+    return list;
+  }
+
+  shortName(n) {
+    if (n.indexOf('D/ST') >= 0) return n;
+    const parts = n.split(' ');
+    if (parts.length < 2) return n;
+    return parts[0][0] + '. ' + parts.slice(1).join(' ');
+  }
+
+  surname(n) {
+    if (n.indexOf('D/ST') >= 0) return n.replace(' D/ST', ' DST').toUpperCase();
+    const parts = n.split(' ');
+    return (parts.length < 2 ? n : parts.slice(1).join(' ')).toUpperCase();
+  }
+
+  slotOf(overall, tc, fmt) {
+    const r = Math.floor(overall / tc), w = overall % tc;
+    return (fmt === 'snake' && r % 2 === 1) ? tc - 1 - w : w;
+  }
+
+  noop = () => {};
+
+  decTeams = () => { this.setState(s => ({ teamCount: Math.max(6, s.teamCount - 1), tab: 0 })); };
+  incTeams = () => { this.setState(s => ({ teamCount: Math.min(14, s.teamCount + 1) })); };
+
+  advance = () => {
+    this.setState(s => {
+      if (s.drafted.length >= s.teamCount * 15) return null;
+      const has = new Set(s.drafted);
+      const next = this.PLAYERS().find(p => !has.has(p.idx));
+      return next ? { drafted: s.drafted.concat(next.idx) } : null;
+    });
+  };
+
+  pickIdx(idx) {
+    this.setState(s => {
+      if (s.drafted.length >= s.teamCount * 15 || s.drafted.indexOf(idx) >= 0) return null;
+      return { drafted: s.drafted.concat(idx) };
+    });
+  }
+
+  undo = () => { this.setState(s => ({ drafted: s.drafted.slice(0, -1), selected: null })); };
+
+  resetDraft = () => {
+    this.stopAuto();
+    this.setState(s => ({ drafted: Array.from({ length: Math.min(23, s.teamCount * 15) }, (_, i) => i), selected: null }));
+  };
+
+  toggleAuto = () => {
+    if (this._timer) { this.stopAuto(); return; }
+    this._timer = setInterval(() => {
+      if (this.state.drafted.length >= this.state.teamCount * 15) { this.stopAuto(); return; }
+      this.advance();
+    }, 850);
+    this.setState({ auto: true });
+  };
+
+  stopAuto = () => {
+    if (this._timer) { clearInterval(this._timer); this._timer = null; }
+    if (this.state.auto) this.setState({ auto: false });
+  };
+
+  componentWillUnmount() { if (this._timer) clearInterval(this._timer); }
+
+  renderVals() {
+    const s = this.state;
+    const players = this.PLAYERS();
+    const tc = s.teamCount, ROUNDS = 15, total = tc * ROUNDS, fmt = s.format;
+    const isAuction = fmt === 'auction';
+    const drafted = s.drafted.slice(0, total);
+    const cur = drafted.length;
+    const POSC = this.POSC;
+
+    const teams = this.TEAMS14.slice(0, tc).map((t, i) => ({
+      key: 'team' + i, name: t[0], abbr: t[1], slotLabel: '#' + (i + 1), picks: [], spent: 0
+    }));
+
+    drafted.forEach((pi, overall) => {
+      const r = Math.floor(overall / tc);
+      const slot = this.slotOf(overall, tc, fmt);
+      const p = players[pi];
+      teams[slot].spent += p.price;
+      teams[slot].picks.push({
+        key: 'tp' + overall,
+        meta: isAuction ? '$' + p.price : 'R' + (r + 1),
+        name: this.shortName(p.name),
+        pos: p.pos, posColor: POSC[p.pos].c, tint: POSC[p.pos].tint,
+        onClick: () => this.setState({ selected: pi })
+      });
+    });
+
+    teams.forEach(t => {
+      t.budgetLabel = isAuction ? '$' + Math.max(0, 200 - t.spent) : '';
+      t.needs = ['QB', 'RB', 'WR', 'TE'].map(pp => pp + String(t.picks.filter(k => k.pos === pp).length)).join(' · ');
+      t.emptyLabel = t.picks.length ? '' : 'no picks yet';
+    });
+
+    const curSlot = cur < total ? this.slotOf(cur, tc, fmt) : -1;
+    const curRound = Math.min(ROUNDS, Math.floor(Math.min(cur, total - 1) / tc) + 1);
+    const clockTeamObj = curSlot >= 0 ? teams[curSlot] : null;
+
+    const board = [];
+    for (let r = 0; r < ROUNDS; r++) {
+      const cells = [];
+      for (let slot = 0; slot < tc; slot++) {
+        const w = (fmt === 'snake' && r % 2 === 1) ? tc - 1 - slot : slot;
+        const overall = r * tc + w;
+        const filled = overall < cur;
+        const isCur = overall === cur;
+        const p = filled ? players[drafted[overall]] : null;
+        const pi2 = filled ? drafted[overall] : -1;
+        const pickShort = (r + 1) + '.' + String(w + 1).padStart(2, '0');
+        cells.push({
+          key: 'c' + r + '-' + slot,
+          name: filled ? this.shortName(p.name) : (isCur ? 'ON THE CLOCK' : ''),
+          nameColor: filled ? '#221C12' : '#E2A33C',
+          sub: filled ? (p.pos + ' · ' + p.team + ' · B' + p.bye) : (isCur ? pickShort : ''),
+          subColor: filled ? '#6A5C3C' : 'rgba(244,236,215,0.55)',
+          meta: filled ? (isAuction ? pickShort + ' $' + p.price : pickShort) : (isCur ? '' : pickShort),
+          metaColor: filled ? '#8A7A4D' : 'rgba(244,236,215,0.3)',
+          bar: filled ? POSC[p.pos].c : 'transparent',
+          bg: filled ? POSC[p.pos].tint : (isCur ? 'rgba(226,163,60,0.1)' : 'rgba(246,239,220,0.04)'),
+          outline: isCur ? '2px dashed rgba(226,163,60,0.8)' : (filled ? '1px solid rgba(34,28,18,0.25)' : '1px solid rgba(246,239,220,0.1)'),
+          shadow: filled ? '0 1px 0 rgba(0,0,0,0.4)' : 'none',
+          cursor: filled ? 'pointer' : 'default',
+          onClick: filled ? () => this.setState({ selected: pi2 }) : this.noop
+        });
+      }
+      board.push({
+        key: 'r' + r, n: r + 1,
+        dir: isAuction ? '$' : (fmt === 'linear' ? '→' : (r % 2 ? '←' : '→')),
+        cells: cells
+      });
+    }
+
+    const ticker = [];
+    for (let i = cur - 1; i >= 0 && ticker.length < 6; i--) {
+      const p = players[drafted[i]];
+      const r = Math.floor(i / tc), w = i % tc;
+      ticker.push({
+        key: 'tk' + i,
+        label: (r + 1) + '.' + String(w + 1).padStart(2, '0'),
+        name: this.shortName(p.name),
+        posColor: POSC[p.pos].c
+      });
+    }
+
+    const has = new Set(drafted);
+    const availAll = players.filter(p => !has.has(p.idx));
+    const avail = s.queueFilter === 'ALL' ? availAll : availAll.filter(p => p.pos === s.queueFilter);
+    const queue = avail.slice(0, 8).map(p => ({
+      key: 'q' + p.idx,
+      rank: p.adp,
+      name: this.shortName(p.name),
+      pos: p.pos, posColor: POSC[p.pos].c,
+      sub: p.team + ' · BYE ' + p.bye,
+      adp: 'ADP ' + p.adp,
+      price: isAuction ? '$' + p.price : '',
+      onDraft: () => this.pickIdx(p.idx),
+      onOpen: () => this.setState({ selected: p.idx })
+    }));
+    const chips = ['ALL', 'QB', 'RB', 'WR', 'TE'].map(l => ({
+      key: 'chip' + l, label: l,
+      bg: s.queueFilter === l ? '#221C12' : 'transparent',
+      color: s.queueFilter === l ? '#F6EFDC' : '#5C5138',
+      onClick: () => this.setState({ queueFilter: l })
+    }));
+
+    const r0 = curRound - 1;
+    const roundStrip = [];
+    const flipRows = [];
+    for (let w = 0; w < tc; w++) {
+      const overall = r0 * tc + w;
+      const slot = (fmt === 'snake' && r0 % 2 === 1) ? tc - 1 - w : w;
+      const done = overall < cur;
+      const isCur = overall === cur;
+      const p = done ? players[drafted[overall]] : null;
+      const pi2 = done ? drafted[overall] : -1;
+      const pickShort = (r0 + 1) + '.' + String(w + 1).padStart(2, '0');
+      roundStrip.push({
+        key: 'rs' + overall,
+        pickShort: pickShort, abbr: teams[slot].abbr,
+        name: done ? this.shortName(p.name) : (isCur ? 'ON THE CLOCK' : '—'),
+        nameColor: done ? '#221C12' : (isCur ? '#A93E26' : '#9A8C66'),
+        bg: done ? POSC[p.pos].tint : (isCur ? '#FBEFCE' : '#F1E9D4'),
+        bar: done ? POSC[p.pos].c : (isCur ? '#A93E26' : '#D8CDB0'),
+        sub: done ? (p.pos + ' · ' + p.team) : (isCur ? 'PICKING…' : 'waiting'),
+        cursor: done ? 'pointer' : 'default',
+        onClick: done ? () => this.setState({ selected: pi2 }) : this.noop
+      });
+      const label = done ? this.surname(p.name).slice(0, 12) : '';
+      const isNew = overall === cur - 1;
+      const tiles = [];
+      for (let i = 0; i < 12; i++) {
+        tiles.push({
+          key: 't' + overall + '-' + i,
+          ch: label[i] || '',
+          anim: isNew ? 'flapIn 0.4s ' + (i * 0.05).toFixed(2) + 's both' : 'none'
+        });
+      }
+      flipRows.push({
+        key: 'fr' + overall,
+        pickShort: pickShort, abbr: teams[slot].abbr,
+        tiles: tiles,
+        pos: done ? p.pos : '',
+        posColor: done ? POSC[p.pos].c : 'transparent',
+        rowOutline: isCur ? '1px dashed rgba(226,163,60,0.7)' : '1px solid transparent',
+        clock: isCur ? 'ON THE CLOCK' : ''
+      });
+    }
+
+    const tab = Math.min(s.tab, tc - 1);
+    const teamTabs = teams.map((t, i) => ({
+      key: 'tab' + i, abbr: t.abbr,
+      bg: i === tab ? '#221C12' : '#EDE4CC',
+      color: i === tab ? '#F6EFDC' : '#5C5138',
+      onClick: () => this.setState({ tab: i })
+    }));
+
+    const fmtBtns = ['snake', 'linear', 'auction'].map(f => ({
+      key: 'fmt' + f, label: f.toUpperCase(),
+      bg: f === fmt ? '#A93E26' : 'transparent',
+      color: f === fmt ? '#F6EFDC' : 'rgba(244,236,215,0.6)',
+      onClick: () => this.setState({ format: f })
+    }));
+
+    const statusLine = cur < total
+      ? 'ROUND ' + (Math.floor(cur / tc) + 1) + ' · PICK ' + (cur % tc + 1) + '/' + tc + ' · OVERALL #' + (cur + 1)
+      : 'ALL ' + total + ' PICKS IN';
+    const nextAbbrs = [];
+    for (let k = 1; k <= 2; k++) {
+      const o = cur + k;
+      if (o < total) nextAbbrs.push(teams[this.slotOf(o, tc, fmt)].abbr);
+    }
+
+    let sel = null;
+    if (s.selected != null) {
+      const p = players[s.selected];
+      const di = drafted.indexOf(s.selected);
+      let status = '✓ STILL AVAILABLE';
+      if (di >= 0) {
+        const r = Math.floor(di / tc), slot = this.slotOf(di, tc, fmt);
+        status = 'DRAFTED ' + (r + 1) + '.' + String(di % tc + 1).padStart(2, '0') + ' · ' + teams[slot].name.toUpperCase();
+      }
+      sel = {
+        name: p.name.toUpperCase(), pos: p.pos,
+        posColor: POSC[p.pos].c, tint: POSC[p.pos].tint,
+        sub: p.pos + ' — ' + p.team + ' · BYE ' + p.bye,
+        adp: String(p.adp), proj: String(p.proj), price: '$' + p.price,
+        status: status
+      };
+    }
+
+    return {
+      teamCount: tc,
+      fmtBtns: fmtBtns,
+      decTeams: this.decTeams, incTeams: this.incTeams,
+      undo: this.undo, advance: this.advance,
+      toggleAuto: this.toggleAuto, resetDraft: this.resetDraft,
+      autoLabel: s.auto ? '◼ STOP SIM' : '▶ RUN SIM',
+      autoBg: s.auto ? '#A93E26' : 'transparent',
+      statusLine: statusLine,
+      clockTeam: clockTeamObj ? clockTeamObj.name.toUpperCase() : 'DRAFT COMPLETE',
+      clockAbbr: clockTeamObj ? clockTeamObj.abbr : '—',
+      nextUp: nextAbbrs.length ? 'NEXT: ' + nextAbbrs.join(' → ') : '',
+      timer: cur < total ? '0:38' : '0:00',
+      curRound: curRound,
+      teams: teams, board: board, ticker: ticker,
+      queue: queue, chips: chips,
+      roundStrip: roundStrip, flipRows: flipRows,
+      teamTabs: teamTabs, activeTeam: teams[tab],
+      hasSelected: !!sel, sel: sel || {},
+      closeCard: () => this.setState({ selected: null })
+    };
+  }
+}
+</script>
+</body>
+</html>
