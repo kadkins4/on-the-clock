@@ -7,6 +7,7 @@ import type { ColumnId } from "../../lib/columns";
 import { nextDraftStatus } from "../../lib/draft";
 import { injuryBadge } from "../../lib/injury";
 import { RankCell } from "./RankCell";
+import { NotesCell } from "./NotesCell";
 
 // Everything a cell renderer might need beyond the player itself.
 export interface CellCtx {
@@ -161,13 +162,5 @@ export const CELL_RENDERERS: Record<
     </td>
   ),
   bye: (p) => <td className="bye num">{p.byeWeek ?? ""}</td>,
-  notes: (p, ctx) => (
-    <td>
-      <input
-        className="notes"
-        value={p.notes}
-        onChange={(e) => upd(ctx.dispatch, p.id, { notes: e.target.value })}
-      />
-    </td>
-  ),
+  notes: (p, ctx) => <NotesCell player={p} dispatch={ctx.dispatch} />,
 };
