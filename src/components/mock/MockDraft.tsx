@@ -20,6 +20,8 @@ import { PickPool, type PoolCol, POOL_COL_CAP } from "./PickPool";
 import { PlayerPanel } from "./PlayerPanel";
 import { DraftShell, type DraftTab } from "./DraftShell";
 import { playerDraftStatus } from "../../lib/mock/playerDraftStatus";
+import { MyQueue } from "./MyQueue";
+import { toggleQueue, pendingQueue } from "../../lib/mock/queue";
 
 interface Props {
   state: MockState;
@@ -58,6 +60,9 @@ export function MockDraft({
   // B1: top-level draft-room tab (app-bar). Defaults to the working Draft view
   // so the clock + controls are visible on entry.
   const [tab, setTab] = useState<DraftTab>("draft");
+  // B5: My Queue — ordered list of starred player ids. Drafted ones auto-drop
+  // from the display via pendingQueue (derived at render, no effect needed).
+  const [queueIds, setQueueIds] = useState<string[]>([]);
   const [openPlayer, setOpenPlayer] = useState<string | null>(null);
   const [extraCols, setExtraCols] = useState<PoolCol[]>(["bye"]);
   const [colMenuOpen, setColMenuOpen] = useState(false);
@@ -209,6 +214,18 @@ export function MockDraft({
     [state],
   );
 
+  // B5: queue membership set (for the ★ toggles) and the resolved, ordered,
+  // still-pending queue players (drafted ones dropped).
+  const queuedSet = useMemo(() => new Set(queueIds), [queueIds]);
+  const queuePlayers = useMemo(() => {
+    const byId = new Map(state.pool.map((p) => [p.id, p]));
+    return pendingQueue(queueIds, state.draftedIds)
+      .map((id) => byId.get(id))
+      .filter((p): p is (typeof state.pool)[number] => p != null);
+  }, [queueIds, state.pool, state.draftedIds]);
+  const onToggleQueue = (id: string) =>
+    setQueueIds((ids) => toggleQueue(ids, id));
+
   const myPositions = teamRosterPositions(state, userTeamIndex);
 
   const toggleCol = (c: PoolCol) =>
@@ -312,6 +329,8 @@ export function MockDraft({
         onToggleCol={toggleCol}
         onDraft={onDraft}
         onOpenPlayer={(id) => setOpenPlayer(id)}
+        queuedIds={queuedSet}
+        onToggleQueue={onToggleQueue}
       />
     </>
   );
@@ -329,6 +348,8 @@ export function MockDraft({
         onDraft={onDraft}
         onOpenPlayer={(id) => setOpenPlayer(id)}
         draftStatusOf={draftStatusOf}
+        queuedIds={queuedSet}
+        onToggleQueue={onToggleQueue}
       />
     </>
   );
@@ -392,6 +413,16 @@ export function MockDraft({
                   })
               )}
             </div>
+
+            <MyQueue
+              players={queuePlayers}
+              canDraft={isUser && !revealing}
+              onDraft={onDraft}
+              onRemove={(id) =>
+                setQueueIds((ids) => ids.filter((x) => x !== id))
+              }
+              onOpenPlayer={(id) => setOpenPlayer(id)}
+            />
 
             {draftPoolBody}
           </>

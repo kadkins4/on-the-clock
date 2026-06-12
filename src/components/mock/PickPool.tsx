@@ -20,6 +20,12 @@ interface Props {
    * When absent (Draft tab), all rows render as available.
    */
   draftStatusOf?: (id: string) => PlayerDraftStatus & { initials?: string };
+  /**
+   * When provided, each row shows a ★ queue toggle (B5). `queuedIds` marks the
+   * currently-queued players. Absent → no star (other usages unaffected).
+   */
+  queuedIds?: ReadonlySet<string>;
+  onToggleQueue?: (id: string) => void;
 }
 
 // Group consecutive players by tier (players arrive in overall-rank order).
@@ -43,6 +49,8 @@ export function PickPool({
   onDraft,
   onOpenPlayer,
   draftStatusOf,
+  queuedIds,
+  onToggleQueue,
 }: Props) {
   const groups = groupByTier(players);
   const [note, setNote] = useState<{
@@ -81,6 +89,20 @@ export function PickPool({
                     onClick={() => onDraft(p.id)}
                   >
                     ＋
+                  </button>
+                )}
+                {onToggleQueue && (
+                  <button
+                    className={`pp-star${queuedIds?.has(p.id) ? " on" : ""}`}
+                    title={
+                      queuedIds?.has(p.id)
+                        ? `Remove ${p.name} from queue`
+                        : `Add ${p.name} to queue`
+                    }
+                    aria-pressed={queuedIds?.has(p.id) ?? false}
+                    onClick={() => onToggleQueue(p.id)}
+                  >
+                    {queuedIds?.has(p.id) ? "★" : "☆"}
                   </button>
                 )}
                 <span className="pp-pos">{p.position}</span>
