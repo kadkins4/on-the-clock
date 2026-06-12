@@ -1390,9 +1390,11 @@ table.players th.sorted {
   flex: 0 0 auto;
   border-radius: 7px;
 }
-.otc-title {
+h1.otc-title {
   /* Wordmark: Archivo 800. Spec app bar is 19px; home runs one scale step
-     roomier (decision 4) so the brand reads as the page's hero. */
+     roomier (decision 4) so the brand reads as the page's hero.
+     h1-qualified: must tie `.app h1`'s specificity so this font-size wins
+     by source order. */
   margin: 0;
   font-family: var(--font-display);
   font-size: var(--fs-21);
