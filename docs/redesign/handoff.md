@@ -117,7 +117,7 @@ else can flex. Parallel-safe pairs if wanted: A2∥A3, B5∥B7.
       flags untouched. **Riskiest story** — it touches the board editor's drag
       interactions.
       _Done when: visual match; every current interaction still works._
-- [ ] **A4. Toolbar restyle.** Search input, position chips, toggles in the
+- [x] **A4. Toolbar restyle.** Search input, position chips, toggles in the
       new language.
       _Done when: visual match; filtering unchanged._
 - [ ] **A5. Notes column rendering.** Icon when a note exists; click opens

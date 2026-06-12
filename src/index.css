@@ -149,26 +149,58 @@ body {
   display: flex;
   gap: 0.25rem;
 }
-.chip {
-  padding: 0.2rem 0.6rem;
-  border: 1px solid var(--border);
-  background: var(--panel);
-  color: var(--text);
+/* `.toolbar .chip` (0-2-0) deliberately out-specifies the generic
+   `.toolbar button` rule (0-1-1) below, so chips keep their pill shape and
+   transparent fill instead of inheriting the card-button treatment. */
+.toolbar .chip {
+  padding: 0.2rem 0.7rem;
+  border: 1px solid var(--border-4);
+  background: transparent;
+  color: var(--text-secondary);
   border-radius: 999px;
+  font-family: var(--font-condensed);
+  font-size: var(--fs-15);
+  letter-spacing: 0.02em;
   cursor: pointer;
 }
-.chip.active {
-  background: var(--text);
-  color: var(--bg);
-  border-color: var(--text);
+.toolbar .chip:hover:not(.active) {
+  color: var(--text-primary);
+  border-color: var(--border-5);
+}
+.toolbar .chip.active {
+  background: var(--clock-orange);
+  color: #fff;
+  border-color: var(--clock-orange);
 }
 .toolbar select,
 .toolbar button {
-  background: var(--panel);
-  color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 0.25rem 0.5rem;
+  background: var(--card);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-4);
+  border-radius: 6px;
+  padding: 0.3rem 0.6rem;
+  font-family: var(--font-condensed);
+  font-size: var(--fs-15);
+}
+.toolbar button:hover:not(:disabled),
+.toolbar select:hover {
+  color: var(--text-primary);
+  border-color: var(--border-5);
+}
+
+/* Hide-drafted toggle: a button that lights orange when filtering is on
+   (spec: "✓ HIDING DRAFTED"). `.toolbar button.hide-drafted.active` (0-3-1)
+   beats the generic hover rule so the orange fill holds on hover too. */
+.toolbar button.hide-drafted {
+  cursor: pointer;
+  white-space: nowrap;
+  letter-spacing: 0.04em;
+}
+.toolbar button.hide-drafted.active,
+.toolbar button.hide-drafted.active:hover {
+  background: var(--clock-orange);
+  color: #fff;
+  border-color: var(--clock-orange);
 }
 
 .toolbar button.clear-filters,
@@ -2080,11 +2112,16 @@ h1.otc-title {
   width: 100%;
   box-sizing: border-box;
   padding: 0.3rem 1.6rem 0.3rem 2rem;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: var(--panel);
+  border: 1px solid var(--border-4);
+  border-radius: 8px;
+  background: var(--card);
   color: var(--text);
+  font-family: var(--font-condensed);
+  font-size: var(--fs-15);
   outline: none;
+}
+.search-pill .search-pill-input::placeholder {
+  color: var(--text-tertiary-2);
 }
 .search-pill .search-pill-input:focus {
   border-color: var(--otc-accent);

@@ -109,14 +109,14 @@ export function Toolbar(props: Props) {
           </button>
         ))}
       </div>
-      <label className="hide-drafted">
-        <input
-          type="checkbox"
-          checked={props.hideDrafted}
-          onChange={(e) => props.setHideDrafted(e.target.checked)}
-        />{" "}
-        Hide drafted
-      </label>
+      <button
+        className={props.hideDrafted ? "hide-drafted active" : "hide-drafted"}
+        aria-pressed={props.hideDrafted}
+        onClick={() => props.setHideDrafted(!props.hideDrafted)}
+        title="Hide players already drafted"
+      >
+        {props.hideDrafted ? "✓ HIDING DRAFTED" : "HIDE DRAFTED"}
+      </button>
       <label>
         Bye:{" "}
         <select
