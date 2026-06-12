@@ -120,10 +120,10 @@ else can flex. Parallel-safe pairs if wanted: A2∥A3, B5∥B7.
 - [x] **A4. Toolbar restyle.** Search input, position chips, toggles in the
       new language.
       _Done when: visual match; filtering unchanged._
-- [ ] **A5. Notes column rendering.** Icon when a note exists; click opens
+- [x] **A5. Notes column rendering.** Icon when a note exists; click opens
       popover; editable; column show/hide via column manager (already supported).
       _Done when: icon + popover work, notes still editable._
-- [ ] **A6. Sort toggle.** "Sort by Tier" (default) ↔ "Sort by ADP"; tier
+- [x] **A6. Sort toggle.** "Sort by Tier" (default) ↔ "Sort by ADP"; tier
       bands hide in ADP mode; choice persists.
       _Done when: toggle round-trips, default is tier._
 
