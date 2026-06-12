@@ -68,7 +68,7 @@ the story off here.
 
 ### Phase A — Home page (research board)
 
-- [ ] **A1. Design tokens + fonts.** App-global CSS vars for palette, OKLCH
+- [x] **A1. Design tokens + fonts.** App-global CSS vars for palette, OKLCH
       position key, type scale (README "Design Tokens"); self-host the three
       fonts; swap `positionColor.ts` to the new key. No layout changes — old
       screens just shift hue.

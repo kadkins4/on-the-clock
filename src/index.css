@@ -1,12 +1,77 @@
 :root {
   font-family: system-ui, sans-serif;
   font-size: 14px;
-  --bg: #0f1115;
-  --panel: #171a21;
-  --text: #e6e8eb;
-  --muted: #8b93a1;
-  --border: #2a2f3a;
-  --green: #22c55e;
+
+  /* ===================================================================
+     2026 visual redesign tokens — copied from
+     docs/design/draft-room/README.md § "Design Tokens". A1 only DEFINES
+     these; screens adopt the --font-* / scale tokens in A2+. Applying the
+     fonts here would shift text metrics (violates "no layout changes").
+     =================================================================== */
+
+  /* Elevation / grounds */
+  --void: #0b0e13; /* page ground */
+  --stage: #07090c; /* TV mode ground */
+  --raised: #0e1218; /* app bar, board grounds, tier headers */
+  --panel-2: #12161d; /* section panels */
+  --card: #161b23; /* cards, inputs, chips */
+  --card-high: #1a2029; /* rows inside panels */
+
+  /* Borders — elevation-matched hairlines */
+  --border-1: #1c232c;
+  --border-2: #222933;
+  --border-3: #242c37;
+  --border-4: #2a323d;
+  --border-5: #39424f;
+
+  /* Text tiers */
+  --text-primary: #eceef1;
+  --text-secondary: #9aa3ae;
+  --text-secondary-2: #b6bec9;
+  --text-tertiary: #707a87;
+  --text-tertiary-2: #5c6470;
+  --text-disabled: #3e4650;
+
+  /* Brand accents — each used ONLY for its stated role */
+  --clock-orange: #fb5a2d; /* brand, CTAs, active states */
+  --live-green: #2fc76d; /* "on the clock" status */
+  --your-gold: #d9a53f; /* local-user highlights + auction $ */
+  --danger: #a93e26; /* AUTO-running state */
+
+  /* Type families — self-hosted via @fontsource (imported in main.tsx) */
+  --font-display:
+    "Archivo", system-ui, sans-serif; /* headlines, timers, wordmark */
+  --font-condensed:
+    "Barlow Condensed", system-ui, sans-serif; /* names, buttons, tabs */
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace; /* numbers, metadata */
+
+  /* Type scale (px) */
+  --fs-9: 9px;
+  --fs-10: 10px;
+  --fs-11: 11px;
+  --fs-12-5: 12.5px;
+  --fs-13-5: 13.5px;
+  --fs-15: 15px;
+  --fs-19: 19px;
+  --fs-21: 21px;
+  --fs-27: 27px;
+  --fs-30: 30px;
+  --fs-38: 38px;
+  --fs-46: 46px;
+  --fs-56: 56px;
+
+  /* ===================================================================
+     Legacy vars remapped onto the new palette so existing (not-yet-
+     redesigned) screens shift hue without layout change. Roles that map
+     1:1 to the new tiers point at the new tokens; --red/--purple/--grey/
+     --accent are left for A2–A4 to retire as their usages get restyled.
+     =================================================================== */
+  --bg: var(--void);
+  --panel: var(--panel-2);
+  --text: var(--text-primary);
+  --muted: var(--text-secondary);
+  --border: var(--border-2);
+  --green: var(--live-green);
   --red: #ef4444;
   --purple: #a855f7;
   --grey: #5b6573;
@@ -14,14 +79,30 @@
   /* Brand wordmark — single source of truth for "On The Clock." coloring.
      ink = the gray-white of "On The" + "."; accent = the orange "Clock".
      Explicit colors (not opacity) so they stay consistent over any background. */
-  --otc-ink: #b7b9bc;
-  --otc-accent: #ff6b4a;
-  --pos-QB: #c084fc;
-  --pos-RB: #34d399;
-  --pos-WR: #38bdf8;
-  --pos-TE: #fb923c;
-  --pos-K: #9aa3b2;
-  --pos-DST: #9aa3b2;
+  --otc-ink: #eceef1;
+  --otc-accent: #fb5a2d;
+
+  /* Position key — OKLCH, mirrors src/lib/positionColor.ts (POSITION_KEY).
+     --pos-X is the badge; -tint is the cell/row bg; -subtext is light text on tint. */
+  --pos-QB: oklch(0.62 0.14 30);
+  --pos-QB-tint: oklch(0.26 0.04 30);
+  --pos-QB-subtext: oklch(0.72 0.06 30);
+  --pos-RB: oklch(0.62 0.14 150);
+  --pos-RB-tint: oklch(0.26 0.04 150);
+  --pos-RB-subtext: oklch(0.72 0.06 150);
+  --pos-WR: oklch(0.62 0.14 250);
+  --pos-WR-tint: oklch(0.26 0.04 250);
+  --pos-WR-subtext: oklch(0.72 0.06 250);
+  --pos-TE: oklch(0.66 0.13 75);
+  --pos-TE-tint: oklch(0.27 0.05 75);
+  --pos-TE-subtext: oklch(0.74 0.07 75);
+  --pos-TE-badge-text: #1a1407;
+  --pos-K: oklch(0.62 0.14 310);
+  --pos-K-tint: oklch(0.26 0.04 310);
+  --pos-K-subtext: oklch(0.72 0.06 310);
+  --pos-DST: oklch(0.62 0.14 200);
+  --pos-DST-tint: oklch(0.26 0.04 200);
+  --pos-DST-subtext: oklch(0.72 0.06 200);
 }
 body {
   margin: 1rem;
