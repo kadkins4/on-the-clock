@@ -27,10 +27,17 @@ export function Header({
             cy="34"
             r="17"
             fill="none"
-            stroke="#ff6b4a"
+            style={{ stroke: "var(--otc-accent)" }}
             strokeWidth="4"
           />
-          <rect x="26" y="9" width="12" height="5" rx="2.5" fill="#ff6b4a" />
+          <rect
+            x="26"
+            y="9"
+            width="12"
+            height="5"
+            rx="2.5"
+            style={{ fill: "var(--otc-accent)" }}
+          />
           <line
             x1="32"
             y1="34"

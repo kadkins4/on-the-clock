@@ -108,7 +108,7 @@ else can flex. Parallel-safe pairs if wanted: A2∥A3, B5∥B7.
       screens just shift hue.
       _Done when: tokens exist, fonts load offline, app structurally unchanged,
       tests green._
-- [ ] **A2. Header/wordmark restyle.** App bar treatment on home: wordmark
+- [x] **A2. Header/wordmark restyle.** App bar treatment on home: wordmark
       with orange "Clock.", mono microlabel.
       _Done when: matches spec; existing nav/info links work._
 - [ ] **A3. Table chrome.** Panel shell, tier bands (orange tick + "TIER N"

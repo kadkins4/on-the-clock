@@ -1355,18 +1355,22 @@ table.players th.sorted {
 
 /* ===== On the Clock — brand header, intro splash, alpha banner ===== */
 .otc-header {
+  /* App-bar band (redesign spec § "App Bar"): raised ground, hairline bottom
+     border, roomier home density (decision 4). Bleeds L/R to the viewport
+     edges over the body's 1rem margin so it reads as a full-width bar. */
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
   flex-wrap: wrap;
-  margin: 0 0 0.75rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid var(--border);
+  margin: 0 -1rem 1rem;
+  padding: 14px 24px;
+  background: var(--raised);
+  border-bottom: 1px solid var(--border-1);
 }
 .otc-brand {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 10px;
   padding: 0;
   background: none;
   border: none;
@@ -1379,7 +1383,7 @@ table.players th.sorted {
   opacity: 0.85;
 }
 .otc-brand:focus-visible {
-  outline: 2px solid #ff6b4a;
+  outline: 2px solid var(--otc-accent);
   outline-offset: 3px;
 }
 .otc-logo {
@@ -1387,8 +1391,11 @@ table.players th.sorted {
   border-radius: 7px;
 }
 .otc-title {
+  /* Wordmark: Archivo 800. Spec app bar is 19px; home runs one scale step
+     roomier (decision 4) so the brand reads as the page's hero. */
   margin: 0;
-  font-size: 1.6rem;
+  font-family: var(--font-display);
+  font-size: var(--fs-21);
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1;
@@ -1409,14 +1416,17 @@ table.players th.sorted {
 .otc-brand-text {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 }
 .otc-tagline {
-  font-size: 10.5px;
-  letter-spacing: 0.06em;
-  color: var(--muted);
-  margin-top: 4px;
-  text-transform: lowercase;
+  /* Mono microlabel under the wordmark (spec: IBM Plex Mono 9px, ls 2px,
+     #5C6470, uppercase). text-transform keeps the DOM text lowercase. */
+  font-family: var(--font-mono);
+  font-size: var(--fs-9);
+  letter-spacing: 2px;
+  color: var(--text-tertiary-2);
+  margin-top: 5px;
+  text-transform: uppercase;
 }
 .otc-header-spacer {
   flex: 1;
@@ -1427,20 +1437,25 @@ table.players th.sorted {
   gap: 4px;
 }
 .otc-navlink {
-  font: inherit;
+  /* Nav labels in the redesign's label language: Barlow Condensed, uppercase,
+     tracked. Underline appears on hover as the accent affordance. */
+  font-family: var(--font-condensed);
   font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
   background: none;
   border: none;
   cursor: pointer;
-  color: var(--muted);
+  color: var(--text-tertiary);
   text-decoration: underline;
-  text-underline-offset: 3px;
-  text-decoration-color: #ffffff33;
-  padding: 6px 6px;
+  text-underline-offset: 4px;
+  text-decoration-color: transparent;
+  padding: 6px 8px;
   transition: 0.14s ease;
 }
 .otc-navlink:hover {
-  color: var(--text);
+  color: var(--text-primary);
   text-decoration-color: var(--otc-accent);
 }
 
