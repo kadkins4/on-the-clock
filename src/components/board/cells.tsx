@@ -134,7 +134,7 @@ export const CELL_RENDERERS: Record<
     );
   },
   pos: (p, ctx) => (
-    <td className="pos num">
+    <td className={`pos num pos-${p.position}`}>
       {p.position}
       {ctx.positionalRank}
     </td>

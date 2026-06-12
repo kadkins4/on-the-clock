@@ -719,13 +719,13 @@ table.players .notes {
 /* Subtle zebra. Stripe parity resets per tier (PlayerTable passes `stripe`),
    and the first row under each banner is the dark base so it doesn't blend
    into the brighter tier banner. */
-tr.prow td {
+table.players tr.prow td {
   background: transparent;
 }
-tr.prow.lite td {
+table.players tr.prow.lite td {
   background: var(--card);
 }
-tr.row:hover td {
+table.players tr.row:hover td {
   background: var(--card-high);
 }
 
@@ -2262,6 +2262,13 @@ h1.otc-title {
 }
 .pos-DST {
   --c: var(--pos-DST);
+}
+
+/* Home board positional-rank label: tint the text with the OKLCH position
+   hue. Reset background so the mock-draft .pos-X tint above doesn't leak. */
+table.players td.pos {
+  color: var(--c, var(--text-secondary));
+  font-weight: 700;
 }
 
 /* --- PickPool --- */
