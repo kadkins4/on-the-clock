@@ -18,6 +18,8 @@ export interface PickCell {
   playerId?: string;
   name?: string;
   position?: Position;
+  nflTeam?: string; // NFL team abbreviation (e.g. "KC")
+  byeWeek?: number | null;
   signal?: PickSignal; // reach/value vs ADP for a made pick
 }
 
@@ -62,6 +64,8 @@ export function buildPickCells(state: MockState): PickCell[] {
         playerId: pick.playerId,
         name: pl?.name,
         position: pl?.position,
+        nflTeam: pl?.team,
+        byeWeek: pl?.byeWeek,
         signal,
       };
     }

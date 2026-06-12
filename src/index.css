@@ -3334,3 +3334,203 @@ table.players td.pos {
 .myqueue-remove:hover {
   color: var(--text-primary);
 }
+
+/* ── B7: The Wall restyle + round-direction rail ───────────────────────────── */
+
+/* Outer wrapper: rail + grid side-by-side */
+.wall-wrap {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  background: var(--void, #0b0e13);
+  overflow-x: auto;
+}
+
+/* Left rail: round numbers + arrows */
+.wall-rail {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0 8px 0 4px;
+  min-width: 36px;
+}
+
+/* Spacer that lines up with the team header row height */
+.wall-rail-spacer {
+  /* The team header row min-height matches .bcg-team padding + avatar + text.
+     We keep this as a flex item with the same visual height. */
+  min-height: 58px;
+}
+
+.wall-rail-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  gap: 2px;
+}
+
+.wall-rail-round {
+  font-family: var(--font-mono);
+  font-size: var(--fs-9, 9px);
+  color: var(--text-disabled, #3e4650);
+  letter-spacing: 0.5px;
+}
+
+.wall-rail-arrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-tertiary, #5c6470);
+}
+
+/* Wall ground */
+.wall-wrap .board-inline {
+  flex: 1 1 auto;
+  background: var(--void, #0b0e13);
+  padding: 0;
+  min-width: 0;
+}
+
+/* Team header cells */
+.wall-wrap .bcg-team {
+  min-height: 58px;
+  padding: 8px 4px 6px;
+  gap: 3px;
+}
+
+/* Team slot label under name */
+.bcg-slot {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  color: var(--text-disabled, #3e4650);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Gold outline on the user's team header */
+.wall-wrap .bcg-team.you {
+  outline: 1px solid var(--your-gold, #d9a53f);
+  outline-offset: -1px;
+  background: oklch(0.16 0.025 75 / 0.25);
+  border-radius: 6px;
+}
+
+/* Wall cells: min-height 48px, 6px radius, 4px left border */
+.wall-wrap .bcg-cell {
+  min-height: 48px;
+  border-radius: 6px;
+  border-left-width: 4px;
+  padding: 5px 6px 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 2px;
+}
+
+/* Done cells: position-tint bg is already supplied by .pos-* --c var.
+   Use a slightly stronger tint mix for the Wall. */
+.wall-wrap .bcg-cell.done {
+  background: color-mix(in srgb, var(--c, #2a2f3a) 18%, var(--void, #0b0e13));
+}
+
+/* Player name line */
+.wall-wrap .bcg-name {
+  font-family: var(--font-condensed);
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--text-primary, #eceef1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+}
+
+/* Sub-line: POS · TEAM · B# in the position's light subtext color */
+.bcg-submeta {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.5px;
+  color: oklch(from var(--c, #707a87) 0.72 0.06 h);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Pick label (top-right corner) */
+.wall-wrap .bcg-cell .bcg-pick {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-tertiary, #5c6470);
+  opacity: 1;
+  position: static;
+  align-self: flex-end;
+  margin-left: auto;
+  order: -1; /* push to top */
+  line-height: 1;
+}
+
+/* Current-pick cell: gold 2px dashed outline + green "ON THE CLOCK" */
+.wall-wrap .bcg-cell.current {
+  background: rgba(217, 165, 63, 0.06);
+  border: 2px dashed var(--your-gold, #d9a53f);
+  border-left: 4px solid var(--your-gold, #d9a53f);
+  animation: bcg-pulse 1.8s ease-in-out infinite;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+/* When the current pick IS the user's column, reinforce gold */
+.wall-wrap .bcg-cell.current.current-user {
+  background: rgba(217, 165, 63, 0.1);
+}
+
+/* Green "ON THE CLOCK" microlabel inside current cell */
+.bcg-otc-label {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--live-green, #2fc76d);
+  line-height: 1;
+}
+
+/* Timer inside current cell */
+.wall-wrap .bcg-clock {
+  font-family: var(--font-display, var(--font-sans));
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--live-green, #2fc76d);
+  letter-spacing: -0.5px;
+}
+
+/* Upcoming cells: minimal, dark */
+.wall-wrap .bcg-cell.upcoming {
+  background: var(--void, #0b0e13);
+  border-left-color: #1b2130;
+  opacity: 0.5;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.wall-wrap .bcg-cell.upcoming .bcg-pick {
+  opacity: 0.4;
+}
+
+/* Empty cells */
+.wall-wrap .bcg-cell.empty {
+  background: var(--void, #0b0e13);
+  border-left-color: #16191f;
+}
+
+/* Gold outline for user's column cells */
+.wall-wrap .bcg-cell.user-col {
+  outline: 1px solid rgba(217, 165, 63, 0.35);
+  outline-offset: -1px;
+}
+
+/* Current cell in user's column: stronger gold */
+.wall-wrap .bcg-cell.current.user-col {
+  outline: none; /* border-dashed already handles it */
+}
