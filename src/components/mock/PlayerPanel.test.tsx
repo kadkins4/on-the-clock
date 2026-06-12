@@ -1,0 +1,110 @@
+import { describe, it, expect, vi, afterEach } from "vitest";
+import { render, screen, cleanup, fireEvent } from "@testing-library/react";
+import { PlayerPanel } from "./PlayerPanel";
+import type { Player } from "../../types";
+import type { PlayerDraftStatus } from "../../lib/mock/playerDraftStatus";
+
+afterEach(cleanup);
+
+const PLAYER: Player = {
+  id: "p1",
+  name: "Justin Jefferson",
+  position: "WR",
+  team: "MIN",
+  overallRank: 3,
+  byeWeek: 6,
+  tier: 1,
+  adp: 3.2,
+  notes: "",
+  flag: "none",
+  draftStatus: "available",
+  projPoints: 312.4,
+};
+
+const UNDRAFTED: PlayerDraftStatus = { drafted: false };
+const DRAFTED: PlayerDraftStatus = {
+  drafted: true,
+  pickLabel: "2.03",
+  teamName: "Lamb Chops",
+};
+
+function renderPanel(
+  player: Player | null,
+  draftStatus: PlayerDraftStatus,
+  onClose = vi.fn(),
+) {
+  return render(
+    <PlayerPanel player={player} draftStatus={draftStatus} onClose={onClose} />,
+  );
+}
+
+describe("PlayerPanel", () => {
+  it("renders nothing when player is null", () => {
+    const { container } = renderPanel(null, UNDRAFTED);
+    expect(container.firstChild).toBeNull();
+  });
+
+  it("renders the player name", () => {
+    renderPanel(PLAYER, UNDRAFTED);
+    expect(screen.getByText("Justin Jefferson")).toBeTruthy();
+  });
+
+  it("renders the ADP value", () => {
+    renderPanel(PLAYER, UNDRAFTED);
+    // adp 3.2 → rounded to "3"
+    expect(screen.getByText("3")).toBeTruthy();
+  });
+
+  it("renders projected points", () => {
+    renderPanel(PLAYER, UNDRAFTED);
+    expect(screen.getByText("312.4")).toBeTruthy();
+  });
+
+  it("shows STILL AVAILABLE for an undrafted player", () => {
+    renderPanel(PLAYER, UNDRAFTED);
+    expect(screen.getByText(/STILL AVAILABLE/i)).toBeTruthy();
+  });
+
+  it("shows DRAFTED label with pick and team for a drafted player", () => {
+    renderPanel(PLAYER, DRAFTED);
+    expect(screen.getByText(/DRAFTED 2\.03 · Lamb Chops/i)).toBeTruthy();
+  });
+
+  it("calls onClose when the ✕ CLOSE button is clicked", () => {
+    const onClose = vi.fn();
+    renderPanel(PLAYER, UNDRAFTED, onClose);
+    fireEvent.click(screen.getByRole("button", { name: /close/i }));
+    expect(onClose).toHaveBeenCalledOnce();
+  });
+
+  it("calls onClose when the scrim is clicked", () => {
+    const onClose = vi.fn();
+    const { container } = renderPanel(PLAYER, UNDRAFTED, onClose);
+    const scrim = container.querySelector(".pc-scrim");
+    expect(scrim).toBeTruthy();
+    fireEvent.click(scrim!);
+    expect(onClose).toHaveBeenCalledOnce();
+  });
+
+  it("calls onClose on Escape keydown", () => {
+    const onClose = vi.fn();
+    renderPanel(PLAYER, UNDRAFTED, onClose);
+    fireEvent.keyDown(document, { key: "Escape" });
+    expect(onClose).toHaveBeenCalledOnce();
+  });
+
+  it("renders VALUE stat as em-dash (no VOR data in mock)", () => {
+    renderPanel(PLAYER, UNDRAFTED);
+    // The VALUE cell always shows "—" per backlog
+    const dashes = screen.getAllByText("—");
+    expect(dashes.length).toBeGreaterThanOrEqual(1);
+  });
+
+  it("renders PROJ as em-dash when projPoints is null", () => {
+    const noProj: Player = { ...PLAYER, projPoints: null };
+    renderPanel(noProj, UNDRAFTED);
+    const dashes = screen.getAllByText("—");
+    // PROJ + VALUE both become "—"
+    expect(dashes.length).toBeGreaterThanOrEqual(2);
+  });
+});

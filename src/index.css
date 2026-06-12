@@ -2939,3 +2939,166 @@ table.players td.pos {
   font-size: 13.5px;
   line-height: 1.5;
 }
+
+/* ── B2: Player card overlay ─────────────────────────────────────────────── */
+
+/* Scrim */
+.pc-scrim {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 6, 9, 0.72);
+  z-index: 70;
+}
+
+/* Outer card shell */
+.pc-card {
+  position: fixed;
+  inset: 0;
+  z-index: 71;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none; /* let scrim catch clicks outside */
+}
+
+/* The 320px card itself */
+.pc-card > .pc-frame {
+  pointer-events: auto;
+  width: 320px;
+  max-width: calc(100vw - 32px);
+  background: var(--card);
+  border-radius: 14px;
+  padding: 11px;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7);
+}
+
+/* Inner frame: 3px position-color border */
+.pc-frame {
+  border: 3px solid; /* color set inline via style.borderColor */
+  border-radius: 9px;
+  background: #11151c;
+  overflow: hidden;
+}
+
+/* Header row: badge + close */
+.pc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px 8px;
+}
+
+.pc-pos-badge {
+  font-family: var(--font-condensed);
+  font-weight: 700;
+  font-size: var(--fs-11);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-radius: 3px;
+  padding: 2px 7px;
+  line-height: 1.4;
+}
+
+.pc-close {
+  appearance: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: var(--fs-9);
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  padding: 2px 4px;
+  transition: color 0.12s;
+}
+.pc-close:hover {
+  color: var(--text-primary);
+}
+
+/* Name plate */
+.pc-nameplate {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 12px 10px;
+  background: var(--void);
+}
+
+.pc-name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--fs-19);
+  letter-spacing: -0.3px;
+  color: var(--text-primary);
+  line-height: 1.1;
+}
+
+.pc-meta {
+  font-family: var(--font-mono);
+  font-size: var(--fs-11);
+  letter-spacing: 0.5px;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+}
+
+/* 3-stat grid */
+.pc-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border-1);
+  border-top: 1px solid var(--border-1);
+  border-bottom: 1px solid var(--border-1);
+}
+
+.pc-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 10px 8px;
+  background: #11151c;
+}
+
+.pc-stat-label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-9);
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.pc-stat-value {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.pc-stat-value--gold {
+  color: var(--your-gold);
+}
+
+/* Status strip */
+.pc-status-strip {
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pc-status-text {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: var(--fs-11);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.pc-status-text--avail {
+  color: var(--live-green);
+}

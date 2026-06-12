@@ -1,62 +1,106 @@
+import { useEffect } from "react";
 import type { Player } from "../../types";
-import { POSITION_COLOR } from "../../lib/positionColor";
+import { POSITION_KEY } from "../../lib/positionColor";
+import type { PlayerDraftStatus } from "../../lib/mock/playerDraftStatus";
 
 interface Props {
   player: Player | null;
+  draftStatus: PlayerDraftStatus;
   onClose: () => void;
 }
 
-export function PlayerPanel({ player, onClose }: Props) {
+export function PlayerPanel({ player, draftStatus, onClose }: Props) {
+  // Close on Escape
+  useEffect(() => {
+    if (!player) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [player, onClose]);
+
+  if (!player) return null;
+
+  const posStyle = POSITION_KEY[player.position];
+
+  const adpDisplay = player.adp != null ? String(Math.round(player.adp)) : "—";
+  const projDisplay =
+    player.projPoints != null ? player.projPoints.toFixed(1) : "—";
+  // VALUE (VOR) is not available in the mock pool — always "—" per backlog note
+  const valueDisplay = "—";
+
   return (
     <>
-      <div className={`pp-scrim${player ? " open" : ""}`} onClick={onClose} />
-      <aside
-        className={`player-panel${player ? " open" : ""}`}
-        aria-hidden={!player}
-      >
-        {player && (
-          <>
-            <div className="ppx-head">
-              <button className="ppx-x" onClick={onClose}>
-                ✕
-              </button>
-              <h3 className="ppx-name">{player.name}</h3>
-              <span
-                className="ppx-pos"
-                style={{ background: POSITION_COLOR[player.position] }}
-              >
-                {player.position}
+      {/* Scrim — click to close */}
+      <div className="pc-scrim" onClick={onClose} />
+
+      {/* Card */}
+      <div className="pc-card" role="dialog" aria-modal="true">
+        {/* Inner frame with 3px position-color border */}
+        <div className="pc-frame" style={{ borderColor: posStyle.badge }}>
+          {/* Header row: position badge + close button */}
+          <div className="pc-header">
+            <span
+              className="pc-pos-badge"
+              style={{
+                background: posStyle.badge,
+                color: posStyle.badgeText,
+              }}
+            >
+              {player.position}
+            </span>
+            <button className="pc-close" onClick={onClose}>
+              ✕ CLOSE
+            </button>
+          </div>
+
+          {/* Name plate */}
+          <div className="pc-nameplate">
+            <span className="pc-name">{player.name}</span>
+            <span className="pc-meta">
+              {player.position} — {player.team} · BYE {player.byeWeek ?? "—"}
+            </span>
+          </div>
+
+          {/* 3-stat grid */}
+          <div className="pc-stats">
+            <div className="pc-stat">
+              <span className="pc-stat-label">ADP</span>
+              <span className="pc-stat-value">{adpDisplay}</span>
+            </div>
+            <div className="pc-stat">
+              <span className="pc-stat-label">PROJ</span>
+              <span className="pc-stat-value">{projDisplay}</span>
+            </div>
+            <div className="pc-stat">
+              <span className="pc-stat-label">VALUE</span>
+              <span className="pc-stat-value pc-stat-value--gold">
+                {valueDisplay}
               </span>
-              <span className="ppx-team">· {player.team}</span>
             </div>
-            <div className="ppx-body">
-              <span className="ppx-soon">Player profile · Coming soon</span>
-              <div className="ppx-stub">
-                <h4>Season outlook</h4>
-                <div className="ppx-bars">
-                  <div />
-                  <div />
-                  <div />
-                </div>
-              </div>
-              <div className="ppx-stub">
-                <h4>Recent news</h4>
-                <div className="ppx-bars">
-                  <div />
-                  <div />
-                </div>
-              </div>
-              <div className="ppx-stub">
-                <h4>Matchup &amp; schedule</h4>
-                <div className="ppx-bars">
-                  <div />
-                  <div />
-                </div>
-              </div>
-            </div>
-          </>
-        )}
-      </aside>
+          </div>
+
+          {/* Status strip */}
+          <div
+            className="pc-status-strip"
+            style={{ background: posStyle.tint }}
+          >
+            {draftStatus.drafted ? (
+              <span
+                className="pc-status-text"
+                style={{ color: posStyle.subtext }}
+              >
+                DRAFTED {draftStatus.pickLabel} · {draftStatus.teamName}
+              </span>
+            ) : (
+              <span className="pc-status-text pc-status-text--avail">
+                ✓ STILL AVAILABLE
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
     </>
   );
 }

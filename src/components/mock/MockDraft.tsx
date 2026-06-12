@@ -19,6 +19,7 @@ import { StopwatchMark } from "./StopwatchMark";
 import { PickPool, type PoolCol, POOL_COL_CAP } from "./PickPool";
 import { PlayerPanel } from "./PlayerPanel";
 import { DraftShell, type DraftTab } from "./DraftShell";
+import { playerDraftStatus } from "../../lib/mock/playerDraftStatus";
 
 interface Props {
   state: MockState;
@@ -380,6 +381,11 @@ export function MockDraft({
             openPlayer
               ? (state.pool.find((p) => p.id === openPlayer) ?? null)
               : null
+          }
+          draftStatus={
+            openPlayer
+              ? playerDraftStatus(state, openPlayer)
+              : { drafted: false }
           }
           onClose={() => setOpenPlayer(null)}
         />
