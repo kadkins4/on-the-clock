@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import { render, screen, cleanup } from "@testing-library/react";
+import { render, screen, cleanup, fireEvent } from "@testing-library/react";
 import { Toolbar } from "./Toolbar";
 import type { ChipConfig } from "../lib/posFilter";
 import type { Position } from "../types";
@@ -62,6 +62,12 @@ function renderToolbar(
     onImport: noop,
     onExportJson: noop,
     onExportCsv: noop,
+    scopePref: "ask" as const,
+    onScopePrefChange: noop,
+    onOpenColumns: noop,
+    columnsOpen: false,
+    sortMode: "tier" as const,
+    onSortModeChange: vi.fn(),
     ...over,
   };
   return render(
@@ -87,5 +93,43 @@ describe("Toolbar chip bar", () => {
     expect(screen.getByRole("button", { name: "All" }).className).toContain(
       "active",
     );
+  });
+});
+
+describe("Toolbar sort mode toggle", () => {
+  it('renders both "Tier" and "ADP" options', () => {
+    renderToolbar({ sortMode: "tier" });
+    expect(screen.getByRole("button", { name: "Tier" })).toBeTruthy();
+    expect(screen.getByRole("button", { name: "ADP" })).toBeTruthy();
+  });
+
+  it('"Tier" segment is active by default (sortMode="tier")', () => {
+    renderToolbar({ sortMode: "tier" });
+    const tierBtn = screen.getByRole("button", { name: "Tier" });
+    const adpBtn = screen.getByRole("button", { name: "ADP" });
+    expect(tierBtn.className).toContain("active");
+    expect(adpBtn.className).not.toContain("active");
+  });
+
+  it('"ADP" segment is active when sortMode="adp"', () => {
+    renderToolbar({ sortMode: "adp" });
+    const tierBtn = screen.getByRole("button", { name: "Tier" });
+    const adpBtn = screen.getByRole("button", { name: "ADP" });
+    expect(adpBtn.className).toContain("active");
+    expect(tierBtn.className).not.toContain("active");
+  });
+
+  it("calls onSortModeChange with 'adp' when ADP button is clicked", () => {
+    const onSortModeChange = vi.fn();
+    renderToolbar({ sortMode: "tier", onSortModeChange });
+    fireEvent.click(screen.getByRole("button", { name: "ADP" }));
+    expect(onSortModeChange).toHaveBeenCalledWith("adp");
+  });
+
+  it("calls onSortModeChange with 'tier' when Tier button is clicked in ADP mode", () => {
+    const onSortModeChange = vi.fn();
+    renderToolbar({ sortMode: "adp", onSortModeChange });
+    fireEvent.click(screen.getByRole("button", { name: "Tier" }));
+    expect(onSortModeChange).toHaveBeenCalledWith("tier");
   });
 });

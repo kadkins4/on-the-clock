@@ -7,6 +7,7 @@ import {
   type ChipConfig,
   type Macro,
 } from "../lib/posFilter";
+import type { SortMode } from "../lib/storage";
 import { SearchPill } from "./SearchPill";
 
 interface Props {
@@ -59,6 +60,8 @@ interface Props {
   onScopePrefChange: (p: "ask" | "all" | "this") => void;
   onOpenColumns: () => void;
   columnsOpen: boolean;
+  sortMode: SortMode;
+  onSortModeChange: (mode: SortMode) => void;
   children?: ReactNode; // the column-manager popover, anchored to the ⚙ Columns trigger
 }
 
@@ -135,6 +138,26 @@ export function Toolbar(props: Props) {
           ))}
         </select>
       </label>
+      <div className="sort-mode-toggle" role="group" aria-label="Sort mode">
+        <button
+          className={
+            props.sortMode === "tier" ? "sort-mode-btn active" : "sort-mode-btn"
+          }
+          onClick={() => props.onSortModeChange("tier")}
+          aria-pressed={props.sortMode === "tier"}
+        >
+          Tier
+        </button>
+        <button
+          className={
+            props.sortMode === "adp" ? "sort-mode-btn active" : "sort-mode-btn"
+          }
+          onClick={() => props.onSortModeChange("adp")}
+          aria-pressed={props.sortMode === "adp"}
+        >
+          ADP
+        </button>
+      </div>
       <button
         className={props.grouped ? "tiers-btn active" : "tiers-btn"}
         onClick={props.onBackToTiers}

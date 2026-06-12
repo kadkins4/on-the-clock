@@ -26,7 +26,10 @@ import {
   saveRefetchResult,
   loadErrorLog,
   clearErrorLog,
+  loadSortMode,
+  saveSortMode,
   type RefetchResult,
+  type SortMode,
 } from "./lib/storage";
 import { safeStorage } from "./lib/safeStorage";
 import { fetchEspnPlayers, EspnShapeError } from "./lib/fetchEspn";
@@ -119,8 +122,15 @@ export default function App() {
       safeStorage.getItem(HIDE_DST_KEY) === "1" ||
       safeStorage.getItem(OLD_HIDE_KDST_KEY) === "1",
   );
-  const [sortKey, setSortKey] = useState<SortKey | null>(null);
-  const [sortAsc, setSortAsc] = useState(true);
+  const [sortKey, setSortKey] = useState<SortKey | null>(() => {
+    const mode = loadSortMode();
+    return mode === "adp" ? "adp" : null;
+  });
+  const [sortAsc, setSortAsc] = useState(() => {
+    const mode = loadSortMode();
+    return mode === "adp" ? defaultSortAsc("adp") : true;
+  });
+  const [sortMode, setSortMode] = useState<SortMode>(loadSortMode);
   // Column layout: a global default plus an optional per-league override. The
   // effective layout the board renders is `override ?? global`. Edits route by
   // the scope pref (all/this/ask) — see writeLayout/onLayoutChange below.
@@ -178,7 +188,21 @@ export default function App() {
       setSortAsc(defaultSortAsc(key));
     }
   };
-  const onBackToTiers = () => setSortKey(null);
+  const onBackToTiers = () => {
+    setSortKey(null);
+    setSortMode("tier");
+    saveSortMode("tier");
+  };
+  const onSortModeChange = (mode: SortMode) => {
+    setSortMode(mode);
+    saveSortMode(mode);
+    if (mode === "tier") {
+      setSortKey(null);
+    } else {
+      setSortKey("adp");
+      setSortAsc(defaultSortAsc("adp"));
+    }
+  };
   const [fetching, setFetching] = useState(false);
   const [adpStatus, setAdpStatus] = useState<string | null>(null);
   const [mockMode, setMockMode] = useState(false);
@@ -466,6 +490,8 @@ export default function App() {
     setByeFilter(null);
     setSortKey(null);
     setSortAsc(true);
+    setSortMode("tier");
+    saveSortMode("tier");
   };
 
   const onToggleK = () => {
@@ -700,6 +726,8 @@ export default function App() {
             onScopePrefChange={onScopePrefChange}
             onOpenColumns={() => setColumnsOpen((o) => !o)}
             columnsOpen={columnsOpen}
+            sortMode={sortMode}
+            onSortModeChange={onSortModeChange}
           >
             {columnsOpen && (
               <ColumnManager

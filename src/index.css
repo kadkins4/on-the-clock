@@ -843,6 +843,39 @@ table.players th.sorted {
   font-weight: 600;
 }
 
+/* Sort-mode segmented control (Tier | ADP) */
+.sort-mode-toggle {
+  display: flex;
+  gap: 0;
+}
+.sort-mode-toggle .sort-mode-btn {
+  background: var(--card);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-4);
+  padding: 0.3rem 0.7rem;
+  font-family: var(--font-condensed);
+  font-size: var(--fs-15);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.sort-mode-toggle .sort-mode-btn:first-child {
+  border-radius: 6px 0 0 6px;
+  border-right: none;
+}
+.sort-mode-toggle .sort-mode-btn:last-child {
+  border-radius: 0 6px 6px 0;
+}
+.sort-mode-toggle .sort-mode-btn:hover:not(.active) {
+  color: var(--text-primary);
+  border-color: var(--border-5);
+}
+.sort-mode-toggle .sort-mode-btn.active {
+  background: var(--clock-orange);
+  color: #fff;
+  border-color: var(--clock-orange);
+}
+
 /* mover column: drag handle (centered) + a "+" that pokes into the left gutter */
 .mover {
   position: relative;

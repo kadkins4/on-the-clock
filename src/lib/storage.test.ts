@@ -156,3 +156,29 @@ describe("league storage", () => {
     expect(loadLeagues().leagues[0].name).toBe("V2 league");
   });
 });
+
+import { loadSortMode, saveSortMode } from "./storage";
+
+describe("sort mode storage", () => {
+  beforeEach(() => localStorage.clear());
+
+  it('loadSortMode returns "tier" when nothing is stored', () => {
+    expect(loadSortMode()).toBe("tier");
+  });
+
+  it('saveSortMode / loadSortMode round-trips "adp"', () => {
+    saveSortMode("adp");
+    expect(loadSortMode()).toBe("adp");
+  });
+
+  it('saveSortMode / loadSortMode round-trips "tier"', () => {
+    saveSortMode("adp");
+    saveSortMode("tier");
+    expect(loadSortMode()).toBe("tier");
+  });
+
+  it("loadSortMode returns tier when storage has an unrecognized value", () => {
+    localStorage.setItem("otc:sortMode", "garbage");
+    expect(loadSortMode()).toBe("tier");
+  });
+});

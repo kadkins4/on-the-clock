@@ -190,6 +190,23 @@ export function saveColumnScopePref(p: ColumnScopePref): void {
   }
 }
 
+// --- Sort mode (A6) ---
+const SORT_MODE_KEY = "otc:sortMode";
+export type SortMode = "tier" | "adp";
+
+export function loadSortMode(): SortMode {
+  const v = safeStorage.getItem(SORT_MODE_KEY);
+  return v === "adp" ? "adp" : "tier";
+}
+
+export function saveSortMode(mode: SortMode): void {
+  try {
+    localStorage.setItem(SORT_MODE_KEY, mode);
+  } catch {
+    /* ignore quota / availability */
+  }
+}
+
 // --- Dev diagnostics (Phase 5) ---
 const REFETCH_KEY = "otc:devRefetch";
 const ERRORS_KEY = "otc:devErrors";
