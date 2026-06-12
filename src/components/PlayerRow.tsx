@@ -48,7 +48,9 @@ export function PlayerRow({
   const style: CSSProperties = {
     transform: CSS.Transform.toString(transform),
     transition,
-    opacity: isDragging ? 0.5 : 1,
+    // only set inline while dragging — a constant inline `1` would override
+    // the stylesheet's .state-taken 40% dim
+    opacity: isDragging ? 0.5 : undefined,
   };
 
   const ctx: CellCtx = {

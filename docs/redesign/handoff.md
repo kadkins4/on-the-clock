@@ -111,7 +111,7 @@ else can flex. Parallel-safe pairs if wanted: A2∥A3, B5∥B7.
 - [x] **A2. Header/wordmark restyle.** App bar treatment on home: wordmark
       with orange "Clock.", mono microlabel.
       _Done when: matches spec; existing nav/info links work._
-- [ ] **A3. Table chrome.** Panel shell, tier bands (orange tick + "TIER N"
+- [x] **A3. Table chrome.** Panel shell, tier bands (orange tick + "TIER N"
       from user tier breaks), row typography, position-hue labels, research
       density. All columns, drag re-ranking, tier-break editing, column manager,
       flags untouched. **Riskiest story** — it touches the board editor's drag
