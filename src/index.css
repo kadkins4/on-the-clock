@@ -474,6 +474,15 @@ table.players td {
      handle, sortable headers) set their own pointer/grab. */
   cursor: default;
 }
+table.players th {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-tertiary-2);
+  border-bottom: 1px solid var(--border-4);
+}
 /* the mover cell must not clip the "+" that pokes above/left of the row */
 table.players td.mover,
 table.players th.col-mover {
@@ -702,7 +711,7 @@ table.players th.sortable:hover {
   color: var(--text);
 }
 table.players th.sorted {
-  color: var(--otc-accent);
+  color: var(--clock-orange);
 }
 .sort-arrow {
   font-size: 0.7em;
