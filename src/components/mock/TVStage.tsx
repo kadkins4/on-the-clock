@@ -133,7 +133,12 @@ export function TVStage({ snapshot }: Props) {
             >
               <span className="tv-flap-pick">{row.label}</span>
               <span className="tv-flap-team">{row.initials}</span>
-              <LetterTiles surname={row.surname} />
+              {/* key on the surname so the flap animation replays when a pick
+                  lands (the row goes from blank → spelled). */}
+              <LetterTiles
+                key={row.surname ?? row.kind}
+                surname={row.surname}
+              />
               <PosBadge position={row.position} />
               {row.kind === "current" && (
                 <span className="tv-otc-badge">ON THE CLOCK</span>
@@ -146,7 +151,8 @@ export function TVStage({ snapshot }: Props) {
         <div className="tv-rail">
           {/* Latest pick splash */}
           {latest ? (
-            <div className="tv-splash">
+            // key on the pick label so the spring-in replays per new pick
+            <div className="tv-splash" key={latest.label}>
               <span className="tv-splash-label">{latest.label}</span>
               <div className="tv-splash-name">{latest.name}</div>
               <div className="tv-splash-pos">
@@ -190,19 +196,28 @@ export function TVStage({ snapshot }: Props) {
       {/* ── Ticker ─────────────────────────────────────────────────────── */}
       {ticker.length > 0 && (
         <div className="tv-ticker">
-          {ticker.map((t, i) => (
-            <span key={i} className="tv-ticker-item">
-              <span className="tv-ticker-label">{t.label}</span>
-              <span
-                className="tv-ticker-dot"
-                style={{
-                  background:
-                    POSITION_KEY[t.position as Position]?.badge ?? "#888",
-                }}
-              />
-              <span className="tv-ticker-name">{t.surname}</span>
-            </span>
-          ))}
+          {/* track rendered twice for a seamless 24s marquee loop (B10) */}
+          <div className="tv-ticker-track">
+            {[0, 1].map((copy) =>
+              ticker.map((t, i) => (
+                <span
+                  key={`${copy}-${i}`}
+                  className="tv-ticker-item"
+                  aria-hidden={copy === 1 ? true : undefined}
+                >
+                  <span className="tv-ticker-label">{t.label}</span>
+                  <span
+                    className="tv-ticker-dot"
+                    style={{
+                      background:
+                        POSITION_KEY[t.position as Position]?.badge ?? "#888",
+                    }}
+                  />
+                  <span className="tv-ticker-name">{t.surname}</span>
+                </span>
+              )),
+            )}
+          </div>
         </div>
       )}
     </div>
