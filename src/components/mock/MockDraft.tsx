@@ -22,6 +22,7 @@ import { DraftShell, type DraftTab } from "./DraftShell";
 import { playerDraftStatus } from "../../lib/mock/playerDraftStatus";
 import { MyQueue } from "./MyQueue";
 import { toggleQueue, pendingQueue } from "../../lib/mock/queue";
+import { LockerRoom } from "./LockerRoom";
 
 interface Props {
   state: MockState;
@@ -71,6 +72,7 @@ export function MockDraft({
   const [missed, setMissed] = useState(false);
   const [missedLeft, setMissedLeft] = useState(25);
   const promptedRef = useRef(false);
+  const [boardView, setBoardView] = useState<"wall" | "locker">("wall");
   const [menuFor, setMenuFor] = useState<number | null>(null); // pick popover
   const [replaceSearch, setReplaceSearch] = useState("");
   const [timerSec, setTimerSec] = useState<number | null>(20); // null = Off
@@ -431,11 +433,33 @@ export function MockDraft({
         {tab === "players" && playersPoolBody}
 
         {tab === "board" && (
-          <DraftBoardGrid
-            state={state}
-            onPickClick={(o) => setMenuFor(o)}
-            timer={isUser ? timerUi : undefined}
-          />
+          <>
+            {/* Wall / Locker Room toggle */}
+            <div className="board-view-toggle">
+              <button
+                className={`bvt-pill${boardView === "wall" ? " active" : ""}`}
+                onClick={() => setBoardView("wall")}
+              >
+                THE WALL
+              </button>
+              <button
+                className={`bvt-pill${boardView === "locker" ? " active" : ""}`}
+                onClick={() => setBoardView("locker")}
+              >
+                LOCKER ROOM
+              </button>
+            </div>
+
+            {boardView === "wall" ? (
+              <DraftBoardGrid
+                state={state}
+                onPickClick={(o) => setMenuFor(o)}
+                timer={isUser ? timerUi : undefined}
+              />
+            ) : (
+              <LockerRoom state={state} />
+            )}
+          </>
         )}
 
         {tab === "tv" && (
