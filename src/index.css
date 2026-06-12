@@ -619,29 +619,29 @@ table.players .notes {
   border-left: 3px solid transparent;
 }
 .row.state-target td:first-child {
-  border-left-color: var(--purple);
+  border-left-color: var(--your-gold);
 }
 .row.state-avoid td:first-child {
-  border-left-color: var(--red);
+  border-left-color: var(--danger);
 }
 .row.state-mine td:first-child {
-  border-left-color: var(--green);
+  border-left-color: var(--live-green);
 }
 .row.state-taken td:first-child {
-  border-left-color: var(--grey);
+  border-left-color: var(--text-tertiary-2);
 }
 .row.state-mine {
-  color: var(--green);
+  color: var(--live-green);
 }
 .row.state-avoid {
-  color: var(--red);
+  color: var(--danger);
 }
 .row.state-target {
-  color: var(--purple);
+  color: var(--your-gold);
 }
 .row.state-taken {
-  color: var(--muted);
-  opacity: 0.55;
+  color: var(--text-tertiary);
+  opacity: 0.4;
 }
 .row.state-taken .name-cell {
   text-decoration: line-through;
@@ -800,12 +800,12 @@ table.players th.sorted {
   border-radius: 4px;
 }
 .draft-mine {
-  color: var(--green);
-  border-color: var(--green);
+  color: var(--live-green);
+  border-color: var(--live-green);
 }
 .draft-taken {
-  color: var(--grey);
-  border-color: var(--grey);
+  color: var(--text-tertiary-2);
+  border-color: var(--text-tertiary-2);
 }
 .flag {
   border: none;
@@ -815,10 +815,10 @@ table.players th.sorted {
   color: var(--muted);
 }
 .flag-target {
-  color: var(--purple);
+  color: var(--your-gold);
 }
 .flag-avoid {
-  color: var(--red);
+  color: var(--danger);
 }
 .add-form {
   display: flex;
