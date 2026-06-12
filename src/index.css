@@ -629,18 +629,19 @@ table.players .notes {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.32rem 0.6rem;
-  background: var(--panel);
-  border-left: 3px solid var(--otc-accent);
-  border-right: 3px solid var(--otc-accent);
-  font-weight: 700;
-  letter-spacing: 0.05em;
+  padding: 0.3rem 0.6rem;
+  background: var(--raised);
+  border-left: 3px solid var(--clock-orange);
+  border-right: none;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  font-size: 0.75rem;
-  color: var(--text);
+  font-size: 10px;
+  color: var(--text-primary);
 }
 .tier-banner .tier-count {
-  color: var(--muted);
+  color: var(--text-tertiary);
   font-weight: 500;
   letter-spacing: 0;
   text-transform: none;
@@ -660,32 +661,32 @@ table.players .notes {
 .tier-remove {
   border: none;
   background: none;
-  color: var(--muted);
+  color: var(--text-tertiary);
   cursor: pointer;
   font-size: 0.85rem;
   line-height: 1;
   padding: 0 0.15rem;
 }
 .tier-remove:hover {
-  color: var(--red);
+  color: var(--danger);
 }
 .empty-tier .tier-banner {
-  color: var(--accent, #3b82f6);
+  color: var(--clock-orange);
   font-style: italic;
   text-transform: none;
   letter-spacing: 0;
-  border-left-color: var(--accent, #3b82f6);
-  border-right-color: var(--accent, #3b82f6);
+  border-left-color: var(--clock-orange);
+  border-right-color: var(--clock-orange);
   background: repeating-linear-gradient(
     45deg,
-    var(--panel),
-    var(--panel) 8px,
-    #1b2030 8px,
-    #1b2030 16px
+    var(--raised),
+    var(--raised) 8px,
+    var(--card) 8px,
+    var(--card) 16px
   );
 }
 .empty-tier.drop-over td {
-  outline: 1px dashed var(--accent, #3b82f6);
+  outline: 1px dashed var(--clock-orange);
   outline-offset: -3px;
 }
 
