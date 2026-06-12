@@ -185,6 +185,30 @@ export function MockDraft({
     [state, posFilter],
   );
 
+  // Players tab: full pool (including drafted), filtered by position chip, in
+  // overallRank order. Draft tab stays available-only (avail above).
+  const fullPool = useMemo(
+    () =>
+      state.pool
+        .filter((p) => posFilter === "All" || p.position === posFilter)
+        .slice()
+        .sort((a, b) => a.overallRank - b.overallRank),
+    [state.pool, posFilter],
+  );
+
+  // draftStatusOf for the Players tab: extends PlayerDraftStatus with initials.
+  const draftStatusOf = useMemo(
+    () => (id: string) => {
+      const base = playerDraftStatus(state, id);
+      if (!base.drafted) return base;
+      const pick = state.picks.find((pk) => pk.playerId === id);
+      const initials =
+        pick != null ? (state.teams[pick.teamIndex]?.initials ?? "") : "";
+      return { ...base, initials };
+    },
+    [state],
+  );
+
   const myPositions = teamRosterPositions(state, userTeamIndex);
 
   const toggleCol = (c: PoolCol) =>
@@ -225,58 +249,61 @@ export function MockDraft({
     </span>
   );
 
-  // Players-pool body (filters + columns + list). Shared by the research
-  // PLAYERS tab and the working DRAFT tab.
-  const poolBody = (
-    <>
-      <div className="filters">
-        {POS_FILTERS.map((p) => (
-          <button
-            key={p}
-            className={posFilter === p ? "chip active" : "chip"}
-            onClick={() => setPosFilter(p)}
-          >
-            {p}
-          </button>
-        ))}
-        <div className="colbtn-wrap">
-          <button
-            className={`colbtn${colMenuOpen ? " active" : ""}`}
-            onClick={() => setColMenuOpen((o) => !o)}
-            aria-label="Columns"
-          >
-            ⚙ Columns
-          </button>
-          {colMenuOpen && (
-            <>
-              <div
-                className="colmenu-scrim"
-                onClick={() => setColMenuOpen(false)}
-              />
-              <div className="colmenu">
-                {(["bye", "proj", "vor"] as PoolCol[]).map((c) => {
-                  const on = extraCols.includes(c);
-                  const comingSoon = c === "proj" || c === "vor";
-                  return (
-                    <button
-                      key={c}
-                      className={on ? "on" : ""}
-                      disabled={
-                        comingSoon || (!on && extraCols.length >= POOL_COL_CAP)
-                      }
-                      title={comingSoon ? "Coming soon" : undefined}
-                      onClick={() => toggleCol(c)}
-                    >
-                      {c === "bye" ? "Bye" : c === "proj" ? "Proj" : "VOR"}
-                    </button>
-                  );
-                })}
-              </div>
-            </>
-          )}
-        </div>
+  // Shared filter/column toolbar — same for both pool views.
+  const filterBar = (
+    <div className="filters">
+      {POS_FILTERS.map((p) => (
+        <button
+          key={p}
+          className={posFilter === p ? "chip active" : "chip"}
+          onClick={() => setPosFilter(p)}
+        >
+          {p}
+        </button>
+      ))}
+      <div className="colbtn-wrap">
+        <button
+          className={`colbtn${colMenuOpen ? " active" : ""}`}
+          onClick={() => setColMenuOpen((o) => !o)}
+          aria-label="Columns"
+        >
+          ⚙ Columns
+        </button>
+        {colMenuOpen && (
+          <>
+            <div
+              className="colmenu-scrim"
+              onClick={() => setColMenuOpen(false)}
+            />
+            <div className="colmenu">
+              {(["bye", "proj", "vor"] as PoolCol[]).map((c) => {
+                const on = extraCols.includes(c);
+                const comingSoon = c === "proj" || c === "vor";
+                return (
+                  <button
+                    key={c}
+                    className={on ? "on" : ""}
+                    disabled={
+                      comingSoon || (!on && extraCols.length >= POOL_COL_CAP)
+                    }
+                    title={comingSoon ? "Coming soon" : undefined}
+                    onClick={() => toggleCol(c)}
+                  >
+                    {c === "bye" ? "Bye" : c === "proj" ? "Proj" : "VOR"}
+                  </button>
+                );
+              })}
+            </div>
+          </>
+        )}
       </div>
+    </div>
+  );
 
+  // DRAFT tab: available-only pool, no draftStatusOf (best-available working list).
+  const draftPoolBody = (
+    <>
+      {filterBar}
       <PickPool
         players={avail.slice(0, 100)}
         canDraft={isUser && !revealing}
@@ -285,6 +312,23 @@ export function MockDraft({
         onToggleCol={toggleCol}
         onDraft={onDraft}
         onOpenPlayer={(id) => setOpenPlayer(id)}
+      />
+    </>
+  );
+
+  // PLAYERS tab: full pool including drafted players, dimmed with pick status.
+  const playersPoolBody = (
+    <>
+      {filterBar}
+      <PickPool
+        players={fullPool}
+        canDraft={isUser && !revealing}
+        overall={overall}
+        extraCols={extraCols}
+        onToggleCol={toggleCol}
+        onDraft={onDraft}
+        onOpenPlayer={(id) => setOpenPlayer(id)}
+        draftStatusOf={draftStatusOf}
       />
     </>
   );
@@ -349,11 +393,11 @@ export function MockDraft({
               )}
             </div>
 
-            {poolBody}
+            {draftPoolBody}
           </>
         )}
 
-        {tab === "players" && poolBody}
+        {tab === "players" && playersPoolBody}
 
         {tab === "board" && (
           <DraftBoardGrid

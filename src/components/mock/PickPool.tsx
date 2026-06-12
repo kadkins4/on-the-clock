@@ -1,17 +1,25 @@
 import { useState } from "react";
 import type { Player } from "../../types";
+import type { PlayerDraftStatus } from "../../lib/mock/playerDraftStatus";
 
 export type PoolCol = "bye" | "proj" | "vor";
 export const POOL_COL_CAP = 3;
 
 interface Props {
-  players: Player[]; // already filtered by position chip, available
+  players: Player[]; // filtered by position chip; available-only OR full pool
   canDraft: boolean;
   overall: number;
   extraCols: PoolCol[];
   onToggleCol: (c: PoolCol) => void;
   onDraft: (id: string) => void;
   onOpenPlayer: (id: string) => void;
+  /**
+   * When provided, PickPool is in "research mode" (Players tab).
+   * Called per row — if the returned status has `drafted: true`, the row is
+   * dimmed and shows "pickLabel · teamInitials" instead of the ＋ DRAFT button.
+   * When absent (Draft tab), all rows render as available.
+   */
+  draftStatusOf?: (id: string) => PlayerDraftStatus & { initials?: string };
 }
 
 // Group consecutive players by tier (players arrive in overall-rank order).
@@ -34,6 +42,7 @@ export function PickPool({
   onToggleCol,
   onDraft,
   onOpenPlayer,
+  draftStatusOf,
 }: Props) {
   const groups = groupByTier(players);
   const [note, setNote] = useState<{
@@ -52,54 +61,68 @@ export function PickPool({
             Tier {g.tier ?? "—"}{" "}
             <span className="pp-cnt">· {g.players.length}</span>
           </div>
-          {g.players.map((p) => (
-            <div
-              key={p.id}
-              className={`pp-row pos-${p.position} flag-${p.flag}`}
-            >
-              <button
-                className="pp-draft"
-                disabled={!canDraft}
-                title={`Draft ${p.name}`}
-                onClick={() => onDraft(p.id)}
+          {g.players.map((p) => {
+            const ds = draftStatusOf?.(p.id);
+            const isDrafted = ds?.drafted === true;
+            return (
+              <div
+                key={p.id}
+                className={`pp-row pos-${p.position} flag-${p.flag}${isDrafted ? " pp-row--drafted" : ""}`}
               >
-                ＋
-              </button>
-              <span className="pp-pos">{p.position}</span>
-              <button className="pp-name" onClick={() => onOpenPlayer(p.id)}>
-                {p.name}
-              </button>
-              <span className="pp-team">· {p.team}</span>
-              {p.flag !== "none" && (
-                <span className={`pp-flag ${p.flag}`} title={p.flag}>
-                  {p.flag === "target" ? "★" : "⊘"}
-                </span>
-              )}
-              {p.notes?.trim() && (
-                <span
-                  className="pp-note"
-                  title="Read note"
-                  onClick={(e) => {
-                    const r = (e.target as HTMLElement).getBoundingClientRect();
-                    const x = Math.min(r.left, window.innerWidth - 240);
-                    setNote({
-                      text: p.notes,
-                      x: Math.max(8, x),
-                      y: r.bottom + 6,
-                    });
-                  }}
-                >
-                  📝
-                </span>
-              )}
-              <span className="pp-adp">
-                {p.adp == null ? "" : `ADP ${Number(p.adp.toFixed(1))}`}
-              </span>
-              {extraCols.includes("bye") && (
-                <span className="pp-x">{p.byeWeek ?? "—"}</span>
-              )}
-            </div>
-          ))}
+                {isDrafted && ds.drafted ? (
+                  <span className="pp-status">
+                    {ds.pickLabel} · {ds.initials ?? ""}
+                  </span>
+                ) : (
+                  <button
+                    className="pp-draft"
+                    disabled={!canDraft}
+                    title={`Draft ${p.name}`}
+                    onClick={() => onDraft(p.id)}
+                  >
+                    ＋
+                  </button>
+                )}
+                <span className="pp-pos">{p.position}</span>
+                <button className="pp-name" onClick={() => onOpenPlayer(p.id)}>
+                  {p.name}
+                </button>
+                <span className="pp-team">· {p.team}</span>
+                {p.flag !== "none" && (
+                  <span className={`pp-flag ${p.flag}`} title={p.flag}>
+                    {p.flag === "target" ? "★" : "⊘"}
+                  </span>
+                )}
+                {p.notes?.trim() && (
+                  <span
+                    className="pp-note"
+                    title="Read note"
+                    onClick={(e) => {
+                      const r = (
+                        e.target as HTMLElement
+                      ).getBoundingClientRect();
+                      const x = Math.min(r.left, window.innerWidth - 240);
+                      setNote({
+                        text: p.notes,
+                        x: Math.max(8, x),
+                        y: r.bottom + 6,
+                      });
+                    }}
+                  >
+                    📝
+                  </span>
+                )}
+                {!isDrafted && (
+                  <span className="pp-adp">
+                    {p.adp == null ? "" : `ADP ${Number(p.adp.toFixed(1))}`}
+                  </span>
+                )}
+                {extraCols.includes("bye") && (
+                  <span className="pp-x">{p.byeWeek ?? "—"}</span>
+                )}
+              </div>
+            );
+          })}
         </div>
       ))}
       {note && (

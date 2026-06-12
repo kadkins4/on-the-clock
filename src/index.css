@@ -2494,6 +2494,26 @@ table.players td.pos {
   cursor: default;
 }
 
+/* ── B4: drafted rows (Players tab research mode) */
+.pp-row--drafted {
+  opacity: 0.4;
+}
+.pp-row--drafted:hover {
+  opacity: 0.6;
+}
+.pp-status {
+  width: 30px;
+  min-width: 60px;
+  font-size: var(--fs-9, 9px);
+  font-family: var(--font-mono, "IBM Plex Mono", monospace);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-tertiary, #707a87);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
 /* --- Note popover --- */
 .pp-note-scrim {
   position: fixed;
