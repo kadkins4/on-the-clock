@@ -24,6 +24,12 @@ import { toggleQueue, pendingQueue } from "../../lib/mock/queue";
 import { LockerRoom } from "./LockerRoom";
 import { MyRoster } from "./MyRoster";
 import { RoundStrip } from "./RoundStrip";
+import { TVStage } from "./TVStage";
+import {
+  buildTvSnapshot,
+  TV_CHANNEL,
+  type TvMessage,
+} from "../../lib/mock/tvSnapshot";
 
 interface Props {
   state: MockState;
@@ -184,6 +190,25 @@ export function MockDraft({
     const t = setTimeout(() => setMissedLeft((s) => s - 1), 1000);
     return () => clearTimeout(t);
   }, [missed, missedLeft]);
+
+  // B9: broadcast a compact TV snapshot to any open "cast" window (the #tv
+  // route) over a BroadcastChannel. Read-only mirror — additive, never touches
+  // the draft engine. Posts on every state change, and replies to a fresh
+  // window's "request" with the current snapshot.
+  useEffect(() => {
+    if (typeof BroadcastChannel === "undefined") return;
+    const ch = new BroadcastChannel(TV_CHANNEL);
+    const post = () =>
+      ch.postMessage({
+        type: "snapshot",
+        snapshot: buildTvSnapshot(state),
+      } satisfies TvMessage);
+    ch.onmessage = (e: MessageEvent<TvMessage>) => {
+      if (e.data.type === "request") post();
+    };
+    post();
+    return () => ch.close();
+  }, [state]);
 
   const avail = useMemo(
     () =>
@@ -450,13 +475,23 @@ export function MockDraft({
         )}
 
         {tab === "tv" && (
-          <div className="draft-tv-placeholder">
-            <span className="ppx-soon">TV Mode · Coming soon</span>
-            <p>
-              A passive, animated &ldquo;cast&rdquo; view for in-person draft
-              parties — split-flap board, latest-pick splash, and a live ticker.
-              Landing in a later update.
-            </p>
+          <div className="tv-tab">
+            <div className="tv-tab-bar">
+              <button
+                className="tv-open-btn"
+                onClick={() =>
+                  window.open(
+                    location.href.split("#")[0] + "#tv",
+                    "otc-tv",
+                    "width=1280,height=720",
+                  )
+                }
+                title="Open the cast view in a separate window"
+              >
+                ⧉ Open TV Window
+              </button>
+            </div>
+            <TVStage snapshot={buildTvSnapshot(state)} />
           </div>
         )}
 

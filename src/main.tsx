@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { Analytics } from "@vercel/analytics/react";
 import App from "./App";
+import { TvWindow } from "./components/mock/TvWindow";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { installErrorHandlers } from "./lib/devLog";
 // Self-hosted fonts (bundled by Vite — no CDN, works offline). Weights match
@@ -21,10 +22,14 @@ import "./index.css";
 
 installErrorHandlers();
 
+// B9: the "#tv" hash mounts the read-only cast view (a second window mirroring
+// the draft over a BroadcastChannel) instead of the full app.
+const isTvWindow = window.location.hash === "#tv";
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ErrorBoundary>
-      <App />
+      {isTvWindow ? <TvWindow /> : <App />}
       <Analytics />
     </ErrorBoundary>
   </React.StrictMode>,

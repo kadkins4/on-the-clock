@@ -3888,3 +3888,327 @@ table.players td.pos {
   flex: 1;
   color: var(--text-disabled, #3e4650);
 }
+
+/* ── B9: TV mode (static cast view) ──────────────────────────────────────── */
+.tv-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+}
+.tv-tab-bar {
+  display: flex;
+  justify-content: flex-end;
+}
+.tv-open-btn {
+  appearance: none;
+  cursor: pointer;
+  font-family: var(--font-condensed);
+  font-weight: 700;
+  font-size: var(--fs-13-5);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  background: var(--card);
+  border: 1px solid var(--border-4);
+  border-radius: 6px;
+  padding: 6px 12px;
+}
+.tv-open-btn:hover {
+  border-color: var(--border-5);
+}
+
+/* Stage */
+.tv-stage {
+  background: var(--stage);
+  border-radius: 16px;
+  box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.6);
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-height: 420px;
+}
+
+/* Header */
+.tv-header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+}
+.tv-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.tv-live-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--live-green);
+  box-shadow: 0 0 8px var(--live-green);
+  flex-shrink: 0;
+}
+.tv-live-label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-9);
+  letter-spacing: 1.5px;
+  color: var(--live-green);
+  white-space: nowrap;
+}
+.tv-avatar-initials {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: var(--fs-13-5);
+  color: #fff;
+}
+.tv-header-team {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 30px;
+  letter-spacing: -0.5px;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tv-header-complete {
+  color: var(--text-tertiary);
+}
+.tv-board-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--fs-19);
+  letter-spacing: 2px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+.tv-header-right {
+  text-align: right;
+}
+.tv-round-status {
+  font-family: var(--font-mono);
+  font-size: var(--fs-11);
+  letter-spacing: 1px;
+  color: var(--text-tertiary);
+}
+
+/* Body: flap board + rail */
+.tv-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 290px;
+  gap: 18px;
+  align-items: start;
+}
+
+/* Split-flap board */
+.tv-flap-board {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.tv-flap-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+}
+.tv-flap-row--current {
+  border: 2px dashed var(--your-gold);
+  background: rgba(217, 165, 63, 0.07);
+}
+.tv-flap-pick {
+  font-family: var(--font-mono);
+  font-size: var(--fs-11);
+  color: var(--text-tertiary);
+  width: 38px;
+}
+.tv-flap-team {
+  font-family: var(--font-mono);
+  font-size: var(--fs-11);
+  color: var(--text-secondary);
+  width: 28px;
+}
+.tv-flap-tiles {
+  display: flex;
+  gap: 3px;
+  flex: 1;
+}
+.tv-flap-tile {
+  width: 28px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background: linear-gradient(
+    180deg,
+    #232a33 0%,
+    #181e26 48%,
+    #10151b 52%,
+    #1c222b 100%
+  );
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 19px;
+  color: var(--text-primary);
+}
+.tv-pos-badge {
+  font-family: var(--font-condensed);
+  font-weight: 700;
+  font-size: var(--fs-11);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-radius: 3px;
+  padding: 2px 7px;
+  flex-shrink: 0;
+}
+.tv-otc-badge {
+  font-family: var(--font-mono);
+  font-size: var(--fs-9);
+  letter-spacing: 1.5px;
+  color: var(--live-green);
+  white-space: nowrap;
+}
+
+/* Right rail: splash + up next */
+.tv-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.tv-splash {
+  background: var(--void);
+  border: 1px solid var(--border-3);
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.tv-splash-label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-9);
+  letter-spacing: 1.5px;
+  color: var(--text-tertiary);
+}
+.tv-splash-name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 27px;
+  letter-spacing: -0.5px;
+  color: var(--text-primary);
+  line-height: 1.05;
+}
+.tv-splash-pos {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.tv-splash-team {
+  font-family: var(--font-mono);
+  font-size: var(--fs-11);
+  color: var(--text-secondary);
+}
+.tv-splash-by {
+  font-family: var(--font-mono);
+  font-size: var(--fs-9);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+.tv-splash-by-team {
+  color: var(--your-gold);
+}
+.tv-splash--empty .tv-splash-waiting {
+  font-family: var(--font-condensed);
+  color: var(--text-disabled, #3e4650);
+}
+.tv-upnext {
+  background: var(--void);
+  border: 1px solid var(--border-1);
+  border-radius: 12px;
+  padding: 12px;
+}
+.tv-upnext-label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-9);
+  letter-spacing: 1.5px;
+  color: var(--text-tertiary);
+  margin-bottom: 8px;
+}
+.tv-upnext-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.tv-upnext-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.tv-upnext-name {
+  font-family: var(--font-condensed);
+  font-size: var(--fs-15);
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Ticker (static) */
+.tv-ticker {
+  display: flex;
+  gap: 20px;
+  overflow: hidden;
+  border-top: 1px solid var(--border-1);
+  padding-top: 12px;
+}
+.tv-ticker-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+.tv-ticker-label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-9);
+  color: var(--text-tertiary);
+}
+.tv-ticker-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.tv-ticker-name {
+  font-family: var(--font-condensed);
+  font-size: var(--fs-13-5);
+  color: var(--text-secondary);
+}
+
+/* Second window (cast view) */
+.tv-window {
+  min-height: 100vh;
+  background: var(--stage);
+  padding: 14px;
+}
+
+/* Second-window waiting state */
+.tv-window-waiting {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--stage);
+}
+.tv-window-waiting-text {
+  font-family: var(--font-condensed);
+  font-size: var(--fs-19);
+  letter-spacing: 1px;
+  color: var(--text-tertiary);
+}
