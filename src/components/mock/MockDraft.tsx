@@ -7,7 +7,6 @@ import {
   botPickId,
   currentTeamIndex,
   isComplete,
-  teamRosterPositions,
 } from "../../lib/mock/engine";
 import { formatPick, picksUntilUser } from "../../lib/mock/board";
 import { playPing } from "../../lib/sound";
@@ -23,6 +22,8 @@ import { playerDraftStatus } from "../../lib/mock/playerDraftStatus";
 import { MyQueue } from "./MyQueue";
 import { toggleQueue, pendingQueue } from "../../lib/mock/queue";
 import { LockerRoom } from "./LockerRoom";
+import { MyRoster } from "./MyRoster";
+import { RoundStrip } from "./RoundStrip";
 
 interface Props {
   state: MockState;
@@ -228,8 +229,6 @@ export function MockDraft({
   const onToggleQueue = (id: string) =>
     setQueueIds((ids) => toggleQueue(ids, id));
 
-  const myPositions = teamRosterPositions(state, userTeamIndex);
-
   const toggleCol = (c: PoolCol) =>
     setExtraCols((cur) =>
       cur.includes(c)
@@ -366,68 +365,56 @@ export function MockDraft({
       pickLabel={formatPick(overall, state.settings.teams)}
       isUser={isUser}
       isComplete={isComplete(state)}
-      timer={isUser && !isComplete(state) ? timerUi : null}
+      timer={tab !== "draft" && isUser && !isComplete(state) ? timerUi : null}
       statusLine={`R${round} · PICK ${overall} OF ${state.order.length}`}
     >
       <div className="mock-draft">
         {tab === "draft" && (
-          <>
-            <OnTheClockBanner
-              state={state}
-              round={round}
-              overall={overall}
-              isUser={isUser}
-              isComplete={isComplete(state)}
-              paused={paused}
-              picksAway={picksAway}
-              urgent={urgent}
-              muted={muted}
-              onToggleMute={toggleMute}
-              timerSec={timerSec}
-              onTimerSecChange={setTimerSec}
-              onTogglePause={() => setPaused((p) => !p)}
-              onUndo={undoAndPause}
-              onExit={onExit}
-            />
+          // B6: Broadcast Desk — three columns (clock + roster + queue /
+          // best available / round strip). The clock panel reuses the existing
+          // OnTheClockBanner (and its preserved pause/undo/mute/timer/reveal
+          // wiring) untouched; the app-bar timer is hidden on this tab so the
+          // Desk owns the live clock.
+          <div className="desk">
+            <div className="desk-col desk-left">
+              <OnTheClockBanner
+                state={state}
+                round={round}
+                overall={overall}
+                isUser={isUser}
+                isComplete={isComplete(state)}
+                paused={paused}
+                picksAway={picksAway}
+                urgent={urgent}
+                muted={muted}
+                onToggleMute={toggleMute}
+                timerSec={timerSec}
+                onTimerSecChange={setTimerSec}
+                onTogglePause={() => setPaused((p) => !p)}
+                onUndo={undoAndPause}
+                onExit={onExit}
+                timer={timerUi}
+              />
 
-            <div className="mock-myroster">
-              {myPositions.length === 0 ? (
-                <span className="mock-myroster-empty">
-                  Your picks will appear here
-                </span>
-              ) : (
-                state.picks
-                  .filter((pk) => pk.teamIndex === userTeamIndex)
-                  .map((pk) => {
-                    const pl = state.pool.find((p) => p.id === pk.playerId);
-                    if (!pl) return null;
-                    return (
-                      <span
-                        key={pk.overall}
-                        className={`mock-roster-chip pos-${pl.position}`}
-                      >
-                        <span className="mrc-pos">{pl.position}</span>
-                        <span className="mrc-name">
-                          {pl.name.split(" ").slice(-1)[0]}
-                        </span>
-                      </span>
-                    );
-                  })
-              )}
+              <MyQueue
+                players={queuePlayers}
+                canDraft={isUser && !revealing}
+                onDraft={onDraft}
+                onRemove={(id) =>
+                  setQueueIds((ids) => ids.filter((x) => x !== id))
+                }
+                onOpenPlayer={(id) => setOpenPlayer(id)}
+              />
+
+              <MyRoster state={state} userTeamIndex={userTeamIndex} />
             </div>
 
-            <MyQueue
-              players={queuePlayers}
-              canDraft={isUser && !revealing}
-              onDraft={onDraft}
-              onRemove={(id) =>
-                setQueueIds((ids) => ids.filter((x) => x !== id))
-              }
-              onOpenPlayer={(id) => setOpenPlayer(id)}
-            />
+            <div className="desk-col desk-center">{draftPoolBody}</div>
 
-            {draftPoolBody}
-          </>
+            <div className="desk-col desk-right">
+              <RoundStrip state={state} round={round} />
+            </div>
+          </div>
         )}
 
         {tab === "players" && playersPoolBody}

@@ -3718,3 +3718,173 @@ table.players td.pos {
   text-overflow: ellipsis;
   line-height: 1.4;
 }
+
+/* ── B6: Broadcast Desk (DRAFT tab 3-column layout) ──────────────────────── */
+.desk {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr) 290px;
+  gap: 14px;
+  padding: 14px;
+  align-items: start;
+}
+.desk-col {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Clock panel: the reused OnTheClockBanner, stacked vertically to fit the
+   280px left column. Behavior/markup unchanged — layout only. */
+.desk-left .mock-banner {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+}
+.desk-left .mock-banner-main {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+.desk-left .mock-banner-right {
+  align-items: flex-start;
+}
+.desk-left .mock-controls {
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* Shared panel title (roster + round strip) */
+.desk-panel-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-15);
+  color: var(--text-primary);
+}
+
+/* My Roster panel */
+.desk-roster {
+  background: var(--panel-2);
+  border: 1px solid var(--border-1);
+  border-radius: 10px;
+  padding: 9px 10px;
+}
+.desk-roster-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 7px;
+}
+.desk-roster-needs {
+  font-family: var(--font-mono);
+  font-size: var(--fs-9);
+  letter-spacing: 0.5px;
+  color: var(--your-gold);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.desk-roster-empty {
+  font-family: var(--font-condensed);
+  font-size: var(--fs-13-5);
+  color: var(--text-disabled, #3e4650);
+}
+.desk-roster-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.desk-roster-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 6px;
+  border-radius: 5px;
+  border-left: 3px solid var(--border-4);
+  background: var(--card);
+}
+.drr-pos {
+  font-family: var(--font-mono);
+  font-size: var(--fs-9);
+  font-weight: 700;
+  color: var(--text-secondary);
+  width: 26px;
+}
+.drr-name {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-condensed);
+  font-size: var(--fs-13-5);
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.drr-round {
+  font-family: var(--font-mono);
+  font-size: var(--fs-9);
+  color: var(--text-tertiary);
+}
+
+/* Round strip (right column) */
+.desk-round {
+  background: var(--panel-2);
+  border: 1px solid var(--border-1);
+  border-radius: 10px;
+  padding: 9px 10px;
+}
+.desk-round-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 7px;
+}
+.desk-round-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 6px;
+  border-radius: 5px;
+  border-left: 3px solid transparent;
+  font-family: var(--font-condensed);
+  font-size: var(--fs-13-5);
+}
+.desk-round-row.current {
+  border: 1px dashed var(--your-gold);
+  background: rgba(217, 165, 63, 0.07);
+}
+.desk-round-row.upcoming {
+  opacity: 0.55;
+}
+.drow-pick {
+  font-family: var(--font-mono);
+  font-size: var(--fs-9);
+  color: var(--text-tertiary);
+  width: 30px;
+}
+.drow-team {
+  font-family: var(--font-mono);
+  font-size: var(--fs-9);
+  color: var(--text-secondary);
+  width: 26px;
+}
+.drow-name {
+  flex: 1;
+  min-width: 0;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.drow-otc {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: var(--fs-9);
+  letter-spacing: 1px;
+  color: var(--live-green);
+}
+.drow-empty {
+  flex: 1;
+  color: var(--text-disabled, #3e4650);
+}

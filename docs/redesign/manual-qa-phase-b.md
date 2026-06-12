@@ -68,6 +68,21 @@ frame and that nothing underneath broke.
 - [ ] Draft a queued player (anywhere) → it **auto-drops** from the queue.
 - [ ] DRAFT and ✕ remove work from the panel; empty state prompts to star.
 
+## B6 — Draft tab (Broadcast Desk)
+
+The DRAFT tab is now a 3-column desk.
+
+- [ ] **Left**: clock panel (reveal + team + big timer + status), then My Queue,
+      then My Roster (gold needs header that updates as you draft).
+- [ ] **Center**: Best Available (position chips + tier-grouped list + DRAFT ＋).
+- [ ] **Right**: "Round N" strip — current pick gold-dashed with green
+      "ON THE CLOCK", completed picks show the player, future picks show "—".
+- [ ] The app-bar timer is hidden on the DRAFT tab (the Desk clock owns it);
+      it reappears on PLAYERS / BOARD / TV MODE.
+- [ ] **Preserved behaviors still work from the Desk clock panel**: pause,
+      undo, mute, pick-clock duration (⚙), exit, and the on-the-clock reveal.
+- [ ] Drafting a player updates My Roster + the round strip + needs immediately.
+
 ## B7 — The Wall
 
 - [ ] BOARD tab → THE WALL: left rail shows round numbers + direction arrows;
@@ -85,8 +100,10 @@ frame and that nothing underneath broke.
 
 ### Known cosmetic carry-forwards
 
-- Team name appears in **both** the app-bar pill and the DRAFT-tab banner —
-  resolved by B6 (Broadcast Desk replaces the banner).
+- ~~Team name appears in both the app-bar pill and the DRAFT-tab banner~~ —
+  RESOLVED by B6 (the Desk owns the clock; app-bar timer hidden on DRAFT).
+- The B6 clock panel reuses `OnTheClockBanner` stacked vertically rather than the
+  spec's bespoke 46px-timer card — functional, visual polish deferred.
 - **Replace-pick** is reachable only from the **Board-tab** Wall cell click (the
   strip now opens the player card). The spec's "Wall click → player card" is
   deferred until the sim-edit menu gets a dedicated affordance (decide at B6).

@@ -154,9 +154,13 @@ else can flex. Parallel-safe pairs if wanted: A2∥A3, B5∥B7.
       auto-drop when drafted; draft/remove from the panel.
       _Pure `queue.ts` (`toggleQueue`/`pendingQueue`); ★ on pool rows; panel in
       the DRAFT tab for now (B6 relocates it to the Desk's left column)._
-- [ ] **B6. Draft tab (Desk).** Three columns (280 / flex / 290): clock panel
+- [x] **B6. Draft tab (Desk).** Three columns (280 / flex / 290): clock panel
   - My Queue + My Roster with real needs (`openNeeds`, includes FLEX/
     SUPERFLEX) on the left, Best Available center, Round strip right.
+    _Clock panel reuses `OnTheClockBanner` unchanged (stacked vertically) so
+    pause/undo/mute/timer/reveal are preserved; app-bar timer is hidden on the
+    DRAFT tab so the Desk owns the live clock (also resolves the B1 pill/banner
+    double-team carry-forward). New `MyRoster` + `RoundStrip` components._
 - [x] **B7. Board: The Wall.** Restyle `DraftBoardGrid`; arrows 3RR-aware
       (decision 9).
       _Pure `roundDirection(order, teams, round)` derives arrows from the real
