@@ -64,6 +64,40 @@ the story off here.
 - Mock team avatar colors map to the design's `AV` palette (user = gold
   `#D9A53F`).
 
+## Plan types & dependencies (planning session, 2026-06-11)
+
+How much planning each story needs, decided with Kenny. Plans are written
+**at pickup time** against the codebase as it exists then — never in advance.
+
+- **Direct** — restyle in the story worktree; existing tests stay green; no doc
+- **TDD direct** — story has logic: red-green-refactor; no plan doc
+- **Light plan** — file map + done-checklist + verification steps; no per-step code
+- **Full plan** — complete implementation plan (bite-sized steps, code blocks)
+
+| Story                  | Plan type        | Hard deps        | Why                                                                            |
+| ---------------------- | ---------------- | ---------------- | ------------------------------------------------------------------------------ |
+| A1 tokens + fonts      | Light plan       | —                | no logic, but every screen shifts                                              |
+| A2 header restyle      | Direct           | A1               | CSS-only                                                                       |
+| A3 table chrome        | **Full plan**    | A1               | riskiest: drag re-ranking, tier-break editing, column manager must survive     |
+| A4 toolbar             | Direct           | A1               | filtering untouched                                                            |
+| A5 notes column        | TDD direct       | A3               | icon-when-note, click-opens-popover, edit affordance                           |
+| A6 sort toggle         | TDD direct       | A3, A4           | tier↔ADP sort, band hiding, persistence                                        |
+| B1 draft-room shell    | Light plan       | A1, A2           | tab state + preservation checklist (pause, undo, replace-pick, sounds, reveal) |
+| B2 player card overlay | TDD direct       | A1               | status logic (available vs drafted)                                            |
+| B3 pick strip          | Direct           | B1, B2           | styling + click→card                                                           |
+| B4 players tab         | Light plan       | A3–A6, B1, B2    | composition; drafted dimming + DRAFT buttons are the logic                     |
+| B5 my queue            | TDD direct       | B1               | auto-drop on draft, ordering, draft-from-panel                                 |
+| B6 draft tab (Desk)    | **Full plan**    | B1, B2, B5       | three-column composition: clock + queue + `openNeeds` roster + best available  |
+| B7 the Wall            | TDD direct       | B1               | arrow derivation from `order.ts` (3RR) is testable logic                       |
+| B8 locker room         | Light plan       | B7               | new view + Wall/Locker toggle                                                  |
+| B9 TV static           | **Full plan**    | B1               | new surface, BroadcastChannel second window                                    |
+| B10 TV motion          | Direct           | B9               | animation behind `prefers-reduced-motion`                                      |
+| B11+ mobile            | decide at pickup | each tab's story | one per tab; likely Direct                                                     |
+
+Hard ordering: A1 first → A3 before A5/A6 → B1 gates all of Phase B →
+B2 before B3/B4 → B5 before B6 → B7 before B8 → B9 before B10. Everything
+else can flex. Parallel-safe pairs if wanted: A2∥A3, B5∥B7.
+
 ## Stories
 
 ### Phase A — Home page (research board)
