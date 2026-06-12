@@ -4037,6 +4037,7 @@ table.players td.pos {
   display: flex;
   gap: 3px;
   flex: 1;
+  perspective: 400px; /* gives the B10 rotateX flap real depth */
 }
 .tv-flap-tile {
   width: 28px;
@@ -4323,5 +4324,13 @@ table.players td.pos {
   .tv-ticker-track,
   .tv-live-dot {
     animation: none !important;
+  }
+  /* With the marquee off, let the (wider-than-viewport) ticker scroll instead
+     of clipping; hide the duplicate copy that only existed for the loop. */
+  .tv-ticker {
+    overflow-x: auto;
+  }
+  .tv-ticker-item[aria-hidden="true"] {
+    display: none;
   }
 }

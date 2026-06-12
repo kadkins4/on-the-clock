@@ -193,21 +193,37 @@ export function MockDraft({
 
   // B9: broadcast a compact TV snapshot to any open "cast" window (the #tv
   // route) over a BroadcastChannel. Read-only mirror — additive, never touches
-  // the draft engine. Posts on every state change, and replies to a fresh
-  // window's "request" with the current snapshot.
+  // the draft engine.
+  //
+  // The channel is opened ONCE (stable across the draft) so a fresh TV window's
+  // one-shot "request" never races a channel teardown; a separate effect posts
+  // the latest snapshot on every state change. The request handler reads the
+  // current state via a ref so its reply is never stale.
+  const tvChanRef = useRef<BroadcastChannel | null>(null);
+  const tvStateRef = useRef(state);
+  tvStateRef.current = state;
   useEffect(() => {
     if (typeof BroadcastChannel === "undefined") return;
     const ch = new BroadcastChannel(TV_CHANNEL);
-    const post = () =>
-      ch.postMessage({
-        type: "snapshot",
-        snapshot: buildTvSnapshot(state),
-      } satisfies TvMessage);
+    tvChanRef.current = ch;
     ch.onmessage = (e: MessageEvent<TvMessage>) => {
-      if (e.data.type === "request") post();
+      if (e.data.type === "request") {
+        ch.postMessage({
+          type: "snapshot",
+          snapshot: buildTvSnapshot(tvStateRef.current),
+        } satisfies TvMessage);
+      }
     };
-    post();
-    return () => ch.close();
+    return () => {
+      ch.close();
+      tvChanRef.current = null;
+    };
+  }, []);
+  useEffect(() => {
+    tvChanRef.current?.postMessage({
+      type: "snapshot",
+      snapshot: buildTvSnapshot(state),
+    } satisfies TvMessage);
   }, [state]);
 
   const avail = useMemo(

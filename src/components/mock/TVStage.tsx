@@ -178,7 +178,7 @@ export function TVStage({ snapshot }: Props) {
               <div className="tv-upnext-label">UP NEXT</div>
               <div className="tv-upnext-list">
                 {upNext.map((t, i) => (
-                  <div key={i} className="tv-upnext-item">
+                  <div key={`${t.name}-${i}`} className="tv-upnext-item">
                     <TeamAvatar
                       initials={t.initials}
                       color={t.color}
