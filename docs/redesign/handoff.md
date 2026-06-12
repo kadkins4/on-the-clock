@@ -169,10 +169,18 @@ else can flex. Parallel-safe pairs if wanted: A2∥A3, B5∥B7.
       strand replace-pick until the sim-edit affordance gets a permanent home)._
 - [x] **B8. Board: Locker Room.** New roster-first view + Wall/Locker toggle.
       _`LockerRoom` columns + `formatNeeds(openNeeds(...))` footer; read-only._
-- [ ] **B9. TV mode, static.** Header, split-flap board (no motion), latest-
+- [x] **B9. TV mode, static.** Header, split-flap board (no motion), latest-
       pick splash, up-next rail; opens as second window via BroadcastChannel.
-- [ ] **B10. TV mode, motion.** Flap stagger, 24s ticker, pulses — all behind
+      _`buildTvSnapshot(state)` → compact serializable snapshot; `TVStage`
+      renders it (shared by the in-app tab + the `#tv` window). Channel
+      `"otc-tv"`: main posts on state change + replies to a fresh window's
+      request; `main.tsx` mounts `TvWindow` on `#tv`. Read-only/additive._
+- [x] **B10. TV mode, motion.** Flap stagger, 24s ticker, pulses — all behind
       `prefers-reduced-motion`.
+      _CSS keyframes (otc-flap-in 0.4s/50ms stagger, otc-splash-in spring,
+      otc-ticker 24s marquee w/ duplicated track, otc-live-pulse); flap/splash
+      replay via React keys on pick-land; reduced-motion zeroes all + scrolls
+      the ticker instead of clipping._
 - [ ] **B11+. Mobile passes.** One story per tab, layouts from
       `Draft Board Explorations v2 (Dark).dc.html`.
 
