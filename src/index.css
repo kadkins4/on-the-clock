@@ -483,6 +483,33 @@ table.players th {
   color: var(--text-tertiary-2);
   border-bottom: 1px solid var(--border-4);
 }
+/* redesign body-cell type & density (decision 4) */
+table.players td {
+  padding: 0.3rem 0.5rem;
+}
+td.name-cell {
+  font-family: var(--font-condensed);
+  font-weight: 600;
+  font-size: 15px;
+}
+td.rank,
+td.team,
+td.adp,
+td.vor,
+td.proj,
+td.last,
+td.bye {
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+td.rank {
+  color: var(--text-tertiary);
+}
+td.vor,
+td.proj,
+td.last {
+  color: var(--text-secondary);
+}
 /* the mover cell must not clip the "+" that pokes above/left of the row */
 table.players td.mover,
 table.players th.col-mover {
@@ -519,7 +546,6 @@ table.players th.col-mover {
 }
 td.vor {
   font-variant-numeric: tabular-nums;
-  color: #9aa4b2;
 }
 .col-proj {
   width: 3.6rem;
@@ -532,7 +558,6 @@ td.vor {
 td.proj,
 td.last {
   font-variant-numeric: tabular-nums;
-  color: #9aa4b2;
 }
 .col-bye {
   width: 2.6rem;
@@ -563,12 +588,13 @@ table.players input:not([type="checkbox"]) {
   width: 100%;
   box-sizing: border-box;
   background: transparent;
-  color: var(--text);
+  color: var(--text-primary);
+  font: inherit;
   border: 1px solid transparent;
   border-radius: 3px;
 }
 table.players input:focus {
-  border-color: var(--border);
+  border-color: var(--border-2);
   outline: none;
 }
 /* inline rank editor: centered, no number-spinner arrows in the narrow cell */
@@ -694,13 +720,13 @@ table.players .notes {
    and the first row under each banner is the dark base so it doesn't blend
    into the brighter tier banner. */
 tr.prow td {
-  background: var(--bg);
+  background: transparent;
 }
 tr.prow.lite td {
-  background: #13161c;
+  background: var(--card);
 }
 tr.row:hover td {
-  background: #1e2330;
+  background: var(--card-high);
 }
 
 /* clickable sortable headers + the ↩ Tiers button */
