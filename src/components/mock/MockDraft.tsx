@@ -374,7 +374,11 @@ export function MockDraft({
           </div>
         )}
 
-        <PickStrip state={state} onPickClick={(o) => setMenuFor(o)} />
+        <PickStrip
+          state={state}
+          userTeamIndex={userTeamIndex}
+          onOpenPlayer={(id) => setOpenPlayer(id)}
+        />
 
         <PlayerPanel
           player={

@@ -3102,3 +3102,105 @@ table.players td.pos {
 .pc-status-text--avail {
   color: var(--live-green);
 }
+
+/* ── B3: Pick strip restyle ──────────────────────────────────────────────── */
+
+/* Card dimensions — spec: 118px wide, 7px radius, 7px/9px padding */
+.mock-strip .strip-card {
+  width: 118px;
+  border-radius: 7px;
+  padding: 7px 9px;
+  border: 1px solid transparent;
+}
+
+/* Completed pick: position-tint bg (from pos-* helpers), primary text */
+.mock-strip .strip-card.done {
+  /* pos-* classes supply the tinted background + matching border-color */
+  color: var(--text-primary);
+}
+
+/* Completed pick: cursor + hover ring */
+.mock-strip .strip-card.done.clickable {
+  cursor: pointer;
+}
+.mock-strip .strip-card.done.clickable:hover {
+  outline: 2px solid rgba(217, 165, 63, 0.6);
+  outline-offset: -1px;
+}
+
+/* Current pick: gold dashed-feel highlight */
+.mock-strip .strip-card.current {
+  background: rgba(217, 165, 63, 0.07);
+  border-color: var(--your-gold);
+  box-shadow: none; /* override the old inset ring */
+  font-weight: 400; /* reset — inner elements carry their own weight */
+}
+
+/* Future picks: panel-2 bg, muted border */
+.mock-strip .strip-card.upcoming {
+  background: var(--panel-2);
+  border-color: #222933;
+  opacity: 1; /* override old 0.6 rule */
+}
+.mock-strip .strip-card.upcoming .strip-team {
+  color: var(--text-tertiary);
+}
+
+/* Pick number: mono, fs-9 */
+.mock-strip .strip-pick {
+  font-family: var(--font-mono);
+  font-size: var(--fs-9);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+/* Local user's pick number: gold */
+.mock-strip .strip-pick--user {
+  color: var(--your-gold);
+  opacity: 1;
+}
+
+/* Local user's card: gold-tinted border overlay */
+.mock-strip .strip-card.is-user {
+  border-color: rgba(217, 165, 63, 0.45);
+}
+/* Current pick that is also the user's: keep gold border, add tint bg */
+.mock-strip .strip-card.current.is-user {
+  border-color: var(--your-gold);
+}
+
+/* "ON THE CLOCK" green label on current cell */
+.mock-strip .strip-otc {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-9);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--live-green);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Player name on done picks: primary color, semi-bold */
+.mock-strip .strip-name {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Position label on done picks: subtext tone */
+.mock-strip .strip-pos {
+  font-family: var(--font-mono);
+  font-size: var(--fs-9);
+  letter-spacing: 1px;
+  opacity: 0.8;
+}
+
+/* Team name on non-done picks */
+.mock-strip .strip-team {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 11px;
+}
