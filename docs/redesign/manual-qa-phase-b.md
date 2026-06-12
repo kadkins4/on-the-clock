@@ -41,7 +41,53 @@ frame and that nothing underneath broke.
 - [ ] **Replace-pick**: click a completed pick in the strip/board → menu →
       "Replace with…" → pick a player → that slot updates everywhere.
 
-### Known cosmetic carry-forward
+## B2 — Player card overlay
 
-- Team name appears in **both** the app-bar pill and the DRAFT-tab banner. This
-  is resolved by B6, which replaces the banner with the Broadcast Desk.
+- [ ] Click a player name (pool/strip/board) → centered card with a 3px
+      position-color border opens.
+- [ ] Card shows ADP, PROJ (or `—`), VALUE (`—` in mock), and a status strip:
+      green "✓ STILL AVAILABLE" or "DRAFTED x.xx · TEAM".
+- [ ] Closes on ✕, scrim click, and Escape.
+
+## B3 — Pick strip
+
+- [ ] Clicking a completed pick in the bottom strip opens the **player card**.
+- [ ] The on-the-clock card shows a gold dashed look + green "ON THE CLOCK".
+- [ ] Your own picks have gold pick numbers + a gold-tinted border.
+
+## B4 — Players tab
+
+- [ ] PLAYERS tab shows already-drafted players inline, dimmed (~40%), with
+      "pick · initials" instead of a DRAFT button.
+- [ ] DRAFT tab still shows **available-only** players (no dimmed rows).
+
+## B5 — My Queue
+
+- [ ] Star (☆→★) a player in the pool → it appears in the **My Queue** panel
+      (DRAFT tab), in star order.
+- [ ] Draft a queued player (anywhere) → it **auto-drops** from the queue.
+- [ ] DRAFT and ✕ remove work from the panel; empty state prompts to star.
+
+## B7 — The Wall
+
+- [ ] BOARD tab → THE WALL: left rail shows round numbers + direction arrows;
+      arrows follow the **real** order (flip correctly under 3rd-round reversal).
+- [ ] Your column has a gold outline; current pick cell is gold-dashed with
+      green "ON THE CLOCK".
+- [ ] Clicking a filled Wall cell still opens the **edit menu**
+      (replace/undo/resume) — this is the replace-pick path; verify it works.
+
+## B8 — Locker Room
+
+- [ ] BOARD tab → toggle **THE WALL / LOCKER ROOM** (active pill orange).
+- [ ] LOCKER ROOM: one column per team, each with a header, that team's picks
+      as mini cards, and a needs footer ("QB1 · RB2 · …") that reflects picks.
+
+### Known cosmetic carry-forwards
+
+- Team name appears in **both** the app-bar pill and the DRAFT-tab banner —
+  resolved by B6 (Broadcast Desk replaces the banner).
+- **Replace-pick** is reachable only from the **Board-tab** Wall cell click (the
+  strip now opens the player card). The spec's "Wall click → player card" is
+  deferred until the sim-edit menu gets a dedicated affordance (decide at B6).
+- B4's **HIDE DRAFTED** toggle (spec'd on the Players toolbar) is not yet wired.

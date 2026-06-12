@@ -138,20 +138,33 @@ else can flex. Parallel-safe pairs if wanted: A2∥A3, B5∥B7.
       untouched. DRAFT tab = working view (banner+roster+pool), PLAYERS = pool,
       BOARD = `DraftBoardGrid`, TV MODE = placeholder (B9 fills it). Carry-forward:
       team shows in both pill + banner on DRAFT (B6 desk resolves it)._
-- [ ] **B2. Player card overlay.** Opens from any player name/cell; ADP /
+- [x] **B2. Player card overlay.** Opens from any player name/cell; ADP /
       PROJ / VOR grid; status strip (available vs. "DRAFTED 2.03 · TEAM").
-- [ ] **B3. Pick strip restyle.** Gold borders on the user's picks,
+      _Pure `playerDraftStatus` helper; VALUE/VOR shows `—` (deferred for mock)._
+- [x] **B3. Pick strip restyle.** Gold borders on the user's picks,
       on-the-clock card, click completed pick → player card.
-- [ ] **B4. Players tab.** Reuses A3–A6 components + drafted dimming,
+      _Strip click now opens the player card; the edit menu (replace-pick) moved
+      to the Board-tab grid click — see B7._
+- [x] **B4. Players tab.** Reuses A3–A6 components + drafted dimming,
       "3.04 · CB" status text, DRAFT buttons.
-- [ ] **B5. My Queue.** Starred players surface as the ordered queue panel;
+      _Drafted rows dim to 40% with "pick · initials"; DRAFT tab stays
+      available-only. Did NOT embed the global PlayerTable. HIDE DRAFTED toggle
+      deferred._
+- [x] **B5. My Queue.** Starred players surface as the ordered queue panel;
       auto-drop when drafted; draft/remove from the panel.
+      _Pure `queue.ts` (`toggleQueue`/`pendingQueue`); ★ on pool rows; panel in
+      the DRAFT tab for now (B6 relocates it to the Desk's left column)._
 - [ ] **B6. Draft tab (Desk).** Three columns (280 / flex / 290): clock panel
   - My Queue + My Roster with real needs (`openNeeds`, includes FLEX/
     SUPERFLEX) on the left, Best Available center, Round strip right.
-- [ ] **B7. Board: The Wall.** Restyle `DraftBoardGrid`; arrows 3RR-aware
+- [x] **B7. Board: The Wall.** Restyle `DraftBoardGrid`; arrows 3RR-aware
       (decision 9).
-- [ ] **B8. Board: Locker Room.** New roster-first view + Wall/Locker toggle.
+      _Pure `roundDirection(order, teams, round)` derives arrows from the real
+      order. Board cell click still opens the edit menu (the preserved
+      replace-pick path) — spec's "Wall click → player card" deferred (would
+      strand replace-pick until the sim-edit affordance gets a permanent home)._
+- [x] **B8. Board: Locker Room.** New roster-first view + Wall/Locker toggle.
+      _`LockerRoom` columns + `formatNeeds(openNeeds(...))` footer; read-only._
 - [ ] **B9. TV mode, static.** Header, split-flap board (no motion), latest-
       pick splash, up-next rail; opens as second window via BroadcastChannel.
 - [ ] **B10. TV mode, motion.** Flap stagger, 24s ticker, pulses — all behind
