@@ -129,10 +129,15 @@ else can flex. Parallel-safe pairs if wanted: A2∥A3, B5∥B7.
 
 ### Phase B — Draft room
 
-- [ ] **B1. Draft-room shell.** App bar variant: on-the-clock pill (gold when
+- [x] **B1. Draft-room shell.** App bar variant: on-the-clock pill (gold when
       it's you), styled timer (current semantics), PLAYERS / DRAFT / BOARD /
       TV MODE tabs. Existing mock content renders inside; pause, undo,
       replace-pick, sounds, reveal all preserved.
+      _Thin shell: new `DraftShell` wraps existing `MockDraft`; app bar owns the
+      live timer (banner's removed to avoid a double clock), banner otherwise
+      untouched. DRAFT tab = working view (banner+roster+pool), PLAYERS = pool,
+      BOARD = `DraftBoardGrid`, TV MODE = placeholder (B9 fills it). Carry-forward:
+      team shows in both pill + banner on DRAFT (B6 desk resolves it)._
 - [ ] **B2. Player card overlay.** Opens from any player name/cell; ADP /
       PROJ / VOR grid; status strip (available vs. "DRAFTED 2.03 · TEAM").
 - [ ] **B3. Pick strip restyle.** Gold borders on the user's picks,

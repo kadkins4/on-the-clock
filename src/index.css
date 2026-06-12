@@ -2784,3 +2784,158 @@ table.players td.pos {
   font-size: 12px;
   color: #6b7280;
 }
+
+/* ── B1: Draft-room shell (global frame) ───────────────────────────────── */
+.draft-shell {
+  display: flex;
+  flex-direction: column;
+}
+
+/* App bar */
+.draft-appbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 16px;
+  background: var(--raised);
+  border-bottom: 1px solid var(--border-1);
+}
+.draft-appbar-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.draft-wordmark {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 19px;
+  letter-spacing: -0.3px;
+  line-height: 1;
+}
+.draft-microlabel {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--text-tertiary-2);
+  text-transform: uppercase;
+}
+
+/* On-the-clock pill */
+.otc-pill {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 auto;
+  padding: 5px 12px 5px 5px;
+  background: var(--panel-2);
+  border: 1px solid var(--border-3);
+  border-radius: 999px;
+}
+.otc-pill.is-user {
+  border-color: var(--your-gold);
+}
+.otc-pill-who {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  line-height: 1.1;
+  min-width: 0;
+}
+.otc-pill-status {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: var(--live-green);
+  text-transform: uppercase;
+}
+.otc-pill.is-user .otc-pill-status {
+  color: var(--your-gold);
+}
+.otc-pill-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.otc-pill-pick {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
+/* App-bar right: timer + status */
+.draft-appbar-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  margin-left: auto;
+  min-width: 64px;
+}
+.draft-appbar-timer {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1;
+}
+.draft-appbar-status {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 1px;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Tab row */
+.draft-tabs {
+  display: flex;
+  gap: 22px;
+  padding: 0 18px;
+  background: var(--raised);
+  border-bottom: 1px solid var(--border-1);
+}
+.draft-tab {
+  appearance: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 12px 0;
+  font-family: var(--font-condensed);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  border-bottom: 3px solid transparent;
+  margin-bottom: -1px;
+}
+.draft-tab:hover {
+  color: var(--text-secondary);
+}
+.draft-tab.active {
+  color: var(--text);
+  border-bottom-color: var(--clock-orange);
+}
+
+/* TV Mode placeholder (filled in by B9) */
+.draft-tv-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 64px 24px;
+  text-align: center;
+  color: var(--text-tertiary);
+}
+.draft-tv-placeholder p {
+  max-width: 420px;
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+}

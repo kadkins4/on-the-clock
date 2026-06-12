@@ -18,6 +18,7 @@ import { OnTheClockBanner } from "./OnTheClockBanner";
 import { StopwatchMark } from "./StopwatchMark";
 import { PickPool, type PoolCol, POOL_COL_CAP } from "./PickPool";
 import { PlayerPanel } from "./PlayerPanel";
+import { DraftShell, type DraftTab } from "./DraftShell";
 
 interface Props {
   state: MockState;
@@ -53,9 +54,9 @@ export function MockDraft({
   onRewindTo,
 }: Props) {
   const [posFilter, setPosFilter] = useState<Position | "All">("All");
-  const [poolTab, setPoolTab] = useState<"players" | "queue" | "board">(
-    "players",
-  );
+  // B1: top-level draft-room tab (app-bar). Defaults to the working Draft view
+  // so the clock + controls are visible on entry.
+  const [tab, setTab] = useState<DraftTab>("draft");
   const [openPlayer, setOpenPlayer] = useState<string | null>(null);
   const [extraCols, setExtraCols] = useState<PoolCol[]>(["bye"]);
   const [colMenuOpen, setColMenuOpen] = useState(false);
@@ -81,6 +82,7 @@ export function MockDraft({
   const mutedRef = useRef(muted);
   mutedRef.current = muted;
   const onClock = currentTeamIndex(state);
+  const team = state.teams[onClock];
   const isUser = onClock === userTeamIndex && !isComplete(state);
   const overall = state.picks.length + 1;
   const round = Math.floor((overall - 1) / state.settings.teams) + 1;
@@ -222,256 +224,260 @@ export function MockDraft({
     </span>
   );
 
-  return (
-    <div className="mock-draft">
-      <OnTheClockBanner
-        state={state}
-        round={round}
+  // Players-pool body (filters + columns + list). Shared by the research
+  // PLAYERS tab and the working DRAFT tab.
+  const poolBody = (
+    <>
+      <div className="filters">
+        {POS_FILTERS.map((p) => (
+          <button
+            key={p}
+            className={posFilter === p ? "chip active" : "chip"}
+            onClick={() => setPosFilter(p)}
+          >
+            {p}
+          </button>
+        ))}
+        <div className="colbtn-wrap">
+          <button
+            className={`colbtn${colMenuOpen ? " active" : ""}`}
+            onClick={() => setColMenuOpen((o) => !o)}
+            aria-label="Columns"
+          >
+            ⚙ Columns
+          </button>
+          {colMenuOpen && (
+            <>
+              <div
+                className="colmenu-scrim"
+                onClick={() => setColMenuOpen(false)}
+              />
+              <div className="colmenu">
+                {(["bye", "proj", "vor"] as PoolCol[]).map((c) => {
+                  const on = extraCols.includes(c);
+                  const comingSoon = c === "proj" || c === "vor";
+                  return (
+                    <button
+                      key={c}
+                      className={on ? "on" : ""}
+                      disabled={
+                        comingSoon || (!on && extraCols.length >= POOL_COL_CAP)
+                      }
+                      title={comingSoon ? "Coming soon" : undefined}
+                      onClick={() => toggleCol(c)}
+                    >
+                      {c === "bye" ? "Bye" : c === "proj" ? "Proj" : "VOR"}
+                    </button>
+                  );
+                })}
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+
+      <PickPool
+        players={avail.slice(0, 100)}
+        canDraft={isUser && !revealing}
         overall={overall}
-        isUser={isUser}
-        isComplete={isComplete(state)}
-        paused={paused}
-        picksAway={picksAway}
-        urgent={urgent}
-        muted={muted}
-        onToggleMute={toggleMute}
-        timerSec={timerSec}
-        onTimerSecChange={setTimerSec}
-        onTogglePause={() => setPaused((p) => !p)}
-        onUndo={undoAndPause}
-        onExit={onExit}
-        timer={timerUi}
+        extraCols={extraCols}
+        onToggleCol={toggleCol}
+        onDraft={onDraft}
+        onOpenPlayer={(id) => setOpenPlayer(id)}
       />
+    </>
+  );
 
-      <div className="mock-myroster">
-        {myPositions.length === 0 ? (
-          <span className="mock-myroster-empty">
-            Your picks will appear here
-          </span>
-        ) : (
-          state.picks
-            .filter((pk) => pk.teamIndex === userTeamIndex)
-            .map((pk) => {
-              const pl = state.pool.find((p) => p.id === pk.playerId);
-              if (!pl) return null;
-              return (
-                <span
-                  key={pk.overall}
-                  className={`mock-roster-chip pos-${pl.position}`}
-                >
-                  <span className="mrc-pos">{pl.position}</span>
-                  <span className="mrc-name">
-                    {pl.name.split(" ").slice(-1)[0]}
-                  </span>
+  return (
+    <DraftShell
+      tab={tab}
+      onTabChange={setTab}
+      teamName={team?.name ?? ""}
+      initials={team?.initials ?? ""}
+      color={team?.color ?? "#888888"}
+      pickLabel={formatPick(overall, state.settings.teams)}
+      isUser={isUser}
+      isComplete={isComplete(state)}
+      timer={isUser && !isComplete(state) ? timerUi : null}
+      statusLine={`R${round} · PICK ${overall} OF ${state.order.length}`}
+    >
+      <div className="mock-draft">
+        {tab === "draft" && (
+          <>
+            <OnTheClockBanner
+              state={state}
+              round={round}
+              overall={overall}
+              isUser={isUser}
+              isComplete={isComplete(state)}
+              paused={paused}
+              picksAway={picksAway}
+              urgent={urgent}
+              muted={muted}
+              onToggleMute={toggleMute}
+              timerSec={timerSec}
+              onTimerSecChange={setTimerSec}
+              onTogglePause={() => setPaused((p) => !p)}
+              onUndo={undoAndPause}
+              onExit={onExit}
+            />
+
+            <div className="mock-myroster">
+              {myPositions.length === 0 ? (
+                <span className="mock-myroster-empty">
+                  Your picks will appear here
                 </span>
-              );
-            })
-        )}
-      </div>
-
-      <div className="pool-tabs">
-        <button
-          className={poolTab === "players" ? "on" : ""}
-          onClick={() => setPoolTab("players")}
-        >
-          Players
-        </button>
-        <button
-          className={poolTab === "queue" ? "on" : ""}
-          onClick={() => setPoolTab("queue")}
-        >
-          Queue
-        </button>
-        <button
-          className={poolTab === "board" ? "on" : ""}
-          onClick={() => setPoolTab("board")}
-        >
-          Draft Board
-        </button>
-      </div>
-
-      {poolTab === "players" && (
-        <>
-          <div className="filters">
-            {POS_FILTERS.map((p) => (
-              <button
-                key={p}
-                className={posFilter === p ? "chip active" : "chip"}
-                onClick={() => setPosFilter(p)}
-              >
-                {p}
-              </button>
-            ))}
-            <div className="colbtn-wrap">
-              <button
-                className={`colbtn${colMenuOpen ? " active" : ""}`}
-                onClick={() => setColMenuOpen((o) => !o)}
-                aria-label="Columns"
-              >
-                ⚙ Columns
-              </button>
-              {colMenuOpen && (
-                <>
-                  <div
-                    className="colmenu-scrim"
-                    onClick={() => setColMenuOpen(false)}
-                  />
-                  <div className="colmenu">
-                    {(["bye", "proj", "vor"] as PoolCol[]).map((c) => {
-                      const on = extraCols.includes(c);
-                      const comingSoon = c === "proj" || c === "vor";
-                      return (
-                        <button
-                          key={c}
-                          className={on ? "on" : ""}
-                          disabled={
-                            comingSoon ||
-                            (!on && extraCols.length >= POOL_COL_CAP)
-                          }
-                          title={comingSoon ? "Coming soon" : undefined}
-                          onClick={() => toggleCol(c)}
-                        >
-                          {c === "bye" ? "Bye" : c === "proj" ? "Proj" : "VOR"}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </>
+              ) : (
+                state.picks
+                  .filter((pk) => pk.teamIndex === userTeamIndex)
+                  .map((pk) => {
+                    const pl = state.pool.find((p) => p.id === pk.playerId);
+                    if (!pl) return null;
+                    return (
+                      <span
+                        key={pk.overall}
+                        className={`mock-roster-chip pos-${pl.position}`}
+                      >
+                        <span className="mrc-pos">{pl.position}</span>
+                        <span className="mrc-name">
+                          {pl.name.split(" ").slice(-1)[0]}
+                        </span>
+                      </span>
+                    );
+                  })
               )}
             </div>
-          </div>
 
-          <PickPool
-            players={avail.slice(0, 100)}
-            canDraft={isUser && !revealing}
-            overall={overall}
-            extraCols={extraCols}
-            onToggleCol={toggleCol}
-            onDraft={onDraft}
-            onOpenPlayer={(id) => setOpenPlayer(id)}
+            {poolBody}
+          </>
+        )}
+
+        {tab === "players" && poolBody}
+
+        {tab === "board" && (
+          <DraftBoardGrid
+            state={state}
+            onPickClick={(o) => setMenuFor(o)}
+            timer={isUser ? timerUi : undefined}
           />
-        </>
-      )}
+        )}
 
-      {poolTab === "queue" && (
-        <div className="queue-soon">
-          <span className="ppx-soon">Queue · Coming soon</span>
-          <p>
-            Add players to a queue and drag them up and down to plan your picks.
-            Landing soon.
-          </p>
-        </div>
-      )}
-
-      {poolTab === "board" && (
-        <DraftBoardGrid
-          state={state}
-          onPickClick={(o) => setMenuFor(o)}
-          timer={isUser ? timerUi : undefined}
-        />
-      )}
-      <PickStrip state={state} onPickClick={(o) => setMenuFor(o)} />
-
-      <PlayerPanel
-        player={
-          openPlayer
-            ? (state.pool.find((p) => p.id === openPlayer) ?? null)
-            : null
-        }
-        onClose={() => setOpenPlayer(null)}
-      />
-
-      {/* Missed-pick modal */}
-      {missed && (
-        <div className="missed-scrim">
-          <div className="missed-modal">
-            <h3>⏰ You missed your pick</h3>
+        {tab === "tv" && (
+          <div className="draft-tv-placeholder">
+            <span className="ppx-soon">TV Mode · Coming soon</span>
             <p>
-              Your clock ran out. Keep drafting, or let auto-draft finish for
-              you?
+              A passive, animated &ldquo;cast&rdquo; view for in-person draft
+              parties — split-flap board, latest-pick splash, and a live ticker.
+              Landing in a later update.
             </p>
-            <div className="missed-acts">
-              <button className="ghost" onClick={() => setMissed(false)}>
-                Keep drafting
-              </button>
-              <button
-                className="primary"
-                onClick={() => {
-                  setAutoOn(true);
-                  setMissed(false);
-                }}
-              >
-                Auto-draft the rest
-              </button>
-            </div>
-            <div className="missed-count">
-              Auto-drafts in {missedLeft}s if you don&apos;t choose…
-            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Edit a made pick: resume from here, replace the player, or undo it. */}
-      {menuFor != null && (
-        <>
-          <div className="pickmenu-scrim" onClick={() => setMenuFor(null)} />
-          <div className="pickmenu">
-            <div className="pickmenu-head">
-              Pick {formatPick(menuFor, state.settings.teams)}
-            </div>
-            <button
-              className="pickmenu-item"
-              onClick={() => resumeFromHere(menuFor)}
-            >
-              ↩ Resume draft from here
-            </button>
-            {menuFor === state.picks.length && (
-              <button
-                className="pickmenu-item"
-                onClick={() => {
-                  undoAndPause();
-                  setMenuFor(null);
-                }}
-              >
-                ✕ Undo this pick
-              </button>
-            )}
+        <PickStrip state={state} onPickClick={(o) => setMenuFor(o)} />
 
-            <div className="pickmenu-replace">
-              <div className="pickmenu-replace-label">Replace with…</div>
-              <SearchPill
-                value={replaceSearch}
-                onChange={setReplaceSearch}
-                placeholder="Search players…"
-                autoFocus
-              />
-              <div className="pickmenu-list">
-                {availableByBoard(state)
-                  .filter((p) =>
-                    p.name.toLowerCase().includes(replaceSearch.toLowerCase()),
-                  )
-                  .slice(0, 8)
-                  .map((p) => (
-                    <button
-                      key={p.id}
-                      className={`pickmenu-row pos-${p.position}`}
-                      onClick={() => {
-                        onReplacePick(menuFor, p.id);
-                        setMenuFor(null);
-                        setReplaceSearch("");
-                      }}
-                    >
-                      <span>{p.name}</span>
-                      <span className="pickmenu-meta">
-                        {p.position} · {p.team}
-                      </span>
-                    </button>
-                  ))}
+        <PlayerPanel
+          player={
+            openPlayer
+              ? (state.pool.find((p) => p.id === openPlayer) ?? null)
+              : null
+          }
+          onClose={() => setOpenPlayer(null)}
+        />
+
+        {/* Missed-pick modal */}
+        {missed && (
+          <div className="missed-scrim">
+            <div className="missed-modal">
+              <h3>⏰ You missed your pick</h3>
+              <p>
+                Your clock ran out. Keep drafting, or let auto-draft finish for
+                you?
+              </p>
+              <div className="missed-acts">
+                <button className="ghost" onClick={() => setMissed(false)}>
+                  Keep drafting
+                </button>
+                <button
+                  className="primary"
+                  onClick={() => {
+                    setAutoOn(true);
+                    setMissed(false);
+                  }}
+                >
+                  Auto-draft the rest
+                </button>
+              </div>
+              <div className="missed-count">
+                Auto-drafts in {missedLeft}s if you don&apos;t choose…
               </div>
             </div>
           </div>
-        </>
-      )}
-    </div>
+        )}
+
+        {/* Edit a made pick: resume from here, replace the player, or undo it. */}
+        {menuFor != null && (
+          <>
+            <div className="pickmenu-scrim" onClick={() => setMenuFor(null)} />
+            <div className="pickmenu">
+              <div className="pickmenu-head">
+                Pick {formatPick(menuFor, state.settings.teams)}
+              </div>
+              <button
+                className="pickmenu-item"
+                onClick={() => resumeFromHere(menuFor)}
+              >
+                ↩ Resume draft from here
+              </button>
+              {menuFor === state.picks.length && (
+                <button
+                  className="pickmenu-item"
+                  onClick={() => {
+                    undoAndPause();
+                    setMenuFor(null);
+                  }}
+                >
+                  ✕ Undo this pick
+                </button>
+              )}
+
+              <div className="pickmenu-replace">
+                <div className="pickmenu-replace-label">Replace with…</div>
+                <SearchPill
+                  value={replaceSearch}
+                  onChange={setReplaceSearch}
+                  placeholder="Search players…"
+                  autoFocus
+                />
+                <div className="pickmenu-list">
+                  {availableByBoard(state)
+                    .filter((p) =>
+                      p.name
+                        .toLowerCase()
+                        .includes(replaceSearch.toLowerCase()),
+                    )
+                    .slice(0, 8)
+                    .map((p) => (
+                      <button
+                        key={p.id}
+                        className={`pickmenu-row pos-${p.position}`}
+                        onClick={() => {
+                          onReplacePick(menuFor, p.id);
+                          setMenuFor(null);
+                          setReplaceSearch("");
+                        }}
+                      >
+                        <span>{p.name}</span>
+                        <span className="pickmenu-meta">
+                          {p.position} · {p.team}
+                        </span>
+                      </button>
+                    ))}
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+    </DraftShell>
   );
 }
