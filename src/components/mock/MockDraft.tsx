@@ -16,6 +16,7 @@ import { DraftBoardGrid } from "./DraftBoardGrid";
 import { OnTheClockBanner } from "./OnTheClockBanner";
 import { StopwatchMark } from "./StopwatchMark";
 import { PickPool, type PoolCol, POOL_COL_CAP } from "./PickPool";
+import { MockPlayersTable } from "./MockPlayersTable";
 import { PlayerPanel } from "./PlayerPanel";
 import { DraftShell, type DraftTab } from "./DraftShell";
 import { playerDraftStatus } from "../../lib/mock/playerDraftStatus";
@@ -377,16 +378,14 @@ export function MockDraft({
     </>
   );
 
-  // PLAYERS tab: full pool including drafted players, dimmed with pick status.
+  // PLAYERS tab: full pool including drafted players, as a dense research table
+  // (distinct from the Draft tab's carded Best-Available list).
   const playersPoolBody = (
     <>
       {filterBar}
-      <PickPool
+      <MockPlayersTable
         players={fullPool}
         canDraft={isUser && !revealing}
-        overall={overall}
-        extraCols={extraCols}
-        onToggleCol={toggleCol}
         onDraft={onDraft}
         onOpenPlayer={(id) => setOpenPlayer(id)}
         draftStatusOf={draftStatusOf}

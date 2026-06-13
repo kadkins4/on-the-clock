@@ -2568,6 +2568,135 @@ table.players td.pos {
   margin-left: auto;
 }
 
+/* ④b Mock-draft Players tab — dense research table (★ # PLAYER POS TEAM ADP
+   PROJ BYE STATUS). Distinct from the carded Best-Available list. */
+.mpt {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-condensed);
+}
+.mpt thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--void, #0b0e13);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-tertiary-2, #5c6470);
+  text-align: center;
+  padding: 7px 8px;
+  border-bottom: 1px solid var(--border-4, #2a323d);
+}
+.mpt th.mpt-l,
+.mpt td.mpt-l {
+  text-align: left;
+}
+.mpt td {
+  padding: 5px 8px;
+  text-align: center;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--border-1, #1c232c);
+}
+.mpt-row:nth-child(even) {
+  background: rgba(255, 255, 255, 0.015);
+}
+.mpt-row:hover {
+  background: #10141d;
+}
+.mpt-row--drafted {
+  opacity: 0.4;
+}
+.mpt-row--drafted:hover {
+  opacity: 0.6;
+}
+.mpt-mono {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary, #9aa3ae);
+  font-variant-numeric: tabular-nums;
+}
+.mpt-rank {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-tertiary, #707a87);
+  font-variant-numeric: tabular-nums;
+}
+.mpt-name {
+  background: none;
+  border: none;
+  color: var(--text-primary, #eceef1);
+  font-family: var(--font-condensed);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+}
+.mpt-name:hover {
+  text-decoration: underline;
+}
+.mpt-pos {
+  display: inline-block;
+  min-width: 30px;
+  font-family: var(--font-condensed);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  color: var(--c-badge-text, #fff);
+  background: var(--c, #888);
+  border-radius: 3px;
+  padding: 2px 0;
+}
+.mpt-star-col {
+  width: 2rem;
+}
+.mpt-star {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-tertiary, #707a87);
+  font-size: 14px;
+  line-height: 1;
+  padding: 0;
+}
+.mpt-star.on {
+  color: var(--your-gold, #d9a53f);
+}
+.mpt-status-cell {
+  width: 5rem;
+}
+.mpt-status {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-tertiary, #707a87);
+  white-space: nowrap;
+}
+/* Orange DRAFT button — global button spec, app-wide. */
+.mpt-draft {
+  border: none;
+  background: var(--clock-orange, #fb5a2d);
+  color: #fff;
+  border-radius: 5px;
+  padding: 4px 11px;
+  font-family: var(--font-condensed);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+}
+.mpt-draft:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+.mpt-draft:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
 /* --- Note popover --- */
 .pp-note-scrim {
   position: fixed;
