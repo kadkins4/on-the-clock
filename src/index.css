@@ -2555,6 +2555,31 @@ table.players td.pos {
   padding: 12px 12px 10px;
   flex-wrap: wrap;
 }
+/* Position filter chips — pill spec, consistent with `.toolbar .chip` on the
+   home page but with a bigger mobile tap target. `.filters .chip` (0-2-0)
+   out-specifies the generic button rules so chips keep their pill treatment. */
+.filters .chip {
+  padding: 6px 14px;
+  border: 1px solid var(--border-4);
+  background: transparent;
+  color: var(--text-secondary);
+  border-radius: 999px;
+  font-family: var(--font-condensed);
+  font-weight: 700;
+  font-size: 12.5px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.filters .chip:hover:not(.active) {
+  color: var(--text-primary);
+  border-color: var(--border-5);
+}
+.filters .chip.active {
+  background: var(--clock-orange);
+  color: #fff;
+  border-color: var(--clock-orange);
+}
 .colbtn-wrap {
   margin-left: auto;
   position: relative;
