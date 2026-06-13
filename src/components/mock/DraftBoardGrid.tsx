@@ -9,9 +9,10 @@ interface Props {
   state: MockState;
   onPickClick?: (overall: number) => void; // open the edit menu for a made pick
   timer?: ReactNode; // live countdown shown in the on-the-clock cell
+  urgent?: boolean; // final 5 seconds — turns the current cell red + faster pulse
 }
 
-export function DraftBoardGrid({ state, onPickClick, timer }: Props) {
+export function DraftBoardGrid({ state, onPickClick, timer, urgent }: Props) {
   const { teams, rounds } = state.settings;
   // Full grid including current/upcoming cells (not just made picks), so empty
   // slots can show a placeholder and the on-the-clock cell can show the timer.
@@ -105,10 +106,10 @@ export function DraftBoardGrid({ state, onPickClick, timer }: Props) {
                   return (
                     <div
                       key={t}
-                      className={`bcg-cell current${userClass}${isUserCell ? " current-user" : ""}`}
+                      className={`bcg-cell current${userClass}${isUserCell ? " current-user" : ""}${urgent ? " is-urgent" : ""}`}
                     >
                       <span className="bcg-pick">{cell.label}</span>
-                      <span className="bcg-otc-label">ON THE CLOCK</span>
+                      <span className="bcg-otc-label">● ON THE CLOCK</span>
                       <span className="bcg-clock">{timer ?? "⏱"}</span>
                     </div>
                   );

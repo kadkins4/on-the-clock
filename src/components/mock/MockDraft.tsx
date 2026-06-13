@@ -483,6 +483,7 @@ export function MockDraft({
                 state={state}
                 onPickClick={(o) => setMenuFor(o)}
                 timer={isUser ? timerUi : undefined}
+                urgent={urgent}
               />
             ) : (
               <LockerRoom state={state} />

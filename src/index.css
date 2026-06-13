@@ -36,6 +36,7 @@
   --clock-orange: #fb5a2d; /* brand, CTAs, active states */
   --live-green: #2fc76d; /* "on the clock" status */
   --your-gold: #d9a53f; /* local-user highlights + auction $ */
+  --urgent-red: #ef4444; /* final-5-seconds countdown alert */
   --danger: #a93e26; /* AUTO-running state */
 
   /* Type families — self-hosted via @fontsource (imported in main.tsx) */
@@ -3446,15 +3447,16 @@ table.players td.pos {
 
 .wall-rail-round {
   font-family: var(--font-mono);
-  font-size: var(--fs-9, 9px);
-  color: var(--text-disabled, #3e4650);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-tertiary, #707a87);
   letter-spacing: 0.5px;
 }
 
 .wall-rail-arrow {
   font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--text-tertiary, #5c6470);
+  font-size: 11px;
+  color: var(--your-gold, #d9a53f);
 }
 
 /* Wall ground */
@@ -3504,7 +3506,7 @@ table.players td.pos {
 /* Done cells: position-tint bg is already supplied by .pos-* --c var.
    Use a slightly stronger tint mix for the Wall. */
 .wall-wrap .bcg-cell.done {
-  background: color-mix(in srgb, var(--c, #2a2f3a) 18%, var(--void, #0b0e13));
+  background: var(--c-tint, #161b23);
 }
 
 /* Player name line */
@@ -3558,6 +3560,32 @@ table.players td.pos {
   background: rgba(217, 165, 63, 0.1);
 }
 
+/* ③ Final 5 seconds: the on-the-clock cell flips red with a faster pulse. */
+.wall-wrap .bcg-cell.current.is-urgent {
+  border-color: var(--urgent-red, #ef4444);
+  border-left-color: var(--urgent-red, #ef4444);
+  background: rgba(239, 68, 68, 0.1);
+  animation: bcg-urgent-pulse 0.7s ease-in-out infinite;
+}
+.wall-wrap .bcg-cell.current.is-urgent .bcg-clock,
+.wall-wrap .bcg-cell.current.is-urgent .bcg-otc-label {
+  color: var(--urgent-red, #ef4444);
+}
+@keyframes bcg-urgent-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wall-wrap .bcg-cell.current.is-urgent {
+    animation: none;
+  }
+}
+
 /* Green "ON THE CLOCK" microlabel inside current cell */
 .bcg-otc-label {
   font-family: var(--font-mono);
@@ -3568,13 +3596,14 @@ table.players td.pos {
   line-height: 1;
 }
 
-/* Timer inside current cell */
+/* Timer inside current cell — big centered Archivo countdown */
 .wall-wrap .bcg-clock {
   font-family: var(--font-display, var(--font-sans));
-  font-size: 13px;
+  font-size: 19px;
   font-weight: 800;
   color: var(--live-green, #2fc76d);
   letter-spacing: -0.5px;
+  align-self: center;
 }
 
 /* Upcoming cells: minimal, dark */
