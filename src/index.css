@@ -3092,30 +3092,37 @@ table.players td.pos {
   line-height: 1.4;
 }
 
+/* ⑦ Bordered close button */
 .pc-close {
   appearance: none;
   background: none;
-  border: none;
+  border: 1px solid #39424f;
+  border-radius: 5px;
   cursor: pointer;
-  font-family: var(--font-mono);
-  font-size: var(--fs-9);
+  font-family: var(--font-condensed);
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: var(--text-tertiary);
-  padding: 2px 4px;
-  transition: color 0.12s;
+  color: var(--text-secondary, #9aa3ae);
+  padding: 3px 9px;
+  transition:
+    color 0.12s,
+    border-color 0.12s;
 }
 .pc-close:hover {
   color: var(--text-primary);
+  border-color: #4a5564;
 }
 
-/* Name plate */
+/* ⑦ Name plate — rounded dark plate inset from the frame; meta sits inside. */
 .pc-nameplate {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding: 8px 12px 10px;
+  gap: 6px;
+  margin: 0 14px 10px;
+  padding: 10px 12px;
+  border-radius: 5px;
   background: var(--void);
 }
 
@@ -3128,31 +3135,41 @@ table.players td.pos {
   line-height: 1.1;
 }
 
+/* Meta inside the plate — team on the left, bye on the right. */
 .pc-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
   font-family: var(--font-mono);
   font-size: var(--fs-11);
   letter-spacing: 0.5px;
-  color: var(--text-tertiary);
   text-transform: uppercase;
 }
+.pc-meta-team {
+  color: var(--text-secondary, #9aa3ae);
+  font-weight: 700;
+}
+.pc-meta-bye {
+  font-size: var(--fs-9, 9px);
+  color: var(--text-tertiary, #707a87);
+}
 
-/* 3-stat grid */
+/* ⑦ 3-stat grid — dashed top rule, no internal divider lines. */
 .pc-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--border-1);
-  border-top: 1px solid var(--border-1);
-  border-bottom: 1px solid var(--border-1);
+  gap: 0;
+  background: transparent;
+  border-top: 1px dashed var(--border-4, #2a323d);
 }
 
 .pc-stat {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
-  padding: 10px 8px;
-  background: #11151c;
+  gap: 4px;
+  padding: 14px 8px;
+  background: transparent;
 }
 
 .pc-stat-label {

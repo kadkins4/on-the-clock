@@ -55,11 +55,13 @@ export function PlayerPanel({ player, draftStatus, onClose }: Props) {
             </button>
           </div>
 
-          {/* Name plate */}
+          {/* Name plate — meta lives inside; position is dropped here (the
+              badge already shows it): team on the left, bye on the right. */}
           <div className="pc-nameplate">
             <span className="pc-name">{player.name}</span>
             <span className="pc-meta">
-              {player.position} — {player.team} · BYE {player.byeWeek ?? "—"}
+              <span className="pc-meta-team">{player.team}</span>
+              <span className="pc-meta-bye">BYE {player.byeWeek ?? "—"}</span>
             </span>
           </div>
 
@@ -74,7 +76,7 @@ export function PlayerPanel({ player, draftStatus, onClose }: Props) {
               <span className="pc-stat-value">{projDisplay}</span>
             </div>
             <div className="pc-stat">
-              <span className="pc-stat-label">VALUE</span>
+              <span className="pc-stat-label">VOR</span>
               <span className="pc-stat-value pc-stat-value--gold">
                 {valueDisplay}
               </span>

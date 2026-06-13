@@ -93,9 +93,24 @@ describe("PlayerPanel", () => {
     expect(onClose).toHaveBeenCalledOnce();
   });
 
+  it("shows team and bye inside the nameplate meta, without the position", () => {
+    const { container } = renderPanel(PLAYER, UNDRAFTED);
+    const meta = container.querySelector(".pc-meta");
+    expect(meta?.textContent).toContain("MIN");
+    expect(meta?.textContent).toContain("BYE 6");
+    // Position is already shown by the badge — it must not repeat in the meta.
+    expect(meta?.textContent).not.toContain("WR");
+  });
+
+  it("labels the gold value-over-replacement stat as VOR (not VALUE)", () => {
+    renderPanel(PLAYER, UNDRAFTED);
+    expect(screen.getByText("VOR")).toBeTruthy();
+    expect(screen.queryByText("VALUE")).toBeNull();
+  });
+
   it("renders VALUE stat as em-dash (no VOR data in mock)", () => {
     renderPanel(PLAYER, UNDRAFTED);
-    // The VALUE cell always shows "—" per backlog
+    // The VOR cell always shows "—" per backlog
     const dashes = screen.getAllByText("—");
     expect(dashes.length).toBeGreaterThanOrEqual(1);
   });
