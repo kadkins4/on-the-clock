@@ -77,20 +77,7 @@ export function PickPool({
                 key={p.id}
                 className={`pp-row pos-${p.position} flag-${p.flag}${isDrafted ? " pp-row--drafted" : ""}`}
               >
-                {isDrafted && ds.drafted ? (
-                  <span className="pp-status">
-                    {ds.pickLabel} · {ds.initials ?? ""}
-                  </span>
-                ) : (
-                  <button
-                    className="pp-draft"
-                    disabled={!canDraft}
-                    title={`Draft ${p.name}`}
-                    onClick={() => onDraft(p.id)}
-                  >
-                    ＋
-                  </button>
-                )}
+                <span className="pp-rank">{p.overallRank}</span>
                 {onToggleQueue && (
                   <button
                     className={`pp-star${queuedIds?.has(p.id) ? " on" : ""}`}
@@ -109,7 +96,9 @@ export function PickPool({
                 <button className="pp-name" onClick={() => onOpenPlayer(p.id)}>
                   {p.name}
                 </button>
-                <span className="pp-team">· {p.team}</span>
+                <span className="pp-meta">
+                  {p.team} · BYE {p.byeWeek ?? "—"}
+                </span>
                 {p.flag !== "none" && (
                   <span className={`pp-flag ${p.flag}`} title={p.flag}>
                     {p.flag === "target" ? "★" : "⊘"}
@@ -141,6 +130,20 @@ export function PickPool({
                 )}
                 {extraCols.includes("bye") && (
                   <span className="pp-x">{p.byeWeek ?? "—"}</span>
+                )}
+                {isDrafted && ds.drafted ? (
+                  <span className="pp-status">
+                    {ds.pickLabel} · {ds.initials ?? ""}
+                  </span>
+                ) : (
+                  <button
+                    className="pp-draft"
+                    disabled={!canDraft}
+                    title={`Draft ${p.name}`}
+                    onClick={() => onDraft(p.id)}
+                  >
+                    DRAFT
+                  </button>
                 )}
               </div>
             );

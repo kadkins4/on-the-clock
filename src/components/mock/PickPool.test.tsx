@@ -42,6 +42,21 @@ describe("PickPool", () => {
     expect(document.querySelector(".pp-status")).toBeNull();
   });
 
+  it("labels the draft control with the word DRAFT (not a glyph)", () => {
+    const player = makePlayer();
+    render(<PickPool {...defaultProps} players={[player]} />);
+    const btn = screen.getByTitle("Draft Justin Jefferson");
+    expect(btn.textContent).toBe("DRAFT");
+  });
+
+  it("renders the player's overall rank in a rank cell", () => {
+    const player = makePlayer({ overallRank: 7 });
+    render(<PickPool {...defaultProps} players={[player]} />);
+    const rank = document.querySelector(".pp-rank");
+    expect(rank).not.toBeNull();
+    expect(rank?.textContent).toBe("7");
+  });
+
   it("renders dimmed row with pick status and no DRAFT button when draftStatusOf reports drafted", () => {
     const player = makePlayer({ id: "p1" });
 

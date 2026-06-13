@@ -2372,23 +2372,45 @@ h1.otc-title {
 .bcg-cell.clickable {
   cursor: pointer;
 }
+/* Each .pos-X exposes the full position key as cascading vars: --c (badge),
+   --c-tint (row/cell bg), --c-subtext (light text on tint), --c-badge-text
+   (label on badge — white except TE). Shared by pool rows, round strip, locker
+   room and the board. */
 .pos-QB {
   --c: var(--pos-QB);
+  --c-tint: var(--pos-QB-tint);
+  --c-subtext: var(--pos-QB-subtext);
+  --c-badge-text: #fff;
 }
 .pos-RB {
   --c: var(--pos-RB);
+  --c-tint: var(--pos-RB-tint);
+  --c-subtext: var(--pos-RB-subtext);
+  --c-badge-text: #fff;
 }
 .pos-WR {
   --c: var(--pos-WR);
+  --c-tint: var(--pos-WR-tint);
+  --c-subtext: var(--pos-WR-subtext);
+  --c-badge-text: #fff;
 }
 .pos-TE {
   --c: var(--pos-TE);
+  --c-tint: var(--pos-TE-tint);
+  --c-subtext: var(--pos-TE-subtext);
+  --c-badge-text: var(--pos-TE-badge-text);
 }
 .pos-K {
   --c: var(--pos-K);
+  --c-tint: var(--pos-K-tint);
+  --c-subtext: var(--pos-K-subtext);
+  --c-badge-text: #fff;
 }
 .pos-DST {
   --c: var(--pos-DST);
+  --c-tint: var(--pos-DST-tint);
+  --c-subtext: var(--pos-DST-subtext);
+  --c-badge-text: #fff;
 }
 
 /* Home board positional-rank label: tint the text with the OKLCH position
@@ -2418,42 +2440,62 @@ table.players td.pos {
   color: #b08778;
   font-weight: 500;
 }
+/* ② Carded pool rows. */
 .pp-row {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 12px 8px 9px;
-  border-left: 3px solid var(--c, #2a2f3a);
-  border-bottom: 1px solid #11151d;
+  gap: 9px;
+  padding: 8px 10px;
+  margin: 0 8px 6px;
+  background: #1a2029;
+  border: 1px solid #242c37;
+  border-radius: 7px;
 }
 .pp-row:hover {
-  background: #10141d;
+  border-color: #2a323d;
+  background: #1c2431;
+}
+.pp-rank {
+  width: 24px;
+  flex-shrink: 0;
+  text-align: right;
+  font-family: var(--font-mono, "IBM Plex Mono", monospace);
+  font-size: 11px;
+  color: var(--text-tertiary, #707a87);
+  font-variant-numeric: tabular-nums;
 }
 .pp-pos {
-  font-size: 9.5px;
-  font-weight: 900;
-  color: #06080d;
-  background: var(--c, #888);
-  border-radius: 4px;
-  padding: 2px 5px;
-  min-width: 30px;
+  flex-shrink: 0;
+  min-width: 34px;
   text-align: center;
+  font-family: var(--font-condensed);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--c-badge-text, #fff);
+  background: var(--c, #888);
+  border-radius: 3px;
+  padding: 4px 0;
 }
 .pp-name {
   background: none;
   border: none;
   color: #eef1f6;
-  font-weight: 700;
-  font-size: 13.5px;
+  font-family: var(--font-condensed);
+  font-weight: 600;
+  font-size: 15px;
   cursor: pointer;
   padding: 0;
+  text-align: left;
 }
 .pp-name:hover {
   text-decoration: underline;
 }
-.pp-team {
-  font-size: 11px;
-  color: #8b93a4;
+.pp-meta {
+  font-family: var(--font-mono, "IBM Plex Mono", monospace);
+  font-size: 10px;
+  color: var(--text-tertiary, #707a87);
+  white-space: nowrap;
 }
 .pp-flag.target {
   color: #34d399;
@@ -2466,28 +2508,28 @@ table.players td.pos {
 }
 .pp-adp {
   margin-left: auto;
-  font-size: 11px;
-  color: #8b93a4;
+  font-family: var(--font-mono, "IBM Plex Mono", monospace);
+  font-size: 10px;
+  color: var(--text-secondary, #9aa3ae);
   font-variant-numeric: tabular-nums;
 }
+/* Right-aligned orange DRAFT button — global button spec, app-wide. */
 .pp-draft {
-  width: 30px;
-  height: 30px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  background: #16a34a;
-  color: #fff;
-  border-radius: 8px;
-  font-size: 18px;
-  line-height: 1;
-  cursor: pointer;
-  box-shadow: 0 1px 0 #0d6b32;
   flex-shrink: 0;
+  margin-left: 10px;
+  border: none;
+  background: var(--clock-orange, #fb5a2d);
+  color: #fff;
+  border-radius: 5px;
+  padding: 5px 12px;
+  font-family: var(--font-condensed);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  cursor: pointer;
 }
-.pp-draft:hover {
-  background: #15b150;
+.pp-draft:hover:not(:disabled) {
+  filter: brightness(1.08);
 }
 .pp-draft:disabled {
   opacity: 0.4;
@@ -2502,8 +2544,9 @@ table.players td.pos {
   opacity: 0.6;
 }
 .pp-status {
-  width: 30px;
+  margin-left: 10px;
   min-width: 60px;
+  text-align: right;
   font-size: var(--fs-9, 9px);
   font-family: var(--font-mono, "IBM Plex Mono", monospace);
   font-weight: 600;
@@ -2512,6 +2555,10 @@ table.players td.pos {
   color: var(--text-tertiary, #707a87);
   white-space: nowrap;
   flex-shrink: 0;
+}
+/* Drafted rows have no ADP cell, so the status anchors itself to the right. */
+.pp-row--drafted .pp-status {
+  margin-left: auto;
 }
 
 /* --- Note popover --- */
