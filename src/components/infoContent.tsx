@@ -46,6 +46,27 @@ export function LogContent() {
         <h2 className="otc-log-h">Change Log</h2>
         <ul className="otc-changelog">
           <li>
+            <span className="otc-log-date">Jun 13, 2026</span>
+            Fresh look — redesigned across the app with new typography, position
+            colors, and roomier, easier-to-scan tables.
+          </li>
+          <li>
+            <span className="otc-log-date">Jun 13, 2026</span>
+            Draft room — mock drafts now run in a dedicated room with a player
+            card overlay, a broadcast Desk, and two board views (The Wall &amp;
+            Locker Room).
+          </li>
+          <li>
+            <span className="otc-log-date">Jun 13, 2026</span>
+            My Queue — star players to build an ordered queue that auto-drops
+            each pick as it&rsquo;s taken.
+          </li>
+          <li>
+            <span className="otc-log-date">Jun 13, 2026</span>
+            TV mode — cast the draft to a second window with a live split-flap
+            big board.
+          </li>
+          <li>
             <span className="otc-log-date">Jun 5, 2026</span>
             Undo — reverse recent board edits with the Undo button or
             &#8984;Z&nbsp;/&nbsp;Ctrl+Z.
