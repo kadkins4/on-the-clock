@@ -143,16 +143,53 @@ describe("PickStrip", () => {
     expect(buttons[1].className).not.toContain("is-user");
   });
 
-  it("current cell renders the green ON THE CLOCK label", () => {
+  it("current cell shows a clock glyph + countdown instead of ON THE CLOCK words", () => {
     const state = makeState({
       pool: [],
       picks: [], // no picks yet → cell 1 is "current"
       draftedIds: new Set(),
     });
-    render(
-      <PickStrip state={state} userTeamIndex={0} onOpenPlayer={vi.fn()} />,
+    const { container } = render(
+      <PickStrip
+        state={state}
+        userTeamIndex={0}
+        onOpenPlayer={vi.fn()}
+        timer={<span>0:15</span>}
+      />,
     );
 
-    expect(screen.getByText("ON THE CLOCK")).toBeTruthy();
+    // The "ON THE CLOCK" wording is gone; the countdown + a clock glyph replace it.
+    expect(screen.queryByText("ON THE CLOCK")).toBeNull();
+    expect(screen.getByText("0:15")).toBeTruthy();
+    expect(container.querySelector(".strip-clock")).not.toBeNull();
+  });
+
+  it("marks the current card urgent when urgent is true", () => {
+    const state = makeState({ pool: [], picks: [], draftedIds: new Set() });
+    const { container } = render(
+      <PickStrip
+        state={state}
+        userTeamIndex={0}
+        onOpenPlayer={vi.fn()}
+        timer={<span>0:03</span>}
+        urgent
+      />,
+    );
+    const current = container.querySelector(".strip-card.current");
+    expect(current?.classList.contains("is-urgent")).toBe(true);
+  });
+
+  it("shows the team abbreviation in a card's top row", () => {
+    const player = makePlayer("p1", "QB");
+    const state = makeState({
+      pool: [player],
+      picks: [{ overall: 1, round: 1, teamIndex: 0, playerId: "p1" }],
+      draftedIds: new Set(["p1"]),
+    });
+    const { container } = render(
+      <PickStrip state={state} userTeamIndex={0} onOpenPlayer={vi.fn()} />,
+    );
+    const abbr = container.querySelector(".strip-card.done .strip-abbr");
+    expect(abbr?.textContent).toBe("TA");
   });
 });

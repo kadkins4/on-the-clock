@@ -1469,8 +1469,13 @@ table.players th.sorted {
 }
 .mock-strip .strip-card .num-dot {
   position: absolute;
-  top: 6px;
+  bottom: 6px;
   right: 7px;
+  /* ⑧ moved to the bottom-right so it clears the team abbr in the top row */
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  font-size: 10px;
 }
 
 /* --- Draft board inline --- */
@@ -3280,31 +3285,58 @@ table.players td.pos {
   border-color: var(--your-gold);
 }
 
-/* "ON THE CLOCK" green label on current cell */
-.mock-strip .strip-otc {
-  display: block;
+/* ⑧ Top row on every card: pick # (left) + team abbr (right). */
+.mock-strip .strip-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px;
+}
+.mock-strip .strip-abbr {
   font-family: var(--font-mono);
   font-size: var(--fs-9);
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--live-green);
+  letter-spacing: 0.5px;
+  color: var(--text-secondary, #9aa3ae);
+}
+
+/* ⑧ On-the-clock card: clock glyph + countdown (replaces the OTC words).
+   Static gold; turns red and blinks only in the final 5 seconds. */
+.mock-strip .strip-otc {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--your-gold, #d9a53f);
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+}
+.mock-strip .strip-clock {
+  flex-shrink: 0;
+}
+.mock-strip .strip-card.current.is-urgent {
+  border-color: var(--urgent-red, #ef4444);
+}
+.mock-strip .strip-card.current.is-urgent .strip-otc {
+  color: var(--urgent-red, #ef4444);
+  animation: strip-blink 1s steps(1) infinite;
+}
+@keyframes strip-blink {
+  50% {
+    opacity: 0.35;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mock-strip .strip-card.current.is-urgent .strip-otc {
+    animation: none;
+  }
 }
 
 /* Player name on done picks: primary color, semi-bold */
 .mock-strip .strip-name {
   color: var(--text-primary);
   font-weight: 600;
-}
-
-/* Position label on done picks: subtext tone */
-.mock-strip .strip-pos {
-  font-family: var(--font-mono);
-  font-size: var(--fs-9);
-  letter-spacing: 1px;
-  opacity: 0.8;
+  font-size: 12.5px;
 }
 
 /* Team name on non-done picks */

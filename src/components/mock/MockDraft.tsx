@@ -516,6 +516,8 @@ export function MockDraft({
           state={state}
           userTeamIndex={userTeamIndex}
           onOpenPlayer={(id) => setOpenPlayer(id)}
+          timer={isUser ? timerUi : undefined}
+          urgent={urgent}
         />
 
         <PlayerPanel
