@@ -184,6 +184,36 @@ else can flex. Parallel-safe pairs if wanted: A2∥A3, B5∥B7.
 - [ ] **B11+. Mobile passes.** One story per tab, layouts from
       `Draft Board Explorations v2 (Dark).dc.html`.
 
+### Phase C — Fidelity pass (surfaces ①–⑨, `redesign-build-spec.md`)
+
+Polish pass closing the "doesn't look stylized" gaps. Shared infra: `.pos-*`
+now exposes cascading vars `--c` (badge) / `--c-tint` (row/cell bg) /
+`--c-subtext` / `--c-badge-text`, reused by ②⑤⑥③④b. New token `--urgent-red`;
+every new keyframe gated behind `prefers-reduced-motion`. One surface per
+worktree, ff-merged to local main. ⑨ deferred (ships with live-multiplayer).
+
+- [x] **C1 (①). Position filter chips.** Pill `.filters .chip` (had zero CSS).
+- [x] **C2 (②). Pool player rows.** Carded `.pp-row` w/ rank cell, right-side
+      orange "DRAFT" button, `team · BYE` meta; position-tint via shared vars.
+- [x] **C3 (⑤). Round strip.** `.desk-round-row.done` tint+edge + `desk-cur-pulse`;
+      full team names, no more transparent border-left. _CSS-only._
+- [x] **C4 (⑥). Locker Room cards.** Column-centered header, gold user-column
+      outline, two-line tinted pick cards w/ **full** names + POS·R# subrows.
+- [x] **C5 (③). The Wall.** Gold rail arrows, `.bcg-cell.done` real position
+      tint, in-cell timer, `.current.is-urgent` red + `bcg-urgent-pulse`.
+      _`DraftBoardGrid` gains `urgent` prop; "● ON THE CLOCK" label._
+- [x] **C6 (⑦). Player card overlay.** Bordered ✕ CLOSE, rounded nameplate
+      meta (`team` / `BYE`), dashed-top stat grid, gold VOR (was VALUE).
+- [x] **C7 (⑧). Bottom pick strip.** Top-row abbr, clock-glyph countdown on the
+      user's current card, `strip-blink` urgent. _`PickStrip` gains
+      `timer`/`urgent` props + `ClockGlyph` SVG._
+- [x] **C8 (④a). Home research table.** Default-hide VOR/'25, center PROJ,
+      shrink name col, fix truncated headers. _`columnLayout` default hidden._
+- [x] **C9 (④b). Mock Players-tab table.** New dense `MockPlayersTable`
+      (`★ # PLAYER POS TEAM ADP PROJ BYE STATUS`); replaces `PickPool` in the
+      Players tab. STATUS = orange draft button / `pick · team` when drafted.
+- [ ] **C10 (⑨). TV stage big-board.** Deferred — builds with live-multiplayer.
+
 ## Backlog (not scheduled)
 
 - Auction format (budgets, $ values, gold price columns thread through the
@@ -197,7 +227,7 @@ else can flex. Parallel-safe pairs if wanted: A2∥A3, B5∥B7.
 
 | Area            | Files                                                                                                                                                                |
 | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Styles          | `src/index.css` (~2500 lines, `--bg` etc., system-ui today)                                                                                                          |
+| Styles          | `src/index.css` (~4600 lines, `--bg` etc., self-hosted fonts)                                                                                                        |
 | Position colors | `src/lib/positionColor.ts` (hex, mirrored as `--pos-*`)                                                                                                              |
 | Tiers           | `src/lib/tierBreaks.ts` (user breaks ↔ tier numbers)                                                                                                                 |
 | Home board      | `src/components/PlayerTable.tsx`, `TierGroup.tsx`, `PlayerRow.tsx`, `Toolbar.tsx`, `components/board/*` (cells, ColumnManager, RankCell)                             |
