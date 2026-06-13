@@ -3659,16 +3659,16 @@ table.players td.pos {
   min-width: 0;
 }
 
-/* Header card */
+/* ⑥ Header card — avatar on top, team name centered below. */
 .lr-header {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 6px;
-  padding: 6px 8px;
-  border-radius: 6px;
-  background: var(--panel-2, #12161d);
-  border: 1px solid #1c232c;
-  min-height: 48px;
+  gap: 4px;
+  padding: 10px 4px;
+  border-radius: 8px;
+  background: var(--card, #161b23);
+  border: 1px solid #242c37;
   min-width: 0;
 }
 
@@ -3688,9 +3688,11 @@ table.players td.pos {
 .lr-header-text {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1px;
   min-width: 0;
   overflow: hidden;
+  text-align: center;
 }
 
 .lr-team-name {
@@ -3727,15 +3729,16 @@ table.players td.pos {
   padding: 6px 0;
 }
 
-/* Mini pick card — position-tinted via .pos-* bg + border-color */
+/* ⑥ Two-line pick card — position-tint bg + 3px position-color left edge;
+   name on top, POS · R# sub-row below in the position's subtext color. */
 .lr-pick-card {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 4px;
+  flex-direction: column;
+  gap: 1px;
   padding: 4px 6px;
   border-radius: 4px;
-  border-left: 3px solid transparent;
+  border-left: 3px solid var(--c, transparent);
+  background: var(--c-tint, transparent);
   min-width: 0;
   overflow: hidden;
 }
@@ -3748,32 +3751,28 @@ table.players td.pos {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  flex: 1 1 auto;
   min-width: 0;
 }
 
 .lr-pick-meta {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 4px;
-  flex-shrink: 0;
 }
 
 .lr-pos-badge {
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 8.5px;
   font-weight: 700;
   letter-spacing: 0.5px;
-  color: var(--text-secondary, #9aa3ae);
-  background: rgba(255, 255, 255, 0.06);
-  padding: 1px 3px;
-  border-radius: 2px;
+  color: var(--c-subtext, var(--text-secondary, #9aa3ae));
 }
 
 .lr-pick-round {
   font-family: var(--font-mono);
-  font-size: 8px;
-  color: var(--text-tertiary, #707a87);
+  font-size: 8.5px;
+  color: var(--c-subtext, var(--text-tertiary, #707a87));
   letter-spacing: 0.3px;
 }
 

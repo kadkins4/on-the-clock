@@ -120,6 +120,18 @@ describe("LockerRoom", () => {
     expect(col1.textContent).toContain("McCaffrey");
   });
 
+  it("shows the full player name on a pick card (not just the surname)", () => {
+    const qb = makePlayer("p1", "Patrick Mahomes", "QB");
+    const state = makeState({
+      pool: [qb],
+      picks: [{ overall: 1, round: 1, teamIndex: 0, playerId: "p1" }],
+      draftedIds: new Set(["p1"]),
+    });
+    const { container } = render(<LockerRoom state={state} />);
+    const name = container.querySelector(".lr-pick-name");
+    expect(name?.textContent).toBe("Patrick Mahomes");
+  });
+
   it("renders the needs footer for each column", () => {
     const state = makeState();
     const footers = screen.queryAllByTestId("lr-needs");

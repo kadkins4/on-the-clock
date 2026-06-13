@@ -46,14 +46,15 @@ export function LockerRoom({ state }: Props) {
                 teamPicks.map((pk) => {
                   const player = playerById.get(pk.playerId);
                   if (!player) return null;
-                  const lastName = player.name.split(" ").slice(-1)[0];
                   return (
                     <div
                       key={pk.overall}
                       className={`lr-pick-card pos-${player.position}`}
                       data-testid="lr-pick-card"
                     >
-                      <span className="lr-pick-name">{lastName}</span>
+                      <span className="lr-pick-name" title={player.name}>
+                        {player.name}
+                      </span>
                       <span className="lr-pick-meta">
                         <span
                           className="lr-pos-badge"
