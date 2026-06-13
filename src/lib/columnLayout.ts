@@ -18,7 +18,9 @@ const LOCKED = new Set<ColumnId>(
 
 export const DEFAULT_LAYOUT: ColumnLayout = {
   order: [...DEFAULT_COLUMN_ORDER],
-  hidden: [],
+  // VOR and last-season ('25) ship hidden — they're advanced extras the user
+  // turns on via the ⚙ Columns manager. Everything else is visible by default.
+  hidden: ["vor", "last"],
 };
 
 const isId = (x: unknown): x is ColumnId => VALID.has(x as ColumnId);

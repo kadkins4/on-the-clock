@@ -15,9 +15,10 @@ describe("column persistence", () => {
     expect(loadColumnScopePref()).toBe("ask");
   });
   it("round-trips a layout", () => {
-    const l = toggleHidden(DEFAULT_LAYOUT, "vor");
+    // "bye" is visible by default, so toggling it on persists a hidden entry.
+    const l = toggleHidden(DEFAULT_LAYOUT, "bye");
     saveColumnLayout(l);
-    expect(loadColumnLayout().hidden).toContain("vor");
+    expect(loadColumnLayout().hidden).toContain("bye");
   });
   it("round-trips scope pref", () => {
     saveColumnScopePref("this");

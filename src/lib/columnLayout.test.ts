@@ -11,9 +11,10 @@ import {
 import { DEFAULT_COLUMN_ORDER } from "./columns";
 
 describe("DEFAULT_LAYOUT", () => {
-  it("is the full registry order, nothing hidden", () => {
+  it("is the full registry order with VOR and last-season hidden by default", () => {
     expect(DEFAULT_LAYOUT.order).toEqual(DEFAULT_COLUMN_ORDER);
-    expect(DEFAULT_LAYOUT.hidden).toEqual([]);
+    // Extra/advanced columns ship off by default; toggle on via ⚙ Columns.
+    expect([...DEFAULT_LAYOUT.hidden].sort()).toEqual(["last", "vor"]);
   });
 });
 
@@ -38,9 +39,10 @@ describe("resolveColumns", () => {
 
 describe("toggleHidden", () => {
   it("hides then shows a non-locked column", () => {
-    const a = toggleHidden(DEFAULT_LAYOUT, "vor");
-    expect(a.hidden).toContain("vor");
-    expect(toggleHidden(a, "vor").hidden).not.toContain("vor");
+    // "bye" is visible by default, so toggling adds then removes it.
+    const a = toggleHidden(DEFAULT_LAYOUT, "bye");
+    expect(a.hidden).toContain("bye");
+    expect(toggleHidden(a, "bye").hidden).not.toContain("bye");
   });
   it("refuses to hide a locked column", () => {
     expect(toggleHidden(DEFAULT_LAYOUT, "name").hidden).not.toContain("name");

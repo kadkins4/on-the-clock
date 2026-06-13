@@ -553,17 +553,17 @@ table.players th.col-mover {
   width: 1.7rem;
 }
 .col-draft {
-  width: 2.6rem;
-}
+  width: 3.2rem;
+} /* wide enough for the full "DRAFT" header, no truncation */
 .col-flag {
-  width: 2rem;
-}
+  width: 2.4rem;
+} /* fits the star/avoid header without clipping */
 .col-rank {
   width: 2.2rem;
 }
 .col-name {
-  width: 16rem;
-} /* Player — the wide one */
+  width: 12rem;
+} /* Player — shrunk to leave room for a future click-to-open sidebar */
 .col-pos {
   width: 4rem;
 } /* fits 3-digit positional ranks, e.g. WR110 / DST32 */
@@ -582,8 +582,7 @@ td.vor {
 }
 .col-proj {
   width: 3.6rem;
-  text-align: right;
-}
+} /* ④ centered (header + cell) for a uniform rhythm with POS/TEAM/ADP/BYE */
 .col-last {
   width: 3.2rem;
   text-align: right;
@@ -661,6 +660,7 @@ table.players th.col-rank,
 table.players th.col-pos,
 table.players th.col-team,
 table.players th.col-adp,
+table.players th.col-proj,
 table.players th.col-bye,
 table.players th.col-draft,
 table.players th.col-flag,
@@ -668,6 +668,7 @@ table.players td.rank,
 table.players td.pos,
 table.players td.team,
 table.players td.adp,
+table.players td.proj,
 table.players td.bye,
 table.players td.draft-cell,
 table.players td.flag-cell {
