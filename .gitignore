@@ -5,6 +5,9 @@ dist/
 .vercel
 .claude/worktrees/
 
+# This project uses npm (package-lock.json). Keep stray pnpm lockfiles out.
+pnpm-lock.yaml
+
 # Playwright MCP scratch output
 .playwright-mcp/
 
