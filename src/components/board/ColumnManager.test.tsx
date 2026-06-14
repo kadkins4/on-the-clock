@@ -32,18 +32,18 @@ describe("ColumnManager", () => {
 
   it("locked columns are checked and disabled", () => {
     renderManager();
-    const cb = screen.getByRole("checkbox", {
+    const cb = screen.getByRole<HTMLInputElement>("checkbox", {
       name: /Player/i,
-    }) as HTMLInputElement;
+    });
     expect(cb.disabled).toBe(true);
     expect(cb.checked).toBe(true);
   });
 
   it("a hidden column renders unchecked", () => {
     renderManager({ layout: { ...DEFAULT_LAYOUT, hidden: ["vor"] } });
-    const cb = screen.getByRole("checkbox", {
+    const cb = screen.getByRole<HTMLInputElement>("checkbox", {
       name: /VOR/i,
-    }) as HTMLInputElement;
+    });
     expect(cb.checked).toBe(false);
   });
 

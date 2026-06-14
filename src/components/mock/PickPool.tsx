@@ -10,7 +10,6 @@ interface Props {
   canDraft: boolean;
   overall: number;
   extraCols: PoolCol[];
-  onToggleCol: (c: PoolCol) => void;
   onDraft: (id: string) => void;
   onOpenPlayer: (id: string) => void;
   /**
@@ -45,7 +44,6 @@ export function PickPool({
   players,
   canDraft,
   extraCols,
-  onToggleCol,
   onDraft,
   onOpenPlayer,
   draftStatusOf,
@@ -58,8 +56,6 @@ export function PickPool({
     x: number;
     y: number;
   } | null>(null);
-
-  const atCap = extraCols.length >= POOL_COL_CAP;
 
   return (
     <div className="pickpool">

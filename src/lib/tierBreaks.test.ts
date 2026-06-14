@@ -25,7 +25,7 @@ function P(id: string, rank: number, tier: number): Player {
     notes: "",
     flag: "none",
     draftStatus: "available",
-  } as Player;
+  };
 }
 
 describe("breaksFromTiers", () => {

@@ -13,16 +13,18 @@ export function installErrorHandlers(): void {
       at: Date.now(),
       message: e.message || "error",
       source: "onerror",
-      stack: e.error?.stack,
+      stack: e.error instanceof Error ? e.error.stack : undefined,
     });
   });
   window.addEventListener("unhandledrejection", (e) => {
-    const r = e.reason;
+    const r: unknown = e.reason;
+    const err = r instanceof Error ? r : undefined;
     captureError({
       at: Date.now(),
-      message: (r && (r.message ?? String(r))) || "unhandledrejection",
+      message:
+        err?.message ?? (typeof r === "string" ? r : "unhandledrejection"),
       source: "unhandledrejection",
-      stack: r?.stack,
+      stack: err?.stack,
     });
   });
 }

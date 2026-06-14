@@ -2,7 +2,6 @@ import type { MockState } from "../../lib/mock/types";
 import { teamRosterPositions } from "../../lib/mock/engine";
 import { openNeeds } from "../../lib/mock/roster";
 import { formatNeeds } from "../../lib/mock/formatNeeds";
-import { formatPick } from "../../lib/mock/board";
 import { Avatar } from "./Avatar";
 
 interface Props {

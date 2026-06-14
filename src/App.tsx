@@ -321,7 +321,7 @@ export default function App() {
     () =>
       grouped
         ? []
-        : sortPlayers(renderPlayers, sortKey!, sortAsc, {
+        : sortPlayers(renderPlayers, sortKey, sortAsc, {
             vor: vorById,
             proj: projById,
             last: lastById,
@@ -415,9 +415,9 @@ export default function App() {
       const r: RefetchResult = {
         ok: false,
         at: Date.now(),
-        reason: shape ? (err as EspnShapeError).message : "fetch-failed",
+        reason: shape ? err.message : "fetch-failed",
         fingerprint: shape
-          ? (err as EspnShapeError).fingerprint
+          ? err.fingerprint
           : String((err as Error).message ?? err),
       };
       setRefetchResult(r);
@@ -707,9 +707,9 @@ export default function App() {
             onToggleK={onToggleK}
             hideDst={hideDst}
             onToggleDst={onToggleDst}
-            onFetch={onFetch}
+            onFetch={() => void onFetch()}
             fetching={fetching}
-            onRefreshAdp={onRefreshAdp}
+            onRefreshAdp={() => void onRefreshAdp()}
             adpStatus={adpStatus}
             onImport={onImport}
             onExportJson={() =>

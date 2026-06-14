@@ -154,37 +154,6 @@ describe("buildTvSnapshot — empty draft", () => {
 // ── after some picks ──────────────────────────────────────────────────────────
 
 describe("buildTvSnapshot — after picks", () => {
-  function stateWithPicks(n: number): MockState {
-    const s = baseState();
-    const playerIds = ["p1", "p2", "p3", "p4"];
-    let m: MockState = { ...s, picks: [], draftedIds: new Set() };
-    for (let i = 0; i < n; i++) {
-      const pid = playerIds[i % playerIds.length];
-      m = {
-        ...m,
-        picks: [
-          ...m.picks,
-          {
-            overall: i + 1,
-            round: Math.floor(i / 4) + 1,
-            teamIndex: m.order[i],
-            playerId: pid + "_" + i, // unique id per pick
-          },
-        ],
-        draftedIds: new Set([...m.draftedIds, pid + "_" + i]),
-        pool: [
-          ...s.pool,
-          // add per-pick unique players so they resolve
-          ...Array.from({ length: n }, (_, k) => ({
-            ...s.pool[k % s.pool.length],
-            id: s.pool[k % s.pool.length].id + "_" + k,
-          })),
-        ],
-      };
-    }
-    return m;
-  }
-
   it("latest is the most recent pick's player", () => {
     // Build a simpler state with one real pick
     const s = baseState();

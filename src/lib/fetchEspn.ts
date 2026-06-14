@@ -358,8 +358,13 @@ export async function fetchEspnPlayers(): Promise<FetchedPlayer[]> {
   if (!res.ok) {
     throw new Error(`ESPN request failed: ${res.status} ${res.statusText}`);
   }
-  const data = await res.json();
-  const raw: EspnEntry[] = Array.isArray(data.players) ? data.players : data;
+  const data: unknown = await res.json();
+  const maybePlayers = (data as { players?: unknown }).players;
+  // ESPN returns either a bare array or `{ players: [...] }`; validateEspnShape
+  // below is the real guard, so this cast just picks the array to validate.
+  const raw = (
+    Array.isArray(maybePlayers) ? maybePlayers : data
+  ) as EspnEntry[];
   const shape = validateEspnShape(raw);
   if (!shape.ok) {
     console.warn("ESPN shape guard tripped:", shape.reason, shape.fingerprint);

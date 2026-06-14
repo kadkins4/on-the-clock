@@ -33,7 +33,7 @@ export function mapYahooAdp(json: unknown): NormalizedAdp[] {
     ? (gameArr[1] as Record<string, unknown>)?.players
     : undefined;
   if (!players || typeof players !== "object") return out;
-  for (const key of Object.keys(players as Record<string, unknown>)) {
+  for (const key of Object.keys(players)) {
     if (key === "count") continue;
     const entry = (players as Record<string, { player?: unknown }>)[key]
       ?.player;

@@ -21,7 +21,10 @@ export function SuggestionBox({ onClose }: { onClose: () => void }) {
 
     if (!ENDPOINT) {
       try {
-        const list = JSON.parse(localStorage.getItem(FALLBACK_KEY) || "[]");
+        const raw: unknown = JSON.parse(
+          localStorage.getItem(FALLBACK_KEY) || "[]",
+        );
+        const list: unknown[] = Array.isArray(raw) ? raw : [];
         list.push({ message: text, email, at: new Date().toISOString() });
         localStorage.setItem(FALLBACK_KEY, JSON.stringify(list));
       } catch {
@@ -62,7 +65,7 @@ export function SuggestionBox({ onClose }: { onClose: () => void }) {
   }
 
   return (
-    <form className="otc-suggest" onSubmit={handleSubmit}>
+    <form className="otc-suggest" onSubmit={(e) => void handleSubmit(e)}>
       <textarea
         className="otc-suggest-text"
         value={message}

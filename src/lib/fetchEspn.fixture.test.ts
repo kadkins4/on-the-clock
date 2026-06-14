@@ -6,7 +6,7 @@ import sample from "./__fixtures__/espn-sample.json";
 // silent change to mapEspnPlayers (field names, nesting) is caught in CI.
 describe("ESPN fixture mapping (regression guard)", () => {
   it("maps the captured sample to FetchedPlayer rows", () => {
-    const out = mapEspnPlayers(sample as never);
+    const out = mapEspnPlayers(sample);
     expect(out.length).toBeGreaterThan(0);
     const first = out[0];
     expect(first.id).toBeTruthy();
@@ -16,7 +16,7 @@ describe("ESPN fixture mapping (regression guard)", () => {
   });
 
   it("carries projected + last-season lines through for skill players", () => {
-    const out = mapEspnPlayers(sample as never);
+    const out = mapEspnPlayers(sample);
     const back = out.find((p) => p.position === "RB");
     expect(back?.projStats).toBeTruthy();
     expect(back?.lastStats).toBeTruthy();

@@ -1,5 +1,5 @@
 import { describe, it, expect, afterEach } from "vitest";
-import { render, screen, cleanup } from "@testing-library/react";
+import { render, cleanup } from "@testing-library/react";
 import { LockerRoom } from "./LockerRoom";
 import type { MockState } from "../../lib/mock/types";
 import type { Player } from "../../types";
@@ -134,8 +134,6 @@ describe("LockerRoom", () => {
 
   it("renders the needs footer for each column", () => {
     const state = makeState();
-    const footers = screen.queryAllByTestId("lr-needs");
-    // Use container query instead since screen needs the render
     const { container } = render(<LockerRoom state={state} />);
     const needs = container.querySelectorAll("[data-testid='lr-needs']");
     expect(needs).toHaveLength(3);

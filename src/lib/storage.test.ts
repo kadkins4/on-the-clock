@@ -68,7 +68,7 @@ describe("league storage", () => {
   beforeEach(() => localStorage.clear());
 
   it("round-trips a saved LeaguesState through the v2 key", () => {
-    saveLeagues({ currentId: "x", leagues: [] } as unknown as LeaguesState);
+    saveLeagues({ currentId: "x", leagues: [] });
     expect(localStorage.getItem(LEAGUES_KEY_V2)).toContain('"currentId":"x"');
   });
 

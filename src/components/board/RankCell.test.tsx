@@ -18,7 +18,7 @@ function P(rank: number): Player {
     notes: "",
     flag: "none",
     draftStatus: "available",
-  } as Player;
+  };
 }
 
 // RankCell renders a bare <td>; wrap it in a table so the DOM is valid.
@@ -40,7 +40,7 @@ describe("RankCell", () => {
   it("shows the rank and reveals an input pre-filled with it on double-click", () => {
     setup(3);
     fireEvent.doubleClick(screen.getByText("3"));
-    const input = screen.getByRole("spinbutton") as HTMLInputElement;
+    const input = screen.getByRole<HTMLInputElement>("spinbutton");
     expect(input.value).toBe("3");
   });
 

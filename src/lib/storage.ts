@@ -16,18 +16,23 @@ import { uid } from "./uid";
 const LISTS_KEY = "ff-cheat-sheet:lists:v1";
 const OLD_KEY = "ff-cheat-sheet:players:v2"; // pre-named-lists single board
 
+// Narrow a freshly-parsed JSON value (typed `unknown`) to a keyed object so the
+// shape guards below can read properties without tripping no-unsafe-* rules.
+const isObj = (x: unknown): x is Record<string, unknown> =>
+  typeof x === "object" && x !== null;
+
 function readBoard(): Board {
   try {
     const raw = safeStorage.getItem(LISTS_KEY);
     if (raw) {
-      const parsed = JSON.parse(raw);
+      const parsed: unknown = JSON.parse(raw);
       if (
-        parsed &&
+        isObj(parsed) &&
         typeof parsed.current === "string" &&
-        parsed.lists &&
+        isObj(parsed.lists) &&
         Array.isArray(parsed.lists[parsed.current])
       ) {
-        return parsed as Board;
+        return parsed as unknown as Board;
       }
     }
   } catch {
@@ -37,7 +42,7 @@ function readBoard(): Board {
   try {
     const old = safeStorage.getItem(OLD_KEY);
     if (old) {
-      const arr = JSON.parse(old);
+      const arr: unknown = JSON.parse(old);
       if (Array.isArray(arr)) {
         return { current: "My Board", lists: { "My Board": arr as Player[] } };
       }
@@ -57,7 +62,7 @@ export function exportJson(players: Player[]): string {
 }
 
 export function importJson(text: string): Player[] {
-  const parsed = JSON.parse(text);
+  const parsed: unknown = JSON.parse(text);
   if (!Array.isArray(parsed))
     throw new Error("Expected a JSON array of players");
   return parsed as Player[];
@@ -86,7 +91,7 @@ export function migrateLeaguesV1toV2(state: LeaguesState): LeaguesState {
         tierLists: [{ id, name: "Default", board }],
         activeTierListId: id,
         defaultTierListId: id,
-      } as League;
+      };
     }),
   };
 }
@@ -95,17 +100,17 @@ function parseLeagues(key: string): LeaguesState | null {
   try {
     const raw = safeStorage.getItem(key);
     if (raw) {
-      const parsed = JSON.parse(raw);
+      const parsed: unknown = JSON.parse(raw);
       // An empty `leagues` array is invalid state, not "no data": reject it here
       // so it never reaches loadLeagues, where `leagues[0].id` would crash the
       // app on load. The caller's seed-migration fallback then takes over.
       if (
-        parsed &&
+        isObj(parsed) &&
         typeof parsed.currentId === "string" &&
         Array.isArray(parsed.leagues) &&
         parsed.leagues.length > 0
       ) {
-        return parsed as LeaguesState;
+        return parsed as unknown as LeaguesState;
       }
     }
   } catch {
@@ -217,7 +222,9 @@ export interface LoggedError {
 export function loadRefetchResult(): RefetchResult | null {
   try {
     const raw = safeStorage.getItem(REFETCH_KEY);
-    return raw ? (JSON.parse(raw) as RefetchResult) : null;
+    if (!raw) return null;
+    const parsed: unknown = JSON.parse(raw);
+    return parsed as RefetchResult;
   } catch {
     return null;
   }
@@ -228,7 +235,7 @@ export function saveRefetchResult(r: RefetchResult): void {
 export function loadErrorLog(): LoggedError[] {
   try {
     const raw = safeStorage.getItem(ERRORS_KEY);
-    const arr = raw ? JSON.parse(raw) : [];
+    const arr: unknown = raw ? JSON.parse(raw) : [];
     return Array.isArray(arr) ? (arr as LoggedError[]) : [];
   } catch {
     return [];

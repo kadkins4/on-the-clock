@@ -248,7 +248,6 @@ export function MockDraft({
         canDraft={isUser && !revealing}
         overall={overall}
         extraCols={extraCols}
-        onToggleCol={toggleCol}
         onDraft={onDraft}
         onOpenPlayer={(id) => setOpenPlayer(id)}
         queuedIds={queuedSet}

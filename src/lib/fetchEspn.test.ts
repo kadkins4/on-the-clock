@@ -365,7 +365,7 @@ describe("validateEspnShape", () => {
     expect(validateEspnShape(raw).ok).toBe(true);
   });
   it("rejects a non-array", () => {
-    expect(validateEspnShape({} as never).ok).toBe(false);
+    expect(validateEspnShape({}).ok).toBe(false);
   });
   it("rejects too few ranked rows, with a fingerprint", () => {
     const raw = Array.from({ length: 50 }, (_, i) => row(i + 1, i + 1));

@@ -70,9 +70,7 @@ function renderToolbar(
     onSortModeChange: vi.fn(),
     ...over,
   };
-  return render(
-    <Toolbar {...(props as React.ComponentProps<typeof Toolbar>)} />,
-  );
+  return render(<Toolbar {...props} />);
 }
 
 describe("Toolbar chip bar", () => {

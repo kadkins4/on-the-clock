@@ -22,7 +22,7 @@ export function replacementSlots(
   distribute(slots, base, FLEX_POOL, teams * roster.FLEX);
   distribute(slots, base, SUPER_POOL, teams * roster.SUPERFLEX);
 
-  return slots as Record<Position, number>;
+  return slots;
 }
 
 function distribute(

@@ -11,7 +11,7 @@ function sig(e: LoggedError): string {
 
 function alreadySent(s: string): boolean {
   try {
-    const arr = JSON.parse(localStorage.getItem(SIGS_KEY) || "[]");
+    const arr: unknown = JSON.parse(localStorage.getItem(SIGS_KEY) || "[]");
     return Array.isArray(arr) && arr.includes(s);
   } catch {
     return false;
@@ -20,8 +20,9 @@ function alreadySent(s: string): boolean {
 
 function markSent(s: string): void {
   try {
-    const arr = JSON.parse(localStorage.getItem(SIGS_KEY) || "[]");
-    const next = [s, ...(Array.isArray(arr) ? arr : [])].slice(0, MAX_SIGS);
+    const arr: unknown = JSON.parse(localStorage.getItem(SIGS_KEY) || "[]");
+    const prev: string[] = Array.isArray(arr) ? (arr as string[]) : [];
+    const next = [s, ...prev].slice(0, MAX_SIGS);
     localStorage.setItem(SIGS_KEY, JSON.stringify(next));
   } catch {
     /* ignore */
@@ -35,9 +36,7 @@ function markSent(s: string): void {
 // signature sent *before* the request so a fast error loop can't hammer the form
 // even if the network is flaky (we accept losing the occasional failed send).
 export function reportErrorRemote(e: LoggedError): void {
-  const endpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT as
-    | string
-    | undefined;
+  const endpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT;
   if (!endpoint) return;
   const s = sig(e);
   if (alreadySent(s)) return;
