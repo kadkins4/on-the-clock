@@ -222,6 +222,15 @@ worktree, ff-merged to local main. ⑨ deferred (ships with live-multiplayer).
 - Cross-device TV cast (needs a server)
 - Bot personalities (e.g., per-bot K/DST gating, blockers)
 - Real PROJ/VOR data in the mock pick pool
+- **Deep component decomposition** (deferred from the 2026-06-14 code review).
+  The live-clock + TV-broadcast logic is now extracted into `useDraftTimer` /
+  `useTvBroadcast` hooks; the heavier structural split is planned but not
+  scheduled: (1) `MockDraft.tsx` (~510 lines) — pull the missed-pick modal and
+  the pick-edit/replace popover into their own components, and lift the queue +
+  column-menu state into hooks; (2) `App.tsx` (~790 lines) — split per-view
+  shells (research board vs. mock vs. dev panel) behind the existing route
+  switch. Continue the "custom hooks wherever business logic is heavy" pattern
+  as these are touched.
 
 ## Codebase map (verified 2026-06-11)
 
