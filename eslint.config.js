@@ -53,11 +53,11 @@ export default tseslint.config(
           caughtErrorsIgnorePattern: "^_",
         },
       ],
-      // Advisory, not bugs: setState-in-effect fires legitimately in the timer/
-      // reveal effects, and the "latest ref" write-during-render pattern is
-      // intentional. Keep them visible as warnings, don't fail the build.
-      "react-hooks/set-state-in-effect": "warn",
-      "react-hooks/refs": "warn",
+      // Errors (block the push). The few legitimately-intentional setState-in-
+      // effect sites are the draft-timer effects, opted out with a documented
+      // inline/file disable; everything else should be treated as a real bug.
+      "react-hooks/set-state-in-effect": "error",
+      "react-hooks/refs": "error",
     },
   },
   {

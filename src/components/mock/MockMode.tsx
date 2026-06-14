@@ -62,8 +62,10 @@ export function MockMode({ league, onExit, onSetValueFlags }: Props) {
     setState((m) => (m ? rewindTo(m, overall) : m));
   }, []);
 
-  // advance to summary once the board fills
+  // advance to summary once the board fills — intentional phase transition
+  // driven by the draft reaching completion, not a render loop.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (state && isComplete(state) && phase === "draft") setPhase("summary");
   }, [state, phase]);
 

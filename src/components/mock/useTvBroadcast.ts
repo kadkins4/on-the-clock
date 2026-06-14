@@ -17,7 +17,9 @@ import {
 export function useTvBroadcast(state: MockState): void {
   const chanRef = useRef<BroadcastChannel | null>(null);
   const stateRef = useRef(state);
-  stateRef.current = state;
+  useEffect(() => {
+    stateRef.current = state;
+  }, [state]);
 
   useEffect(() => {
     if (typeof BroadcastChannel === "undefined") return;

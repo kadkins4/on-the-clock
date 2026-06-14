@@ -148,7 +148,7 @@ export function MockDraft({
     return pendingQueue(queueIds, state.draftedIds)
       .map((id) => byId.get(id))
       .filter((p): p is (typeof state.pool)[number] => p != null);
-  }, [queueIds, state.pool, state.draftedIds]);
+  }, [queueIds, state]);
   const onToggleQueue = (id: string) =>
     setQueueIds((ids) => toggleQueue(ids, id));
 

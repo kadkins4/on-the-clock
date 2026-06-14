@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const KEY = "otc:intro-seen";
 const LINE1 = "You are now...";
@@ -40,14 +40,34 @@ export function Intro({ replay = 0 }: { replay?: number }) {
   const [phase, setPhase] = useState<"typing" | "leaving">("typing");
   const timer = useRef<number | undefined>(undefined);
 
+  // Memoized so the keydown effect below can depend on them without
+  // re-subscribing the listener every render.
+  const finish = useCallback(() => {
+    try {
+      sessionStorage.setItem(KEY, "1");
+    } catch {
+      /* private mode — replays next session */
+    }
+    setShow(false);
+  }, []);
+
+  const skip = useCallback(() => {
+    window.clearTimeout(timer.current);
+    finish();
+  }, [finish]);
+
   // Replay on demand: reset the typewriter and show the overlay again. Skips
   // the initial render (replay === 0) so first-load behavior is unchanged.
   useEffect(() => {
     if (!replay) return;
+    // Intentional: reset the typewriter when the replay counter changes (an
+    // external trigger), not a render loop.
+    /* eslint-disable react-hooks/set-state-in-effect */
     setTyped1("");
     setTyped2("");
     setPhase("typing");
     setShow(true);
+    /* eslint-enable react-hooks/set-state-in-effect */
   }, [replay]);
 
   // While the splash is up: drop focus from whatever was clicked (so Enter
@@ -66,7 +86,7 @@ export function Intro({ replay = 0 }: { replay?: number }) {
     // capture so a focused button can't act on Enter/Space before we skip
     window.addEventListener("keydown", onKey, true);
     return () => window.removeEventListener("keydown", onKey, true);
-  }, [show]);
+  }, [show, skip]);
 
   useEffect(() => {
     if (!show) return;
@@ -90,20 +110,6 @@ export function Intro({ replay = 0 }: { replay?: number }) {
     timer.current = window.setTimeout(step, 450);
     return () => window.clearTimeout(timer.current);
   }, [show]);
-
-  function finish() {
-    try {
-      sessionStorage.setItem(KEY, "1");
-    } catch {
-      /* private mode — replays next session */
-    }
-    setShow(false);
-  }
-
-  function skip() {
-    window.clearTimeout(timer.current);
-    finish();
-  }
 
   if (!show) return null;
 

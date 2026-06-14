@@ -9,6 +9,13 @@ import type { MockState } from "../../lib/mock/types";
 import { bestAvailableId, botPickId, isComplete } from "../../lib/mock/engine";
 import { playPing } from "../../lib/sound";
 
+/* eslint-disable react-hooks/set-state-in-effect --
+   This hook IS the draft clock: its effects intentionally set state in response
+   to ticks (countdown), turn changes (reveal), and external draft state (bot
+   stall, missed-pick expiry). These are the legitimate "sync with an external
+   system" cases the rule exempts conceptually; a cascading re-render per tick is
+   the intended behavior, not a bug. */
+
 const BOT_DELAY = 850;
 const REVEAL_MS = 1500;
 
@@ -70,7 +77,9 @@ export function useDraftTimer({
     }
   });
   const mutedRef = useRef(muted);
-  mutedRef.current = muted;
+  useEffect(() => {
+    mutedRef.current = muted;
+  }, [muted]);
 
   const toggleMute = () =>
     setMuted((m) => {
