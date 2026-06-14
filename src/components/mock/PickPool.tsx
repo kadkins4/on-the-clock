@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Player } from "../../types";
 import type { PlayerDraftStatus } from "../../lib/mock/playerDraftStatus";
+import { formatVor } from "../../lib/vor";
 
 export type PoolCol = "bye" | "proj" | "vor";
 export const POOL_COL_CAP = 3;
@@ -25,6 +26,12 @@ interface Props {
    */
   queuedIds?: ReadonlySet<string>;
   onToggleQueue?: (id: string) => void;
+  /**
+   * Scored PROJ / VOR maps (player id → value) for the `proj` / `vor` extra
+   * columns. Absent → those columns render "—".
+   */
+  projById?: Record<string, number | null>;
+  vorById?: Record<string, number | null>;
 }
 
 // Group consecutive players by tier (players arrive in overall-rank order).
@@ -49,6 +56,8 @@ export function PickPool({
   draftStatusOf,
   queuedIds,
   onToggleQueue,
+  projById,
+  vorById,
 }: Props) {
   const groups = groupByTier(players);
   const [note, setNote] = useState<{
@@ -68,6 +77,7 @@ export function PickPool({
           {g.players.map((p) => {
             const ds = draftStatusOf?.(p.id);
             const isDrafted = ds?.drafted === true;
+            const proj = projById?.[p.id];
             return (
               <div
                 key={p.id}
@@ -126,6 +136,14 @@ export function PickPool({
                 )}
                 {extraCols.includes("bye") && (
                   <span className="pp-x">{p.byeWeek ?? "—"}</span>
+                )}
+                {extraCols.includes("proj") && (
+                  <span className="pp-x">
+                    {proj == null ? "—" : proj.toFixed(1)}
+                  </span>
+                )}
+                {extraCols.includes("vor") && (
+                  <span className="pp-x">{formatVor(vorById?.[p.id])}</span>
                 )}
                 {isDrafted && ds.drafted ? (
                   <span className="pp-status">

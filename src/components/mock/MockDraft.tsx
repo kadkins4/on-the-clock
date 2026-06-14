@@ -9,6 +9,7 @@ import {
 import { formatPick, picksUntilUser } from "../../lib/mock/board";
 import { useDraftTimer } from "./useDraftTimer";
 import { useTvBroadcast } from "./useTvBroadcast";
+import { usePoolStats } from "./usePoolStats";
 import { SearchPill } from "../SearchPill";
 import { PickStrip } from "./PickStrip";
 import { DraftBoardGrid } from "./DraftBoardGrid";
@@ -107,6 +108,10 @@ export function MockDraft({
 
   // Mirror the draft to any open #tv cast window (read-only BroadcastChannel).
   useTvBroadcast(state);
+
+  // Scored PROJ + VOR for the pick pool / player card, computed once per mock
+  // from the frozen pool at the league's scoring settings.
+  const { projById, vorById } = usePoolStats(state);
 
   const avail = useMemo(
     () =>
@@ -217,15 +222,11 @@ export function MockDraft({
             <div className="colmenu">
               {(["bye", "proj", "vor"] as PoolCol[]).map((c) => {
                 const on = extraCols.includes(c);
-                const comingSoon = c === "proj" || c === "vor";
                 return (
                   <button
                     key={c}
                     className={on ? "on" : ""}
-                    disabled={
-                      comingSoon || (!on && extraCols.length >= POOL_COL_CAP)
-                    }
-                    title={comingSoon ? "Coming soon" : undefined}
+                    disabled={!on && extraCols.length >= POOL_COL_CAP}
                     onClick={() => toggleCol(c)}
                   >
                     {c === "bye" ? "Bye" : c === "proj" ? "Proj" : "VOR"}
@@ -252,6 +253,8 @@ export function MockDraft({
         onOpenPlayer={(id) => setOpenPlayer(id)}
         queuedIds={queuedSet}
         onToggleQueue={onToggleQueue}
+        projById={projById}
+        vorById={vorById}
       />
     </>
   );
@@ -269,6 +272,8 @@ export function MockDraft({
         draftStatusOf={draftStatusOf}
         queuedIds={queuedSet}
         onToggleQueue={onToggleQueue}
+        projById={projById}
+        vorById={vorById}
       />
     </>
   );
@@ -408,6 +413,8 @@ export function MockDraft({
               ? playerDraftStatus(state, openPlayer)
               : { drafted: false }
           }
+          proj={openPlayer ? projById[openPlayer] : undefined}
+          vor={openPlayer ? vorById[openPlayer] : undefined}
           onClose={() => setOpenPlayer(null)}
         />
 

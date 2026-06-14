@@ -24,6 +24,10 @@ export interface MockState {
   // immutable snapshot of the league at draft start
   pool: Player[]; // all draftable players (disabled positions removed)
   scoring: Scoring;
+  // snapshot of the league's TE-premium flag (PROJ/VOR scoring). Optional so
+  // existing fixtures stay valid; createMock always sets it, read sites
+  // default to false.
+  tePremium?: boolean;
   roster: RosterSettings;
   settings: MockSettings;
   teams: TeamIdentity[]; // generated team identities (name/avatar/isUser)

@@ -45,6 +45,7 @@ describe("MockPlayersTable", () => {
       "TEAM",
       "ADP",
       "PROJ",
+      "VOR",
       "BYE",
       "STATUS",
     ]) {

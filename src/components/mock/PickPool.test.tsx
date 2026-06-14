@@ -125,6 +125,41 @@ describe("PickPool", () => {
     expect(tiers[1].textContent).toContain("Tier 2");
   });
 
+  it("renders PROJ and VOR extra columns from the supplied maps", () => {
+    const player = makePlayer({ id: "p1" });
+    render(
+      <PickPool
+        {...defaultProps}
+        players={[player]}
+        extraCols={["proj", "vor"]}
+        projById={{ p1: 287.4 }}
+        vorById={{ p1: 63 }}
+      />,
+    );
+    const cells = [...document.querySelectorAll(".pp-x")].map(
+      (n) => n.textContent,
+    );
+    expect(cells).toContain("287.4");
+    expect(cells).toContain("+63"); // positive VOR gets a leading +
+  });
+
+  it("renders em-dash in PROJ/VOR columns when no map value exists", () => {
+    const player = makePlayer({ id: "p1" });
+    render(
+      <PickPool
+        {...defaultProps}
+        players={[player]}
+        extraCols={["proj", "vor"]}
+        projById={{}}
+        vorById={{}}
+      />,
+    );
+    const cells = [...document.querySelectorAll(".pp-x")].map(
+      (n) => n.textContent,
+    );
+    expect(cells.filter((t) => t === "—").length).toBe(2);
+  });
+
   it("tier header count shows player count per tier", () => {
     const players = [
       makePlayer({ id: "p1", tier: 1 }),

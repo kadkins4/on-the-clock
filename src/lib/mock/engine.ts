@@ -36,6 +36,7 @@ export function createMock(
   return {
     pool,
     scoring: league.scoring,
+    tePremium: league.tePremium,
     roster: league.roster,
     settings: { ...settings, rounds },
     teams: makeTeamIdentities(settings.teams, settings.userSlot, seed),

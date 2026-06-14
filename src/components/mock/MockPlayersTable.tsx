@@ -1,5 +1,6 @@
 import type { Player } from "../../types";
 import type { PlayerDraftStatus } from "../../lib/mock/playerDraftStatus";
+import { formatVor } from "../../lib/vor";
 
 interface Props {
   players: Player[]; // full pool, filtered by the position chip
@@ -10,6 +11,13 @@ interface Props {
   /** When provided, each row shows a ★ queue toggle (no drag / drafted / avoid). */
   queuedIds?: ReadonlySet<string>;
   onToggleQueue?: (id: string) => void;
+  /**
+   * Scored PROJ / VOR maps (player id → value). When provided, PROJ shows the
+   * scored total and a VOR column is added. Absent → PROJ falls back to the raw
+   * player.projPoints and the VOR column shows "—".
+   */
+  projById?: Record<string, number | null>;
+  vorById?: Record<string, number | null>;
 }
 
 // ④b The mock-draft "Players" tab as a dense research table — distinct from
@@ -24,6 +32,8 @@ export function MockPlayersTable({
   onOpenPlayer,
   queuedIds,
   onToggleQueue,
+  projById,
+  vorById,
 }: Props) {
   return (
     <table className="mpt">
@@ -36,6 +46,7 @@ export function MockPlayersTable({
           <th className="mpt-c">TEAM</th>
           <th className="mpt-c">ADP</th>
           <th className="mpt-c">PROJ</th>
+          <th className="mpt-c">VOR</th>
           <th className="mpt-c">BYE</th>
           <th className="mpt-c">STATUS</th>
         </tr>
@@ -45,6 +56,9 @@ export function MockPlayersTable({
           const ds = draftStatusOf(p.id);
           const isDrafted = ds.drafted === true;
           const queued = queuedIds?.has(p.id) ?? false;
+          // Prefer the scored proj; fall back to the raw stored total.
+          const projVal =
+            projById && p.id in projById ? projById[p.id] : p.projPoints;
           return (
             <tr
               key={p.id}
@@ -80,8 +94,9 @@ export function MockPlayersTable({
                 {p.adp == null ? "—" : Number(p.adp.toFixed(1))}
               </td>
               <td className="mpt-c mpt-mono">
-                {p.projPoints == null ? "—" : p.projPoints.toFixed(1)}
+                {projVal == null ? "—" : projVal.toFixed(1)}
               </td>
+              <td className="mpt-c mpt-mono">{formatVor(vorById?.[p.id])}</td>
               <td className="mpt-c mpt-mono">{p.byeWeek ?? "—"}</td>
               <td className="mpt-c mpt-status-cell">
                 {isDrafted && ds.drafted ? (

@@ -77,3 +77,11 @@ export function computeVor(
   }
   return out;
 }
+
+// Display string for a VOR value: em-dash when absent, leading "+" for a
+// positive value so over/under-replacement reads at a glance (mirrors the
+// research board's VOR column).
+export function formatVor(vor: number | null | undefined): string {
+  if (vor == null) return "—";
+  return vor > 0 ? `+${vor}` : String(vor);
+}

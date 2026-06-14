@@ -46,6 +46,13 @@ export function LogContent() {
         <h2 className="otc-log-h">Change Log</h2>
         <ul className="otc-changelog">
           <li>
+            <span className="otc-log-date">Jun 14, 2026</span>
+            Mock PROJ &amp; VOR — the pick pool and player card now show
+            projected points and value over replacement, scored at your
+            league&rsquo;s settings. Toggle the Proj and VOR columns from the ⚙
+            menu.
+          </li>
+          <li>
             <span className="otc-log-date">Jun 13, 2026</span>
             Fresh look — redesigned across the app with new typography, position
             colors, and roomier, easier-to-scan tables.

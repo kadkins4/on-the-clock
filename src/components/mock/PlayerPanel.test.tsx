@@ -32,9 +32,16 @@ function renderPanel(
   player: Player | null,
   draftStatus: PlayerDraftStatus,
   onClose = vi.fn(),
+  stats: { proj?: number | null; vor?: number | null } = {},
 ) {
   return render(
-    <PlayerPanel player={player} draftStatus={draftStatus} onClose={onClose} />,
+    <PlayerPanel
+      player={player}
+      draftStatus={draftStatus}
+      onClose={onClose}
+      proj={stats.proj}
+      vor={stats.vor}
+    />,
   );
 }
 
@@ -108,11 +115,26 @@ describe("PlayerPanel", () => {
     expect(screen.queryByText("VALUE")).toBeNull();
   });
 
-  it("renders VALUE stat as em-dash (no VOR data in mock)", () => {
+  it("renders the VOR value when provided, with a leading + for positive", () => {
+    renderPanel(PLAYER, UNDRAFTED, vi.fn(), { vor: 42 });
+    expect(screen.getByText("+42")).toBeTruthy();
+  });
+
+  it("renders a negative VOR without an extra sign", () => {
+    renderPanel(PLAYER, UNDRAFTED, vi.fn(), { vor: -8 });
+    expect(screen.getByText("-8")).toBeTruthy();
+  });
+
+  it("renders VOR as em-dash when no VOR data is supplied", () => {
     renderPanel(PLAYER, UNDRAFTED);
-    // The VOR cell always shows "—" per backlog
     const dashes = screen.getAllByText("—");
     expect(dashes.length).toBeGreaterThanOrEqual(1);
+  });
+
+  it("prefers the scored proj prop over the raw projPoints", () => {
+    renderPanel(PLAYER, UNDRAFTED, vi.fn(), { proj: 280.6 });
+    expect(screen.getByText("280.6")).toBeTruthy();
+    expect(screen.queryByText("312.4")).toBeNull();
   });
 
   it("renders PROJ as em-dash when projPoints is null", () => {

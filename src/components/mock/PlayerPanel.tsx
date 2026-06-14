@@ -2,14 +2,29 @@ import { useEffect } from "react";
 import type { Player } from "../../types";
 import { POSITION_KEY } from "../../lib/positionColor";
 import type { PlayerDraftStatus } from "../../lib/mock/playerDraftStatus";
+import { formatVor } from "../../lib/vor";
 
 interface Props {
   player: Player | null;
   draftStatus: PlayerDraftStatus;
   onClose: () => void;
+  /**
+   * Scored projected points for this player (league scoring/TE premium). When
+   * provided it overrides the raw player.projPoints fallback so PROJ matches
+   * the pool's VOR. Absent → falls back to player.projPoints.
+   */
+  proj?: number | null;
+  /** Value over replacement; absent → "—". */
+  vor?: number | null;
 }
 
-export function PlayerPanel({ player, draftStatus, onClose }: Props) {
+export function PlayerPanel({
+  player,
+  draftStatus,
+  onClose,
+  proj,
+  vor,
+}: Props) {
   // Close on Escape
   useEffect(() => {
     if (!player) return;
@@ -25,10 +40,10 @@ export function PlayerPanel({ player, draftStatus, onClose }: Props) {
   const posStyle = POSITION_KEY[player.position];
 
   const adpDisplay = player.adp != null ? String(Math.round(player.adp)) : "—";
-  const projDisplay =
-    player.projPoints != null ? player.projPoints.toFixed(1) : "—";
-  // VALUE (VOR) is not available in the mock pool — always "—" per backlog note
-  const valueDisplay = "—";
+  // Prefer the scored proj passed in; fall back to the raw stored total.
+  const projValue = proj !== undefined ? proj : player.projPoints;
+  const projDisplay = projValue != null ? projValue.toFixed(1) : "—";
+  const valueDisplay = formatVor(vor);
 
   return (
     <>
