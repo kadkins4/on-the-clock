@@ -125,6 +125,18 @@ describe("league storage", () => {
     expect(activeBoard(state.leagues[0]).length).toBeGreaterThan(0);
   });
 
+  it("reseeds instead of crashing on a corrupt empty-leagues payload", () => {
+    // A persisted `{ currentId, leagues: [] }` is invalid state — loadLeagues
+    // must not reach `leagues[0].id` (which would throw and white-screen).
+    localStorage.setItem(
+      LEAGUES_KEY_V2,
+      JSON.stringify({ currentId: "x", leagues: [] }),
+    );
+    const state = loadLeagues();
+    expect(state.leagues).toHaveLength(1);
+    expect(activeBoard(state.leagues[0]).length).toBeGreaterThan(0);
+  });
+
   it("prefers an existing leagues key over older shapes", () => {
     const saved: LeaguesState = {
       currentId: "keep",

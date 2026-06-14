@@ -18,7 +18,7 @@ const OLD_KEY = "ff-cheat-sheet:players:v2"; // pre-named-lists single board
 
 function readBoard(): Board {
   try {
-    const raw = localStorage.getItem(LISTS_KEY);
+    const raw = safeStorage.getItem(LISTS_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
       if (
@@ -35,7 +35,7 @@ function readBoard(): Board {
   }
   // migrate a pre-named-lists single board
   try {
-    const old = localStorage.getItem(OLD_KEY);
+    const old = safeStorage.getItem(OLD_KEY);
     if (old) {
       const arr = JSON.parse(old);
       if (Array.isArray(arr)) {
@@ -69,11 +69,7 @@ const LEAGUES_KEY_V1 = "ff-cheat-sheet:leagues:v1"; // legacy single-board leagu
 const LEAGUES_KEY_V2 = "ff-cheat-sheet:leagues:v2"; // leagues with tier lists
 
 export function saveLeagues(state: LeaguesState): void {
-  try {
-    localStorage.setItem(LEAGUES_KEY_V2, JSON.stringify(state));
-  } catch {
-    // storage full / unavailable — ignore
-  }
+  safeStorage.setItem(LEAGUES_KEY_V2, JSON.stringify(state));
 }
 
 // A v1 league carried a single `board`; v2 wraps it as one "Default" tier list.
@@ -97,13 +93,17 @@ export function migrateLeaguesV1toV2(state: LeaguesState): LeaguesState {
 
 function parseLeagues(key: string): LeaguesState | null {
   try {
-    const raw = localStorage.getItem(key);
+    const raw = safeStorage.getItem(key);
     if (raw) {
       const parsed = JSON.parse(raw);
+      // An empty `leagues` array is invalid state, not "no data": reject it here
+      // so it never reaches loadLeagues, where `leagues[0].id` would crash the
+      // app on load. The caller's seed-migration fallback then takes over.
       if (
         parsed &&
         typeof parsed.currentId === "string" &&
-        Array.isArray(parsed.leagues)
+        Array.isArray(parsed.leagues) &&
+        parsed.leagues.length > 0
       ) {
         return parsed as LeaguesState;
       }
@@ -162,7 +162,7 @@ export type ColumnScopePref = "ask" | "all" | "this";
 
 export function loadColumnLayout(): ColumnLayout {
   try {
-    const raw = localStorage.getItem(COLUMNS_KEY);
+    const raw = safeStorage.getItem(COLUMNS_KEY);
     return raw ? sanitizeLayout(JSON.parse(raw)) : DEFAULT_LAYOUT;
   } catch {
     return DEFAULT_LAYOUT;
@@ -170,11 +170,7 @@ export function loadColumnLayout(): ColumnLayout {
 }
 
 export function saveColumnLayout(layout: ColumnLayout): void {
-  try {
-    localStorage.setItem(COLUMNS_KEY, JSON.stringify(layout));
-  } catch {
-    /* ignore quota / availability */
-  }
+  safeStorage.setItem(COLUMNS_KEY, JSON.stringify(layout));
 }
 
 export function loadColumnScopePref(): ColumnScopePref {
@@ -183,11 +179,7 @@ export function loadColumnScopePref(): ColumnScopePref {
 }
 
 export function saveColumnScopePref(p: ColumnScopePref): void {
-  try {
-    localStorage.setItem(COL_SCOPE_KEY, p);
-  } catch {
-    /* ignore */
-  }
+  safeStorage.setItem(COL_SCOPE_KEY, p);
 }
 
 // --- Sort mode (A6) ---
@@ -200,11 +192,7 @@ export function loadSortMode(): SortMode {
 }
 
 export function saveSortMode(mode: SortMode): void {
-  try {
-    localStorage.setItem(SORT_MODE_KEY, mode);
-  } catch {
-    /* ignore quota / availability */
-  }
+  safeStorage.setItem(SORT_MODE_KEY, mode);
 }
 
 // --- Dev diagnostics (Phase 5) ---
@@ -228,22 +216,18 @@ export interface LoggedError {
 
 export function loadRefetchResult(): RefetchResult | null {
   try {
-    const raw = localStorage.getItem(REFETCH_KEY);
+    const raw = safeStorage.getItem(REFETCH_KEY);
     return raw ? (JSON.parse(raw) as RefetchResult) : null;
   } catch {
     return null;
   }
 }
 export function saveRefetchResult(r: RefetchResult): void {
-  try {
-    localStorage.setItem(REFETCH_KEY, JSON.stringify(r));
-  } catch {
-    /* ignore */
-  }
+  safeStorage.setItem(REFETCH_KEY, JSON.stringify(r));
 }
 export function loadErrorLog(): LoggedError[] {
   try {
-    const raw = localStorage.getItem(ERRORS_KEY);
+    const raw = safeStorage.getItem(ERRORS_KEY);
     const arr = raw ? JSON.parse(raw) : [];
     return Array.isArray(arr) ? (arr as LoggedError[]) : [];
   } catch {
@@ -251,17 +235,9 @@ export function loadErrorLog(): LoggedError[] {
   }
 }
 export function pushErrorLog(e: LoggedError): void {
-  try {
-    const next = [e, ...loadErrorLog()].slice(0, MAX_ERRORS);
-    localStorage.setItem(ERRORS_KEY, JSON.stringify(next));
-  } catch {
-    /* ignore */
-  }
+  const next = [e, ...loadErrorLog()].slice(0, MAX_ERRORS);
+  safeStorage.setItem(ERRORS_KEY, JSON.stringify(next));
 }
 export function clearErrorLog(): void {
-  try {
-    localStorage.removeItem(ERRORS_KEY);
-  } catch {
-    /* ignore */
-  }
+  safeStorage.removeItem(ERRORS_KEY);
 }
