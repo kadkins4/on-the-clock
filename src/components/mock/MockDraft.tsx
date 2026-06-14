@@ -1,15 +1,14 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import type { MockState } from "../../lib/mock/types";
 import type { Position } from "../../types";
 import {
   availableByBoard,
-  bestAvailableId,
-  botPickId,
   currentTeamIndex,
   isComplete,
 } from "../../lib/mock/engine";
 import { formatPick, picksUntilUser } from "../../lib/mock/board";
-import { playPing } from "../../lib/sound";
+import { useDraftTimer } from "./useDraftTimer";
+import { useTvBroadcast } from "./useTvBroadcast";
 import { SearchPill } from "../SearchPill";
 import { PickStrip } from "./PickStrip";
 import { DraftBoardGrid } from "./DraftBoardGrid";
@@ -26,11 +25,7 @@ import { LockerRoom } from "./LockerRoom";
 import { MyRoster } from "./MyRoster";
 import { RoundStrip } from "./RoundStrip";
 import { TVStage } from "./TVStage";
-import {
-  buildTvSnapshot,
-  TV_CHANNEL,
-  type TvMessage,
-} from "../../lib/mock/tvSnapshot";
+import { buildTvSnapshot } from "../../lib/mock/tvSnapshot";
 
 interface Props {
   state: MockState;
@@ -53,8 +48,6 @@ const POS_FILTERS: (Position | "All")[] = [
   "DST",
 ];
 
-const BOT_DELAY = 850;
-
 export function MockDraft({
   state,
   userTeamIndex,
@@ -75,157 +68,45 @@ export function MockDraft({
   const [openPlayer, setOpenPlayer] = useState<string | null>(null);
   const [extraCols, setExtraCols] = useState<PoolCol[]>(["bye"]);
   const [colMenuOpen, setColMenuOpen] = useState(false);
-  const [paused, setPaused] = useState(false);
-  const [autoOn, setAutoOn] = useState(!!state.settings.autoDraft);
-  const [missed, setMissed] = useState(false);
-  const [missedLeft, setMissedLeft] = useState(25);
-  const promptedRef = useRef(false);
   const [boardView, setBoardView] = useState<"wall" | "locker">("wall");
   const [menuFor, setMenuFor] = useState<number | null>(null); // pick popover
   const [replaceSearch, setReplaceSearch] = useState("");
-  const [timerSec, setTimerSec] = useState<number | null>(20); // null = Off
-  const [remaining, setRemaining] = useState(20);
-  // The "on the clock" reveal locks the clock + Draft for a beat so the
-  // typewriter + glow can play before the user can act.
-  const [revealing, setRevealing] = useState(false);
-  const [muted, setMuted] = useState(() => {
-    try {
-      return localStorage.getItem("otc:muted") === "1";
-    } catch {
-      return false;
-    }
-  });
-  const mutedRef = useRef(muted);
-  mutedRef.current = muted;
+
   const onClock = currentTeamIndex(state);
   const team = state.teams[onClock];
   const isUser = onClock === userTeamIndex && !isComplete(state);
   const overall = state.picks.length + 1;
   const round = Math.floor((overall - 1) / state.settings.teams) + 1;
   const picksAway = picksUntilUser(state, userTeamIndex);
-  const toggleMute = () =>
-    setMuted((m) => {
-      const next = !m;
-      try {
-        localStorage.setItem("otc:muted", next ? "1" : "0");
-      } catch {
-        /* ignore */
-      }
-      return next;
-    });
 
-  // Going on the clock: ping (unless muted) and hold a 1.5s reveal during which
-  // the timer is idle and Draft is locked. Re-fires for each new user pick.
-  const REVEAL_MS = 1500;
-  useEffect(() => {
-    if (!isUser) {
-      setRevealing(false);
-      return;
-    }
-    setRevealing(true);
-    if (!mutedRef.current) playPing();
-    const t = setTimeout(() => setRevealing(false), REVEAL_MS);
-    return () => clearTimeout(t);
-  }, [isUser, overall]);
+  // The live draft clock (reveal hold, countdown + auto-pick, bot progression,
+  // auto-draft, missed-pick modal, mute) lives in useDraftTimer.
+  const {
+    timerSec,
+    setTimerSec,
+    remaining,
+    revealing,
+    paused,
+    setPaused,
+    setAutoOn,
+    missed,
+    setMissed,
+    missedLeft,
+    muted,
+    toggleMute,
+    urgent,
+  } = useDraftTimer({
+    state,
+    isUser,
+    onClock,
+    userTeamIndex,
+    overall,
+    onDraft,
+    onBotTick,
+  });
 
-  // Reset the clock to full on a new pick, a duration change, or resuming from a
-  // pause. The pause case only reaches the user's clock via undo-on-your-turn
-  // (which pauses); a fresh full clock there is intended, not a resume mid-count.
-  useEffect(() => {
-    if (timerSec != null) setRemaining(timerSec);
-  }, [overall, timerSec, paused]);
-
-  // Countdown + auto-pick (user's live, unpaused turn only). Held during the
-  // reveal so the clock doesn't start until the animation finishes.
-  useEffect(() => {
-    if (timerSec == null || paused || !isUser || revealing) return;
-    if (remaining <= 0) {
-      const id = bestAvailableId(state);
-      if (id) onDraft(id);
-      // Show missed-pick popup once per draft session (only when not auto-drafting)
-      if (!autoOn && !promptedRef.current) {
-        promptedRef.current = true;
-        setMissed(true);
-      }
-      return;
-    }
-    const t = setTimeout(() => setRemaining((s) => s - 1), 1000);
-    return () => clearTimeout(t);
-  }, [timerSec, paused, isUser, revealing, remaining, state, onDraft, autoOn]);
-
-  // Bots pick automatically while running. Pausing (or a dry pool that leaves a
-  // bot with no legal pick) stops the timer so the draft can't spin or fight an
-  // undo.
-  useEffect(() => {
-    if (paused || isComplete(state) || onClock === userTeamIndex) return;
-    if (!botPickId(state)) {
-      setPaused(true); // stall guard: nothing legal to draft
-      return;
-    }
-    const t = setTimeout(onBotTick, BOT_DELAY);
-    return () => clearTimeout(t);
-  }, [state, paused, onClock, userTeamIndex, onBotTick]);
-
-  // Auto-draft: when enabled and it's the user's live, unpaused, non-revealing,
-  // non-complete turn, pick the best available after BOT_DELAY (mirrors bot guards).
-  useEffect(() => {
-    if (!autoOn || !isUser || paused || revealing || isComplete(state)) return;
-    const id = bestAvailableId(state);
-    if (!id) return;
-    const t = setTimeout(() => onDraft(id), BOT_DELAY);
-    return () => clearTimeout(t);
-  }, [autoOn, isUser, paused, revealing, state, onDraft]);
-
-  // Missed-pick modal countdown: decrement missedLeft each second while modal is open;
-  // at 0, activate auto-draft and close the modal.
-  useEffect(() => {
-    if (!missed) {
-      setMissedLeft(25);
-      return;
-    }
-    if (missedLeft <= 0) {
-      setAutoOn(true);
-      setMissed(false);
-      return;
-    }
-    const t = setTimeout(() => setMissedLeft((s) => s - 1), 1000);
-    return () => clearTimeout(t);
-  }, [missed, missedLeft]);
-
-  // B9: broadcast a compact TV snapshot to any open "cast" window (the #tv
-  // route) over a BroadcastChannel. Read-only mirror — additive, never touches
-  // the draft engine.
-  //
-  // The channel is opened ONCE (stable across the draft) so a fresh TV window's
-  // one-shot "request" never races a channel teardown; a separate effect posts
-  // the latest snapshot on every state change. The request handler reads the
-  // current state via a ref so its reply is never stale.
-  const tvChanRef = useRef<BroadcastChannel | null>(null);
-  const tvStateRef = useRef(state);
-  tvStateRef.current = state;
-  useEffect(() => {
-    if (typeof BroadcastChannel === "undefined") return;
-    const ch = new BroadcastChannel(TV_CHANNEL);
-    tvChanRef.current = ch;
-    ch.onmessage = (e: MessageEvent<TvMessage>) => {
-      if (e.data.type === "request") {
-        ch.postMessage({
-          type: "snapshot",
-          snapshot: buildTvSnapshot(tvStateRef.current),
-        } satisfies TvMessage);
-      }
-    };
-    return () => {
-      ch.close();
-      tvChanRef.current = null;
-    };
-  }, []);
-  useEffect(() => {
-    tvChanRef.current?.postMessage({
-      type: "snapshot",
-      snapshot: buildTvSnapshot(state),
-    } satisfies TvMessage);
-  }, [state]);
+  // Mirror the draft to any open #tv cast window (read-only BroadcastChannel).
+  useTvBroadcast(state);
 
   const avail = useMemo(
     () =>
@@ -292,8 +173,6 @@ export function MockDraft({
     setMenuFor(null);
   };
 
-  // Final-seconds alert: the stopwatch sweeps and the wordmark re-pulses.
-  const urgent = isUser && !revealing && timerSec != null && remaining <= 5;
   const timerUi = (
     <span className="mock-timer-wrap">
       {urgent && <StopwatchMark urgent />}
