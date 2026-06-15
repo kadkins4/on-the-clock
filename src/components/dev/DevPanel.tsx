@@ -1,11 +1,14 @@
 import type { Player } from "../../types";
 import type { RefetchResult, LoggedError } from "../../lib/storage";
+import type { SourcesMeta } from "../../lib/sources/types";
 import { dataQualityIssues } from "../../lib/dataQuality";
 
 interface Props {
   players: Player[];
   refetch: RefetchResult | null;
   errors: LoggedError[];
+  sourcesMeta: SourcesMeta | null;
+  sourcesFetchedAt: number;
   onClearErrors: () => void;
   onResetBoard: () => void;
   onClose: () => void;
@@ -19,6 +22,8 @@ export function DevPanel({
   players,
   refetch,
   errors,
+  sourcesMeta,
+  sourcesFetchedAt,
   onClearErrors,
   onResetBoard,
   onClose,
@@ -42,6 +47,22 @@ export function DevPanel({
           </p>
         ) : (
           <p className="muted">No refetch recorded.</p>
+        )}
+      </section>
+
+      <section>
+        <h2>Player source data</h2>
+        {sourcesMeta ? (
+          <p>
+            {sourcesMeta.count} players ·{" "}
+            {sourcesMeta.sources.join(" + ") || "—"} · season{" "}
+            {sourcesMeta.season}
+            {sourcesFetchedAt > 0 && ` · ${fmt(sourcesFetchedAt)}`}
+          </p>
+        ) : (
+          <p className="muted">
+            None gathered yet — run “Refresh data &amp; ADP”.
+          </p>
         )}
       </section>
 

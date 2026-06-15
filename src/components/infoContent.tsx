@@ -47,6 +47,12 @@ export function LogContent() {
         <ul className="otc-changelog">
           <li>
             <span className="otc-log-date">Jun 15, 2026</span>
+            More data sources — the data refresh now also gathers Sleeper
+            projections/ADP and FantasyCalc values behind the scenes, building a
+            richer per-player dataset for upcoming player cards.
+          </li>
+          <li>
+            <span className="otc-log-date">Jun 15, 2026</span>
             One-tap data refresh — “Refresh data &amp; ADP” now pulls the latest
             players and projections from ESPN and blends fresh ADP (FFC,
             FantasyPros, Yahoo) in a single step, with Yahoo now covering the

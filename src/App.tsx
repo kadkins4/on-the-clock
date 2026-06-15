@@ -34,6 +34,8 @@ import {
 import { safeStorage } from "./lib/safeStorage";
 import { fetchEspnPlayers, EspnShapeError } from "./lib/fetchEspn";
 import { fetchAdp } from "./lib/fetchAdp";
+import { fetchSources } from "./lib/fetchSources";
+import { useSources } from "./state/useSources";
 import { searchPlayers } from "./lib/search";
 import {
   matchesPosFilter,
@@ -215,6 +217,7 @@ export default function App() {
     loadRefetchResult,
   );
   const { toast, showToast, dismiss: dismissToast } = useToast();
+  const { sourcesMeta, sourcesFetchedAt, setSources } = useSources();
   const [view, setView] = useState<"board" | "about" | "log">("board");
   // Cmd/Ctrl+Z undoes the last board edit — but only when not typing in a field,
   // so the browser's native text undo still works inside the rank/notes inputs.
@@ -406,6 +409,21 @@ export default function App() {
     }
   };
 
+  // Best-effort: gather the third-party source store (Sleeper + FantasyCalc)
+  // into the persisted side cache. No board/ranking impact yet — this data is
+  // collected for a future player info card — so a failure is silent.
+  const refreshSourceData = async (): Promise<void> => {
+    try {
+      const res = await fetchSources(
+        currentLeague.scoring,
+        currentLeague.teams,
+      );
+      setSources(res);
+    } catch (err) {
+      console.warn("[sources] refresh failed:", (err as Error).message);
+    }
+  };
+
   // One action: pull the latest players + projections from ESPN, then blend
   // fresh ADP (FFC + FantasyPros + Yahoo) onto the merged board. The ESPN merge
   // runs first so any new players are present before the ADP blend lands on top.
@@ -438,6 +456,8 @@ export default function App() {
           : `Refreshed ${fetched.length} players, but ADP refresh failed — board kept.`,
         adp ? "success" : "warning",
       );
+      // Gather the side source store (Sleeper + FantasyCalc) in the background.
+      await refreshSourceData();
     } catch (err) {
       const shape = err instanceof EspnShapeError;
       const r: RefetchResult = {
@@ -609,6 +629,8 @@ export default function App() {
             players={players}
             refetch={refetchResult}
             errors={loadErrorLog()}
+            sourcesMeta={sourcesMeta}
+            sourcesFetchedAt={sourcesFetchedAt}
             onClearErrors={() => {
               clearErrorLog();
               showToast("Cleared error log.", "success");

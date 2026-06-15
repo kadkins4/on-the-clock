@@ -8,6 +8,8 @@ const base = {
   players: [],
   refetch: null,
   errors: [],
+  sourcesMeta: null,
+  sourcesFetchedAt: 0,
   onClearErrors: () => {},
   onResetBoard: () => {},
   onClose: () => {},
