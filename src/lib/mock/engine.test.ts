@@ -73,6 +73,55 @@ describe("createMock", () => {
     expect(m.order).toHaveLength(6);
     expect(m.pool.every((pl) => pl.position !== "TE")).toBe(true);
   });
+
+  it("honors an explicit rounds override over the roster size", () => {
+    const m = createMock(
+      league(board),
+      { teams: 2, userSlot: 1, thirdRoundReversal: false, rounds: 5 },
+      123,
+    );
+    expect(m.settings.rounds).toBe(5);
+    expect(m.order).toHaveLength(10); // 2 teams × 5 rounds
+  });
+
+  it("snapshots a scoring override without touching the league", () => {
+    const lg = league(board);
+    const m = createMock(
+      lg,
+      { teams: 2, userSlot: 1, thirdRoundReversal: false, scoring: "standard" },
+      123,
+    );
+    expect(m.scoring).toBe("standard");
+    expect(lg.scoring).toBe("ppr");
+  });
+
+  it("snapshots a roster override and derives rounds + disabled from it", () => {
+    const lg = league(board);
+    const roster = {
+      QB: 1,
+      RB: 2,
+      WR: 2,
+      TE: 1,
+      FLEX: 1,
+      SUPERFLEX: 0,
+      K: 0,
+      DST: 0,
+      bench: 0,
+      disabled: ["K", "DST"] as Player["position"][],
+    };
+    const m = createMock(
+      lg,
+      { teams: 2, userSlot: 1, thirdRoundReversal: false, roster },
+      123,
+    );
+    expect(m.roster).toEqual(roster);
+    // rounds default = roster size = 1+2+2+1+1 = 7 → 14 picks
+    expect(m.order).toHaveLength(14);
+    // the override's disabled list drives the pool (QBs survive; they aren't
+    // disabled), and the league's own roster is left untouched.
+    expect(m.pool.some((pl) => pl.position === "QB")).toBe(true);
+    expect(lg.roster.disabled).toContain("TE");
+  });
 });
 
 describe("draftPlayer + available", () => {

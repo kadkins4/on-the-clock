@@ -11,6 +11,10 @@ export interface MockSettings {
   valueThreshold?: number;
   valueFlagsEnabled?: boolean;
   autoDraft?: boolean;
+  // Per-mock overrides chosen on the setup screen. Absent => inherit the
+  // league's value. The mock snapshots these so the live league is untouched.
+  scoring?: Scoring;
+  roster?: RosterSettings;
 }
 
 export interface DraftPick {

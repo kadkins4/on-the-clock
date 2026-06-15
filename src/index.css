@@ -1027,6 +1027,482 @@ table.players th.sorted {
   padding: 6px 10px;
   font-size: 13px;
 }
+/* ====================================================================
+   Mock-draft setup — "Hero Card" lobby (replaces the old plain form).
+   Uses the 2026 design tokens; classes are ms- prefixed to avoid any
+   collision (notably .soon, which is a different component's box).
+   ==================================================================== */
+.ms-card {
+  max-width: 540px;
+  margin: 24px auto;
+  background: linear-gradient(180deg, var(--card) 0%, var(--panel-2) 100%);
+  border: 1px solid var(--border-3);
+  border-radius: 20px;
+  padding: 30px 34px 34px;
+  box-shadow:
+    0 40px 80px -40px #000,
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+.ms-head {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-bottom: 22px;
+}
+.ms-eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--fs-11);
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--clock-orange);
+}
+.ms-title {
+  margin: 2px 0 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--fs-30);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+.ms-block {
+  margin-bottom: 22px;
+}
+.ms-label {
+  display: block;
+  margin-bottom: 11px;
+  font-family: var(--font-condensed);
+  font-weight: 600;
+  font-size: var(--fs-13-5);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+/* Segmented control (draft format / scoring) */
+.ms-seg {
+  display: inline-flex;
+  border: 1px solid var(--border-4);
+  border-radius: 9px;
+  overflow: hidden;
+}
+.ms-seg button {
+  font-family: var(--font-condensed);
+  font-weight: 600;
+  font-size: var(--fs-13-5);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 8px 15px;
+  color: var(--text-secondary);
+  background: var(--card);
+  border: none;
+  border-right: 1px solid var(--border-2);
+  cursor: pointer;
+  transition: all 0.13s;
+}
+.ms-seg button:last-child {
+  border-right: none;
+}
+.ms-seg button:hover {
+  color: var(--text-primary);
+}
+.ms-seg button.on {
+  color: #fff;
+  background: var(--clock-orange);
+}
+.ms-seg button.ms-seg-soon {
+  color: var(--text-tertiary);
+}
+.ms-seg button.ms-seg-soon:hover {
+  color: var(--text-secondary);
+}
+.ms-seg button.ms-seg-soon.on {
+  background: rgba(217, 165, 63, 0.16);
+  color: var(--your-gold);
+}
+.ms-seg-note {
+  margin: 9px 0 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-11);
+  color: var(--your-gold);
+}
+
+/* Teams / rounds steppers */
+.ms-field-row {
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+.ms-field-col .ms-label {
+  margin-bottom: 11px;
+}
+.ms-stepper {
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid var(--border-4);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--card);
+}
+.ms-stepper button {
+  font-family: var(--font-display);
+  font-size: var(--fs-19);
+  font-weight: 700;
+  width: 44px;
+  color: var(--text-secondary);
+  background: var(--card-high);
+  border: none;
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.ms-stepper button:hover {
+  color: #fff;
+  background: var(--clock-orange);
+}
+.ms-stepper-val {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--fs-27);
+  min-width: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+}
+
+/* Slot board */
+.ms-slotboard {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.ms-slot {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: var(--fs-13-5);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  color: var(--text-secondary);
+  background: var(--card);
+  border: 1px solid var(--border-3);
+  cursor: pointer;
+  transition: all 0.12s;
+  position: relative;
+}
+.ms-slot:hover {
+  color: var(--text-primary);
+  border-color: var(--border-5);
+  transform: translateY(-1px);
+}
+.ms-slot.sel {
+  color: #1a1407;
+  background: var(--your-gold);
+  border-color: var(--your-gold);
+  box-shadow: 0 0 0 3px rgba(217, 165, 63, 0.18);
+}
+.ms-slot.sel::after {
+  content: "YOU";
+  position: absolute;
+  bottom: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  color: var(--your-gold);
+}
+
+/* Advanced disclosure */
+.ms-disclosure {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-condensed);
+  font-weight: 600;
+  font-size: var(--fs-13-5);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  border-top: 1px solid var(--border-2);
+  padding: 16px 0 4px;
+  cursor: pointer;
+}
+.ms-disclosure:hover {
+  color: var(--text-primary);
+}
+.ms-chev {
+  color: var(--clock-orange);
+  transition: transform 0.2s;
+}
+.ms-disclosure.open .ms-chev {
+  transform: rotate(90deg);
+}
+.ms-adv-body {
+  padding-top: 6px;
+}
+
+/* Switch rows */
+.ms-switch-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 0;
+}
+.ms-switch-row + .ms-switch-row {
+  border-top: 1px solid var(--border-1);
+}
+.ms-switch-row.is-soon {
+  opacity: 0.6;
+}
+.ms-row-meta {
+  flex: 1;
+}
+.ms-row-title {
+  font-family: var(--font-condensed);
+  font-weight: 600;
+  font-size: var(--fs-15);
+  color: var(--text-primary);
+}
+.ms-row-desc {
+  font-size: var(--fs-13-5);
+  color: var(--text-tertiary);
+  margin-top: 1px;
+}
+.ms-switch {
+  flex: none;
+  width: 46px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--card-high);
+  border: 1px solid var(--border-4);
+  position: relative;
+  cursor: pointer;
+  transition: all 0.16s;
+  padding: 0;
+}
+.ms-switch::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--text-secondary);
+  transition: all 0.16s;
+}
+.ms-switch.on {
+  background: var(--clock-orange);
+  border-color: var(--clock-orange);
+}
+.ms-switch.on::after {
+  left: 22px;
+  background: #fff;
+}
+.ms-switch:disabled {
+  cursor: default;
+}
+.ms-num {
+  font-family: var(--font-mono);
+  font-size: var(--fs-15);
+  color: var(--text-primary);
+  background: var(--card);
+  border: 1px solid var(--border-4);
+  border-radius: 8px;
+  padding: 8px 11px;
+  width: 88px;
+}
+.ms-soon-tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--your-gold);
+  background: rgba(217, 165, 63, 0.1);
+  border: 1px solid rgba(217, 165, 63, 0.35);
+  border-radius: 999px;
+  padding: 2px 7px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+/* Roster spots */
+.ms-roster {
+  padding-top: 16px;
+}
+.ms-rgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+  gap: 8px;
+}
+.ms-rcell {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  background: var(--card);
+  border: 1px solid var(--border-3);
+  border-radius: 9px;
+  padding: 7px 9px 7px 11px;
+}
+.ms-rpos {
+  font-family: var(--font-condensed);
+  font-weight: 700;
+  font-size: var(--fs-13-5);
+  letter-spacing: 0.04em;
+  color: var(--text-secondary-2);
+}
+.ms-rpos.ms-pos-QB {
+  color: var(--pos-QB);
+}
+.ms-rpos.ms-pos-RB {
+  color: var(--pos-RB);
+}
+.ms-rpos.ms-pos-WR {
+  color: var(--pos-WR);
+}
+.ms-rpos.ms-pos-TE {
+  color: var(--pos-TE);
+}
+.ms-rpos.ms-pos-K {
+  color: var(--pos-K);
+}
+.ms-rpos.ms-pos-DST {
+  color: var(--pos-DST);
+}
+.ms-ministep {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+.ms-ministep button {
+  width: 23px;
+  height: 23px;
+  border-radius: 6px;
+  border: 1px solid var(--border-4);
+  background: var(--card-high);
+  color: var(--text-secondary);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-13-5);
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.ms-ministep button:hover {
+  color: #fff;
+  background: var(--clock-orange);
+  border-color: var(--clock-orange);
+}
+.ms-ministep span {
+  font-family: var(--font-mono);
+  font-size: var(--fs-13-5);
+  min-width: 16px;
+  text-align: center;
+  color: var(--text-primary);
+}
+
+/* Bot-personalities teaser (coming soon) */
+.ms-soon {
+  position: relative;
+  margin-top: 18px;
+  border: 1px dashed var(--border-5);
+  border-radius: 13px;
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      rgba(255, 255, 255, 0.014) 0 10px,
+      transparent 10px 20px
+    ),
+    var(--raised);
+  padding: 16px 17px;
+}
+.ms-soon-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ms-soon-ic {
+  font-size: 16px;
+}
+.ms-soon-t {
+  font-family: var(--font-condensed);
+  font-weight: 700;
+  font-size: var(--fs-15);
+  color: var(--text-secondary-2);
+}
+.ms-soon-badge {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--your-gold);
+  background: rgba(217, 165, 63, 0.1);
+  border: 1px solid rgba(217, 165, 63, 0.4);
+  border-radius: 999px;
+  padding: 3px 9px;
+}
+.ms-soon-note {
+  margin: 11px 0 0;
+  font-size: var(--fs-13-5);
+  color: var(--text-tertiary);
+  line-height: 1.45;
+}
+
+/* Actions */
+.ms-actions {
+  display: flex;
+  gap: 11px;
+  margin-top: 26px;
+}
+.ms-start {
+  flex: 1;
+  font-family: var(--font-condensed);
+  font-weight: 700;
+  font-size: var(--fs-15);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--clock-orange);
+  border: none;
+  border-radius: 11px;
+  padding: 15px 26px;
+  cursor: pointer;
+  transition: all 0.14s;
+  box-shadow: 0 8px 24px -8px rgba(251, 90, 45, 0.6);
+}
+.ms-start:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+.ms-cancel {
+  font-family: var(--font-condensed);
+  font-weight: 600;
+  font-size: var(--fs-13-5);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid var(--border-4);
+  border-radius: 11px;
+  padding: 15px 22px;
+  cursor: pointer;
+}
+.ms-cancel:hover {
+  color: var(--text-primary);
+  border-color: var(--border-5);
+}
+
 .mock-setup,
 .mock-summary {
   max-width: 32rem;

@@ -22,22 +22,25 @@ const byAdp = (a: Player, b: Player) => {
 
 export function createMock(
   league: League,
-  settings: Omit<MockSettings, "rounds">,
+  settings: Omit<MockSettings, "rounds"> & { rounds?: number },
   seed: number,
 ): MockState {
-  const rounds = rosterSize(league.roster);
+  // Setup-screen overrides fall back to the league's own values.
+  const roster = settings.roster ?? league.roster;
+  const scoring = settings.scoring ?? league.scoring;
+  const rounds = settings.rounds ?? rosterSize(roster);
   // a mock drafts from the league's default tier list; the pool is kept
   // ADP-sorted because the bots pick by ADP (the user-facing list re-sorts
   // by board order via availableByBoard)
   const pool = defaultBoard(league)
-    .filter((pl) => !league.roster.disabled.includes(pl.position))
+    .filter((pl) => !roster.disabled.includes(pl.position))
     .map((pl) => ({ ...pl }))
     .sort(byAdp);
   return {
     pool,
-    scoring: league.scoring,
+    scoring,
     tePremium: league.tePremium,
-    roster: league.roster,
+    roster,
     settings: { ...settings, rounds },
     teams: makeTeamIdentities(settings.teams, settings.userSlot, seed),
     order: buildDraftOrder(settings.teams, rounds, settings.thirdRoundReversal),

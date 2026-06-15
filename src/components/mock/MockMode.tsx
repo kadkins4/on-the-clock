@@ -33,7 +33,7 @@ export function MockMode({ league, onExit, onSetValueFlags }: Props) {
   const [userSlot, setUserSlot] = useState(1);
 
   const start = useCallback(
-    (settings: Omit<MockSettings, "rounds">) => {
+    (settings: Omit<MockSettings, "rounds"> & { rounds: number }) => {
       unlockAudio(); // prime audio on this gesture so the clock bell can play
       setUserSlot(settings.userSlot);
       setState(createMock(league, settings, Date.now() >>> 0));

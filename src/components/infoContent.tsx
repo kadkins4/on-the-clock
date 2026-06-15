@@ -47,6 +47,13 @@ export function LogContent() {
         <ul className="otc-changelog">
           <li>
             <span className="otc-log-date">Jun 14, 2026</span>
+            Mock lobby — a redesigned pre-draft screen with draft format,
+            scoring, team count, rounds, a click-to-pick draft-slot board, and
+            editable roster spots. Super Flex, TE Premium, and bot personalities
+            are previewed as coming soon.
+          </li>
+          <li>
+            <span className="otc-log-date">Jun 14, 2026</span>
             Mock PROJ &amp; VOR — the pick pool and player card now show
             projected points and value over replacement, scored at your
             league&rsquo;s settings. Toggle the Proj and VOR columns from the ⚙

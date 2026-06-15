@@ -217,10 +217,16 @@ worktree, ff-merged to local main. ⑨ deferred (ships with live-multiplayer).
 ## Backlog (not scheduled)
 
 - Auction format (budgets, $ values, gold price columns thread through the
-  whole design once the engine supports it)
-- Linear draft format
+  whole design once the engine supports it) — previewed as a grayed,
+  selectable "coming soon" option in the mock lobby (`MockSetup`); selecting it
+  falls back to snake.
+- Linear draft format — same coming-soon treatment in the mock lobby.
+- Super Flex + TE Premium in mocks — previewed as grayed "coming soon" rows in
+  the mock lobby's advanced section (the data model has `SUPERFLEX`/`tePremium`;
+  wiring them through the setup is deferred).
 - Cross-device TV cast (needs a server)
-- Bot personalities (e.g., per-bot K/DST gating, blockers)
+- Bot personalities (e.g., per-bot K/DST gating, blockers) — teased in the mock
+  lobby ("Coming soon"); design idea: randomize across seats or assign per seat.
 - **Deep component decomposition** (deferred from the 2026-06-14 code review).
   The live-clock + TV-broadcast logic is now extracted into `useDraftTimer` /
   `useTvBroadcast` hooks; the heavier structural split is planned but not
