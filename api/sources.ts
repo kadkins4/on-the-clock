@@ -42,6 +42,14 @@ async function fetchSleeper(
   throw new Error(`Sleeper returned no projections near ${season}`);
 }
 
+// Sleeper's full player map (~14 MB): the crosswalk hub (espn_id for the whole
+// NFL) plus bio/injury fields. Changes ~daily; fetched per refresh for now.
+async function fetchSleeperPlayers(fetchImpl: typeof fetch): Promise<unknown> {
+  const res = await fetchImpl("https://api.sleeper.com/v1/players/nfl");
+  if (!res.ok) throw new Error(`Sleeper players fetch failed: ${res.status}`);
+  return res.json();
+}
+
 async function settle(p: Promise<unknown>, label: string): Promise<unknown> {
   try {
     return await p;
@@ -55,13 +63,15 @@ export async function handleSources(
   params: SourcesParams,
   fetchImpl: typeof fetch = fetch,
 ): Promise<SourcesResponse> {
-  // FantasyCalc is the crosswalk hub — fetch it first; without it there's no
-  // espn↔sleeper join, so Sleeper data can't be attached.
-  const [fc, sleeper] = await Promise.all([
+  // The Sleeper player map is the crosswalk hub (espn↔sleeper for the whole
+  // NFL). Without it, projections can't join the board; FantasyCalc still
+  // contributes via its own espnId. All feeds are best-effort.
+  const [playerMap, projections, fc] = await Promise.all([
+    settle(fetchSleeperPlayers(fetchImpl), "sleeper-players"),
+    settle(fetchSleeper(params, fetchImpl), "sleeper-projections"),
     settle(fetchFantasyCalc(params, fetchImpl), "fantasycalc"),
-    settle(fetchSleeper(params, fetchImpl), "sleeper"),
   ]);
-  const { store, contributed } = buildSources(fc, sleeper);
+  const { store, contributed } = buildSources(playerMap, projections, fc);
   return {
     sources: store,
     meta: {

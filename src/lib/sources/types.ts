@@ -48,17 +48,33 @@ export interface FantasyCalcSource {
   yearsExp: number | null;
 }
 
+// Bio / status, sourced from the Sleeper player map (covers the full roster,
+// not just the FantasyCalc top 200).
+export interface PlayerBio {
+  team: string | null;
+  age: number | null;
+  college: string | null;
+  heightInches: number | null;
+  weightLbs: number | null;
+  yearsExp: number | null;
+  jersey: number | null;
+  status: string | null; // e.g. "Active", "Inactive"
+  injuryStatus: string | null; // e.g. "Questionable", "Out", "IR"
+  depthChartPos: string | null;
+}
+
 export interface PlayerSourceData {
   espnId: string; // canonical key — matches Player.id on the board
   name: string;
   position: string;
-  // Cross-platform ids (from FantasyCalc) for joining future sources.
+  // Cross-platform ids for joining future sources.
   ids: {
     sleeper?: string;
     mfl?: string;
     fleaflicker?: string;
     ffpc?: string;
   };
+  bio?: PlayerBio;
   fantasycalc?: FantasyCalcSource;
   sleeper?: SleeperSource;
 }

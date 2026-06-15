@@ -10,6 +10,20 @@ function jsonResponse(body: unknown, ok = true): Response {
   } as unknown as Response;
 }
 
+const playerMap = {
+  "9509": {
+    espn_id: "4430807",
+    full_name: "Bijan Robinson",
+    position: "RB",
+    team: "ATL",
+    college: "Texas",
+  },
+};
+
+const projections = [
+  { player_id: "9509", stats: { pts_ppr: 290, adp_ppr: 1.6, rush_yd: 1400 } },
+];
+
 const fc = [
   {
     player: {
@@ -25,53 +39,55 @@ const fc = [
   },
 ];
 
-const sleeper = [
-  {
-    player_id: "9509",
-    stats: { pts_ppr: 290, adp_ppr: 1.6, rush_yd: 1400 },
-  },
-];
+// Route a fake URL to the right payload. The player map is /v1/players/nfl;
+// projections are /projections/nfl/{year} — check the map first.
+function router(
+  map: unknown,
+  proj: unknown,
+  calc: unknown,
+  okMap = true,
+  okProj = true,
+  okCalc = true,
+): typeof fetch {
+  return (async (url: string) => {
+    const u = String(url);
+    if (u.includes("players/nfl")) return jsonResponse(map, okMap);
+    if (u.includes("projections")) return jsonResponse(proj, okProj);
+    if (u.includes("fantasycalc")) return jsonResponse(calc, okCalc);
+    return jsonResponse({}, false);
+  }) as unknown as typeof fetch;
+}
 
 describe("handleSources", () => {
-  it("joins FantasyCalc + Sleeper into an espn-id-keyed store", async () => {
-    const fakeFetch = (async (url: string) => {
-      if (String(url).includes("fantasycalc")) return jsonResponse(fc);
-      if (String(url).includes("sleeper")) return jsonResponse(sleeper);
-      return jsonResponse({}, false);
-    }) as unknown as typeof fetch;
-
+  it("joins the player map + projections + FantasyCalc into an espn-id store", async () => {
     const out = await handleSources(
       { season: 2026, teams: 12, ppr: 1 },
-      fakeFetch,
+      router(playerMap, projections, fc),
     );
     expect(out.meta.count).toBe(1);
-    expect(out.meta.sources).toEqual(["fantasycalc", "sleeper"]);
+    expect(out.meta.sources).toEqual(["sleeper", "fantasycalc"]);
     const entry = out.sources["4430807"];
+    expect(entry.bio?.college).toBe("Texas");
     expect(entry.fantasycalc?.adp).toBe(1.6);
     expect(entry.sleeper?.proj.ppr).toBe(290);
     expect(entry.sleeper?.stats.rush_yd).toBe(1400);
   });
 
-  it("degrades to FantasyCalc-only when Sleeper fails (best-effort)", async () => {
-    const fakeFetch = (async (url: string) => {
-      if (String(url).includes("fantasycalc")) return jsonResponse(fc);
-      return jsonResponse({}, false); // sleeper all non-ok
-    }) as unknown as typeof fetch;
-
+  it("still covers a projection-only player when FantasyCalc fails", async () => {
     const out = await handleSources(
       { season: 2026, teams: 12, ppr: 1 },
-      fakeFetch,
+      router(playerMap, projections, [], true, true, false),
     );
-    expect(out.meta.sources).toEqual(["fantasycalc"]);
-    expect(out.sources["4430807"].sleeper).toBeUndefined();
+    // Sleeper still resolves via the player map even without FantasyCalc
+    expect(out.meta.sources).toEqual(["sleeper"]);
+    expect(out.sources["4430807"].sleeper?.proj.ppr).toBe(290);
+    expect(out.sources["4430807"].fantasycalc).toBeUndefined();
   });
 
-  it("returns an empty store when FantasyCalc (the crosswalk) fails", async () => {
-    const fakeFetch = (async () =>
-      jsonResponse({}, false)) as unknown as typeof fetch;
+  it("returns an empty store when every feed fails", async () => {
     const out = await handleSources(
       { season: 2026, teams: 12, ppr: 1 },
-      fakeFetch,
+      router(null, null, null, false, false, false),
     );
     expect(out.meta.count).toBe(0);
     expect(out.meta.sources).toEqual([]);
