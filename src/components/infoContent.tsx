@@ -47,6 +47,12 @@ export function LogContent() {
         <ul className="otc-changelog">
           <li>
             <span className="otc-log-date">Jun 14, 2026</span>
+            Toast notifications — saves and refreshes now confirm with a small
+            color-coded toast (green success, amber warning, red error) instead
+            of a browser pop-up alert.
+          </li>
+          <li>
+            <span className="otc-log-date">Jun 14, 2026</span>
             Linear draft format — pick Linear in the mock lobby to draft the
             same order (1&rarr;N) every round, no snake. Auction is still coming
             soon.

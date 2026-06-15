@@ -424,7 +424,8 @@ body {
   padding: 0.2rem 0;
 }
 
-/* Transient toast (refetch result, error-log cleared, …) */
+/* Transient toast (refetch result, error-log cleared, save confirmations, …).
+   Kind sets a colored left accent: info (neutral), success, warning, danger. */
 .toast {
   position: fixed;
   left: 50%;
@@ -433,10 +434,21 @@ body {
   z-index: 60;
   background: var(--panel);
   border: 1px solid var(--border);
+  border-left: 4px solid var(--border);
   border-radius: 6px;
   padding: 0.6rem 1rem;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
   max-width: 90vw;
+  cursor: pointer;
+}
+.toast-success {
+  border-left-color: #2ecc71;
+}
+.toast-warning {
+  border-left-color: #f5a623;
+}
+.toast-danger {
+  border-left-color: #ff6b4a;
 }
 
 /* Gated /dev diagnostics panel */

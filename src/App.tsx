@@ -50,6 +50,8 @@ const EMPTY_BREAKS: Break[] = [];
 import seed from "./data/seed.json";
 import { draftedByPosition } from "./lib/counts";
 import { Toolbar } from "./components/Toolbar";
+import { Toast } from "./components/Toast";
+import { useToast } from "./components/useToast";
 import { ColumnManager } from "./components/board/ColumnManager";
 import { ColumnScopePrompt } from "./components/board/ColumnScopePrompt";
 import { PlayerTable, type DisplayRow } from "./components/PlayerTable";
@@ -212,14 +214,8 @@ export default function App() {
   const [refetchResult, setRefetchResult] = useState<RefetchResult | null>(
     loadRefetchResult,
   );
-  const [toast, setToast] = useState<string | null>(null);
+  const { toast, showToast, dismiss: dismissToast } = useToast();
   const [view, setView] = useState<"board" | "about" | "log">("board");
-
-  useEffect(() => {
-    if (!toast) return;
-    const t = setTimeout(() => setToast(null), 4000);
-    return () => clearTimeout(t);
-  }, [toast]);
   // Cmd/Ctrl+Z undoes the last board edit — but only when not typing in a field,
   // so the browser's native text undo still works inside the rank/notes inputs.
   useEffect(() => {
@@ -409,7 +405,7 @@ export default function App() {
       };
       setRefetchResult(r);
       saveRefetchResult(r);
-      setToast(`Refetched ${fetched.length} players.`);
+      showToast(`Refetched ${fetched.length} players.`, "success");
     } catch (err) {
       const shape = err instanceof EspnShapeError;
       const r: RefetchResult = {
@@ -422,10 +418,11 @@ export default function App() {
       };
       setRefetchResult(r);
       saveRefetchResult(r);
-      setToast(
+      showToast(
         shape
           ? "Couldn't refresh — ESPN's data may have changed. Your board is unchanged."
           : "Refetch failed. Your board is unchanged.",
+        shape ? "warning" : "danger",
       );
     } finally {
       setFetching(false);
@@ -449,7 +446,7 @@ export default function App() {
       );
     } catch (err) {
       setAdpStatus("ADP refresh failed");
-      alert("ADP refresh failed: " + (err as Error).message);
+      showToast("ADP refresh failed: " + (err as Error).message, "danger");
     }
   };
 
@@ -468,8 +465,9 @@ export default function App() {
           ? parseCsv(text)
           : importJson(text);
         dispatch({ type: "setAll", players: parsed });
+        showToast(`Imported ${parsed.length} players.`, "success");
       } catch (err) {
-        alert("Import failed: " + (err as Error).message);
+        showToast("Import failed: " + (err as Error).message, "danger");
       }
     };
     input.click();
@@ -521,18 +519,24 @@ export default function App() {
 
   const onAddLeague = () => {
     const name = prompt("New league name:")?.trim();
-    if (name) dispatch({ type: "addLeague", name });
+    if (!name) return;
+    dispatch({ type: "addLeague", name });
+    showToast(`Created league "${name}".`, "success");
   };
   const onDuplicateLeague = () => {
     const name = prompt(
       "Duplicate this league as:",
       `${currentLeague.name} copy`,
     )?.trim();
-    if (name) dispatch({ type: "duplicateLeague", id: currentLeague.id, name });
+    if (!name) return;
+    dispatch({ type: "duplicateLeague", id: currentLeague.id, name });
+    showToast(`Duplicated league as "${name}".`, "success");
   };
   const onRenameLeague = () => {
     const name = prompt("Rename this league:", currentLeague.name)?.trim();
-    if (name) dispatch({ type: "renameLeague", id: currentLeague.id, name });
+    if (!name) return;
+    dispatch({ type: "renameLeague", id: currentLeague.id, name });
+    showToast(`Renamed league to "${name}".`, "success");
   };
   const onDeleteLeague = () => {
     if (leagues.length <= 1) return;
@@ -546,18 +550,24 @@ export default function App() {
 
   const onAddTierList = () => {
     const name = prompt("New tier list name:")?.trim();
-    if (name) dispatch({ type: "addTierList", name });
+    if (!name) return;
+    dispatch({ type: "addTierList", name });
+    showToast(`Created tier list "${name}".`, "success");
   };
   const onDuplicateTierList = () => {
     const name = prompt(
       "Duplicate this tier list as:",
       `${activeTierList?.name ?? "Default"} copy`,
     )?.trim();
-    if (name) dispatch({ type: "duplicateTierList", name });
+    if (!name) return;
+    dispatch({ type: "duplicateTierList", name });
+    showToast(`Duplicated tier list as "${name}".`, "success");
   };
   const onRenameTierList = () => {
     const name = prompt("Rename this tier list:", activeTierList?.name)?.trim();
-    if (name) dispatch({ type: "renameTierList", name });
+    if (!name) return;
+    dispatch({ type: "renameTierList", name });
+    showToast(`Renamed tier list to "${name}".`, "success");
   };
   const onDeleteTierList = () => {
     if (tierLists.length <= 1) return;
@@ -586,7 +596,7 @@ export default function App() {
             errors={loadErrorLog()}
             onClearErrors={() => {
               clearErrorLog();
-              setToast("Cleared error log.");
+              showToast("Cleared error log.", "success");
             }}
             onResetBoard={onResetBoard}
             onClose={() => {
@@ -773,7 +783,7 @@ export default function App() {
           )}
         </>
       )}
-      {toast && <div className="toast">{toast}</div>}
+      <Toast toast={toast} onDismiss={dismissToast} />
       <footer className="otc-footer">
         <a
           href="https://kendalladkins.dev/?utm_source=on-the-clock"
