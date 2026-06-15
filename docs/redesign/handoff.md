@@ -216,6 +216,18 @@ worktree, ff-merged to local main. ⑨ deferred (ships with live-multiplayer).
 
 ## Backlog (not scheduled)
 
+- **Fold Sleeper ADP into the board ADP blend.** Sleeper ADP (and FantasyCalc
+  ADP) are gathered into the side `sources` store but are NOT used by the board
+  ranking — `/api/adp` still blends only FFC + FantasyPros + Yahoo. Sleeper has a
+  huge real-draft sample, so folding it into the blend is high value. Decide
+  weighting vs the existing sources when wiring it in.
+- **Cache the slow-changing source feeds.** `/api/sources` re-fetches large
+  feeds every refresh (Sleeper player map ~14 MB, DynastyProcess ids ~2.6 MB,
+  nflverse season stats ~0.7 MB). These change ~daily, so they should be cached
+  (KV / edge cache / a daily bake) rather than pulled on every refresh — and if
+  the combined parse strains the edge runtime, move `/api/sources` to a Node
+  serverless function for the extra memory/time headroom.
+
 - **Keyed / paid data sources (need an account or API key — deferred).** We're
   integrating the free, keyless sources now (Sleeper, nflverse, FantasyCalc,
   DynastyProcess; on top of existing ESPN/FFC/FantasyPros/Yahoo). These each
