@@ -57,7 +57,6 @@ function renderToolbar(
     onToggleDst: noop,
     onFetch: noop,
     fetching: false,
-    onRefreshAdp: noop,
     adpStatus: null,
     onImport: noop,
     onExportJson: noop,

@@ -384,11 +384,36 @@ export default function App() {
     dispatch({ type: "splitTier", playerId });
   };
 
+  // Pull the blended ADP (FFC + FantasyPros + Yahoo) onto the current board.
+  // Returns a short source summary on success, or null on failure (the caller
+  // owns the user-facing toast so it can report the combined refresh outcome).
+  const refreshAdpBlend = async (): Promise<string | null> => {
+    setAdpStatus("Loading ADP…");
+    try {
+      const { ffc, fantasypros, yahoo, meta } = await fetchAdp(
+        currentLeague.scoring,
+        currentLeague.teams,
+      );
+      dispatch({ type: "applyAdp", ffc, fantasypros, yahoo });
+      const summary =
+        `ADP: ${meta.sources.join(" + ")} ${meta.type ?? ""} (${meta.year})`.trim();
+      setAdpStatus(summary);
+      return summary;
+    } catch (err) {
+      setAdpStatus("ADP refresh failed");
+      console.warn("[adp] blend refresh failed:", (err as Error).message);
+      return null;
+    }
+  };
+
+  // One action: pull the latest players + projections from ESPN, then blend
+  // fresh ADP (FFC + FantasyPros + Yahoo) onto the merged board. The ESPN merge
+  // runs first so any new players are present before the ADP blend lands on top.
   const onFetch = async () => {
     if (fetching) return;
     if (
       !confirm(
-        "Refetch the latest players from ESPN?\n\nKeeps your tiers, targets, draft picks and notes. Refreshes team, ADP, projections, last-season stats and injuries; adds any new players.",
+        "Refresh players & ADP?\n\nPulls the latest players, projections, stats and injuries from ESPN, then blends fresh ADP from FFC, FantasyPros and Yahoo. Keeps your tiers, targets, draft picks and notes; adds any new players.",
       )
     )
       return;
@@ -405,7 +430,14 @@ export default function App() {
       };
       setRefetchResult(r);
       saveRefetchResult(r);
-      showToast(`Refetched ${fetched.length} players.`, "success");
+      // Blend ADP onto the freshly-merged board (new players included).
+      const adp = await refreshAdpBlend();
+      showToast(
+        adp
+          ? `Refreshed ${fetched.length} players + ${adp}`
+          : `Refreshed ${fetched.length} players, but ADP refresh failed — board kept.`,
+        adp ? "success" : "warning",
+      );
     } catch (err) {
       const shape = err instanceof EspnShapeError;
       const r: RefetchResult = {
@@ -431,23 +463,6 @@ export default function App() {
 
   const onResetBoard = () => {
     dispatch({ type: "setAll", players: seed as unknown as Player[] });
-  };
-
-  const onRefreshAdp = async () => {
-    setAdpStatus("Loading ADP…");
-    try {
-      const { ffc, fantasypros, yahoo, meta } = await fetchAdp(
-        currentLeague.scoring,
-        currentLeague.teams,
-      );
-      dispatch({ type: "applyAdp", ffc, fantasypros, yahoo });
-      setAdpStatus(
-        `ADP: ${meta.sources.join(" + ")} ${meta.type ?? ""} (${meta.year})`.trim(),
-      );
-    } catch (err) {
-      setAdpStatus("ADP refresh failed");
-      showToast("ADP refresh failed: " + (err as Error).message, "danger");
-    }
   };
 
   const onImport = () => {
@@ -719,7 +734,6 @@ export default function App() {
             onToggleDst={onToggleDst}
             onFetch={() => void onFetch()}
             fetching={fetching}
-            onRefreshAdp={() => void onRefreshAdp()}
             adpStatus={adpStatus}
             onImport={onImport}
             onExportJson={() =>

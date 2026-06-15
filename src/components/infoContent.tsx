@@ -46,6 +46,13 @@ export function LogContent() {
         <h2 className="otc-log-h">Change Log</h2>
         <ul className="otc-changelog">
           <li>
+            <span className="otc-log-date">Jun 15, 2026</span>
+            One-tap data refresh — “Refresh data &amp; ADP” now pulls the latest
+            players and projections from ESPN and blends fresh ADP (FFC,
+            FantasyPros, Yahoo) in a single step, with Yahoo now covering the
+            full player list instead of just the top 25.
+          </li>
+          <li>
             <span className="otc-log-date">Jun 14, 2026</span>
             Toast notifications — saves and refreshes now confirm with a small
             color-coded toast (green success, amber warning, red error) instead

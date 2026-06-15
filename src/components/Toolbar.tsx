@@ -51,7 +51,6 @@ interface Props {
   onToggleDst: () => void;
   onFetch: () => void;
   fetching: boolean;
-  onRefreshAdp: () => void;
   adpStatus: string | null;
   onImport: () => void;
   onExportJson: () => void;
@@ -350,17 +349,8 @@ export function Toolbar(props: Props) {
               }}
             >
               {props.fetching
-                ? "Refetching…"
-                : "⟳ Refetch data (keeps your tiers)"}
-            </button>
-            <button
-              className="menu-item"
-              onClick={() => {
-                close();
-                props.onRefreshAdp();
-              }}
-            >
-              Refresh ADP
+                ? "Refreshing…"
+                : "⟳ Refresh data & ADP (keeps your tiers)"}
             </button>
             {props.adpStatus && (
               <div className="menu-hint">{props.adpStatus}</div>

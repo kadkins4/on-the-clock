@@ -5,7 +5,7 @@ import {
   type NormalizedAdp,
 } from "../src/lib/ffcAdp";
 import { parseFantasyPros } from "../src/lib/adpSources/fantasypros";
-import { mapYahooAdp, refreshAccessToken } from "../src/lib/adpSources/yahoo";
+import { fetchYahooAdp, refreshAccessToken } from "../src/lib/adpSources/yahoo";
 import type { Scoring } from "../src/types";
 
 export const config = { runtime: "edge" };
@@ -95,13 +95,10 @@ async function fetchYahoo(
     YAHOO_CLIENT_SECRET,
     fetchImpl,
   );
-  const url =
-    "https://fantasysports.yahooapis.com/fantasy/v2/game/nfl/players;sort=AR;out=draft_analysis;start=0;count=25?format=json";
-  const res = await fetchImpl(url, {
-    headers: { authorization: `Bearer ${token}` },
-  });
-  if (!res.ok) throw new Error(`Yahoo fetch failed: ${res.status}`);
-  return mapYahooAdp(await res.json());
+  // Page the whole draft-analysis list (Yahoo serves 25/request). The paginator
+  // stops at the first page with no ADP rows — i.e. past the drafted universe —
+  // so the cap is just a safety bound, not the real limit.
+  return fetchYahooAdp(token, fetchImpl, 600);
 }
 
 // Each non-primary source is best-effort: a failure logs and contributes [].
