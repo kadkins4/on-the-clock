@@ -216,6 +216,19 @@ worktree, ff-merged to local main. ⑨ deferred (ships with live-multiplayer).
 
 ## Backlog (not scheduled)
 
+- **Replace remaining native browser dialogs with custom modals.** `alert()` is
+  done — both now route through the color-coded toast system (Jun 14). Still
+  native: **5 `confirm()`** and **6 `prompt()`**. Build two reusable primitives
+  — `ConfirmModal` (yes/no, with a destructive red variant) and `PromptModal`
+  (single text input) — then convert every site:
+  - confirms: ESPN refetch (`App.tsx`), import-replace ⚠️, delete league ⚠️,
+    delete tier list ⚠️, DevPanel "reset board" ⚠️ (dev-only)
+  - prompts: add / rename / duplicate for both league and tier list (`App.tsx`)
+
+  Shares the modal shell with the mock-settings container decision (modal vs
+  drawer) — sequence these together so the shell is built once. Note: `confirm`/
+  `prompt` are blocking and return synchronously; the modal versions are async,
+  so call sites need promise/callback refactors (esp. the file-import flow).
 - Auction format (budgets, $ values, gold price columns thread through the
   whole design once the engine supports it) — previewed as a grayed,
   selectable "coming soon" option in the mock lobby (`MockSetup`); selecting it
