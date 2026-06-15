@@ -216,6 +216,31 @@ worktree, ff-merged to local main. ⑨ deferred (ships with live-multiplayer).
 
 ## Backlog (not scheduled)
 
+- **Keyed / paid data sources (need an account or API key — deferred).** We're
+  integrating the free, keyless sources now (Sleeper, nflverse, FantasyCalc,
+  DynastyProcess; on top of existing ESPN/FFC/FantasyPros/Yahoo). These each
+  need a key/login before we can wire them, so they wait until someone signs up:
+  - **Tank01** (RapidAPI key) — projections, ADP, stats, news. Free tier
+    1k req/mo, then $10–100/mo.
+  - **MySportsFeeds** (key) — stats + some projections. Free tier is
+    **non-commercial only** + attribution.
+  - **API-Sports / American Football** (key) — stats/scores, thin fantasy data.
+    Free 100 req/day.
+  - **Fantasy Nerds** (key) — projections, ADP, rankings, injuries, DFS salaries.
+    ~$74.95/yr.
+  - **SportsDataIO** (key) — BAKER projections, ADP, stats. Paid (trial only).
+  - **FantasyData** (key) — projections, ADP, stats. Paid.
+  - **Sportradar** (key) — official everything. Enterprise pricing.
+- **Commercial licensing review (only if/when this goes commercial).** Today
+  this is a non-commercial personal tool, so these are fine. Before monetizing,
+  re-check or remove the gray/restricted feeds:
+  - **MySportsFeeds** free tier — non-commercial only (would need a paid plan).
+  - **Sleeper**, **ESPN hidden API**, **FantasyPros** scrape — undocumented /
+    unofficial; ToS is gray for commercial use.
+  - **nflverse** — CC-BY 4.0: fine commercially **with attribution** (must
+    credit nflverse). **DynastyProcess** — open data, verify attribution terms.
+  - **FantasyCalc**, **FantasyFootballCalculator** — sanctioned for commercial.
+
 - **Replace remaining native browser dialogs with custom modals.** `alert()` is
   done — both now route through the color-coded toast system (Jun 14). Still
   native: **5 `confirm()`** and **6 `prompt()`**. Build two reusable primitives
