@@ -220,7 +220,6 @@ worktree, ff-merged to local main. ⑨ deferred (ships with live-multiplayer).
   whole design once the engine supports it) — previewed as a grayed,
   selectable "coming soon" option in the mock lobby (`MockSetup`); selecting it
   falls back to snake.
-- Linear draft format — same coming-soon treatment in the mock lobby.
 - Super Flex + TE Premium in mocks — previewed as grayed "coming soon" rows in
   the mock lobby's advanced section (the data model has `SUPERFLEX`/`tePremium`;
   wiring them through the setup is deferred).

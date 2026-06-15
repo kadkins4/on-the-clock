@@ -109,11 +109,34 @@ describe("MockSetup (Hero Card)", () => {
     expect(settings.teams).toBe(12);
   });
 
-  it("warns that a non-snake format will fall back to snake", () => {
+  it("warns that auction will fall back to snake (but linear does not)", () => {
     renderSetup();
     expect(screen.queryByText(/will run this mock/i)).toBeNull();
     fireEvent.click(screen.getByRole("button", { name: "Auction" }));
     expect(screen.getByText(/auction isn’t available yet/i)).toBeTruthy();
+    // Linear is a real format — selecting it clears the warning.
+    fireEvent.click(screen.getByRole("button", { name: "Linear" }));
+    expect(screen.queryByText(/will run this mock/i)).toBeNull();
+  });
+
+  it("defaults to snake and passes linear through when selected", () => {
+    const { onStart } = renderSetup();
+    fireEvent.click(screen.getByRole("button", { name: /start mock/i }));
+    expect(onStart.mock.calls[0][0].format).toBe("snake");
+
+    cleanup();
+    const second = renderSetup();
+    fireEvent.click(screen.getByRole("button", { name: "Linear" }));
+    fireEvent.click(screen.getByRole("button", { name: /start mock/i }));
+    expect(second.onStart.mock.calls[0][0].format).toBe("linear");
+  });
+
+  it("hides 3rd-round reversal for linear (snake-only concept)", () => {
+    renderSetup();
+    openAdvanced();
+    expect(screen.getByText("3rd-round reversal")).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "Linear" }));
+    expect(screen.queryByText("3rd-round reversal")).toBeNull();
   });
 
   it("edits a roster spot count from the advanced section", () => {

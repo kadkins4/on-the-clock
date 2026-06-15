@@ -4,9 +4,10 @@ import type { MockSettings } from "../../lib/mock/types";
 import { valueFlagsEnabled } from "../../lib/league";
 import { defaultValueThreshold } from "../../lib/draftValue";
 
-// Snake is the only built format; Auction/Linear are previewed but coerced to
-// snake on start (see DRAFT_FORMATS in MockSetup).
-export type DraftFormat = "snake" | "auction" | "linear";
+// The formats the lobby's selector shows. Snake and Linear are built; Auction
+// is previewed only and coerced to snake on start (see DRAFT_FORMATS in
+// MockSetup). The engine's runnable subset is DraftFormat ("snake" | "linear").
+export type LobbyFormat = "snake" | "auction" | "linear";
 
 // Roster positions the setup screen exposes as ± steppers. SUPERFLEX is
 // intentionally omitted (shown as a "coming soon" advanced row instead).
@@ -29,8 +30,8 @@ function rosterTotal(r: RosterSettings): number {
 }
 
 export interface MockSetupForm {
-  format: DraftFormat;
-  setFormat: (f: DraftFormat) => void;
+  format: LobbyFormat;
+  setFormat: (f: LobbyFormat) => void;
   scoring: Scoring;
   setScoring: (s: Scoring) => void;
   teams: number;
@@ -52,8 +53,8 @@ export interface MockSetupForm {
   advancedOpen: boolean;
   setAdvancedOpen: (b: boolean) => void;
   defaultListId: string;
-  // The settings payload for createMock (rounds/scoring/roster overrides
-  // included) — format is coerced to snake since it's the only built mode.
+  // The settings payload for createMock (rounds/scoring/roster/format overrides
+  // included). Auction is coerced to snake; Linear passes through.
   getSettings: () => Omit<MockSettings, "rounds"> & { rounds: number };
   getValueFlags: () => { enabled: boolean; threshold: number | null };
 }
@@ -65,7 +66,7 @@ export function useMockSetupForm(league: League): MockSetupForm {
     league.tierLists.find((t) => t.id === league.defaultTierListId) ??
     league.tierLists[0];
 
-  const [format, setFormat] = useState<DraftFormat>("snake");
+  const [format, setFormat] = useState<LobbyFormat>("snake");
   const [scoring, setScoring] = useState<Scoring>(league.scoring);
   const [teams, setTeamsRaw] = useState(league.teams);
   const [rounds, setRounds] = useState(rosterTotal(league.roster));
@@ -92,7 +93,10 @@ export function useMockSetupForm(league: League): MockSetupForm {
     teams,
     userSlot,
     rounds,
-    thirdRoundReversal,
+    // Linear is built; anything else (snake / the previewed auction) runs snake.
+    format: format === "linear" ? ("linear" as const) : ("snake" as const),
+    // 3RR is a snake-only concept; linear ignores it in the engine anyway.
+    thirdRoundReversal: format === "linear" ? false : thirdRoundReversal,
     autoDraft,
     valueThreshold: vfThreshold ?? defaultValueThreshold(teams),
     valueFlagsEnabled: vfEnabled,

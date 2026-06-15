@@ -1,11 +1,13 @@
 import type { Player, RosterSettings, Scoring } from "../../types";
 import type { TeamIdentity } from "./teamIdentity";
+import type { DraftFormat } from "./order";
 
 export interface MockSettings {
   teams: number; // 8–16
   userSlot: number; // 1-based draft position
   rounds: number; // total roster size (starters + bench)
-  thirdRoundReversal: boolean;
+  thirdRoundReversal: boolean; // snake-only; ignored for linear
+  format?: DraftFormat; // "snake" (default) | "linear"
   // resolved reach/value config for the mock (from the seeding list). Optional
   // so existing fixtures keep working; read sites default threshold to teams+2.
   valueThreshold?: number;

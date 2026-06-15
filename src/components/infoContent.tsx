@@ -47,6 +47,12 @@ export function LogContent() {
         <ul className="otc-changelog">
           <li>
             <span className="otc-log-date">Jun 14, 2026</span>
+            Linear draft format — pick Linear in the mock lobby to draft the
+            same order (1&rarr;N) every round, no snake. Auction is still coming
+            soon.
+          </li>
+          <li>
+            <span className="otc-log-date">Jun 14, 2026</span>
             Mock lobby — a redesigned pre-draft screen with draft format,
             scoring, team count, rounds, a click-to-pick draft-slot board, and
             editable roster spots. Super Flex, TE Premium, and bot personalities

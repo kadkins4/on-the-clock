@@ -43,7 +43,12 @@ export function createMock(
     roster,
     settings: { ...settings, rounds },
     teams: makeTeamIdentities(settings.teams, settings.userSlot, seed),
-    order: buildDraftOrder(settings.teams, rounds, settings.thirdRoundReversal),
+    order: buildDraftOrder(
+      settings.teams,
+      rounds,
+      settings.thirdRoundReversal,
+      settings.format ?? "snake",
+    ),
     picks: [],
     draftedIds: new Set(),
     seed,

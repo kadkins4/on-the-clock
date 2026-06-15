@@ -4,7 +4,7 @@ import { defaultValueThreshold } from "../../lib/draftValue";
 import { StopwatchMark } from "./StopwatchMark";
 import {
   useMockSetupForm,
-  type DraftFormat,
+  type LobbyFormat,
   type RosterKey,
 } from "./useMockSetupForm";
 
@@ -20,10 +20,10 @@ interface Props {
   ) => void;
 }
 
-const DRAFT_FORMATS: { value: DraftFormat; label: string; soon?: boolean }[] = [
+const DRAFT_FORMATS: { value: LobbyFormat; label: string; soon?: boolean }[] = [
   { value: "snake", label: "Snake" },
+  { value: "linear", label: "Linear" },
   { value: "auction", label: "Auction", soon: true },
-  { value: "linear", label: "Linear", soon: true },
 ];
 
 const SCORINGS: { value: Scoring; label: string }[] = [
@@ -164,10 +164,9 @@ export function MockSetup({
             </button>
           ))}
         </div>
-        {f.format !== "snake" && (
+        {f.format === "auction" && (
           <p className="ms-seg-note">
-            {DRAFT_FORMATS.find((d) => d.value === f.format)?.label} isn&rsquo;t
-            available yet &mdash; Snake will run this mock.
+            Auction isn&rsquo;t available yet &mdash; Snake will run this mock.
           </p>
         )}
       </div>
@@ -245,19 +244,22 @@ export function MockSetup({
 
       {f.advancedOpen && (
         <div className="ms-adv-body">
-          <div className="ms-switch-row">
-            <div className="ms-row-meta">
-              <div className="ms-row-title">3rd-round reversal</div>
-              <div className="ms-row-desc">
-                Reverse the snake again after round 2.
+          {/* 3rd-round reversal is a snake-only concept — hidden for linear. */}
+          {f.format !== "linear" && (
+            <div className="ms-switch-row">
+              <div className="ms-row-meta">
+                <div className="ms-row-title">3rd-round reversal</div>
+                <div className="ms-row-desc">
+                  Reverse the snake again after round 2.
+                </div>
               </div>
+              <Switch
+                label="3rd-round reversal"
+                on={f.thirdRoundReversal}
+                onToggle={() => f.setThirdRoundReversal(!f.thirdRoundReversal)}
+              />
             </div>
-            <Switch
-              label="3rd-round reversal"
-              on={f.thirdRoundReversal}
-              onToggle={() => f.setThirdRoundReversal(!f.thirdRoundReversal)}
-            />
-          </div>
+          )}
 
           <div className="ms-switch-row">
             <div className="ms-row-meta">

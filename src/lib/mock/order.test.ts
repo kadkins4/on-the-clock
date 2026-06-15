@@ -17,4 +17,14 @@ describe("buildDraftOrder", () => {
   it("produces teams*rounds picks", () => {
     expect(buildDraftOrder(12, 15, false)).toHaveLength(180);
   });
+
+  it("linear: every round runs in the same forward order", () => {
+    const order = buildDraftOrder(4, 3, false, "linear");
+    expect(order).toEqual([0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3]);
+  });
+
+  it("linear ignores 3rd-round reversal (never reverses)", () => {
+    const order = buildDraftOrder(4, 4, true, "linear");
+    expect(order).toEqual([0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3]);
+  });
 });

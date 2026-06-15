@@ -84,6 +84,16 @@ describe("createMock", () => {
     expect(m.order).toHaveLength(10); // 2 teams × 5 rounds
   });
 
+  it("builds a linear order when format is linear (every round forward)", () => {
+    const m = createMock(
+      league(board),
+      { teams: 2, userSlot: 1, thirdRoundReversal: false, format: "linear" },
+      123,
+    );
+    // 2 teams, roster size 3 rounds → each round runs 0,1
+    expect(m.order).toEqual([0, 1, 0, 1, 0, 1]);
+  });
+
   it("snapshots a scoring override without touching the league", () => {
     const lg = league(board);
     const m = createMock(
