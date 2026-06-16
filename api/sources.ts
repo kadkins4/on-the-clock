@@ -50,6 +50,31 @@ async function fetchSleeperPlayers(fetchImpl: typeof fetch): Promise<unknown> {
   return res.json();
 }
 
+// DynastyProcess id database (~2.6 MB CSV): the most complete cross-platform id
+// crosswalk (espn↔sleeper↔gsis) plus draft pedigree.
+async function fetchDynastyIds(fetchImpl: typeof fetch): Promise<string> {
+  const res = await fetchImpl(
+    "https://raw.githubusercontent.com/dynastyprocess/data/master/files/db_playerids.csv",
+  );
+  if (!res.ok) throw new Error(`DynastyProcess fetch failed: ${res.status}`);
+  return res.text();
+}
+
+// nflverse regular-season player stats CSV for the last completed season
+// (season-1, falling back a year). Keyed by gsis id.
+async function fetchNflverse(
+  { season }: SourcesParams,
+  fetchImpl: typeof fetch,
+): Promise<string> {
+  for (let i = 1; i <= FALLBACK_YEARS; i++) {
+    const year = season - i;
+    const url = `https://github.com/nflverse/nflverse-data/releases/download/player_stats/stats_player_reg_${year}.csv`;
+    const res = await fetchImpl(url);
+    if (res.ok) return res.text();
+  }
+  throw new Error(`nflverse returned no stats near ${season}`);
+}
+
 async function settle(p: Promise<unknown>, label: string): Promise<unknown> {
   try {
     return await p;
@@ -59,19 +84,35 @@ async function settle(p: Promise<unknown>, label: string): Promise<unknown> {
   }
 }
 
+async function settleText(p: Promise<string>, label: string): Promise<string> {
+  try {
+    return await p;
+  } catch (err) {
+    console.warn(`[sources] ${label} skipped: ${(err as Error).message}`);
+    return "";
+  }
+}
+
 export async function handleSources(
   params: SourcesParams,
   fetchImpl: typeof fetch = fetch,
 ): Promise<SourcesResponse> {
-  // The Sleeper player map is the crosswalk hub (espn↔sleeper for the whole
-  // NFL). Without it, projections can't join the board; FantasyCalc still
-  // contributes via its own espnId. All feeds are best-effort.
-  const [playerMap, projections, fc] = await Promise.all([
+  // Crosswalk hubs (Sleeper map, DynastyProcess) + projections + values + last
+  // season's actual stats. Every feed is best-effort: a failure drops that one.
+  const [playerMap, projections, fc, dpCsv, nflverseCsv] = await Promise.all([
     settle(fetchSleeperPlayers(fetchImpl), "sleeper-players"),
     settle(fetchSleeper(params, fetchImpl), "sleeper-projections"),
     settle(fetchFantasyCalc(params, fetchImpl), "fantasycalc"),
+    settleText(fetchDynastyIds(fetchImpl), "dynastyprocess"),
+    settleText(fetchNflverse(params, fetchImpl), "nflverse"),
   ]);
-  const { store, contributed } = buildSources(playerMap, projections, fc);
+  const { store, contributed } = buildSources(
+    playerMap,
+    projections,
+    fc,
+    dpCsv,
+    nflverseCsv,
+  );
   return {
     sources: store,
     meta: {

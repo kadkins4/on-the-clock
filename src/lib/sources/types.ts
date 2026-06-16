@@ -63,6 +63,41 @@ export interface PlayerBio {
   depthChartPos: string | null;
 }
 
+// Draft pedigree, from the DynastyProcess id database.
+export interface DraftInfo {
+  year: number | null;
+  round: number | null;
+  pick: number | null; // pick within the round
+  overall: number | null;
+}
+
+// Last-season actual stats, from nflverse (joined via gsis id). A curated slice
+// of the 100+ columns, including advanced metrics not in ESPN/Sleeper.
+export interface NflverseSource {
+  season: number;
+  games: number | null;
+  // Passing
+  passYards: number | null;
+  passTds: number | null;
+  interceptions: number | null;
+  passEpa: number | null;
+  // Rushing
+  carries: number | null;
+  rushYards: number | null;
+  rushTds: number | null;
+  rushEpa: number | null;
+  // Receiving
+  targets: number | null;
+  receptions: number | null;
+  recYards: number | null;
+  recTds: number | null;
+  recEpa: number | null;
+  targetShare: number | null;
+  airYardsShare: number | null;
+  // Overall
+  fantasyPointsPpr: number | null;
+}
+
 export interface PlayerSourceData {
   espnId: string; // canonical key — matches Player.id on the board
   name: string;
@@ -73,10 +108,15 @@ export interface PlayerSourceData {
     mfl?: string;
     fleaflicker?: string;
     ffpc?: string;
+    gsis?: string;
+    pfr?: string;
+    fantasypros?: string;
   };
   bio?: PlayerBio;
+  draft?: DraftInfo;
   fantasycalc?: FantasyCalcSource;
   sleeper?: SleeperSource;
+  nflverse?: NflverseSource;
 }
 
 export type SourcesStore = Record<string, PlayerSourceData>; // keyed by espnId

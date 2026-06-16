@@ -46,10 +46,12 @@ export function LogContent() {
         <h2 className="otc-log-h">Change Log</h2>
         <ul className="otc-changelog">
           <li>
-            <span className="otc-log-date">Jun 15, 2026</span>
-            More data sources — the data refresh now also gathers Sleeper
-            projections/ADP and FantasyCalc values behind the scenes, building a
-            richer per-player dataset for upcoming player cards.
+            <span className="otc-log-date">Jun 16, 2026</span>
+            More data sources — the data refresh now gathers Sleeper
+            projections/ADP, FantasyCalc values, DynastyProcess draft pedigree,
+            and nflverse last-season advanced stats (target share, air yards,
+            EPA) behind the scenes, building a richer per-player dataset for
+            upcoming player cards.
           </li>
           <li>
             <span className="otc-log-date">Jun 15, 2026</span>
