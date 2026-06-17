@@ -393,11 +393,11 @@ export default function App() {
   const refreshAdpBlend = async (): Promise<string | null> => {
     setAdpStatus("Loading ADP…");
     try {
-      const { ffc, fantasypros, yahoo, meta } = await fetchAdp(
+      const { ffc, fantasypros, yahoo, sleeper, meta } = await fetchAdp(
         currentLeague.scoring,
         currentLeague.teams,
       );
-      dispatch({ type: "applyAdp", ffc, fantasypros, yahoo });
+      dispatch({ type: "applyAdp", ffc, fantasypros, yahoo, sleeper });
       const summary =
         `ADP: ${meta.sources.join(" + ")} ${meta.type ?? ""} (${meta.year})`.trim();
       setAdpStatus(summary);

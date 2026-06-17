@@ -47,6 +47,13 @@ export function LogContent() {
         <ul className="otc-changelog">
           <li>
             <span className="otc-log-date">Jun 16, 2026</span>
+            Sleeper ADP in the blend — the board’s ADP now folds in Sleeper’s
+            real-draft average draft position alongside
+            FantasyFootballCalculator, FantasyPros and Yahoo, for a more
+            accurate consensus (especially in the middle rounds).
+          </li>
+          <li>
+            <span className="otc-log-date">Jun 16, 2026</span>
             More data sources — the data refresh now gathers Sleeper
             projections/ADP, FantasyCalc values, DynastyProcess draft pedigree,
             and nflverse last-season advanced stats (target share, air yards,

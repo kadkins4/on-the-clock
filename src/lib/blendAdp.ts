@@ -6,14 +6,17 @@ export interface AdpSources {
   ffc?: number | null;
   fantasypros?: number | null;
   yahoo?: number | null;
+  sleeper?: number | null;
 }
 
 // Weighted blend. Consensus aggregates (FantasyPros, FFC) outrank single
-// platforms; ESPN is weighted lowest because it skews K/DST early.
+// platforms; Sleeper carries a huge real-draft sample (weighted like FFC/Yahoo);
+// ESPN is weighted lowest because it skews K/DST early.
 const WEIGHTS: Record<keyof AdpSources, number> = {
   fantasypros: 3,
   ffc: 2,
   yahoo: 2,
+  sleeper: 2,
   espn: 1,
 };
 
@@ -32,6 +35,7 @@ export function blendAdp(
     "fantasypros",
     "ffc",
     "yahoo",
+    "sleeper",
     "espn",
   ] as (keyof AdpSources)[]) {
     const v = sources[key];
@@ -52,6 +56,7 @@ export interface AdpInputs {
   ffc?: NormalizedAdp[];
   fantasypros?: NormalizedAdp[];
   yahoo?: NormalizedAdp[];
+  sleeper?: NormalizedAdp[];
 }
 
 function indexByKey(list?: NormalizedAdp[]): Map<string, NormalizedAdp> {
@@ -70,6 +75,7 @@ export function applyAdp(board: Player[], inputs: AdpInputs): Player[] {
   const ffcM = indexByKey(inputs.ffc);
   const fpM = indexByKey(inputs.fantasypros);
   const yM = indexByKey(inputs.yahoo);
+  const slM = indexByKey(inputs.sleeper);
   return board.map((p) => {
     const key = adpMatchKey(p.position, p.name, p.team);
     // Seed players carry `adp` but no adpSources yet — treat the existing number
@@ -78,11 +84,13 @@ export function applyAdp(board: Player[], inputs: AdpInputs): Player[] {
     const ffc = ffcM.get(key)?.adp ?? p.adpSources?.ffc;
     const fantasypros = fpM.get(key)?.adp ?? p.adpSources?.fantasypros;
     const yahoo = yM.get(key)?.adp ?? p.adpSources?.yahoo;
+    const sleeper = slM.get(key)?.adp ?? p.adpSources?.sleeper;
     const sources: AdpSources = {};
     if (espn != null) sources.espn = espn;
     if (ffc != null) sources.ffc = ffc;
     if (fantasypros != null) sources.fantasypros = fantasypros;
     if (yahoo != null) sources.yahoo = yahoo;
+    if (sleeper != null) sources.sleeper = sleeper;
     return { ...p, adpSources: sources, adp: blendAdp(sources, p.position) };
   });
 }

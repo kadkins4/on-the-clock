@@ -42,6 +42,7 @@ export type Action =
       ffc: NormalizedAdp[];
       fantasypros: NormalizedAdp[];
       yahoo: NormalizedAdp[];
+      sleeper: NormalizedAdp[];
     };
 
 export function boardReducer(state: BoardState, action: Action): BoardState {
@@ -98,6 +99,7 @@ export function boardReducer(state: BoardState, action: Action): BoardState {
         ffc: action.ffc,
         fantasypros: action.fantasypros,
         yahoo: action.yahoo,
+        sleeper: action.sleeper,
       });
       return { players: next, breaks: breaksFromTiers(next) };
     }

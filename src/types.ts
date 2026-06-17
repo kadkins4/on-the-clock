@@ -29,6 +29,7 @@ export interface Player {
     ffc?: number | null;
     fantasypros?: number | null;
     yahoo?: number | null;
+    sleeper?: number | null;
   };
   // Raw projected stat line (offensive players only) — scored at the league's
   // settings to produce projected points for VOR. K/DST have no line.

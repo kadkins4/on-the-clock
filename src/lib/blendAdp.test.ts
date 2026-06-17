@@ -48,6 +48,16 @@ describe("blendAdp", () => {
   it("never floors offense", () => {
     expect(blendAdp({ espn: 5 }, "RB")).toBe(5);
   });
+  it("weights sleeper like ffc/yahoo (2) in the blend", () => {
+    // espn 1, sleeper 2
+    expect(blendAdp({ espn: 10, sleeper: 20 }, "RB")).toBeCloseTo(50 / 3, 5);
+  });
+  it("treats sleeper as a consensus source (no K/DST floor)", () => {
+    expect(blendAdp({ espn: 83, sleeper: 140 }, "DST")).toBeCloseTo(
+      (83 + 280) / 3,
+      5,
+    );
+  });
 });
 
 describe("applyAdp", () => {
@@ -82,6 +92,20 @@ describe("applyAdp", () => {
       yahoo: 5,
     });
     expect(out[0].adp).toBeCloseTo((2 + 6 + 12 + 10) / 8, 5);
+  });
+
+  it("merges sleeper into the blend and stores it", () => {
+    const board: Player[] = [
+      player({ id: "1", name: "Bijan Robinson", position: "RB", adp: 2 }),
+    ];
+    const out = applyAdp(board, {
+      sleeper: [
+        { name: "Bijan Robinson", position: "RB", team: "ATL", adp: 6 },
+      ],
+    });
+    expect(out[0].adpSources).toEqual({ espn: 2, sleeper: 6 });
+    // espn 1 + sleeper 2
+    expect(out[0].adp).toBeCloseTo((2 * 1 + 6 * 2) / 3, 5);
   });
 
   it("matches DST by team, ignoring name spelling", () => {

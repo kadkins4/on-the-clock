@@ -6,6 +6,7 @@ import {
 } from "../src/lib/ffcAdp";
 import { parseFantasyPros } from "../src/lib/adpSources/fantasypros";
 import { fetchYahooAdp, refreshAccessToken } from "../src/lib/adpSources/yahoo";
+import { mapSleeperAdp } from "../src/lib/adpSources/sleeper";
 import type { Scoring } from "../src/types";
 
 export const config = { runtime: "edge" };
@@ -20,6 +21,7 @@ export interface AdpResponse {
   ffc: NormalizedAdp[];
   fantasypros: NormalizedAdp[];
   yahoo: NormalizedAdp[];
+  sleeper: NormalizedAdp[];
   meta: {
     year: number;
     type?: string;
@@ -101,6 +103,26 @@ async function fetchYahoo(
   return fetchYahooAdp(token, fetchImpl, 600);
 }
 
+// Sleeper's season projections carry per-format real-draft ADP (huge sample).
+// No key; falls back a season if the requested year has no projections yet.
+async function fetchSleeperAdp(
+  { scoring, season }: AdpParams,
+  fetchImpl: typeof fetch,
+): Promise<NormalizedAdp[]> {
+  const positions = ["QB", "RB", "WR", "TE", "K", "DEF"]
+    .map((p) => `position[]=${p}`)
+    .join("&");
+  for (let i = 0; i < FALLBACK_YEARS; i++) {
+    const year = season - i;
+    const url = `https://api.sleeper.com/projections/nfl/${year}?season_type=regular&${positions}`;
+    const res = await fetchImpl(url);
+    if (!res.ok) continue;
+    const data: unknown = await res.json();
+    if (Array.isArray(data) && data.length) return mapSleeperAdp(data, scoring);
+  }
+  throw new Error(`Sleeper returned no ADP near ${season}`);
+}
+
 // Each non-primary source is best-effort: a failure logs and contributes [].
 async function settle<T>(p: Promise<T[]>, label: string): Promise<T[]> {
   try {
@@ -119,17 +141,20 @@ export async function handleAdp(
   ).process?.env ?? {},
 ): Promise<AdpResponse> {
   const ffc = await fetchFfc(params, fetchImpl); // primary — may throw
-  const [fantasypros, yahoo] = await Promise.all([
+  const [fantasypros, yahoo, sleeper] = await Promise.all([
     settle(fetchFantasyPros(params.scoring, fetchImpl), "fantasypros"),
     settle(fetchYahoo(env, fetchImpl), "yahoo"),
+    settle(fetchSleeperAdp(params, fetchImpl), "sleeper"),
   ]);
   const sources = ["ffc"];
   if (fantasypros.length) sources.push("fantasypros");
   if (yahoo.length) sources.push("yahoo");
+  if (sleeper.length) sources.push("sleeper");
   return {
     ffc: ffc.players,
     fantasypros,
     yahoo,
+    sleeper,
     meta: {
       year: ffc.year,
       type: ffc.type,
