@@ -30,7 +30,7 @@ const BY_ID = new Map<ColumnId, ColumnDef>(COLUMN_DEFS.map((c) => [c.id, c]));
 // checkbox aria-labels (and the visible row text) read sensibly.
 const FRIENDLY: Partial<Record<ColumnId, string>> = {
   mover: "Reorder",
-  flag: "★/⚑",
+  flag: "◎/⚑",
 };
 
 function labelFor(def: ColumnDef): string {

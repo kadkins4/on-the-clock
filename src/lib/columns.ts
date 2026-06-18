@@ -39,7 +39,7 @@ export const COLUMN_DEFS: ColumnDef[] = [
     width: "1.7rem",
   },
   { id: "draft", label: "Draft", sortable: false, align: "c", width: "2.6rem" },
-  { id: "flag", label: "★/⚑", sortable: false, align: "c", width: "2rem" },
+  { id: "flag", label: "◎/⚑", sortable: false, align: "c", width: "2rem" },
   {
     id: "rank",
     label: "#",

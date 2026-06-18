@@ -32,7 +32,7 @@ describe("ColumnHeader", () => {
     expect(headers).toEqual([
       "",
       "Draft",
-      "★/⚑",
+      "◎/⚑",
       "#",
       "Player",
       "Pos",

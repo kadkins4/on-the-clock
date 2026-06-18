@@ -107,7 +107,7 @@ export function PickPool({
                 </span>
                 {p.flag !== "none" && (
                   <span className={`pp-flag ${p.flag}`} title={p.flag}>
-                    {p.flag === "target" ? "★" : "⊘"}
+                    {p.flag === "target" ? "◎" : "⊘"}
                   </span>
                 )}
                 {p.notes?.trim() && (

@@ -216,11 +216,18 @@ worktree, ff-merged to local main. ⑨ deferred (ships with live-multiplayer).
 
 ## Backlog (not scheduled)
 
-- **Fold Sleeper ADP into the board ADP blend.** Sleeper ADP (and FantasyCalc
-  ADP) are gathered into the side `sources` store but are NOT used by the board
-  ranking — `/api/adp` still blends only FFC + FantasyPros + Yahoo. Sleeper has a
-  huge real-draft sample, so folding it into the blend is high value. Decide
-  weighting vs the existing sources when wiring it in.
+- **Define the status model across research board, mock draft, and (future)
+  draft-time.** These three surfaces overlap and duplicate status indicators
+  today — flag/target, drafted/taken cycling + tint, queue `★`. Decide, per
+  surface, which columns/states each shows. Open questions: (1) should the
+  research board carry "drafted/taken" at all, or does that belong only to a
+  draft-time mode (the `DRAFT` button is the seam — inert now, wired later)?
+  (2) are **target (flag)** and **queue** the same concept or distinct (rate vs.
+  ordered live plan)? (3) settle the per-state icon/color treatment. Decided so
+  far: target icon is now a bullseye `◎` (was `★`) to disambiguate from the
+  queue `★`; avoid `⚑`, mine/taken still color-only. Soft row tint + Set 2
+  glyphs were prototyped in `~/.claude/prototypes/status-styles/`. Do NOT unify
+  the tables or change other states until this is settled.
 - **Cache the slow-changing source feeds.** `/api/sources` re-fetches large
   feeds every refresh (Sleeper player map ~14 MB, DynastyProcess ids ~2.6 MB,
   nflverse season stats ~0.7 MB). These change ~daily, so they should be cached

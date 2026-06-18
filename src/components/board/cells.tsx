@@ -112,7 +112,7 @@ export const CELL_RENDERERS: Record<
           onClick={cycle}
           title={p.flag}
         >
-          {p.flag === "target" ? "★" : p.flag === "avoid" ? "⚑" : "·"}
+          {p.flag === "target" ? "◎" : p.flag === "avoid" ? "⚑" : "·"}
         </button>
       </td>
     );
