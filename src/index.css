@@ -1008,7 +1008,7 @@ table.players th.sorted {
 
 /* --- Mock draft --- */
 .mock-setup-card {
-  max-width: 460px;
+  max-width: min(460px, 92vw);
   margin: 24px auto;
   background: #10141d;
   border: 1px solid #232938;
@@ -1045,7 +1045,7 @@ table.players th.sorted {
    collision (notably .soon, which is a different component's box).
    ==================================================================== */
 .ms-card {
-  max-width: 540px;
+  max-width: min(540px, 92vw);
   margin: 24px auto;
   background: linear-gradient(180deg, var(--card) 0%, var(--panel-2) 100%);
   border: 1px solid var(--border-3);
@@ -5121,5 +5121,73 @@ table.players td.pos {
   }
   .tv-ticker-item[aria-hidden="true"] {
     display: none;
+  }
+}
+
+/* ==========================================================================
+   Mobile usability pass (Phase 0). The layout is desktop-first with no
+   width-based breakpoints; this is the responsive layer. Goal: usable on a
+   ~390px phone — reclaim margin, scroll-contain wide tables, cap overlays to
+   the viewport, enlarge touch targets. (Mobile-native redesign is Phase 1.)
+   ========================================================================== */
+
+/* The research board is wider than a phone (~770px of fixed columns). Wrap it
+   in a horizontal scroller. .board-scroll is an inert passthrough on desktop
+   so the hover "+" (.add-tier, left:-1.5rem) is never clipped; it only becomes
+   a scroll container on small screens. */
+@media (max-width: 480px) {
+  body {
+    margin: 0.25rem;
+  }
+  /* the app bar bleeds L/R over the body margin; keep the bleed in sync with
+     the reduced mobile margin so it doesn't overhang the viewport. */
+  .otc-header {
+    margin-left: -0.25rem;
+    margin-right: -0.25rem;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .board-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  /* keep natural column widths and scroll, instead of squishing to fit */
+  table.players {
+    min-width: max-content;
+  }
+
+  /* mock-draft board: floor each team column so they don't crush to ~30px.
+     The surrounding .board-inline already scrolls horizontally. */
+  .bcg-teamrow,
+  .bcg-row {
+    grid-template-columns: repeat(var(--cols), minmax(64px, 1fr));
+  }
+
+  /* dropdowns / popovers must never exceed the screen */
+  .settings-menu,
+  .col-manager,
+  .notes-popover {
+    max-width: 92vw;
+  }
+}
+
+/* Touch devices: grow sub-32px icon buttons to a comfortable ~40px hit area.
+   pointer:coarse targets touchscreens without penalizing desktop mouse use. */
+@media (pointer: coarse) {
+  .add-tier {
+    width: 2rem;
+    height: 2rem;
+  }
+  .draft {
+    min-width: 2.25rem;
+    min-height: 2.25rem;
+  }
+  .flag {
+    min-width: 2.25rem;
+    min-height: 2.25rem;
+  }
+  .notes-icon {
+    padding: 0.5rem 0.6rem;
   }
 }

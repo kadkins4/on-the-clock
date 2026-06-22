@@ -104,61 +104,63 @@ export function PlayerTable({
       onDragEnd={onDragEnd}
     >
       <div className="board-panel">
-        <table className="players">
-          <thead>
-            <ColumnHeader
-              columns={columns}
-              sortKey={sortKey}
-              sortAsc={sortAsc}
-              onSort={onSort}
-            />
-          </thead>
-          <tbody>
-            <SortableContext
-              items={itemIds}
-              strategy={verticalListSortingStrategy}
-            >
-              {grouped
-                ? rows.map((r) => {
-                    if (r.kind === "topHeader") {
-                      return (
-                        <TierHeader
-                          key="topHeader"
-                          tier={1}
-                          displayTier={r.displayTier}
-                          count={r.count}
-                          colSpan={colSpan}
-                          editable={false}
-                          onRemove={() => {}}
-                        />
+        <div className="board-scroll">
+          <table className="players">
+            <thead>
+              <ColumnHeader
+                columns={columns}
+                sortKey={sortKey}
+                sortAsc={sortAsc}
+                onSort={onSort}
+              />
+            </thead>
+            <tbody>
+              <SortableContext
+                items={itemIds}
+                strategy={verticalListSortingStrategy}
+              >
+                {grouped
+                  ? rows.map((r) => {
+                      if (r.kind === "topHeader") {
+                        return (
+                          <TierHeader
+                            key="topHeader"
+                            tier={1}
+                            displayTier={r.displayTier}
+                            count={r.count}
+                            colSpan={colSpan}
+                            editable={false}
+                            onRemove={() => {}}
+                          />
+                        );
+                      }
+                      if (r.kind === "break") {
+                        return (
+                          <TierBreakRow
+                            key={r.breakId}
+                            breakId={r.breakId}
+                            displayTier={r.displayTier}
+                            count={r.count}
+                            colSpan={colSpan}
+                            editable={reorderable}
+                            onRemove={(breakId) =>
+                              dispatch({ type: "removeBreak", breakId })
+                            }
+                          />
+                        );
+                      }
+                      // r.kind === "player"
+                      return renderRow(
+                        r.player,
+                        r.startsTier,
+                        r.stripeIndex % 2 === 1,
                       );
-                    }
-                    if (r.kind === "break") {
-                      return (
-                        <TierBreakRow
-                          key={r.breakId}
-                          breakId={r.breakId}
-                          displayTier={r.displayTier}
-                          count={r.count}
-                          colSpan={colSpan}
-                          editable={reorderable}
-                          onRemove={(breakId) =>
-                            dispatch({ type: "removeBreak", breakId })
-                          }
-                        />
-                      );
-                    }
-                    // r.kind === "player"
-                    return renderRow(
-                      r.player,
-                      r.startsTier,
-                      r.stripeIndex % 2 === 1,
-                    );
-                  })
-                : flat.map((p, i) => renderRow(p, false, i % 2 === 1))}
-            </SortableContext>
-          </tbody>
-        </table>
+                    })
+                  : flat.map((p, i) => renderRow(p, false, i % 2 === 1))}
+              </SortableContext>
+            </tbody>
+          </table>
+        </div>
       </div>
     </DndContext>
   );
