@@ -5152,9 +5152,14 @@ table.players td.pos {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
-  /* keep natural column widths and scroll, instead of squishing to fit */
+  /* keep natural column widths and scroll, instead of squishing to fit.
+     drop the 1.4rem left gutter (it only exists for the desktop hover "+",
+     which can't fire on touch) so the left margin matches the panel's right
+     padding instead of leaving a lopsided gap. */
   table.players {
     min-width: max-content;
+    margin-left: 0;
+    width: 100%;
   }
 
   /* mock-draft board: floor each team column so they don't crush to ~30px.
