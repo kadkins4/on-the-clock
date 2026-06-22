@@ -4,6 +4,9 @@ dist/
 *.bak
 .vercel
 .claude/worktrees/
+# Local Claude Code harness config — per-machine (e.g. worktree bgIsolation);
+# must stay local or it changes the workflow on other machines.
+.claude/settings.json
 
 # This project uses npm (package-lock.json). Keep stray pnpm lockfiles out.
 pnpm-lock.yaml
