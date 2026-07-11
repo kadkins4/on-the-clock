@@ -46,6 +46,15 @@ export function LogContent() {
         <h2 className="otc-log-h">Change Log</h2>
         <ul className="otc-changelog">
           <li>
+            <span className="otc-log-date">Jul 10, 2026</span>
+            Bot personalities &amp; strategy coach — mock-draft bots now draft
+            with distinct strategies (Hero RB, Zero RB, Robust RB, Streamer,
+            Balanced), revealed at the end of the draft. As you pick, a coach
+            reads the strategy you&rsquo;re running and suggests what to target
+            next. Toggle personalities off in the lobby for straight
+            best-available bots.
+          </li>
+          <li>
             <span className="otc-log-date">Jun 16, 2026</span>
             Sleeper ADP in the blend — the board’s ADP now folds in Sleeper’s
             real-draft average draft position alongside

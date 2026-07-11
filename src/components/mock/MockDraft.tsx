@@ -8,7 +8,8 @@ import {
   teamRosterPositions,
 } from "../../lib/mock/engine";
 import { detectStrategy } from "../../lib/mock/detect";
-import { nudgeCopy } from "../../lib/mock/nudge";
+import type { StrategyId } from "../../lib/mock/strategy";
+import { nudgeCopy, shouldShowNudge } from "../../lib/mock/nudge";
 import { StrategyNudge } from "./StrategyNudge";
 import { formatPick, picksUntilUser } from "../../lib/mock/board";
 import { useDraftTimer } from "./useDraftTimer";
@@ -87,7 +88,7 @@ export function MockDraft({
   const [replaceSearch, setReplaceSearch] = useState("");
   // Suggester: which detected strategy the user has dismissed. Cleared whenever
   // the read changes, so a fresh strategy re-surfaces the nudge.
-  const [dismissedStrat, setDismissedStrat] = useState<string | null>(null);
+  const [dismissedStrat, setDismissedStrat] = useState<StrategyId | null>(null);
 
   const onClock = currentTeamIndex(state);
   const team = state.teams[onClock];
@@ -104,10 +105,7 @@ export function MockDraft({
     [state, userTeamIndex],
   );
   const nudge = nudgeCopy(detected.strategy);
-  const showNudge =
-    nudge != null &&
-    detected.confidence === "high" &&
-    detected.strategy !== dismissedStrat;
+  const showNudge = shouldShowNudge(detected, dismissedStrat);
 
   // The live draft clock (reveal hold, countdown + auto-pick, bot progression,
   // auto-draft, missed-pick modal, mute) lives in useDraftTimer.
