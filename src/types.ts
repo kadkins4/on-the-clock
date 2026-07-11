@@ -44,6 +44,11 @@ export interface Player {
   flag: Flag;
   draftStatus: DraftStatus;
   injuryStatus?: string; // raw ESPN value, present only when not ACTIVE
+  // Bio, baked from Sleeper's player map (see scripts/enrich-bio.mjs). Sparse
+  // for players Sleeper doesn't carry; drives age/experience-based bot
+  // personalities and the future player-detail panel.
+  age?: number | null;
+  yearsExp?: number | null; // 0 = rookie
 }
 
 // Fantasy-relevant projected stats pulled from ESPN's raw projection line.

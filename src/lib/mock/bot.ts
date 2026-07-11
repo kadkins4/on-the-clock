@@ -1,6 +1,10 @@
 import type { Player, Position } from "../../types";
 import { servesNeed, type Needs } from "./roster";
-import { strategyMultiplier, type StrategyId } from "./strategy";
+import {
+  strategyMultiplier,
+  type StrategyId,
+  type StrategyContext,
+} from "./strategy";
 
 const MAX_WINDOW = 12;
 const RUN_BONUS = 1.5; // extra weight per recent pick at a player's position
@@ -17,14 +21,13 @@ const STRATEGY_CANDIDATE_CAP = 16;
 function applyStrategy(
   ranked: Player[],
   strategy: StrategyId,
-  round: number,
-  needs: Needs,
+  ctx: StrategyContext,
 ): Player[] {
   const cap = Math.min(ranked.length, STRATEGY_CANDIDATE_CAP);
   const scored = ranked.slice(0, cap).map((pl, i) => ({
     pl,
     i,
-    score: (cap - i) * strategyMultiplier(strategy, pl.position, round, needs),
+    score: (cap - i) * strategyMultiplier(strategy, pl, ctx),
   }));
   scored.sort((a, b) => b.score - a.score || a.i - b.i);
   return [...scored.map((s) => s.pl), ...ranked.slice(cap)];
@@ -58,6 +61,7 @@ export function botPick(
   recentPositions: Position[] = [],
   picksLeft: number = Infinity,
   strategy?: StrategyId,
+  roster: Player[] = [],
 ): string {
   if (available.length === 0) throw new Error("botPick: no players available");
 
@@ -72,7 +76,7 @@ export function botPick(
   // A personality reorders the best-available set before the window is sliced;
   // absent a strategy the order is untouched, so behavior is unchanged.
   const ranked = strategy
-    ? applyStrategy(byAdp, strategy, round, needs)
+    ? applyStrategy(byAdp, strategy, { round, needs, roster })
     : byAdp;
 
   const w = Math.min(pickWindowSize(round), ranked.length);

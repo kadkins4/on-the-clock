@@ -41,7 +41,9 @@
       "ffc": 1.8,
       "fantasypros": 1.5,
       "yahoo": 1.2
-    }
+    },
+    "age": 24,
+    "yearsExp": 3
   },
   {
     "id": "4429795",
@@ -85,7 +87,9 @@
       "ffc": 5,
       "fantasypros": 1.5,
       "yahoo": 2.7
-    }
+    },
+    "age": 24,
+    "yearsExp": 3
   },
   {
     "id": "4426515",
@@ -129,7 +133,9 @@
       "ffc": 10.9,
       "fantasypros": 4,
       "yahoo": 4.4
-    }
+    },
+    "age": 25,
+    "yearsExp": 3
   },
   {
     "id": "4362628",
@@ -173,7 +179,9 @@
       "ffc": 1.4,
       "fantasypros": 3,
       "yahoo": 2.6
-    }
+    },
+    "age": 26,
+    "yearsExp": 5
   },
   {
     "id": "3117251",
@@ -217,7 +225,9 @@
       "ffc": 8.1,
       "fantasypros": 6,
       "yahoo": 6
-    }
+    },
+    "age": 30,
+    "yearsExp": 9
   },
   {
     "id": "4430878",
@@ -261,7 +271,9 @@
       "ffc": 32.5,
       "fantasypros": 5,
       "yahoo": 5.7
-    }
+    },
+    "age": 24,
+    "yearsExp": 3
   },
   {
     "id": "4374302",
@@ -305,7 +317,9 @@
       "ffc": 10.6,
       "fantasypros": 7.5,
       "yahoo": 9.5
-    }
+    },
+    "age": 26,
+    "yearsExp": 5
   },
   {
     "id": "4242335",
@@ -349,7 +363,9 @@
       "ffc": 20,
       "fantasypros": 7.5,
       "yahoo": 7.4
-    }
+    },
+    "age": 27,
+    "yearsExp": 6
   },
   {
     "id": "4429160",
@@ -389,6 +405,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 24,
+    "yearsExp": 3,
     "adpSources": {
       "espn": 11.4,
       "ffc": 14.4,
@@ -438,7 +456,9 @@
       "ffc": 4.9,
       "fantasypros": 10.5,
       "yahoo": 8.4
-    }
+    },
+    "age": 27,
+    "yearsExp": 6
   },
   {
     "id": "4890973",
@@ -482,7 +502,9 @@
       "ffc": 12.3,
       "fantasypros": 10.5,
       "yahoo": 13
-    }
+    },
+    "age": 22,
+    "yearsExp": 1
   },
   {
     "id": "4262921",
@@ -526,7 +548,9 @@
       "ffc": 4.2,
       "fantasypros": 11.5,
       "yahoo": 12
-    }
+    },
+    "age": 27,
+    "yearsExp": 6
   },
   {
     "id": "4379399",
@@ -570,7 +594,9 @@
       "ffc": 34.8,
       "fantasypros": 10.5,
       "yahoo": 9.9
-    }
+    },
+    "age": 26,
+    "yearsExp": 4
   },
   {
     "id": "4870808",
@@ -602,7 +628,9 @@
       "espn": 17.3,
       "fantasypros": 22,
       "yahoo": 25.8
-    }
+    },
+    "age": 21,
+    "yearsExp": 0
   },
   {
     "id": "4426502",
@@ -646,7 +674,9 @@
       "ffc": 14.9,
       "fantasypros": 17.5,
       "yahoo": 16.2
-    }
+    },
+    "age": 24,
+    "yearsExp": 4
   },
   {
     "id": "3929630",
@@ -690,7 +720,9 @@
       "ffc": 2.1,
       "fantasypros": 14.5,
       "yahoo": 15.4
-    }
+    },
+    "age": 29,
+    "yearsExp": 8
   },
   {
     "id": "4428331",
@@ -730,6 +762,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 26,
+    "yearsExp": 3,
     "adpSources": {
       "espn": 24.78,
       "ffc": 94,
@@ -779,7 +813,9 @@
       "ffc": 11.4,
       "fantasypros": 21,
       "yahoo": 21.1
-    }
+    },
+    "age": 32,
+    "yearsExp": 10
   },
   {
     "id": "4258173",
@@ -823,7 +859,9 @@
       "ffc": 9.8,
       "fantasypros": 23,
       "yahoo": 19.7
-    }
+    },
+    "age": 27,
+    "yearsExp": 5
   },
   {
     "id": "4685382",
@@ -867,7 +905,9 @@
       "ffc": 41.2,
       "fantasypros": 15.5,
       "yahoo": 19.8
-    }
+    },
+    "age": 23,
+    "yearsExp": 1
   },
   {
     "id": "4595348",
@@ -907,6 +947,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 22,
+    "yearsExp": 2,
     "adpSources": {
       "espn": 27.3,
       "ffc": 7.1,
@@ -956,7 +998,9 @@
       "ffc": 32.7,
       "fantasypros": 21,
       "yahoo": 22.2
-    }
+    },
+    "age": 26,
+    "yearsExp": 4
   },
   {
     "id": "4047365",
@@ -1000,7 +1044,9 @@
       "ffc": 16.1,
       "fantasypros": 36,
       "yahoo": 30.5
-    }
+    },
+    "age": 28,
+    "yearsExp": 7
   },
   {
     "id": "4432665",
@@ -1044,7 +1090,9 @@
       "ffc": 26.5,
       "fantasypros": 20.5,
       "yahoo": 19.6
-    }
+    },
+    "age": 23,
+    "yearsExp": 2
   },
   {
     "id": "4362238",
@@ -1088,7 +1136,9 @@
       "ffc": 19.5,
       "fantasypros": 14.5,
       "yahoo": 16.8
-    }
+    },
+    "age": 26,
+    "yearsExp": 3
   },
   {
     "id": "4361370",
@@ -1132,7 +1182,9 @@
       "ffc": 71.4,
       "fantasypros": 28,
       "yahoo": 29.1
-    }
+    },
+    "age": 26,
+    "yearsExp": 4
   },
   {
     "id": "4427366",
@@ -1176,7 +1228,9 @@
       "ffc": 49.1,
       "fantasypros": 29,
       "yahoo": 39.4
-    }
+    },
+    "age": 25,
+    "yearsExp": 4
   },
   {
     "id": "4426354",
@@ -1220,7 +1274,9 @@
       "ffc": 59.6,
       "fantasypros": 24,
       "yahoo": 22.2
-    }
+    },
+    "age": 25,
+    "yearsExp": 4
   },
   {
     "id": "4047646",
@@ -1264,7 +1320,9 @@
       "ffc": 17.7,
       "fantasypros": 24.5,
       "yahoo": 30.2
-    }
+    },
+    "age": 29,
+    "yearsExp": 7
   },
   {
     "id": "4567048",
@@ -1308,7 +1366,9 @@
       "ffc": 46.9,
       "fantasypros": 16.5,
       "yahoo": 21.2
-    }
+    },
+    "age": 25,
+    "yearsExp": 4
   },
   {
     "id": "4569618",
@@ -1352,7 +1412,9 @@
       "ffc": 41.6,
       "fantasypros": 36.5,
       "yahoo": 40.7
-    }
+    },
+    "age": 25,
+    "yearsExp": 4
   },
   {
     "id": "4685472",
@@ -1392,6 +1454,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 23,
+    "yearsExp": 1,
     "adpSources": {
       "espn": 40.52,
       "ffc": 47.3,
@@ -1441,7 +1505,9 @@
       "ffc": 45.4,
       "fantasypros": 32.5,
       "yahoo": 31.3
-    }
+    },
+    "age": 27,
+    "yearsExp": 5
   },
   {
     "id": "4361579",
@@ -1485,7 +1551,9 @@
       "ffc": 101.6,
       "fantasypros": 35,
       "yahoo": 38.4
-    }
+    },
+    "age": 26,
+    "yearsExp": 5
   },
   {
     "id": "4430737",
@@ -1529,7 +1597,9 @@
       "ffc": 24,
       "fantasypros": 32,
       "yahoo": 33.5
-    }
+    },
+    "age": 25,
+    "yearsExp": 4
   },
   {
     "id": "4239996",
@@ -1573,7 +1643,9 @@
       "ffc": 104.7,
       "fantasypros": 31.5,
       "yahoo": 39.6
-    }
+    },
+    "age": 27,
+    "yearsExp": 5
   },
   {
     "id": "4429615",
@@ -1617,7 +1689,9 @@
       "ffc": 57.1,
       "fantasypros": 35.5,
       "yahoo": 45.4
-    }
+    },
+    "age": 25,
+    "yearsExp": 3
   },
   {
     "id": "3121422",
@@ -1661,7 +1735,9 @@
       "ffc": 36.8,
       "fantasypros": 48,
       "yahoo": 62.7
-    }
+    },
+    "age": 30,
+    "yearsExp": 7
   },
   {
     "id": "4696981",
@@ -1701,6 +1777,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 24,
+    "yearsExp": 1,
     "adpSources": {
       "espn": 42.09,
       "ffc": 131.2,
@@ -1750,7 +1828,9 @@
       "ffc": 21.6,
       "fantasypros": 37,
       "yahoo": 35.5
-    }
+    },
+    "age": 27,
+    "yearsExp": 6
   },
   {
     "id": "3918298",
@@ -1794,7 +1874,9 @@
       "ffc": 23.7,
       "fantasypros": 28.5,
       "yahoo": 18.4
-    }
+    },
+    "age": 30,
+    "yearsExp": 8
   },
   {
     "id": "16800",
@@ -1838,7 +1920,9 @@
       "ffc": 26.7,
       "fantasypros": 48,
       "yahoo": 47.1
-    }
+    },
+    "age": 33,
+    "yearsExp": 12
   },
   {
     "id": "4596448",
@@ -1878,6 +1962,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 23,
+    "yearsExp": 2,
     "adpSources": {
       "espn": 52.35,
       "ffc": 17.6,
@@ -1915,7 +2001,9 @@
       "espn": 57.19,
       "fantasypros": 61.5,
       "yahoo": 75.8
-    }
+    },
+    "age": 21,
+    "yearsExp": 0
   },
   {
     "id": "4723086",
@@ -1959,7 +2047,9 @@
       "ffc": 147.1,
       "fantasypros": 41.5,
       "yahoo": 37.6
-    }
+    },
+    "age": 22,
+    "yearsExp": 1
   },
   {
     "id": "4685702",
@@ -1999,6 +2089,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 22,
+    "yearsExp": 1,
     "adpSources": {
       "espn": 54.41,
       "ffc": 125.2,
@@ -2048,7 +2140,9 @@
       "ffc": 23.1,
       "fantasypros": 51,
       "yahoo": 31.9
-    }
+    },
+    "age": 29,
+    "yearsExp": 8
   },
   {
     "id": "4612826",
@@ -2092,7 +2186,9 @@
       "ffc": 23.9,
       "fantasypros": 37.5,
       "yahoo": 44.1
-    }
+    },
+    "age": 24,
+    "yearsExp": 2
   },
   {
     "id": "4567750",
@@ -2136,7 +2232,9 @@
       "ffc": 84.6,
       "fantasypros": 40.5,
       "yahoo": 53.9
-    }
+    },
+    "age": 23,
+    "yearsExp": 1
   },
   {
     "id": "4372016",
@@ -2180,7 +2278,9 @@
       "ffc": 64.8,
       "fantasypros": 50.5,
       "yahoo": 53.4
-    }
+    },
+    "age": 27,
+    "yearsExp": 5
   },
   {
     "id": "4431459",
@@ -2224,7 +2324,9 @@
       "ffc": 98.2,
       "fantasypros": 65,
       "yahoo": 49.5
-    }
+    },
+    "age": 24,
+    "yearsExp": 1
   },
   {
     "id": "4432710",
@@ -2268,7 +2370,9 @@
       "ffc": 51.3,
       "fantasypros": 50,
       "yahoo": 53.8
-    }
+    },
+    "age": 23,
+    "yearsExp": 1
   },
   {
     "id": "4426388",
@@ -2312,7 +2416,9 @@
       "ffc": 61.7,
       "fantasypros": 50.5,
       "yahoo": 60.2
-    }
+    },
+    "age": 25,
+    "yearsExp": 4
   },
   {
     "id": "4685512",
@@ -2344,7 +2450,9 @@
       "espn": 62,
       "fantasypros": 61.5,
       "yahoo": 69.6
-    }
+    },
+    "age": 22,
+    "yearsExp": 0
   },
   {
     "id": "3915416",
@@ -2388,7 +2496,9 @@
       "ffc": 44.6,
       "fantasypros": 52.5,
       "yahoo": 66
-    }
+    },
+    "age": 29,
+    "yearsExp": 8
   },
   {
     "id": "4685278",
@@ -2432,7 +2542,9 @@
       "ffc": 150.3,
       "fantasypros": 43.5,
       "yahoo": 57.3
-    }
+    },
+    "age": 22,
+    "yearsExp": 1
   },
   {
     "id": "4426348",
@@ -2476,7 +2588,9 @@
       "ffc": 31.4,
       "fantasypros": 64.5,
       "yahoo": 51.5
-    }
+    },
+    "age": 25,
+    "yearsExp": 2
   },
   {
     "id": "4431299",
@@ -2520,7 +2634,9 @@
       "ffc": 79.3,
       "fantasypros": 55.5,
       "yahoo": 70.6
-    }
+    },
+    "age": 24,
+    "yearsExp": 2
   },
   {
     "id": "4432708",
@@ -2564,7 +2680,9 @@
       "ffc": 38.2,
       "fantasypros": 66,
       "yahoo": 77
-    }
+    },
+    "age": 23,
+    "yearsExp": 2
   },
   {
     "id": "4882093",
@@ -2608,7 +2726,9 @@
       "ffc": 150.5,
       "fantasypros": 63,
       "yahoo": 70.2
-    }
+    },
+    "age": 23,
+    "yearsExp": 1
   },
   {
     "id": "4259545",
@@ -2652,7 +2772,9 @@
       "ffc": 58.1,
       "fantasypros": 52,
       "yahoo": 52.7
-    }
+    },
+    "age": 27,
+    "yearsExp": 6
   },
   {
     "id": "5083076",
@@ -2695,7 +2817,9 @@
       "espn": 64,
       "fantasypros": 86,
       "yahoo": 65.7
-    }
+    },
+    "age": 21,
+    "yearsExp": 1
   },
   {
     "id": "4035538",
@@ -2739,7 +2863,9 @@
       "ffc": 59.5,
       "fantasypros": 49,
       "yahoo": 61.5
-    }
+    },
+    "age": 29,
+    "yearsExp": 7
   },
   {
     "id": "4241416",
@@ -2783,7 +2909,9 @@
       "ffc": 40.8,
       "fantasypros": 68,
       "yahoo": 65.7
-    }
+    },
+    "age": 27,
+    "yearsExp": 5
   },
   {
     "id": "4035687",
@@ -2826,7 +2954,9 @@
       "espn": 85.36,
       "fantasypros": 94.5,
       "yahoo": 121.8
-    }
+    },
+    "age": 28,
+    "yearsExp": 6
   },
   {
     "id": "4880281",
@@ -2855,6 +2985,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 21,
+    "yearsExp": 0,
     "adpSources": {
       "espn": 88.03,
       "fantasypros": 70,
@@ -2903,7 +3035,9 @@
       "ffc": 107.7,
       "fantasypros": 61.5,
       "yahoo": 40.8
-    }
+    },
+    "age": 23,
+    "yearsExp": 2
   },
   {
     "id": "3915511",
@@ -2947,7 +3081,9 @@
       "ffc": 30.9,
       "fantasypros": 60,
       "yahoo": 44.5
-    }
+    },
+    "age": 29,
+    "yearsExp": 6
   },
   {
     "id": "4040715",
@@ -2991,7 +3127,9 @@
       "ffc": 37.4,
       "fantasypros": 72,
       "yahoo": 53.5
-    }
+    },
+    "age": 27,
+    "yearsExp": 6
   },
   {
     "id": "4360078",
@@ -3031,6 +3169,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 26,
+    "yearsExp": 4,
     "adpSources": {
       "espn": 87.85,
       "fantasypros": 76,
@@ -3079,7 +3219,9 @@
       "ffc": 144.9,
       "fantasypros": 95,
       "yahoo": 73.1
-    }
+    },
+    "age": 25,
+    "yearsExp": 5
   },
   {
     "id": "4047650",
@@ -3123,7 +3265,9 @@
       "ffc": 38.2,
       "fantasypros": 73,
       "yahoo": 88.7
-    }
+    },
+    "age": 28,
+    "yearsExp": 7
   },
   {
     "id": "16737",
@@ -3167,7 +3311,9 @@
       "ffc": 28.9,
       "fantasypros": 56,
       "yahoo": 67.8
-    }
+    },
+    "age": 32,
+    "yearsExp": 12
   },
   {
     "id": "3128429",
@@ -3211,7 +3357,9 @@
       "ffc": 48.1,
       "fantasypros": 79.5,
       "yahoo": 90.8
-    }
+    },
+    "age": 30,
+    "yearsExp": 8
   },
   {
     "id": "3916148",
@@ -3255,7 +3403,9 @@
       "ffc": 57.3,
       "fantasypros": 79.5,
       "yahoo": 93.2
-    }
+    },
+    "age": 29,
+    "yearsExp": 7
   },
   {
     "id": "3042519",
@@ -3299,7 +3449,9 @@
       "ffc": 64.8,
       "fantasypros": 123,
       "yahoo": 116.2
-    }
+    },
+    "age": 31,
+    "yearsExp": 9
   },
   {
     "id": "4430027",
@@ -3339,6 +3491,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 25,
+    "yearsExp": 3,
     "adpSources": {
       "espn": 74.36,
       "ffc": 63.6,
@@ -3387,7 +3541,9 @@
       "espn": 71.52,
       "fantasypros": 86.5,
       "yahoo": 66.3
-    }
+    },
+    "age": 23,
+    "yearsExp": 1
   },
   {
     "id": "4248528",
@@ -3430,7 +3586,9 @@
       "espn": 95.52,
       "fantasypros": 55.5,
       "yahoo": 73.6
-    }
+    },
+    "age": 27,
+    "yearsExp": 4
   },
   {
     "id": "4569987",
@@ -3474,7 +3632,9 @@
       "ffc": 76,
       "fantasypros": 70.5,
       "yahoo": 76.8
-    }
+    },
+    "age": 27,
+    "yearsExp": 4
   },
   {
     "id": "3116165",
@@ -3518,7 +3678,9 @@
       "ffc": 102.1,
       "fantasypros": 92.5,
       "yahoo": 99
-    }
+    },
+    "age": 30,
+    "yearsExp": 9
   },
   {
     "id": "3916433",
@@ -3562,7 +3724,9 @@
       "ffc": 73.6,
       "fantasypros": 98,
       "yahoo": 119.2
-    }
+    },
+    "age": 29,
+    "yearsExp": 7
   },
   {
     "id": "4432620",
@@ -3605,7 +3769,9 @@
       "espn": 103.96,
       "fantasypros": 72,
       "yahoo": 106.4
-    }
+    },
+    "age": 24,
+    "yearsExp": 3
   },
   {
     "id": "4432773",
@@ -3649,7 +3815,9 @@
       "ffc": 15.2,
       "fantasypros": 73.5,
       "yahoo": 97.6
-    }
+    },
+    "age": 23,
+    "yearsExp": 2
   },
   {
     "id": "4371733",
@@ -3736,7 +3904,9 @@
       "ffc": 114,
       "fantasypros": 109.5,
       "yahoo": 127.9
-    }
+    },
+    "age": 25,
+    "yearsExp": 4
   },
   {
     "id": "4697815",
@@ -3779,7 +3949,9 @@
       "espn": 106.39,
       "fantasypros": 117.5,
       "yahoo": 126.8
-    }
+    },
+    "age": 27,
+    "yearsExp": 4
   },
   {
     "id": "4038815",
@@ -3822,7 +3994,9 @@
       "espn": 98.16,
       "fantasypros": 87,
       "yahoo": 82.5
-    }
+    },
+    "age": 28,
+    "yearsExp": 6
   },
   {
     "id": "4241985",
@@ -3866,7 +4040,9 @@
       "ffc": 94,
       "fantasypros": 107.5,
       "yahoo": 103.8
-    }
+    },
+    "age": 27,
+    "yearsExp": 6
   },
   {
     "id": "4685415",
@@ -3906,6 +4082,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 23,
+    "yearsExp": 1,
     "adpSources": {
       "espn": 115.82,
       "ffc": 70,
@@ -3940,6 +4118,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 22,
+    "yearsExp": 0,
     "adpSources": {
       "espn": 100.65,
       "fantasypros": 85,
@@ -3988,7 +4168,9 @@
       "ffc": 122.1,
       "fantasypros": 77.5,
       "yahoo": 87.5
-    }
+    },
+    "age": 28,
+    "yearsExp": 5
   },
   {
     "id": "4428209",
@@ -4032,7 +4214,9 @@
       "ffc": 78.3,
       "fantasypros": 98,
       "yahoo": 110.4
-    }
+    },
+    "age": 25,
+    "yearsExp": 2
   },
   {
     "id": "4701936",
@@ -4076,7 +4260,9 @@
       "ffc": 74.9,
       "fantasypros": 118.5,
       "yahoo": 131.3
-    }
+    },
+    "age": 22,
+    "yearsExp": 1
   },
   {
     "id": "15847",
@@ -4120,7 +4306,9 @@
       "ffc": 65.8,
       "fantasypros": 120,
       "yahoo": 93.6
-    }
+    },
+    "age": 36,
+    "yearsExp": 13
   },
   {
     "id": "4360761",
@@ -4163,7 +4351,9 @@
       "espn": 114.91,
       "fantasypros": 91,
       "yahoo": 87.5
-    }
+    },
+    "age": 26,
+    "yearsExp": 3
   },
   {
     "id": "4568490",
@@ -4207,7 +4397,9 @@
       "ffc": 63.4,
       "fantasypros": 78.5,
       "yahoo": 86.7
-    }
+    },
+    "age": 25,
+    "yearsExp": 1
   },
   {
     "id": "4870653",
@@ -4239,7 +4431,9 @@
       "espn": 123.58,
       "fantasypros": 123.5,
       "yahoo": 130.6
-    }
+    },
+    "age": 21,
+    "yearsExp": 0
   },
   {
     "id": "4608686",
@@ -4282,7 +4476,9 @@
       "espn": 114.14,
       "fantasypros": 93,
       "yahoo": 96.4
-    }
+    },
+    "age": 24,
+    "yearsExp": 1
   },
   {
     "id": "4688813",
@@ -4325,7 +4521,9 @@
       "espn": 128.91,
       "fantasypros": 104,
       "yahoo": 125.6
-    }
+    },
+    "age": 24,
+    "yearsExp": 3
   },
   {
     "id": "4429096",
@@ -4368,7 +4566,9 @@
       "espn": 123.25,
       "fantasypros": 99.5,
       "yahoo": 98.4
-    }
+    },
+    "age": 25,
+    "yearsExp": 2
   },
   {
     "id": "4429205",
@@ -4412,7 +4612,9 @@
       "ffc": 100.9,
       "fantasypros": 99,
       "yahoo": 119.3
-    }
+    },
+    "age": 24,
+    "yearsExp": 3
   },
   {
     "id": "4361741",
@@ -4456,7 +4658,9 @@
       "ffc": 69.3,
       "fantasypros": 95.5,
       "yahoo": 101.7
-    }
+    },
+    "age": 26,
+    "yearsExp": 4
   },
   {
     "id": "4683062",
@@ -4496,6 +4700,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 23,
+    "yearsExp": 2,
     "adpSources": {
       "espn": 127.03,
       "ffc": 49.3,
@@ -4545,7 +4751,9 @@
       "ffc": 87.2,
       "fantasypros": 79.5,
       "yahoo": 79.3
-    }
+    },
+    "age": 32,
+    "yearsExp": 10
   },
   {
     "id": "4678008",
@@ -4588,7 +4796,9 @@
       "espn": 128.46,
       "fantasypros": 113.5,
       "yahoo": 125.2
-    }
+    },
+    "age": 22,
+    "yearsExp": 2
   },
   {
     "id": "3040151",
@@ -4628,6 +4838,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 32,
+    "yearsExp": 9,
     "adpSources": {
       "espn": 93.88,
       "ffc": 43.8,
@@ -4677,7 +4889,9 @@
       "ffc": 129.9,
       "fantasypros": 132,
       "yahoo": 99.1
-    }
+    },
+    "age": 31,
+    "yearsExp": 8
   },
   {
     "id": "4242355",
@@ -4721,7 +4935,9 @@
       "ffc": 119.7,
       "fantasypros": 126,
       "yahoo": 105.9
-    }
+    },
+    "age": 27,
+    "yearsExp": 4
   },
   {
     "id": "4373678",
@@ -4765,7 +4981,9 @@
       "ffc": 84.8,
       "fantasypros": 121.5,
       "yahoo": 132.1
-    }
+    },
+    "age": 26,
+    "yearsExp": 4
   },
   {
     "id": "4575131",
@@ -4805,6 +5023,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 25,
+    "yearsExp": 1,
     "adpSources": {
       "espn": 133.26,
       "ffc": 110.5,
@@ -4853,7 +5073,9 @@
       "espn": 140.89,
       "fantasypros": 143,
       "yahoo": 131.6
-    }
+    },
+    "age": 25,
+    "yearsExp": 1
   },
   {
     "id": "4428557",
@@ -4897,7 +5119,9 @@
       "ffc": 156.7,
       "fantasypros": 154.5,
       "yahoo": 127
-    }
+    },
+    "age": 25,
+    "yearsExp": 3
   },
   {
     "id": "4362249",
@@ -4941,7 +5165,9 @@
       "ffc": 111.5,
       "fantasypros": 96,
       "yahoo": 125.9
-    }
+    },
+    "age": 26,
+    "yearsExp": 3
   },
   {
     "id": "4426385",
@@ -4981,6 +5207,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 25,
+    "yearsExp": 3,
     "adpSources": {
       "espn": 138.23,
       "ffc": 100.3,
@@ -5030,7 +5258,9 @@
       "ffc": 68.9,
       "fantasypros": 150,
       "yahoo": 127.2
-    }
+    },
+    "age": 27,
+    "yearsExp": 4
   },
   {
     "id": "4360310",
@@ -5074,7 +5304,9 @@
       "ffc": 127.1,
       "fantasypros": 80,
       "yahoo": 85.7
-    }
+    },
+    "age": 26,
+    "yearsExp": 5
   },
   {
     "id": "4429025",
@@ -5117,7 +5349,9 @@
       "espn": 142.14,
       "fantasypros": 95.5,
       "yahoo": 129.5
-    }
+    },
+    "age": 24,
+    "yearsExp": 3
   },
   {
     "id": "4361432",
@@ -5160,7 +5394,9 @@
       "espn": 141.61,
       "fantasypros": 116,
       "yahoo": 129.3
-    }
+    },
+    "age": 26,
+    "yearsExp": 4
   },
   {
     "id": "4572680",
@@ -5200,6 +5436,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 25,
+    "yearsExp": 3,
     "adpSources": {
       "espn": 110.94,
       "ffc": 115.7,
@@ -5249,7 +5487,9 @@
       "ffc": 27.9,
       "fantasypros": 182,
       "yahoo": 127.5
-    }
+    },
+    "age": 30,
+    "yearsExp": 9
   },
   {
     "id": "4695883",
@@ -5292,7 +5532,9 @@
       "espn": 158.91,
       "fantasypros": 131.5,
       "yahoo": 133.9
-    }
+    },
+    "age": 24,
+    "yearsExp": 2
   },
   {
     "id": "4360569",
@@ -5336,7 +5578,9 @@
       "ffc": 105.9,
       "fantasypros": 122.5,
       "yahoo": 128.8
-    }
+    },
+    "age": 27,
+    "yearsExp": 4
   },
   {
     "id": "4723820",
@@ -5368,7 +5612,9 @@
       "espn": 157.28,
       "fantasypros": 158.5,
       "yahoo": 130.1
-    }
+    },
+    "age": 22,
+    "yearsExp": 0
   },
   {
     "id": "4431611",
@@ -5412,7 +5658,9 @@
       "ffc": 98.3,
       "fantasypros": 69,
       "yahoo": 71.3
-    }
+    },
+    "age": 24,
+    "yearsExp": 2
   },
   {
     "id": "4877706",
@@ -5456,7 +5704,9 @@
       "ffc": 130.2,
       "fantasypros": 123,
       "yahoo": 134.3
-    }
+    },
+    "age": 23,
+    "yearsExp": 1
   },
   {
     "id": "4430834",
@@ -5498,7 +5748,9 @@
     "adpSources": {
       "espn": 164.39,
       "fantasypros": 149
-    }
+    },
+    "age": 24,
+    "yearsExp": 2
   },
   {
     "id": "4426338",
@@ -5538,6 +5790,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 26,
+    "yearsExp": 2,
     "adpSources": {
       "espn": 121.86,
       "ffc": 69,
@@ -5586,7 +5840,9 @@
       "espn": 127.6,
       "fantasypros": 129,
       "yahoo": 110.3
-    }
+    },
+    "age": 26,
+    "yearsExp": 4
   },
   {
     "id": "4362619",
@@ -5629,7 +5885,9 @@
       "espn": 162.67,
       "fantasypros": 122.5,
       "yahoo": 131.7
-    }
+    },
+    "age": 26,
+    "yearsExp": 3
   },
   {
     "id": "3925357",
@@ -5669,6 +5927,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 31,
+    "yearsExp": 8,
     "adpSources": {
       "espn": 166.31,
       "ffc": 57.5,
@@ -5694,7 +5954,9 @@
       "espn": 83.57,
       "ffc": 137.2,
       "yahoo": 85.9
-    }
+    },
+    "age": 31,
+    "yearsExp": 3
   },
   {
     "id": "4373626",
@@ -5738,7 +6000,9 @@
       "ffc": 154,
       "fantasypros": 146.5,
       "yahoo": 128.7
-    }
+    },
+    "age": 26,
+    "yearsExp": 4
   },
   {
     "id": "-16034",
@@ -5822,6 +6086,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 30,
+    "yearsExp": 9,
     "adpSources": {
       "espn": 108.8,
       "ffc": 51.9,
@@ -5870,7 +6136,9 @@
       "espn": 166.33,
       "ffc": 56.5,
       "fantasypros": 177.5
-    }
+    },
+    "age": 27,
+    "yearsExp": 6
   },
   {
     "id": "4038941",
@@ -5914,7 +6182,9 @@
       "ffc": 109.8,
       "fantasypros": 76,
       "yahoo": 63.2
-    }
+    },
+    "age": 28,
+    "yearsExp": 6
   },
   {
     "id": "4429013",
@@ -5957,7 +6227,9 @@
       "espn": 167.52,
       "ffc": 136.7,
       "fantasypros": 181.5
-    }
+    },
+    "age": 23,
+    "yearsExp": 3
   },
   {
     "id": "-16026",
@@ -6021,7 +6293,9 @@
       "espn": 99.55,
       "fantasypros": 94.5,
       "yahoo": 101.4
-    }
+    },
+    "age": 38,
+    "yearsExp": 17
   },
   {
     "id": "4036133",
@@ -6065,7 +6339,9 @@
       "ffc": 75.1,
       "fantasypros": 167,
       "yahoo": 130.4
-    }
+    },
+    "age": 29,
+    "yearsExp": 7
   },
   {
     "id": "4032473",
@@ -6109,7 +6385,9 @@
       "ffc": 102.5,
       "fantasypros": 147.5,
       "yahoo": 127.6
-    }
+    },
+    "age": 27,
+    "yearsExp": 4
   },
   {
     "id": "-16017",
@@ -6151,7 +6429,9 @@
       "espn": 111.18,
       "ffc": 146,
       "yahoo": 130.4
-    }
+    },
+    "age": 26,
+    "yearsExp": 4
   },
   {
     "id": "-16023",
@@ -6260,7 +6540,9 @@
       "espn": 167.52,
       "fantasypros": 171.5,
       "yahoo": 124
-    }
+    },
+    "age": 27,
+    "yearsExp": 4
   },
   {
     "id": "-16033",
@@ -6303,7 +6585,9 @@
       "espn": 125.38,
       "ffc": 161.5,
       "yahoo": 116.7
-    }
+    },
+    "age": 32,
+    "yearsExp": 10
   },
   {
     "id": "2473037",
@@ -6323,7 +6607,9 @@
     "adpSources": {
       "espn": 121.96,
       "yahoo": 129.6
-    }
+    },
+    "age": 35,
+    "yearsExp": 11
   },
   {
     "id": "4685261",
@@ -6354,7 +6640,9 @@
     "adpSources": {
       "espn": 168.7,
       "fantasypros": 218.5
-    }
+    },
+    "age": 22,
+    "yearsExp": 0
   },
   {
     "id": "4869961",
@@ -6383,6 +6671,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 22,
+    "yearsExp": 0,
     "adpSources": {
       "espn": 168.87,
       "fantasypros": 218
@@ -6415,6 +6705,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 21,
+    "yearsExp": 0,
     "adpSources": {
       "espn": 139.57,
       "fantasypros": 153,
@@ -6439,7 +6731,9 @@
     "adpSources": {
       "espn": 138.45,
       "yahoo": 137.5
-    }
+    },
+    "age": 24,
+    "yearsExp": 2
   },
   {
     "id": "4685247",
@@ -6482,7 +6776,9 @@
       "espn": 169.41,
       "ffc": 155.6,
       "fantasypros": 199
-    }
+    },
+    "age": 22,
+    "yearsExp": 2
   },
   {
     "id": "3886598",
@@ -6526,7 +6822,9 @@
       "ffc": 81.3,
       "fantasypros": 147.5,
       "yahoo": 132
-    }
+    },
+    "age": 29,
+    "yearsExp": 6
   },
   {
     "id": "4034949",
@@ -6546,7 +6844,9 @@
     "adpSources": {
       "espn": 146.27,
       "yahoo": 143.1
-    }
+    },
+    "age": 30,
+    "yearsExp": 8
   },
   {
     "id": "4360689",
@@ -6589,7 +6889,9 @@
       "espn": 158.04,
       "fantasypros": 109.5,
       "yahoo": 126.4
-    }
+    },
+    "age": 26,
+    "yearsExp": 1
   },
   {
     "id": "4686361",
@@ -6610,7 +6912,9 @@
       "espn": 135.31,
       "ffc": 144,
       "yahoo": 127.6
-    }
+    },
+    "age": 22,
+    "yearsExp": 2
   },
   {
     "id": "3116365",
@@ -6654,7 +6958,9 @@
       "ffc": 87.7,
       "fantasypros": 136.5,
       "yahoo": 116.2
-    }
+    },
+    "age": 30,
+    "yearsExp": 8
   },
   {
     "id": "4689936",
@@ -6675,7 +6981,9 @@
       "espn": 150.33,
       "ffc": 144.8,
       "yahoo": 135.9
-    }
+    },
+    "age": 27,
+    "yearsExp": 3
   },
   {
     "id": "-16016",
@@ -6741,7 +7049,9 @@
       "ffc": 139.7,
       "fantasypros": 121.5,
       "yahoo": 88.3
-    }
+    },
+    "age": 26,
+    "yearsExp": 3
   },
   {
     "id": "3917315",
@@ -6785,7 +7095,9 @@
       "ffc": 82.5,
       "fantasypros": 109.5,
       "yahoo": 101.6
-    }
+    },
+    "age": 28,
+    "yearsExp": 7
   },
   {
     "id": "-16005",
@@ -6846,6 +7158,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 29,
+    "yearsExp": 7,
     "adpSources": {
       "espn": 167.02,
       "fantasypros": 141.5,
@@ -6891,7 +7205,9 @@
     "adpSources": {
       "espn": 154.86,
       "yahoo": 131.3
-    }
+    },
+    "age": 30,
+    "yearsExp": 9
   },
   {
     "id": "4697745",
@@ -6911,7 +7227,9 @@
     "adpSources": {
       "espn": 159.84,
       "yahoo": 142.4
-    }
+    },
+    "age": 24,
+    "yearsExp": 1
   },
   {
     "id": "4832800",
@@ -6943,7 +7261,9 @@
       "espn": 167.18,
       "fantasypros": 164,
       "yahoo": 130.3
-    }
+    },
+    "age": 22,
+    "yearsExp": 0
   },
   {
     "id": "4040655",
@@ -6986,7 +7306,9 @@
       "espn": 169.47,
       "ffc": 94.5,
       "fantasypros": 208
-    }
+    },
+    "age": 28,
+    "yearsExp": 6
   },
   {
     "id": "-16008",
@@ -7028,7 +7350,9 @@
     "adpSources": {
       "espn": 165.28,
       "yahoo": 145.7
-    }
+    },
+    "age": 34,
+    "yearsExp": 12
   },
   {
     "id": "4567104",
@@ -7048,7 +7372,9 @@
     "adpSources": {
       "espn": 164.14,
       "yahoo": 139.6
-    }
+    },
+    "age": 25,
+    "yearsExp": 2
   },
   {
     "id": "17372",
@@ -7068,7 +7394,9 @@
     "adpSources": {
       "espn": 160.76,
       "yahoo": 142.4
-    }
+    },
+    "age": 35,
+    "yearsExp": 12
   },
   {
     "id": "3045147",
@@ -7108,6 +7436,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 31,
+    "yearsExp": 9,
     "adpSources": {
       "espn": 168.96,
       "ffc": 40.8,
@@ -7146,7 +7476,9 @@
       "ffc": 79.8,
       "fantasypros": 138.5,
       "yahoo": 131.6
-    }
+    },
+    "age": 32,
+    "yearsExp": 11
   },
   {
     "id": "5081432",
@@ -7178,7 +7510,9 @@
       "espn": 169.29,
       "fantasypros": 178.5,
       "yahoo": 135.8
-    }
+    },
+    "age": 21,
+    "yearsExp": 0
   },
   {
     "id": "-16024",
@@ -7241,7 +7575,9 @@
     "adpSources": {
       "espn": 169.58,
       "fantasypros": 163
-    }
+    },
+    "age": 27,
+    "yearsExp": 4
   },
   {
     "id": "4428718",
@@ -7283,7 +7619,9 @@
     "adpSources": {
       "espn": 169.1,
       "fantasypros": 158
-    }
+    },
+    "age": 25,
+    "yearsExp": 3
   },
   {
     "id": "4360516",
@@ -7327,7 +7665,9 @@
       "ffc": 72.2,
       "fantasypros": 132,
       "yahoo": 130.3
-    }
+    },
+    "age": 26,
+    "yearsExp": 2
   },
   {
     "id": "4686658",
@@ -7359,7 +7699,9 @@
       "espn": 168.81,
       "fantasypros": 190,
       "yahoo": 126
-    }
+    },
+    "age": 23,
+    "yearsExp": 0
   },
   {
     "id": "3046439",
@@ -7402,7 +7744,9 @@
       "espn": 160.42,
       "fantasypros": 157,
       "yahoo": 124.8
-    }
+    },
+    "age": 31,
+    "yearsExp": 10
   },
   {
     "id": "3046779",
@@ -7446,7 +7790,9 @@
       "ffc": 96.1,
       "fantasypros": 103,
       "yahoo": 115.4
-    }
+    },
+    "age": 31,
+    "yearsExp": 10
   },
   {
     "id": "3052587",
@@ -7490,7 +7836,9 @@
       "ffc": 52,
       "fantasypros": 112.5,
       "yahoo": 127.8
-    }
+    },
+    "age": 31,
+    "yearsExp": 8
   },
   {
     "id": "4242512",
@@ -7533,7 +7881,9 @@
       "espn": 167.64,
       "fantasypros": 125,
       "yahoo": 116.8
-    }
+    },
+    "age": 27,
+    "yearsExp": 4
   },
   {
     "id": "4429501",
@@ -7575,7 +7925,9 @@
     "adpSources": {
       "espn": 169.9,
       "fantasypros": 199.5
-    }
+    },
+    "age": 26,
+    "yearsExp": 2
   },
   {
     "id": "3929645",
@@ -7618,7 +7970,9 @@
       "espn": 165.32,
       "fantasypros": 146,
       "yahoo": 127.2
-    }
+    },
+    "age": 29,
+    "yearsExp": 6
   },
   {
     "id": "4430539",
@@ -7661,7 +8015,9 @@
       "espn": 168.15,
       "fantasypros": 153,
       "yahoo": 123.1
-    }
+    },
+    "age": 25,
+    "yearsExp": 3
   },
   {
     "id": "4869645",
@@ -7690,6 +8046,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 22,
+    "yearsExp": 0,
     "adpSources": {
       "espn": 169.97,
       "fantasypros": 301.5
@@ -7733,6 +8091,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 26,
+    "yearsExp": 5,
     "adpSources": {
       "espn": 169.8,
       "ffc": 128.2,
@@ -7779,7 +8139,9 @@
     "adpSources": {
       "espn": 169.99,
       "fantasypros": 319.5
-    }
+    },
+    "age": 23,
+    "yearsExp": 1
   },
   {
     "id": "4430968",
@@ -7821,7 +8183,9 @@
     "adpSources": {
       "espn": 169.69,
       "fantasypros": 197
-    }
+    },
+    "age": 24,
+    "yearsExp": 2
   },
   {
     "id": "-16012",
@@ -7884,7 +8248,9 @@
     "adpSources": {
       "espn": 169.61,
       "fantasypros": 251.5
-    }
+    },
+    "age": 28,
+    "yearsExp": 7
   },
   {
     "id": "4361411",
@@ -7927,7 +8293,9 @@
       "espn": 169.06,
       "fantasypros": 196.5,
       "yahoo": 121.9
-    }
+    },
+    "age": 27,
+    "yearsExp": 5
   },
   {
     "id": "4685397",
@@ -7969,7 +8337,9 @@
     "adpSources": {
       "espn": 169.73,
       "fantasypros": 217.5
-    }
+    },
+    "age": 22,
+    "yearsExp": 1
   },
   {
     "id": "4696044",
@@ -8000,7 +8370,9 @@
     "adpSources": {
       "espn": 169.77,
       "fantasypros": 233
-    }
+    },
+    "age": 24,
+    "yearsExp": 0
   },
   {
     "id": "4366031",
@@ -8040,6 +8412,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 26,
+    "yearsExp": 3,
     "adpSources": {
       "espn": 168.85,
       "fantasypros": 221
@@ -8087,7 +8461,9 @@
       "ffc": 119.9,
       "fantasypros": 109.5,
       "yahoo": 122.3
-    }
+    },
+    "age": 27,
+    "yearsExp": 6
   },
   {
     "id": "4688380",
@@ -8130,7 +8506,9 @@
       "espn": 167.55,
       "fantasypros": 136,
       "yahoo": 127.6
-    }
+    },
+    "age": 24,
+    "yearsExp": 1
   },
   {
     "id": "4432577",
@@ -8174,7 +8552,9 @@
       "ffc": 129.2,
       "fantasypros": 136.5,
       "yahoo": 124.1
-    }
+    },
+    "age": 24,
+    "yearsExp": 3
   },
   {
     "id": "3116406",
@@ -8203,6 +8583,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 31,
+    "yearsExp": 10,
     "adpSources": {
       "espn": 162.46,
       "ffc": 26.9,
@@ -8241,7 +8623,9 @@
       "ffc": 67.8,
       "fantasypros": 164,
       "yahoo": 130.2
-    }
+    },
+    "age": 30,
+    "yearsExp": 7
   },
   {
     "id": "4360438",
@@ -8270,6 +8654,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "OUT",
+    "age": 28,
+    "yearsExp": 6,
     "adpSources": {
       "espn": 169.1,
       "ffc": 143.5,
@@ -8318,7 +8704,9 @@
       "espn": 169.08,
       "fantasypros": 222,
       "yahoo": 134.2
-    }
+    },
+    "age": 23,
+    "yearsExp": 1
   },
   {
     "id": "3117256",
@@ -8361,7 +8749,9 @@
       "espn": 169.4,
       "fantasypros": 173.5,
       "yahoo": 130.7
-    }
+    },
+    "age": 30,
+    "yearsExp": 8
   },
   {
     "id": "4686612",
@@ -8403,7 +8793,9 @@
     "adpSources": {
       "espn": 170.16,
       "fantasypros": 178
-    }
+    },
+    "age": 24,
+    "yearsExp": 1
   },
   {
     "id": "5123663",
@@ -8445,7 +8837,9 @@
     "adpSources": {
       "espn": 169.6,
       "fantasypros": 182
-    }
+    },
+    "age": 24,
+    "yearsExp": 1
   },
   {
     "id": "2977187",
@@ -8488,7 +8882,9 @@
       "espn": 168.5,
       "ffc": 92.4,
       "fantasypros": 218.5
-    }
+    },
+    "age": 33,
+    "yearsExp": 9
   },
   {
     "id": "5083754",
@@ -8530,7 +8926,9 @@
     "adpSources": {
       "espn": 170,
       "fantasypros": 180
-    }
+    },
+    "age": 26,
+    "yearsExp": 2
   },
   {
     "id": "4685246",
@@ -8561,7 +8959,9 @@
     "adpSources": {
       "espn": 169.87,
       "fantasypros": 182
-    }
+    },
+    "age": 23,
+    "yearsExp": 0
   },
   {
     "id": "4685555",
@@ -8593,7 +8993,9 @@
       "espn": 169.53,
       "fantasypros": 189,
       "yahoo": 134.5
-    }
+    },
+    "age": 22,
+    "yearsExp": 0
   },
   {
     "id": "4832846",
@@ -8624,7 +9026,9 @@
     "adpSources": {
       "espn": 170.22,
       "fantasypros": 240
-    }
+    },
+    "age": 22,
+    "yearsExp": 0
   },
   {
     "id": "4686728",
@@ -8666,7 +9070,9 @@
     "adpSources": {
       "espn": 169.78,
       "fantasypros": 187.5
-    }
+    },
+    "age": 23,
+    "yearsExp": 1
   },
   {
     "id": "4595342",
@@ -8709,7 +9115,9 @@
       "espn": 168.71,
       "fantasypros": 141,
       "yahoo": 116.9
-    }
+    },
+    "age": 23,
+    "yearsExp": 1
   },
   {
     "id": "4360635",
@@ -8752,7 +9160,9 @@
       "espn": 169.04,
       "fantasypros": 151.5,
       "yahoo": 127.9
-    }
+    },
+    "age": 26,
+    "yearsExp": 4
   },
   {
     "id": "3912547",
@@ -8795,7 +9205,9 @@
       "espn": 166.07,
       "fantasypros": 136,
       "yahoo": 122.6
-    }
+    },
+    "age": 29,
+    "yearsExp": 8
   },
   {
     "id": "4685720",
@@ -8839,7 +9251,9 @@
       "ffc": 141.5,
       "fantasypros": 147,
       "yahoo": 127
-    }
+    },
+    "age": 24,
+    "yearsExp": 3
   },
   {
     "id": "4837248",
@@ -8871,7 +9285,9 @@
       "espn": 163.83,
       "fantasypros": 170,
       "yahoo": 123.3
-    }
+    },
+    "age": 22,
+    "yearsExp": 0
   },
   {
     "id": "4702555",
@@ -8903,7 +9319,9 @@
       "espn": 169.45,
       "fantasypros": 156,
       "yahoo": 129.4
-    }
+    },
+    "age": 22,
+    "yearsExp": 0
   },
   {
     "id": "4686468",
@@ -8934,7 +9352,9 @@
     "adpSources": {
       "espn": 170.3,
       "fantasypros": 335
-    }
+    },
+    "age": 24,
+    "yearsExp": 0
   },
   {
     "id": "4832955",
@@ -8966,7 +9386,9 @@
       "espn": 169.61,
       "fantasypros": 171,
       "yahoo": 130.7
-    }
+    },
+    "age": 22,
+    "yearsExp": 0
   },
   {
     "id": "4710714",
@@ -8997,7 +9419,9 @@
     "adpSources": {
       "espn": 169.96,
       "fantasypros": 213.5
-    }
+    },
+    "age": 23,
+    "yearsExp": 0
   },
   {
     "id": "5081397",
@@ -9040,7 +9464,9 @@
       "espn": 169.88,
       "fantasypros": 153,
       "yahoo": 131
-    }
+    },
+    "age": 21,
+    "yearsExp": 1
   },
   {
     "id": "3116389",
@@ -9082,7 +9508,9 @@
     "adpSources": {
       "espn": 170.14,
       "fantasypros": 294.5
-    }
+    },
+    "age": 30,
+    "yearsExp": 9
   },
   {
     "id": "4597500",
@@ -9124,7 +9552,9 @@
     "adpSources": {
       "espn": 170.26,
       "fantasypros": 213
-    }
+    },
+    "age": 23,
+    "yearsExp": 2
   },
   {
     "id": "4635008",
@@ -9167,7 +9597,9 @@
       "espn": 169.95,
       "ffc": 100,
       "fantasypros": 293.5
-    }
+    },
+    "age": 23,
+    "yearsExp": 2
   },
   {
     "id": "4569603",
@@ -9209,7 +9641,9 @@
     "adpSources": {
       "espn": 170.09,
       "fantasypros": 197.5
-    }
+    },
+    "age": 25,
+    "yearsExp": 2
   },
   {
     "id": "4249417",
@@ -9251,7 +9685,9 @@
     "adpSources": {
       "espn": 170.26,
       "fantasypros": 307
-    }
+    },
+    "age": 27,
+    "yearsExp": 4
   },
   {
     "id": "3895856",
@@ -9294,7 +9730,9 @@
       "espn": 170.01,
       "ffc": 114,
       "fantasypros": 220.5
-    }
+    },
+    "age": 29,
+    "yearsExp": 8
   },
   {
     "id": "4431487",
@@ -9336,7 +9774,9 @@
     "adpSources": {
       "espn": 170.22,
       "fantasypros": 296
-    }
+    },
+    "age": 24,
+    "yearsExp": 1
   },
   {
     "id": "4430034",
@@ -9378,7 +9818,9 @@
     "adpSources": {
       "espn": 170.24,
       "fantasypros": 400
-    }
+    },
+    "age": 25,
+    "yearsExp": 2
   },
   {
     "id": "4600981",
@@ -9420,7 +9862,9 @@
     "adpSources": {
       "espn": 170.12,
       "fantasypros": 291.5
-    }
+    },
+    "age": 23,
+    "yearsExp": 1
   },
   {
     "id": "-16027",
@@ -9482,7 +9926,9 @@
     "adpSources": {
       "espn": 167.19,
       "yahoo": 141.8
-    }
+    },
+    "age": 30,
+    "yearsExp": 7
   },
   {
     "id": "4911851",
@@ -9524,7 +9970,9 @@
     "adpSources": {
       "espn": 170.29,
       "fantasypros": 314.5
-    }
+    },
+    "age": 21,
+    "yearsExp": 1
   },
   {
     "id": "4682745",
@@ -9566,7 +10014,9 @@
     "adpSources": {
       "espn": 170.22,
       "fantasypros": 247
-    }
+    },
+    "age": 23,
+    "yearsExp": 2
   },
   {
     "id": "4711533",
@@ -9609,7 +10059,9 @@
       "espn": 170.26,
       "ffc": 159,
       "fantasypros": 309
-    }
+    },
+    "age": 22,
+    "yearsExp": 1
   },
   {
     "id": "4596334",
@@ -9652,7 +10104,9 @@
       "espn": 170.21,
       "fantasypros": 149,
       "yahoo": 136.3
-    }
+    },
+    "age": 24,
+    "yearsExp": 3
   },
   {
     "id": "4596602",
@@ -9694,7 +10148,9 @@
     "adpSources": {
       "espn": 170.2,
       "fantasypros": 392
-    }
+    },
+    "age": 23,
+    "yearsExp": 1
   },
   {
     "id": "4685526",
@@ -9725,7 +10181,9 @@
     "adpSources": {
       "espn": 170.28,
       "fantasypros": 308
-    }
+    },
+    "age": 21,
+    "yearsExp": 0
   },
   {
     "id": "4429275",
@@ -9765,6 +10223,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 23,
+    "yearsExp": 2,
     "adpSources": {
       "espn": 170.33,
       "ffc": 137.1,
@@ -9812,7 +10272,9 @@
       "espn": 170.26,
       "ffc": 76.2,
       "fantasypros": 386
-    }
+    },
+    "age": 22,
+    "yearsExp": 1
   },
   {
     "id": "3915411",
@@ -9854,7 +10316,9 @@
     "adpSources": {
       "espn": 170.27,
       "fantasypros": 307
-    }
+    },
+    "age": 28,
+    "yearsExp": 7
   },
   {
     "id": "4429023",
@@ -9896,7 +10360,9 @@
     "adpSources": {
       "espn": 169.76,
       "fantasypros": 274.5
-    }
+    },
+    "age": 25,
+    "yearsExp": 2
   },
   {
     "id": "4685279",
@@ -9939,7 +10405,9 @@
       "espn": 170.09,
       "ffc": 149.7,
       "fantasypros": 291
-    }
+    },
+    "age": 22,
+    "yearsExp": 1
   },
   {
     "id": "16002",
@@ -9980,7 +10448,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.17
-    }
+    },
+    "age": 35,
+    "yearsExp": 13
   },
   {
     "id": "3149687",
@@ -10023,7 +10493,9 @@
       "espn": 170.19,
       "fantasypros": 251,
       "yahoo": 131.3
-    }
+    },
+    "age": 26,
+    "yearsExp": 3
   },
   {
     "id": "4597703",
@@ -10063,6 +10535,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 23,
+    "yearsExp": 1,
     "adpSources": {
       "espn": 170.21,
       "fantasypros": 307.5
@@ -10108,7 +10582,9 @@
     "adpSources": {
       "espn": 170.05,
       "fantasypros": 266.5
-    }
+    },
+    "age": 25,
+    "yearsExp": 3
   },
   {
     "id": "-16011",
@@ -10149,7 +10625,9 @@
       "espn": 168.25,
       "ffc": 151.2,
       "yahoo": 146.1
-    }
+    },
+    "age": 26,
+    "yearsExp": 5
   },
   {
     "id": "10621",
@@ -10168,7 +10646,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.66
-    }
+    },
+    "age": 41,
+    "yearsExp": 19
   },
   {
     "id": "4576297",
@@ -10208,6 +10688,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 24,
+    "yearsExp": 2,
     "adpSources": {
       "espn": 169.47,
       "fantasypros": 182,
@@ -10254,7 +10736,9 @@
     "adpSources": {
       "espn": 170.1,
       "fantasypros": 219
-    }
+    },
+    "age": 26,
+    "yearsExp": 4
   },
   {
     "id": "4259147",
@@ -10294,6 +10778,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 27,
+    "yearsExp": 4,
     "adpSources": {
       "espn": 169.9,
       "fantasypros": 221.5
@@ -10339,7 +10825,9 @@
     "adpSources": {
       "espn": 169.84,
       "fantasypros": 209
-    }
+    },
+    "age": 24,
+    "yearsExp": 3
   },
   {
     "id": "4870847",
@@ -10370,7 +10858,9 @@
     "adpSources": {
       "espn": 169.26,
       "fantasypros": 313
-    }
+    },
+    "age": 22,
+    "yearsExp": 0
   },
   {
     "id": "5220680",
@@ -10401,7 +10891,9 @@
     "adpSources": {
       "espn": 170.25,
       "fantasypros": 271.5
-    }
+    },
+    "age": 22,
+    "yearsExp": 0
   },
   {
     "id": "5088338",
@@ -10432,7 +10924,9 @@
     "adpSources": {
       "espn": 170.13,
       "fantasypros": 308
-    }
+    },
+    "age": 23,
+    "yearsExp": 0
   },
   {
     "id": "4695404",
@@ -10474,7 +10968,9 @@
     "adpSources": {
       "espn": 170.24,
       "fantasypros": 354
-    }
+    },
+    "age": 24,
+    "yearsExp": 2
   },
   {
     "id": "4887558",
@@ -10517,7 +11013,9 @@
       "espn": 170.12,
       "fantasypros": 169.5,
       "yahoo": 131.1
-    }
+    },
+    "age": 27,
+    "yearsExp": 3
   },
   {
     "id": "15864",
@@ -10560,7 +11058,9 @@
       "espn": 169.92,
       "ffc": 147.9,
       "fantasypros": 174.5
-    }
+    },
+    "age": 35,
+    "yearsExp": 13
   },
   {
     "id": "8439",
@@ -10603,7 +11103,9 @@
       "espn": 169.39,
       "fantasypros": 163.5,
       "yahoo": 110
-    }
+    },
+    "age": 42,
+    "yearsExp": 21
   },
   {
     "id": "3122840",
@@ -10645,7 +11147,9 @@
     "adpSources": {
       "espn": 170.01,
       "fantasypros": 218
-    }
+    },
+    "age": 30,
+    "yearsExp": 9
   },
   {
     "id": "2578570",
@@ -10687,7 +11191,9 @@
     "adpSources": {
       "espn": 170.11,
       "fantasypros": 171.5
-    }
+    },
+    "age": 33,
+    "yearsExp": 10
   },
   {
     "id": "3929785",
@@ -10729,7 +11235,9 @@
     "adpSources": {
       "espn": 170.27,
       "fantasypros": 289
-    }
+    },
+    "age": 29,
+    "yearsExp": 6
   },
   {
     "id": "3916945",
@@ -10769,6 +11277,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 29,
+    "yearsExp": 7,
     "adpSources": {
       "espn": 170.17,
       "fantasypros": 331.5
@@ -10814,7 +11324,9 @@
     "adpSources": {
       "espn": 170.2,
       "fantasypros": 280
-    }
+    },
+    "age": 26,
+    "yearsExp": 5
   },
   {
     "id": "4361409",
@@ -10856,7 +11368,9 @@
     "adpSources": {
       "espn": 170.21,
       "fantasypros": 336.5
-    }
+    },
+    "age": 26,
+    "yearsExp": 4
   },
   {
     "id": "4368003",
@@ -10898,7 +11412,9 @@
     "adpSources": {
       "espn": 170.17,
       "fantasypros": 322
-    }
+    },
+    "age": 26,
+    "yearsExp": 3
   },
   {
     "id": "4874509",
@@ -10940,7 +11456,9 @@
     "adpSources": {
       "espn": 170.28,
       "fantasypros": 303
-    }
+    },
+    "age": 22,
+    "yearsExp": 1
   },
   {
     "id": "4362748",
@@ -10981,7 +11499,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.27
-    }
+    },
+    "age": 26,
+    "yearsExp": 4
   },
   {
     "id": "4431545",
@@ -11023,7 +11543,9 @@
     "adpSources": {
       "espn": 170.27,
       "fantasypros": 253
-    }
+    },
+    "age": 23,
+    "yearsExp": 2
   },
   {
     "id": "4040761",
@@ -11065,7 +11587,9 @@
     "adpSources": {
       "espn": 170.3,
       "fantasypros": 388
-    }
+    },
+    "age": 28,
+    "yearsExp": 7
   },
   {
     "id": "4240603",
@@ -11107,7 +11631,9 @@
     "adpSources": {
       "espn": 170.16,
       "fantasypros": 284.5
-    }
+    },
+    "age": 27,
+    "yearsExp": 4
   },
   {
     "id": "4430871",
@@ -11149,7 +11675,9 @@
     "adpSources": {
       "espn": 170.28,
       "fantasypros": 185
-    }
+    },
+    "age": 24,
+    "yearsExp": 3
   },
   {
     "id": "4383396",
@@ -11232,7 +11760,9 @@
     "adpSources": {
       "espn": 170.28,
       "fantasypros": 303
-    }
+    },
+    "age": 22,
+    "yearsExp": 1
   },
   {
     "id": "4362921",
@@ -11274,7 +11804,9 @@
     "adpSources": {
       "espn": 170.11,
       "fantasypros": 302.5
-    }
+    },
+    "age": 25,
+    "yearsExp": 4
   },
   {
     "id": "-16004",
@@ -11334,7 +11866,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169
-    }
+    },
+    "age": 23,
+    "yearsExp": 0
   },
   {
     "id": "3050478",
@@ -11353,7 +11887,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.08
-    }
+    },
+    "age": 31,
+    "yearsExp": 9
   },
   {
     "id": "4243331",
@@ -11395,7 +11931,9 @@
     "adpSources": {
       "espn": 169.99,
       "fantasypros": 197.5
-    }
+    },
+    "age": 27,
+    "yearsExp": 4
   },
   {
     "id": "3116164",
@@ -11437,7 +11975,9 @@
     "adpSources": {
       "espn": 169.94,
       "fantasypros": 267.5
-    }
+    },
+    "age": 30,
+    "yearsExp": 8
   },
   {
     "id": "3051876",
@@ -11480,7 +12020,9 @@
       "espn": 169.84,
       "ffc": 91.1,
       "fantasypros": 295
-    }
+    },
+    "age": 31,
+    "yearsExp": 9
   },
   {
     "id": "3123076",
@@ -11524,7 +12066,9 @@
       "ffc": 73.6,
       "fantasypros": 203.5,
       "yahoo": 127.3
-    }
+    },
+    "age": 30,
+    "yearsExp": 9
   },
   {
     "id": "4429086",
@@ -11566,7 +12110,9 @@
     "adpSources": {
       "espn": 170.12,
       "fantasypros": 310
-    }
+    },
+    "age": 25,
+    "yearsExp": 3
   },
   {
     "id": "3930066",
@@ -11607,7 +12153,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.21
-    }
+    },
+    "age": 29,
+    "yearsExp": 6
   },
   {
     "id": "4686472",
@@ -11650,7 +12198,9 @@
       "espn": 170.18,
       "ffc": 127.6,
       "fantasypros": 339
-    }
+    },
+    "age": 24,
+    "yearsExp": 3
   },
   {
     "id": "4241479",
@@ -11693,7 +12243,9 @@
       "espn": 169.97,
       "ffc": 136.9,
       "fantasypros": 202.5
-    }
+    },
+    "age": 28,
+    "yearsExp": 6
   },
   {
     "id": "-16025",
@@ -11817,7 +12369,9 @@
     "adpSources": {
       "espn": 169.51,
       "fantasypros": 230
-    }
+    },
+    "age": 24,
+    "yearsExp": 1
   },
   {
     "id": "14880",
@@ -11859,7 +12413,9 @@
     "adpSources": {
       "espn": 170.02,
       "fantasypros": 244
-    }
+    },
+    "age": 37,
+    "yearsExp": 14
   },
   {
     "id": "3917668",
@@ -11900,7 +12456,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.26
-    }
+    },
+    "age": 30,
+    "yearsExp": 7
   },
   {
     "id": "4429299",
@@ -11942,7 +12500,9 @@
     "adpSources": {
       "espn": 170.2,
       "fantasypros": 338
-    }
+    },
+    "age": 24,
+    "yearsExp": 1
   },
   {
     "id": "3929914",
@@ -12066,7 +12626,9 @@
     "adpSources": {
       "espn": 170.23,
       "fantasypros": 322.5
-    }
+    },
+    "age": 26,
+    "yearsExp": 2
   },
   {
     "id": "3125107",
@@ -12107,7 +12669,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.26
-    }
+    },
+    "age": 30,
+    "yearsExp": 7
   },
   {
     "id": "4693370",
@@ -12137,7 +12701,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.21
-    }
+    },
+    "age": 24,
+    "yearsExp": 0
   },
   {
     "id": "4360423",
@@ -12177,6 +12743,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 26,
+    "yearsExp": 2,
     "adpSources": {
       "espn": 170.17,
       "fantasypros": 230.5
@@ -12222,7 +12790,9 @@
     "adpSources": {
       "espn": 170.14,
       "fantasypros": 303
-    }
+    },
+    "age": 23,
+    "yearsExp": 2
   },
   {
     "id": "4242557",
@@ -12264,7 +12834,9 @@
     "adpSources": {
       "espn": 169.99,
       "fantasypros": 215
-    }
+    },
+    "age": 27,
+    "yearsExp": 6
   },
   {
     "id": "4678006",
@@ -12306,7 +12878,9 @@
     "adpSources": {
       "espn": 170.2,
       "fantasypros": 329
-    }
+    },
+    "age": 23,
+    "yearsExp": 1
   },
   {
     "id": "4430802",
@@ -12348,7 +12922,9 @@
     "adpSources": {
       "espn": 169.68,
       "fantasypros": 321.5
-    }
+    },
+    "age": 24,
+    "yearsExp": 3
   },
   {
     "id": "4433970",
@@ -12391,7 +12967,9 @@
       "espn": 169.93,
       "ffc": 104.7,
       "fantasypros": 357
-    }
+    },
+    "age": 23,
+    "yearsExp": 2
   },
   {
     "id": "4430841",
@@ -12422,7 +13000,9 @@
     "adpSources": {
       "espn": 170.05,
       "fantasypros": 299.5
-    }
+    },
+    "age": 23,
+    "yearsExp": 0
   },
   {
     "id": "4362887",
@@ -12465,7 +13045,9 @@
       "espn": 169.93,
       "ffc": 111,
       "fantasypros": 288.5
-    }
+    },
+    "age": 27,
+    "yearsExp": 5
   },
   {
     "id": "11252",
@@ -12507,7 +13089,9 @@
     "adpSources": {
       "espn": 170.02,
       "fantasypros": 383
-    }
+    },
+    "age": 41,
+    "yearsExp": 18
   },
   {
     "id": "4241464",
@@ -12547,6 +13131,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 27,
+    "yearsExp": 5,
     "adpSources": {
       "espn": 169.99,
       "fantasypros": 316
@@ -12591,7 +13177,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.1
-    }
+    },
+    "age": 28,
+    "yearsExp": 6
   },
   {
     "id": "2975417",
@@ -12632,7 +13220,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.16
-    }
+    },
+    "age": 32,
+    "yearsExp": 9
   },
   {
     "id": "4599739",
@@ -12672,6 +13262,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 24,
+    "yearsExp": 3,
     "adpSources": {
       "espn": 170.15,
       "fantasypros": 262
@@ -12707,7 +13299,9 @@
       "espn": 169.77,
       "fantasypros": 221,
       "yahoo": 127.7
-    }
+    },
+    "age": 23,
+    "yearsExp": 0
   },
   {
     "id": "3930086",
@@ -12749,7 +13343,9 @@
     "adpSources": {
       "espn": 169.97,
       "fantasypros": 326.5
-    }
+    },
+    "age": 29,
+    "yearsExp": 7
   },
   {
     "id": "4808766",
@@ -12791,7 +13387,9 @@
     "adpSources": {
       "espn": 170.17,
       "fantasypros": 290
-    }
+    },
+    "age": 22,
+    "yearsExp": 1
   },
   {
     "id": "4429148",
@@ -12833,7 +13431,9 @@
     "adpSources": {
       "espn": 170.05,
       "fantasypros": 304
-    }
+    },
+    "age": 25,
+    "yearsExp": 2
   },
   {
     "id": "2573401",
@@ -12875,7 +13475,9 @@
     "adpSources": {
       "espn": 169.98,
       "fantasypros": 352
-    }
+    },
+    "age": 33,
+    "yearsExp": 10
   },
   {
     "id": "4833029",
@@ -12906,7 +13508,9 @@
     "adpSources": {
       "espn": 170.21,
       "fantasypros": 401
-    }
+    },
+    "age": 23,
+    "yearsExp": 0
   },
   {
     "id": "4258595",
@@ -12948,7 +13552,9 @@
     "adpSources": {
       "espn": 169.95,
       "fantasypros": 389
-    }
+    },
+    "age": 27,
+    "yearsExp": 6
   },
   {
     "id": "4372780",
@@ -12990,7 +13596,9 @@
     "adpSources": {
       "espn": 170.15,
       "fantasypros": 306
-    }
+    },
+    "age": 26,
+    "yearsExp": 5
   },
   {
     "id": "4240472",
@@ -13032,7 +13640,9 @@
     "adpSources": {
       "espn": 170.12,
       "fantasypros": 360
-    }
+    },
+    "age": 27,
+    "yearsExp": 5
   },
   {
     "id": "4036131",
@@ -13073,7 +13683,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.19
-    }
+    },
+    "age": 28,
+    "yearsExp": 7
   },
   {
     "id": "3043275",
@@ -13114,7 +13726,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.17
-    }
+    },
+    "age": 31,
+    "yearsExp": 10
   },
   {
     "id": "4426844",
@@ -13156,7 +13770,9 @@
     "adpSources": {
       "espn": 170.2,
       "fantasypros": 283
-    }
+    },
+    "age": 25,
+    "yearsExp": 3
   },
   {
     "id": "3116407",
@@ -13198,7 +13814,9 @@
     "adpSources": {
       "espn": 170.08,
       "fantasypros": 261
-    }
+    },
+    "age": 30,
+    "yearsExp": 8
   },
   {
     "id": "2969939",
@@ -13240,7 +13858,9 @@
     "adpSources": {
       "espn": 169.98,
       "fantasypros": 340
-    }
+    },
+    "age": 32,
+    "yearsExp": 11
   },
   {
     "id": "4685522",
@@ -13271,7 +13891,9 @@
     "adpSources": {
       "espn": 170,
       "fantasypros": 350
-    }
+    },
+    "age": 23,
+    "yearsExp": 0
   },
   {
     "id": "4429084",
@@ -13302,7 +13924,9 @@
     "adpSources": {
       "espn": 170.06,
       "fantasypros": 337
-    }
+    },
+    "age": 24,
+    "yearsExp": 3
   },
   {
     "id": "4683423",
@@ -13343,7 +13967,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.08
-    }
+    },
+    "age": 23,
+    "yearsExp": 1
   },
   {
     "id": "4360698",
@@ -13385,7 +14011,9 @@
     "adpSources": {
       "espn": 170.01,
       "fantasypros": 298
-    }
+    },
+    "age": 26,
+    "yearsExp": 2
   },
   {
     "id": "3892775",
@@ -13427,7 +14055,9 @@
     "adpSources": {
       "espn": 170.12,
       "fantasypros": 311
-    }
+    },
+    "age": 29,
+    "yearsExp": 7
   },
   {
     "id": "3059989",
@@ -13469,7 +14099,9 @@
     "adpSources": {
       "espn": 170.14,
       "fantasypros": 288
-    }
+    },
+    "age": 31,
+    "yearsExp": 9
   },
   {
     "id": "4240391",
@@ -13511,7 +14143,9 @@
     "adpSources": {
       "espn": 169.95,
       "fantasypros": 279
-    }
+    },
+    "age": 27,
+    "yearsExp": 3
   },
   {
     "id": "3886812",
@@ -13553,7 +14187,9 @@
     "adpSources": {
       "espn": 170.1,
       "fantasypros": 257
-    }
+    },
+    "age": 30,
+    "yearsExp": 7
   },
   {
     "id": "5208518",
@@ -13572,7 +14208,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.04
-    }
+    },
+    "age": 25,
+    "yearsExp": 2
   },
   {
     "id": "2985659",
@@ -13592,7 +14230,9 @@
     "adpSources": {
       "espn": 169.54,
       "yahoo": 128.4
-    }
+    },
+    "age": 32,
+    "yearsExp": 10
   },
   {
     "id": "3917232",
@@ -13610,6 +14250,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 29,
+    "yearsExp": 6,
     "adpSources": {
       "espn": 169.74
     }
@@ -13631,7 +14273,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.77
-    }
+    },
+    "age": 24,
+    "yearsExp": 1
   },
   {
     "id": "4259619",
@@ -13650,7 +14294,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.91
-    }
+    },
+    "age": 27,
+    "yearsExp": 3
   },
   {
     "id": "4372066",
@@ -13669,7 +14315,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.85
-    }
+    },
+    "age": 26,
+    "yearsExp": 3
   },
   {
     "id": "4569923",
@@ -13689,7 +14337,9 @@
     "adpSources": {
       "espn": 168.95,
       "yahoo": 145.9
-    }
+    },
+    "age": 23,
+    "yearsExp": 1
   },
   {
     "id": "3043234",
@@ -13708,7 +14358,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.91
-    }
+    },
+    "age": 31,
+    "yearsExp": 9
   },
   {
     "id": "4249087",
@@ -13727,7 +14379,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.74
-    }
+    },
+    "age": 32,
+    "yearsExp": 7
   },
   {
     "id": "4568263",
@@ -13746,7 +14400,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.86
-    }
+    },
+    "age": 25,
+    "yearsExp": 1
   },
   {
     "id": "3124084",
@@ -13765,7 +14421,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.01
-    }
+    },
+    "age": 30,
+    "yearsExp": 7
   },
   {
     "id": "4363538",
@@ -13784,7 +14442,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.93
-    }
+    },
+    "age": 26,
+    "yearsExp": 3
   },
   {
     "id": "4258620",
@@ -13803,7 +14463,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.81
-    }
+    },
+    "age": 27,
+    "yearsExp": 4
   },
   {
     "id": "4428963",
@@ -13821,6 +14483,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 25,
+    "yearsExp": 4,
     "adpSources": {
       "espn": 170.01
     }
@@ -14048,7 +14712,9 @@
     "adpSources": {
       "espn": 170.01,
       "fantasypros": 264
-    }
+    },
+    "age": 29,
+    "yearsExp": 4
   },
   {
     "id": "2973405",
@@ -14090,7 +14756,9 @@
     "adpSources": {
       "espn": 170.1,
       "fantasypros": 263
-    }
+    },
+    "age": 31,
+    "yearsExp": 10
   },
   {
     "id": "3917914",
@@ -14132,7 +14800,9 @@
     "adpSources": {
       "espn": 170.16,
       "fantasypros": 330.5
-    }
+    },
+    "age": 28,
+    "yearsExp": 7
   },
   {
     "id": "4602667",
@@ -14173,7 +14843,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.15
-    }
+    },
+    "age": 24,
+    "yearsExp": 1
   },
   {
     "id": "4427095",
@@ -14216,7 +14888,9 @@
       "espn": 169.85,
       "ffc": 141.7,
       "fantasypros": 310
-    }
+    },
+    "age": 25,
+    "yearsExp": 3
   },
   {
     "id": "5091739",
@@ -14247,7 +14921,9 @@
     "adpSources": {
       "espn": 170.09,
       "fantasypros": 303
-    }
+    },
+    "age": 22,
+    "yearsExp": 0
   },
   {
     "id": "4569559",
@@ -14289,7 +14965,9 @@
     "adpSources": {
       "espn": 170.12,
       "fantasypros": 333
-    }
+    },
+    "age": 28,
+    "yearsExp": 2
   },
   {
     "id": "4586312",
@@ -14331,7 +15009,9 @@
     "adpSources": {
       "espn": 170.11,
       "fantasypros": 301.5
-    }
+    },
+    "age": 23,
+    "yearsExp": 1
   },
   {
     "id": "4870612",
@@ -14362,7 +15042,9 @@
     "adpSources": {
       "espn": 169.81,
       "fantasypros": 215
-    }
+    },
+    "age": 22,
+    "yearsExp": 0
   },
   {
     "id": "4360797",
@@ -14404,7 +15086,9 @@
     "adpSources": {
       "espn": 170.09,
       "fantasypros": 332
-    }
+    },
+    "age": 26,
+    "yearsExp": 5
   },
   {
     "id": "4431280",
@@ -14444,6 +15128,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 23,
+    "yearsExp": 2,
     "adpSources": {
       "espn": 170.04,
       "fantasypros": 218.5
@@ -14490,7 +15176,9 @@
       "espn": 170.06,
       "ffc": 120.6,
       "fantasypros": 301.5
-    }
+    },
+    "age": 29,
+    "yearsExp": 7
   },
   {
     "id": "3045523",
@@ -14532,7 +15220,9 @@
     "adpSources": {
       "espn": 170.14,
       "fantasypros": 321.5
-    }
+    },
+    "age": 30,
+    "yearsExp": 9
   },
   {
     "id": "4686422",
@@ -14573,7 +15263,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.15
-    }
+    },
+    "age": 26,
+    "yearsExp": 3
   },
   {
     "id": "4061956",
@@ -14614,7 +15306,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.15
-    }
+    },
+    "age": 29,
+    "yearsExp": 7
   },
   {
     "id": "5082630",
@@ -14656,7 +15350,9 @@
     "adpSources": {
       "espn": 170.02,
       "fantasypros": 323
-    }
+    },
+    "age": 23,
+    "yearsExp": 1
   },
   {
     "id": "4567156",
@@ -14698,7 +15394,9 @@
     "adpSources": {
       "espn": 170.11,
       "fantasypros": 285
-    }
+    },
+    "age": 26,
+    "yearsExp": 4
   },
   {
     "id": "4242433",
@@ -14738,6 +15436,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 26,
+    "yearsExp": 5,
     "adpSources": {
       "espn": 170.1,
       "fantasypros": 307
@@ -14772,7 +15472,9 @@
     "adpSources": {
       "espn": 170.12,
       "fantasypros": 289
-    }
+    },
+    "age": 23,
+    "yearsExp": 0
   },
   {
     "id": "4569382",
@@ -14814,7 +15516,9 @@
     "adpSources": {
       "espn": 170.06,
       "fantasypros": 247
-    }
+    },
+    "age": 25,
+    "yearsExp": 2
   },
   {
     "id": "4432775",
@@ -14857,7 +15561,9 @@
       "espn": 170.15,
       "ffc": 163.7,
       "fantasypros": 274
-    }
+    },
+    "age": 23,
+    "yearsExp": 1
   },
   {
     "id": "4880236",
@@ -14887,7 +15593,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.15
-    }
+    },
+    "age": 23,
+    "yearsExp": 0
   },
   {
     "id": "4427834",
@@ -14927,6 +15635,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 25,
+    "yearsExp": 2,
     "adpSources": {
       "espn": 170.08
     }
@@ -14970,7 +15680,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.09
-    }
+    },
+    "age": 30,
+    "yearsExp": 7
   },
   {
     "id": "3921690",
@@ -15010,6 +15722,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 29,
+    "yearsExp": 7,
     "adpSources": {
       "espn": 170.11
     }
@@ -15054,7 +15768,9 @@
     "adpSources": {
       "espn": 167.39,
       "fantasypros": 284
-    }
+    },
+    "age": 33,
+    "yearsExp": 12
   },
   {
     "id": "4831959",
@@ -15085,7 +15801,9 @@
     "adpSources": {
       "espn": 169.81,
       "fantasypros": 305
-    }
+    },
+    "age": 22,
+    "yearsExp": 0
   },
   {
     "id": "4696882",
@@ -15127,7 +15845,9 @@
     "adpSources": {
       "espn": 170.07,
       "fantasypros": 275
-    }
+    },
+    "age": 25,
+    "yearsExp": 2
   },
   {
     "id": "4426496",
@@ -15168,7 +15888,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.09
-    }
+    },
+    "age": 26,
+    "yearsExp": 2
   },
   {
     "id": "4683243",
@@ -15209,7 +15931,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.13
-    }
+    },
+    "age": 23,
+    "yearsExp": 1
   },
   {
     "id": "4048228",
@@ -15250,7 +15974,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.09
-    }
+    },
+    "age": 28,
+    "yearsExp": 5
   },
   {
     "id": "4682648",
@@ -15281,7 +16007,9 @@
     "adpSources": {
       "espn": 169.72,
       "fantasypros": 219
-    }
+    },
+    "age": 22,
+    "yearsExp": 0
   },
   {
     "id": "4683153",
@@ -15312,7 +16040,9 @@
     "adpSources": {
       "espn": 169.89,
       "fantasypros": 313
-    }
+    },
+    "age": 24,
+    "yearsExp": 0
   },
   {
     "id": "4428085",
@@ -15354,7 +16084,9 @@
     "adpSources": {
       "espn": 169.96,
       "fantasypros": 271
-    }
+    },
+    "age": 25,
+    "yearsExp": 3
   },
   {
     "id": "4431268",
@@ -15396,7 +16128,9 @@
     "adpSources": {
       "espn": 170.05,
       "fantasypros": 262
-    }
+    },
+    "age": 24,
+    "yearsExp": 1
   },
   {
     "id": "3050481",
@@ -15437,7 +16171,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.09
-    }
+    },
+    "age": 31,
+    "yearsExp": 8
   },
   {
     "id": "4710855",
@@ -15479,7 +16215,9 @@
     "adpSources": {
       "espn": 170.04,
       "fantasypros": 269
-    }
+    },
+    "age": 23,
+    "yearsExp": 1
   },
   {
     "id": "3911853",
@@ -15520,7 +16258,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.04
-    }
+    },
+    "age": 29,
+    "yearsExp": 6
   },
   {
     "id": "2991662",
@@ -15562,7 +16302,9 @@
     "adpSources": {
       "espn": 169.88,
       "fantasypros": 390
-    }
+    },
+    "age": 32,
+    "yearsExp": 9
   },
   {
     "id": "4372096",
@@ -15603,7 +16345,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.03
-    }
+    },
+    "age": 27,
+    "yearsExp": 3
   },
   {
     "id": "4573699",
@@ -15644,7 +16388,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.06
-    }
+    },
+    "age": 25,
+    "yearsExp": 1
   },
   {
     "id": "4685553",
@@ -15675,7 +16421,9 @@
     "adpSources": {
       "espn": 170.04,
       "fantasypros": 297.5
-    }
+    },
+    "age": 22,
+    "yearsExp": 0
   },
   {
     "id": "4430870",
@@ -15716,7 +16464,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.04
-    }
+    },
+    "age": 24,
+    "yearsExp": 1
   },
   {
     "id": "2998565",
@@ -15757,7 +16507,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.06
-    }
+    },
+    "age": 32,
+    "yearsExp": 9
   },
   {
     "id": "4690923",
@@ -15799,7 +16551,9 @@
     "adpSources": {
       "espn": 170.09,
       "fantasypros": 308
-    }
+    },
+    "age": 24,
+    "yearsExp": 2
   },
   {
     "id": "4361516",
@@ -15840,7 +16594,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.04
-    }
+    },
+    "age": 25,
+    "yearsExp": 4
   },
   {
     "id": "4361372",
@@ -15881,7 +16637,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.08
-    }
+    },
+    "age": 25,
+    "yearsExp": 4
   },
   {
     "id": "3052897",
@@ -15922,7 +16680,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.05
-    }
+    },
+    "age": 30,
+    "yearsExp": 8
   },
   {
     "id": "4373030",
@@ -15963,7 +16723,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.09
-    }
+    },
+    "age": 26,
+    "yearsExp": 3
   },
   {
     "id": "4613202",
@@ -16005,7 +16767,9 @@
     "adpSources": {
       "espn": 169.93,
       "fantasypros": 398
-    }
+    },
+    "age": 30,
+    "yearsExp": 5
   },
   {
     "id": "4369863",
@@ -16046,7 +16810,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.02
-    }
+    },
+    "age": 26,
+    "yearsExp": 3
   },
   {
     "id": "4685307",
@@ -16077,7 +16843,9 @@
     "adpSources": {
       "espn": 170.07,
       "fantasypros": 266.5
-    }
+    },
+    "age": 22,
+    "yearsExp": 0
   },
   {
     "id": "4608810",
@@ -16119,7 +16887,9 @@
     "adpSources": {
       "espn": 170.01,
       "fantasypros": 399
-    }
+    },
+    "age": 24,
+    "yearsExp": 1
   },
   {
     "id": "4386544",
@@ -16160,7 +16930,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170
-    }
+    },
+    "age": 28,
+    "yearsExp": 3
   },
   {
     "id": "4243389",
@@ -16202,7 +16974,9 @@
     "adpSources": {
       "espn": 170.01,
       "fantasypros": 286
-    }
+    },
+    "age": 27,
+    "yearsExp": 4
   },
   {
     "id": "4426553",
@@ -16243,7 +17017,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.04
-    }
+    },
+    "age": 25,
+    "yearsExp": 3
   },
   {
     "id": "4690070",
@@ -16325,7 +17101,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.08
-    }
+    },
+    "age": 29,
+    "yearsExp": 7
   },
   {
     "id": "4383440",
@@ -16366,7 +17144,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.08
-    }
+    },
+    "age": 27,
+    "yearsExp": 3
   },
   {
     "id": "4242392",
@@ -16406,6 +17186,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 27,
+    "yearsExp": 5,
     "adpSources": {
       "espn": 170.06
     }
@@ -16438,7 +17220,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.07
-    }
+    },
+    "age": 24,
+    "yearsExp": 0
   },
   {
     "id": "4372505",
@@ -16479,7 +17263,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.09
-    }
+    },
+    "age": 26,
+    "yearsExp": 3
   },
   {
     "id": "4241263",
@@ -16521,7 +17307,9 @@
     "adpSources": {
       "espn": 170.08,
       "fantasypros": 273
-    }
+    },
+    "age": 27,
+    "yearsExp": 4
   },
   {
     "id": "4429684",
@@ -16562,7 +17350,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.08
-    }
+    },
+    "age": 25,
+    "yearsExp": 2
   },
   {
     "id": "5160110",
@@ -16603,7 +17393,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170
-    }
+    },
+    "age": 24,
+    "yearsExp": 1
   },
   {
     "id": "4912218",
@@ -16633,7 +17425,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170
-    }
+    },
+    "age": 23,
+    "yearsExp": 0
   },
   {
     "id": "4037235",
@@ -16675,7 +17469,9 @@
     "adpSources": {
       "espn": 170.06,
       "fantasypros": 299
-    }
+    },
+    "age": 28,
+    "yearsExp": 7
   },
   {
     "id": "4362018",
@@ -16716,7 +17512,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.06
-    }
+    },
+    "age": 26,
+    "yearsExp": 3
   },
   {
     "id": "4569371",
@@ -16757,7 +17555,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.07
-    }
+    },
+    "age": 25,
+    "yearsExp": 2
   },
   {
     "id": "4040612",
@@ -16798,7 +17598,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.06
-    }
+    },
+    "age": 28,
+    "yearsExp": 5
   },
   {
     "id": "4573697",
@@ -16838,6 +17640,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 25,
+    "yearsExp": 2,
     "adpSources": {
       "espn": 170.09
     }
@@ -16881,7 +17685,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.07
-    }
+    },
+    "age": 27,
+    "yearsExp": 4
   },
   {
     "id": "4362477",
@@ -16922,7 +17728,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.09
-    }
+    },
+    "age": 25,
+    "yearsExp": 3
   },
   {
     "id": "4035656",
@@ -16963,7 +17771,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.06
-    }
+    },
+    "age": 29,
+    "yearsExp": 5
   },
   {
     "id": "4241476",
@@ -17003,6 +17813,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 26,
+    "yearsExp": 3,
     "adpSources": {
       "espn": 170.07
     }
@@ -17047,7 +17859,9 @@
     "adpSources": {
       "espn": 170.07,
       "fantasypros": 312
-    }
+    },
+    "age": 22,
+    "yearsExp": 1
   },
   {
     "id": "2576980",
@@ -17089,7 +17903,9 @@
     "adpSources": {
       "espn": 170.1,
       "fantasypros": 345
-    }
+    },
+    "age": 32,
+    "yearsExp": 11
   },
   {
     "id": "4434153",
@@ -17131,7 +17947,9 @@
     "adpSources": {
       "espn": 170.07,
       "fantasypros": 330
-    }
+    },
+    "age": 26,
+    "yearsExp": 3
   },
   {
     "id": "2515270",
@@ -17172,7 +17990,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.05
-    }
+    },
+    "age": 34,
+    "yearsExp": 11
   },
   {
     "id": "4869748",
@@ -17203,7 +18023,9 @@
     "adpSources": {
       "espn": 170,
       "fantasypros": 296
-    }
+    },
+    "age": 22,
+    "yearsExp": 0
   },
   {
     "id": "5092508",
@@ -17234,7 +18056,9 @@
     "adpSources": {
       "espn": 170.07,
       "fantasypros": 318
-    }
+    },
+    "age": 23,
+    "yearsExp": 0
   },
   {
     "id": "3043116",
@@ -17275,7 +18099,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.01
-    }
+    },
+    "age": 31,
+    "yearsExp": 10
   },
   {
     "id": "4605951",
@@ -17305,7 +18131,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.01
-    }
+    },
+    "age": 24,
+    "yearsExp": 0
   },
   {
     "id": "4878695",
@@ -17376,7 +18204,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.06
-    }
+    },
+    "age": 26,
+    "yearsExp": 2
   },
   {
     "id": "4685201",
@@ -17418,7 +18248,9 @@
     "adpSources": {
       "espn": 170.09,
       "fantasypros": 265
-    }
+    },
+    "age": 26,
+    "yearsExp": 3
   },
   {
     "id": "4212909",
@@ -17459,7 +18291,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.1
-    }
+    },
+    "age": 31,
+    "yearsExp": 9
   },
   {
     "id": "16728",
@@ -17500,7 +18334,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.11
-    }
+    },
+    "age": 33,
+    "yearsExp": 12
   },
   {
     "id": "4383351",
@@ -17541,7 +18377,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.08
-    }
+    },
+    "age": 26,
+    "yearsExp": 5
   },
   {
     "id": "14163",
@@ -17583,7 +18421,9 @@
     "adpSources": {
       "espn": 170.01,
       "fantasypros": 266
-    }
+    },
+    "age": 36,
+    "yearsExp": 15
   },
   {
     "id": "4917427",
@@ -17613,7 +18453,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.97
-    }
+    },
+    "age": 22,
+    "yearsExp": 0
   },
   {
     "id": "4240703",
@@ -17654,7 +18496,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.1
-    }
+    },
+    "age": 28,
+    "yearsExp": 4
   },
   {
     "id": "4360231",
@@ -17695,7 +18539,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.98
-    }
+    },
+    "age": 28,
+    "yearsExp": 4
   },
   {
     "id": "4565185",
@@ -17736,7 +18582,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.09
-    }
+    },
+    "age": 23,
+    "yearsExp": 1
   },
   {
     "id": "4361112",
@@ -17777,7 +18625,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170
-    }
+    },
+    "age": 26,
+    "yearsExp": 2
   },
   {
     "id": "4596545",
@@ -17818,7 +18668,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170
-    }
+    },
+    "age": 24,
+    "yearsExp": 1
   },
   {
     "id": "4702559",
@@ -17849,7 +18701,9 @@
     "adpSources": {
       "espn": 169.97,
       "fantasypros": 306.5
-    }
+    },
+    "age": 22,
+    "yearsExp": 0
   },
   {
     "id": "3915486",
@@ -17890,7 +18744,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170
-    }
+    },
+    "age": 26,
+    "yearsExp": 4
   },
   {
     "id": "4695705",
@@ -17920,7 +18776,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170
-    }
+    },
+    "age": 23,
+    "yearsExp": 0
   },
   {
     "id": "4426339",
@@ -17962,7 +18820,9 @@
     "adpSources": {
       "espn": 170.1,
       "fantasypros": 285
-    }
+    },
+    "age": 25,
+    "yearsExp": 2
   },
   {
     "id": "4722908",
@@ -18003,7 +18863,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170
-    }
+    },
+    "age": 27,
+    "yearsExp": 4
   },
   {
     "id": "4685504",
@@ -18033,7 +18895,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.97
-    }
+    },
+    "age": 22,
+    "yearsExp": 0
   },
   {
     "id": "4432260",
@@ -18093,7 +18957,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.99
-    }
+    },
+    "age": 22,
+    "yearsExp": 0
   },
   {
     "id": "4035671",
@@ -18135,7 +19001,9 @@
     "adpSources": {
       "espn": 170.04,
       "fantasypros": 342
-    }
+    },
+    "age": 28,
+    "yearsExp": 6
   },
   {
     "id": "2975863",
@@ -18176,7 +19044,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.94
-    }
+    },
+    "age": 32,
+    "yearsExp": 9
   },
   {
     "id": "3118892",
@@ -18216,6 +19086,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 30,
+    "yearsExp": 8,
     "adpSources": {
       "espn": 170.1
     }
@@ -18259,7 +19131,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.98
-    }
+    },
+    "age": 27,
+    "yearsExp": 4
   },
   {
     "id": "4715355",
@@ -18300,7 +19174,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.1
-    }
+    },
+    "age": 24,
+    "yearsExp": 1
   },
   {
     "id": "4696700",
@@ -18340,6 +19216,8 @@
     "flag": "none",
     "draftStatus": "available",
     "injuryStatus": "QUESTIONABLE",
+    "age": 24,
+    "yearsExp": 2,
     "adpSources": {
       "espn": 169.99
     }
@@ -18383,7 +19261,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.08
-    }
+    },
+    "age": 25,
+    "yearsExp": 3
   },
   {
     "id": "4242546",
@@ -18424,7 +19304,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.09
-    }
+    },
+    "age": 27,
+    "yearsExp": 5
   },
   {
     "id": "4045305",
@@ -18465,7 +19347,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.99
-    }
+    },
+    "age": 30,
+    "yearsExp": 8
   },
   {
     "id": "4035020",
@@ -18506,7 +19390,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.97
-    }
+    },
+    "age": 28,
+    "yearsExp": 6
   },
   {
     "id": "4685413",
@@ -18536,7 +19422,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.06
-    }
+    },
+    "age": 22,
+    "yearsExp": 0
   },
   {
     "id": "4565859",
@@ -18566,7 +19454,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.98
-    }
+    },
+    "age": 24,
+    "yearsExp": 0
   },
   {
     "id": "4869132",
@@ -18596,7 +19486,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.99
-    }
+    },
+    "age": 22,
+    "yearsExp": 0
   },
   {
     "id": "5081338",
@@ -18626,7 +19518,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.94
-    }
+    },
+    "age": 24,
+    "yearsExp": 0
   },
   {
     "id": "3115293",
@@ -18668,7 +19562,9 @@
     "adpSources": {
       "espn": 170.08,
       "fantasypros": 295
-    }
+    },
+    "age": 30,
+    "yearsExp": 8
   },
   {
     "id": "3924327",
@@ -18709,7 +19605,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.99
-    }
+    },
+    "age": 29,
+    "yearsExp": 7
   },
   {
     "id": "4883647",
@@ -18751,7 +19649,9 @@
     "adpSources": {
       "espn": 169.95,
       "fantasypros": 293
-    }
+    },
+    "age": 23,
+    "yearsExp": 1
   },
   {
     "id": "3039707",
@@ -18792,7 +19692,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.06
-    }
+    },
+    "age": 31,
+    "yearsExp": 9
   },
   {
     "id": "4889929",
@@ -18834,7 +19736,9 @@
     "adpSources": {
       "espn": 170.07,
       "fantasypros": 277
-    }
+    },
+    "age": 23,
+    "yearsExp": 1
   },
   {
     "id": "4038524",
@@ -18876,7 +19780,9 @@
     "adpSources": {
       "espn": 170.07,
       "fantasypros": 256
-    }
+    },
+    "age": 30,
+    "yearsExp": 7
   },
   {
     "id": "4429939",
@@ -18917,7 +19823,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170.1
-    }
+    },
+    "age": 26,
+    "yearsExp": 2
   },
   {
     "id": "4613104",
@@ -18958,7 +19866,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.97
-    }
+    },
+    "age": 24,
+    "yearsExp": 2
   },
   {
     "id": "2531358",
@@ -18999,7 +19909,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.99
-    }
+    },
+    "age": 34,
+    "yearsExp": 11
   },
   {
     "id": "5097554",
@@ -19040,7 +19952,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.97
-    }
+    },
+    "age": 24,
+    "yearsExp": 2
   },
   {
     "id": "4429105",
@@ -19081,7 +19995,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.94
-    }
+    },
+    "age": 24,
+    "yearsExp": 1
   },
   {
     "id": "4708486",
@@ -19122,7 +20038,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 170
-    }
+    },
+    "age": 23,
+    "yearsExp": 1
   },
   {
     "id": "3120348",
@@ -19163,7 +20081,9 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.84
-    }
+    },
+    "age": 29,
+    "yearsExp": 9
   },
   {
     "id": "3123075",
@@ -19204,6 +20124,8 @@
     "draftStatus": "available",
     "adpSources": {
       "espn": 169.97
-    }
+    },
+    "age": 30,
+    "yearsExp": 8
   }
 ]

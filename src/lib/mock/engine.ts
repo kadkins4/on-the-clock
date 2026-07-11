@@ -129,6 +129,10 @@ export function botPickId(m: MockState): string {
   // this team's remaining picks, counting the one on the clock
   const picksLeft = m.settings.rounds - round + 1;
   const strategy = m.teams[teamIndex]?.strategy ?? undefined;
+  // this team's own drafted players — Stacker reads it to find its QB
+  const roster = m.picks
+    .filter((pk) => pk.teamIndex === teamIndex)
+    .map((pk) => byId.get(pk.playerId)!);
   return botPick(
     available(m),
     needs,
@@ -137,6 +141,7 @@ export function botPickId(m: MockState): string {
     recentPositions,
     picksLeft,
     strategy,
+    roster,
   );
 }
 
