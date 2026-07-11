@@ -5,7 +5,11 @@ import {
   availableByBoard,
   currentTeamIndex,
   isComplete,
+  teamRosterPositions,
 } from "../../lib/mock/engine";
+import { detectStrategy } from "../../lib/mock/detect";
+import { nudgeCopy } from "../../lib/mock/nudge";
+import { StrategyNudge } from "./StrategyNudge";
 import { formatPick, picksUntilUser } from "../../lib/mock/board";
 import { useDraftTimer } from "./useDraftTimer";
 import { useTvBroadcast } from "./useTvBroadcast";
@@ -72,6 +76,9 @@ export function MockDraft({
   const [boardView, setBoardView] = useState<"wall" | "locker">("wall");
   const [menuFor, setMenuFor] = useState<number | null>(null); // pick popover
   const [replaceSearch, setReplaceSearch] = useState("");
+  // Suggester: which detected strategy the user has dismissed. Cleared whenever
+  // the read changes, so a fresh strategy re-surfaces the nudge.
+  const [dismissedStrat, setDismissedStrat] = useState<string | null>(null);
 
   const onClock = currentTeamIndex(state);
   const team = state.teams[onClock];
@@ -79,6 +86,15 @@ export function MockDraft({
   const overall = state.picks.length + 1;
   const round = Math.floor((overall - 1) / state.settings.teams) + 1;
   const picksAway = picksUntilUser(state, userTeamIndex);
+
+  // Suggester: infer the user's strategy from their picks so far and, once
+  // there's a read they haven't dismissed, surface a nudge with target hints.
+  const detected = useMemo(
+    () => detectStrategy(teamRosterPositions(state, userTeamIndex)),
+    [state, userTeamIndex],
+  );
+  const nudge = nudgeCopy(detected);
+  const showNudge = nudge != null && detected.strategy !== dismissedStrat;
 
   // The live draft clock (reveal hold, countdown + auto-pick, bot progression,
   // auto-draft, missed-pick modal, mute) lives in useDraftTimer.
@@ -332,7 +348,15 @@ export function MockDraft({
               <MyRoster state={state} userTeamIndex={userTeamIndex} />
             </div>
 
-            <div className="desk-col desk-center">{draftPoolBody}</div>
+            <div className="desk-col desk-center">
+              {showNudge && nudge && (
+                <StrategyNudge
+                  copy={nudge}
+                  onDismiss={() => setDismissedStrat(detected.strategy)}
+                />
+              )}
+              {draftPoolBody}
+            </div>
 
             <div className="desk-col desk-right">
               <RoundStrip state={state} round={round} />

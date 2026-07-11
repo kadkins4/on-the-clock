@@ -1839,6 +1839,52 @@ table.players th.sorted {
   margin-top: 0.5rem;
 }
 
+/* --- Suggester: detected-strategy nudge in the draft view --- */
+.strat-nudge {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.7rem;
+  margin-bottom: 0.6rem;
+  border: 1px solid #e3a24a;
+  border-left: 3px solid #e3a24a;
+  border-radius: 8px;
+  background: #e3a24a1a;
+}
+.strat-nudge.tentative {
+  border-color: #7d8590;
+  border-left-color: #7d8590;
+  background: #7d859014;
+}
+.sn-icon {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+.sn-body {
+  flex: 1;
+  min-width: 0;
+}
+.sn-head {
+  font-size: 0.85rem;
+}
+.sn-hint {
+  font-size: 0.78rem;
+  opacity: 0.75;
+  margin-top: 0.1rem;
+}
+.sn-x {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 0.8rem;
+  opacity: 0.6;
+  padding: 0.2rem;
+  color: inherit;
+}
+.sn-x:hover {
+  opacity: 1;
+}
+
 /* --- Post-draft reveal: how the bots drafted --- */
 .mock-reveal {
   margin-top: 1.25rem;

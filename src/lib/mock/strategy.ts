@@ -18,7 +18,8 @@ export type StrategyId =
 
 export interface BotStrategy {
   id: StrategyId;
-  label: string; // display name, e.g. "The Anchor"
+  name: string; // plain strategy name, e.g. "Zero RB" (used for the user's read)
+  label: string; // bot persona name, e.g. "The Anchor" (used for bot reveals)
   icon: string; // quick-glance emoji
   blurb: string; // one-liner for the end-of-draft reveal
   // `true` once a strategy is fully modeled and safe to assign to bots. The
@@ -37,6 +38,7 @@ const MID_END = 8; // rounds 4–8
 export const STRATEGIES: Record<StrategyId, BotStrategy> = {
   heroRB: {
     id: "heroRB",
+    name: "Hero RB",
     label: "The Anchor",
     icon: "⚓",
     blurb: "Hero RB — one elite back, then WRs the rest of the way.",
@@ -53,6 +55,7 @@ export const STRATEGIES: Record<StrategyId, BotStrategy> = {
   },
   zeroRB: {
     id: "zeroRB",
+    name: "Zero RB",
     label: "Volume Hunter",
     icon: "0️⃣",
     blurb: "Zero RB — WRs early, hammer RB value in the middle rounds.",
@@ -69,6 +72,7 @@ export const STRATEGIES: Record<StrategyId, BotStrategy> = {
   },
   robustRB: {
     id: "robustRB",
+    name: "Robust RB",
     label: "Ground & Pound",
     icon: "💪",
     blurb: "Robust RB — corner the scarcest position early and often.",
@@ -81,6 +85,7 @@ export const STRATEGIES: Record<StrategyId, BotStrategy> = {
   },
   balanced: {
     id: "balanced",
+    name: "Balanced",
     label: "The Balanced",
     icon: "⚖️",
     blurb: "Best player available — no positional bias.",
@@ -89,6 +94,7 @@ export const STRATEGIES: Record<StrategyId, BotStrategy> = {
   },
   streamer: {
     id: "streamer",
+    name: "Streamer",
     label: "The Streamer",
     icon: "🌊",
     blurb: "Late QB & TE — spends early capital on RB/WR, streams the rest.",
@@ -101,6 +107,7 @@ export const STRATEGIES: Record<StrategyId, BotStrategy> = {
   // --- Not yet assignable: need context the position hook doesn't carry. ---
   tiers: {
     id: "tiers",
+    name: "Tier-Based",
     label: "Cliff Watcher",
     icon: "🪜",
     blurb: "Tier-based — reaches to stay above a tier break.",
@@ -109,6 +116,7 @@ export const STRATEGIES: Record<StrategyId, BotStrategy> = {
   },
   upside: {
     id: "upside",
+    name: "Upside",
     label: "Big-Game Hunter",
     icon: "🚀",
     blurb: "Upside — swings for ceiling and breakouts.",
@@ -117,6 +125,7 @@ export const STRATEGIES: Record<StrategyId, BotStrategy> = {
   },
   homer: {
     id: "homer",
+    name: "Homer",
     label: "The Homer",
     icon: "🎲",
     blurb: "Chaos — overdrafts a favorite team and chases every run.",
