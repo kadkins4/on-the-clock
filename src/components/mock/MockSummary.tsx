@@ -1,14 +1,24 @@
 import type { MockSummaryResult } from "../../lib/mock/summary";
 import { formatPick } from "../../lib/mock/board";
+import { botStrategyReveal } from "../../lib/mock/reveal";
+import type { TeamIdentity } from "../../lib/mock/teamIdentity";
 
 interface Props {
   summary: MockSummaryResult;
   teams: number;
+  teamIdentities: TeamIdentity[];
   onRestart: () => void;
   onExit: () => void;
 }
 
-export function MockSummary({ summary, teams, onRestart, onExit }: Props) {
+export function MockSummary({
+  summary,
+  teams,
+  teamIdentities,
+  onRestart,
+  onExit,
+}: Props) {
+  const field = botStrategyReveal(teamIdentities);
   const counts = Object.entries(summary.positionCounts)
     .map(([pos, n]) => `${pos} ${n}`)
     .join(" · ");
@@ -43,6 +53,22 @@ export function MockSummary({ summary, teams, onRestart, onExit }: Props) {
           </div>
         ))}
       </div>
+      {field.length > 0 && (
+        <div className="mock-reveal">
+          <h3>How the bots drafted</h3>
+          <div className="reveal-list">
+            {field.map((b) => (
+              <div key={b.name} className="reveal-row" title={b.blurb}>
+                <span className="reveal-icon" aria-hidden="true">
+                  {b.icon}
+                </span>
+                <span className="reveal-team">{b.name}</span>
+                <span className="reveal-strat">{b.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
       <div className="mock-actions">
         <button onClick={onRestart}>New mock</button>
         <button className="secondary" onClick={onExit}>
