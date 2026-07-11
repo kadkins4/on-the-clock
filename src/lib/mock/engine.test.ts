@@ -11,6 +11,7 @@ import {
   rewindTo,
   isComplete,
   teamRosterPositions,
+  simulateToEnd,
 } from "./engine";
 import type { League, Player } from "../../types";
 
@@ -438,5 +439,41 @@ describe("bot personalities", () => {
     };
     expect(botPickId(neutral)).toBe("a"); // best RB by ADP
     expect(botPickId(zero)).toBe("b"); // Zero RB reaches past it for the WR
+  });
+});
+
+describe("simulateToEnd", () => {
+  it("fills the whole board in one call", () => {
+    const m = createMock(
+      league(board),
+      { teams: 2, userSlot: 1, thirdRoundReversal: false },
+      7,
+    );
+    const done = simulateToEnd(m);
+    expect(isComplete(done)).toBe(true);
+    expect(done.picks.length).toBe(done.order.length);
+    // every pick is a distinct real player
+    const ids = done.picks.map((p) => p.playerId);
+    expect(new Set(ids).size).toBe(ids.length);
+  });
+
+  it("is deterministic for a fixed seed", () => {
+    const a = simulateToEnd(
+      createMock(
+        league(board),
+        { teams: 2, userSlot: 1, thirdRoundReversal: false },
+        3,
+      ),
+    );
+    const b = simulateToEnd(
+      createMock(
+        league(board),
+        { teams: 2, userSlot: 1, thirdRoundReversal: false },
+        3,
+      ),
+    );
+    expect(a.picks.map((p) => p.playerId)).toEqual(
+      b.picks.map((p) => p.playerId),
+    );
   });
 });

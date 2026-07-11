@@ -140,6 +140,22 @@ export function botPickId(m: MockState): string {
   );
 }
 
+// Run the draft to completion in one synchronous pass — every remaining pick
+// (bots and the user's own slots) is made by best-available, honoring each
+// team's strategy. Pure and instant; used by the dev-mode "simulate" control to
+// test bots/features without waiting out the live clock. The guard caps the
+// loop at the number of open picks so a stuck pick can never spin forever.
+export function simulateToEnd(m: MockState): MockState {
+  let s = m;
+  let guard = s.order.length - s.picks.length + 1;
+  while (!isComplete(s) && guard-- > 0) {
+    const id = botPickId(s);
+    if (!id) break;
+    s = draftPlayer(s, id);
+  }
+  return s;
+}
+
 // Swap the player drafted at pick `overall` (1-based). Frees the old player
 // back into the pool; refuses if the replacement is unknown or already drafted
 // elsewhere. Keeps the slot's overall/round/teamIndex.

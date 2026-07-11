@@ -9,6 +9,7 @@ import {
   replacePick,
   rewindTo,
   isComplete,
+  simulateToEnd,
 } from "../../lib/mock/engine";
 import { mockSummary } from "../../lib/mock/summary";
 import { unlockAudio } from "../../lib/sound";
@@ -62,6 +63,12 @@ export function MockMode({ league, onExit, onSetValueFlags }: Props) {
     setState((m) => (m ? rewindTo(m, overall) : m));
   }, []);
 
+  // Dev-mode instant sim: fill the whole board in one pass, then the completion
+  // effect below flips to the summary.
+  const simulate = useCallback(() => {
+    setState((m) => (m ? simulateToEnd(m) : m));
+  }, []);
+
   // advance to summary once the board fills — intentional phase transition
   // driven by the draft reaching completion, not a render loop.
   useEffect(() => {
@@ -90,6 +97,7 @@ export function MockMode({ league, onExit, onSetValueFlags }: Props) {
         onExit={onExit}
         onReplacePick={replace}
         onRewindTo={rewind}
+        onSimulate={simulate}
       />
     );
   }

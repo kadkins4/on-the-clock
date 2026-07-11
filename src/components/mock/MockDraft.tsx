@@ -41,7 +41,15 @@ interface Props {
   onExit: () => void;
   onReplacePick: (overall: number, playerId: string) => void;
   onRewindTo: (overall: number) => void;
+  onSimulate: () => void; // dev-mode: fill the whole board instantly
 }
+
+// Sim-mode gate (?sim=1): shows the instant-simulate control inside the draft.
+// A distinct param from ?dev=1, which replaces the whole app with diagnostics
+// and so can't coexist with the live draft.
+const simMode =
+  typeof window !== "undefined" &&
+  new URLSearchParams(window.location.search).get("sim") === "1";
 
 const POS_FILTERS: (Position | "All")[] = [
   "All",
@@ -62,6 +70,7 @@ export function MockDraft({
   onExit,
   onReplacePick,
   onRewindTo,
+  onSimulate,
 }: Props) {
   const [posFilter, setPosFilter] = useState<Position | "All">("All");
   // B1: top-level draft-room tab (app-bar). Defaults to the working Draft view
@@ -308,6 +317,15 @@ export function MockDraft({
       statusLine={`R${round} · PICK ${overall} OF ${state.order.length}`}
     >
       <div className="mock-draft">
+        {simMode && !isComplete(state) && (
+          <button
+            className="dev-sim-btn"
+            title="Fill the whole board instantly and jump to the summary (?sim=1)"
+            onClick={onSimulate}
+          >
+            ⚡ Simulate draft
+          </button>
+        )}
         {tab === "draft" && (
           // B6: Broadcast Desk — three columns (clock + roster + queue /
           // best available / round strip). The clock panel reuses the existing
