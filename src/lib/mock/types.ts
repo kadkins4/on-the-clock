@@ -1,6 +1,7 @@
 import type { Player, RosterSettings, Scoring } from "../../types";
 import type { TeamIdentity } from "./teamIdentity";
 import type { DraftFormat } from "./order";
+import type { BotMix } from "./strategy";
 
 export interface MockSettings {
   teams: number; // 8–16
@@ -16,6 +17,10 @@ export interface MockSettings {
   // Give bots draft personalities (default true). When false, every bot drafts
   // by consensus ADP with no positional bias — the pre-personality behavior.
   botPersonalities?: boolean;
+  // Optional user-authored mix of how many bots run each strategy (from the
+  // setup screen). Absent/empty => fill every bot seat randomly. Ignored when
+  // botPersonalities is false.
+  botMix?: BotMix;
   // Per-mock overrides chosen on the setup screen. Absent => inherit the
   // league's value. The mock snapshots these so the live league is untouched.
   scoring?: Scoring;

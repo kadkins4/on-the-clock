@@ -1,4 +1,4 @@
-import type { Player, Position } from "../../types";
+import type { Player } from "../../types";
 import type { Needs } from "./roster";
 
 // Context handed to every strategy at pick time. `round` and `needs` drive the
@@ -27,6 +27,13 @@ export type StrategyId =
   | "stacker"
   | "tiers"
   | "homer";
+
+// A user-authored bot mix from the setup screen: how many bot seats to hand
+// each strategy. "normal" means a personality-free best-available bot. Any seats
+// left unassigned are filled randomly from the ready strategies. An absent/empty
+// mix means "fill every seat randomly" (the default).
+export type BotMixKey = StrategyId | "normal";
+export type BotMix = Partial<Record<BotMixKey, number>>;
 
 export interface BotStrategy {
   id: StrategyId;

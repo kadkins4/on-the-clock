@@ -46,6 +46,17 @@ export function LogContent() {
         <h2 className="otc-log-h">Change Log</h2>
         <ul className="otc-changelog">
           <li>
+            <span className="otc-log-date">Jul 11, 2026</span>
+            More bot personalities &amp; a custom bot mix — four new draft
+            strategies join the pool: Prospector (chases youth &amp; rookies),
+            Proven Vet (trusts established vets), Value Sniper (pounces when the
+            board rates a player above his ADP) and Stacker (pairs a QB with his
+            own pass-catchers). In the lobby&rsquo;s Advanced options you can
+            now set a custom bot mix — dial in how many bots run each strategy,
+            add personality-free &ldquo;Normal&rdquo; bots, or leave it on
+            random.
+          </li>
+          <li>
             <span className="otc-log-date">Jul 10, 2026</span>
             Bot personalities &amp; strategy coach — mock-draft bots now draft
             with distinct strategies (Hero RB, Zero RB, Robust RB, Streamer,

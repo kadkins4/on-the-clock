@@ -1287,6 +1287,80 @@ table.players th.sorted {
   color: var(--text-tertiary);
   margin-top: 1px;
 }
+
+/* Bot-mix picker (Advanced) */
+.ms-botmix {
+  margin: 4px 0 13px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-2);
+  border-radius: 10px;
+  background: var(--card-high);
+}
+.ms-botmix-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.ms-botmix-title {
+  font-size: var(--fs-11);
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+.ms-botmix-reset {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: var(--fs-13-5);
+  color: var(--otc-accent);
+  cursor: pointer;
+  font-weight: 600;
+}
+.ms-botmix-reset:hover {
+  text-decoration: underline;
+}
+.ms-botmix-row {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 8px 0;
+}
+.ms-botmix-row + .ms-botmix-row {
+  border-top: 1px solid var(--border-1);
+}
+.ms-botmix-ic {
+  flex: none;
+  font-size: 18px;
+  width: 22px;
+  text-align: center;
+}
+.ms-botmix-meta {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.ms-botmix-name {
+  font-size: var(--fs-13-5);
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+.ms-botmix-desc {
+  font-size: var(--fs-11);
+  color: var(--text-tertiary);
+  margin-top: 1px;
+}
+.ms-botmix-foot {
+  margin-top: 9px;
+  padding-top: 9px;
+  border-top: 1px solid var(--border-1);
+  font-size: var(--fs-11);
+  color: var(--text-tertiary);
+  text-align: right;
+}
+.ms-botmix-foot.is-over {
+  color: #e0796f;
+}
 .ms-switch {
   flex: none;
   width: 46px;

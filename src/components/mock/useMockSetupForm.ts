@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { League, RosterSettings, Scoring } from "../../types";
 import type { MockSettings } from "../../lib/mock/types";
+import type { BotMix, BotMixKey } from "../../lib/mock/strategy";
 import { valueFlagsEnabled } from "../../lib/league";
 import { defaultValueThreshold } from "../../lib/draftValue";
 
@@ -46,6 +47,9 @@ export interface MockSetupForm {
   setAutoDraft: (b: boolean) => void;
   botPersonalities: boolean;
   setBotPersonalities: (b: boolean) => void;
+  botMix: BotMix;
+  setBotMixCount: (key: BotMixKey, n: number) => void;
+  resetBotMix: () => void;
   vfEnabled: boolean;
   setVfEnabled: (b: boolean) => void;
   vfThreshold: number | null;
@@ -76,6 +80,9 @@ export function useMockSetupForm(league: League): MockSetupForm {
   const [thirdRoundReversal, setThirdRoundReversal] = useState(false);
   const [autoDraft, setAutoDraft] = useState(false);
   const [botPersonalities, setBotPersonalities] = useState(true);
+  // Empty by default => bots are assigned random ready strategies (the prior
+  // behavior). Users can dial in explicit per-strategy counts + "normal" bots.
+  const [botMix, setBotMix] = useState<BotMix>({});
   const [vfEnabled, setVfEnabled] = useState(valueFlagsEnabled(defaultList));
   const [vfThreshold, setVfThreshold] = useState<number | null>(
     defaultList.valueFlags?.threshold ?? null,
@@ -92,6 +99,17 @@ export function useMockSetupForm(league: League): MockSetupForm {
   const setRosterCount = (key: RosterKey, n: number) =>
     setRoster((r) => ({ ...r, [key]: Math.max(0, n) }));
 
+  // Set a strategy's (or "normal") bot count; 0 drops the key so an empty mix
+  // cleanly means "all random".
+  const setBotMixCount = (key: BotMixKey, n: number) =>
+    setBotMix((m) => {
+      const next = { ...m };
+      if (n <= 0) delete next[key];
+      else next[key] = n;
+      return next;
+    });
+  const resetBotMix = () => setBotMix({});
+
   const getSettings = () => ({
     teams,
     userSlot,
@@ -102,6 +120,7 @@ export function useMockSetupForm(league: League): MockSetupForm {
     thirdRoundReversal: format === "linear" ? false : thirdRoundReversal,
     autoDraft,
     botPersonalities,
+    botMix,
     valueThreshold: vfThreshold ?? defaultValueThreshold(teams),
     valueFlagsEnabled: vfEnabled,
     scoring,
@@ -127,6 +146,9 @@ export function useMockSetupForm(league: League): MockSetupForm {
     setAutoDraft,
     botPersonalities,
     setBotPersonalities,
+    botMix,
+    setBotMixCount,
+    resetBotMix,
     vfEnabled,
     setVfEnabled,
     vfThreshold,

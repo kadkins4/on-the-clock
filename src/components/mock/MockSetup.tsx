@@ -1,6 +1,12 @@
 import type { League, Scoring } from "../../types";
 import type { MockSettings } from "../../lib/mock/types";
 import { defaultValueThreshold } from "../../lib/draftValue";
+import {
+  STRATEGIES,
+  READY_STRATEGY_IDS,
+  type BotMix,
+  type BotMixKey,
+} from "../../lib/mock/strategy";
 import { StopwatchMark } from "./StopwatchMark";
 import {
   useMockSetupForm,
@@ -105,6 +111,90 @@ function Switch({
       className={`ms-switch${on ? " on" : ""}`}
       onClick={onToggle}
     />
+  );
+}
+
+// The "no personality" pseudo-row: a best-available bot with no strategy.
+const NORMAL_ROW = {
+  icon: "🤖",
+  name: "Normal",
+  blurb: "No personality — drafts straight best-available.",
+};
+
+// Per-strategy bot counts. Explicit counts are a floor; unassigned seats fill
+// randomly from the ready strategies. All zero = fully random (the default).
+function BotMixPicker({
+  seats,
+  botMix,
+  setCount,
+  onReset,
+}: {
+  seats: number;
+  botMix: BotMix;
+  setCount: (key: BotMixKey, n: number) => void;
+  onReset: () => void;
+}) {
+  const rows: { key: BotMixKey; icon: string; name: string; blurb: string }[] =
+    [
+      ...READY_STRATEGY_IDS.map((id) => ({
+        key: id,
+        icon: STRATEGIES[id].icon,
+        name: STRATEGIES[id].name,
+        blurb: STRATEGIES[id].blurb,
+      })),
+      { key: "normal", ...NORMAL_ROW },
+    ];
+  const assigned = Object.values(botMix).reduce(
+    (sum, n) => sum + Math.max(0, n ?? 0),
+    0,
+  );
+  const capped = Math.min(assigned, seats);
+  const random = Math.max(0, seats - capped);
+  const over = assigned > seats;
+
+  return (
+    <div className="ms-botmix">
+      <div className="ms-botmix-head">
+        <span className="ms-botmix-title">Bot mix</span>
+        <button type="button" className="ms-botmix-reset" onClick={onReset}>
+          Randomize all
+        </button>
+      </div>
+      <div className="ms-botmix-list">
+        {rows.map((row) => (
+          <div className="ms-botmix-row" key={row.key}>
+            <span className="ms-botmix-ic" aria-hidden>
+              {row.icon}
+            </span>
+            <div className="ms-botmix-meta">
+              <div className="ms-botmix-name">{row.name}</div>
+              <div className="ms-botmix-desc">{row.blurb}</div>
+            </div>
+            <Stepper
+              label={`${row.name} bots`}
+              value={botMix[row.key] ?? 0}
+              min={0}
+              max={seats}
+              onChange={(n) => setCount(row.key, n)}
+            />
+          </div>
+        ))}
+      </div>
+      <div className={`ms-botmix-foot${over ? " is-over" : ""}`}>
+        {over ? (
+          <>
+            {capped} of {seats} seats assigned · extra picks ignored
+          </>
+        ) : (
+          <>
+            {capped} of {seats} seats assigned ·{" "}
+            {random === 0
+              ? "no random bots"
+              : `${random} filled randomly from enabled bots`}
+          </>
+        )}
+      </div>
+    </div>
   );
 }
 
@@ -289,6 +379,15 @@ export function MockSetup({
               onToggle={() => f.setBotPersonalities(!f.botPersonalities)}
             />
           </div>
+
+          {f.botPersonalities && (
+            <BotMixPicker
+              seats={Math.max(0, f.teams - 1)}
+              botMix={f.botMix}
+              setCount={f.setBotMixCount}
+              onReset={f.resetBotMix}
+            />
+          )}
 
           <div className="ms-switch-row">
             <div className="ms-row-meta">

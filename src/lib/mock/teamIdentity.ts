@@ -1,4 +1,4 @@
-import { READY_STRATEGY_IDS, type StrategyId } from "./strategy";
+import { READY_STRATEGY_IDS, type StrategyId, type BotMix } from "./strategy";
 
 export interface TeamIdentity {
   name: string;
@@ -69,29 +69,60 @@ function initials(name: string): string {
   return ltrs.toUpperCase().slice(0, 2);
 }
 
+// Seeded Fisher–Yates shuffle in place.
+function shuffle<T>(arr: T[], r: () => number): T[] {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(r() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// Build the per-seat strategy assignments for `seats` bots. Explicit `botMix`
+// counts are honored first ("normal" → null, a personality-free bot), capped at
+// the seat count; any leftover seats are filled from a seeded shuffle of the
+// ready strategies. The whole list is then shuffled so explicit picks aren't
+// clustered into adjacent slots. An absent/empty mix fills every seat randomly.
+function assignStrategies(
+  seats: number,
+  seed: number,
+  botMix: BotMix | undefined,
+): (StrategyId | null)[] {
+  const r = rng(seed);
+  const explicit: (StrategyId | null)[] = [];
+  if (botMix) {
+    for (const [key, count] of Object.entries(botMix)) {
+      const c = Math.max(0, Math.floor(count ?? 0));
+      for (let i = 0; i < c && explicit.length < seats; i++) {
+        explicit.push(key === "normal" ? null : (key as StrategyId));
+      }
+    }
+  }
+  const strat = shuffle(READY_STRATEGY_IDS.slice(), r);
+  const fill: (StrategyId | null)[] = [];
+  for (let i = 0; explicit.length + fill.length < seats; i++) {
+    fill.push(strat[i % strat.length]);
+  }
+  return shuffle([...explicit, ...fill], r);
+}
+
 // Generate identities; userSlot is 1-based. Names/colors shuffled by seed; the
-// user's slot is always "Your Team". When `personalities` is true (default),
-// each bot gets a seeded draft strategy; when false, every bot is neutral.
+// user's slot is always "Your Team". When `personalities` is false, every bot is
+// neutral. When true, bot strategies come from `botMix` (explicit counts +
+// random fill); an absent/empty mix fills every bot randomly from ready ones.
 export function makeTeamIdentities(
   teams: number,
   userSlot: number,
   seed: number,
   personalities: boolean = true,
+  botMix?: BotMix,
 ): TeamIdentity[] {
   const r = rng(seed);
-  const pool = NAMES.slice();
-  // Fisher–Yates shuffle of the name pool
-  for (let i = pool.length - 1; i > 0; i--) {
-    const j = Math.floor(r() * (i + 1));
-    [pool[i], pool[j]] = [pool[j], pool[i]];
-  }
-  // Seeded shuffle of the ready strategies, cycled across the bots so a draft
-  // gets a varied but reproducible mix.
-  const strat = READY_STRATEGY_IDS.slice();
-  for (let i = strat.length - 1; i > 0; i--) {
-    const j = Math.floor(r() * (i + 1));
-    [strat[i], strat[j]] = [strat[j], strat[i]];
-  }
+  const pool = shuffle(NAMES.slice(), r);
+  // One strategy per bot seat (teams minus the user's slot).
+  const assignments = personalities
+    ? assignStrategies(Math.max(0, teams - 1), seed ^ 0x9e3779b9, botMix)
+    : [];
   const out: TeamIdentity[] = [];
   let n = 0;
   let s = 0;
@@ -99,7 +130,7 @@ export function makeTeamIdentities(
     const isUser = t === userSlot - 1;
     const name = isUser ? "Your Team" : pool[n++ % pool.length];
     const strategy =
-      isUser || !personalities ? null : strat[s++ % strat.length];
+      isUser || !personalities ? null : (assignments[s++] ?? null);
     out.push({
       name,
       initials: isUser ? "YT" : initials(name),

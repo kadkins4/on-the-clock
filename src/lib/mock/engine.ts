@@ -47,6 +47,7 @@ export function createMock(
       settings.userSlot,
       seed,
       settings.botPersonalities ?? true,
+      settings.botMix,
     ),
     order: buildDraftOrder(
       settings.teams,

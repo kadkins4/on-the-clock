@@ -53,3 +53,61 @@ describe("makeTeamIdentities", () => {
     }
   });
 });
+
+describe("makeTeamIdentities — bot mix", () => {
+  const bots = (ts: ReturnType<typeof makeTeamIdentities>) =>
+    ts.filter((t) => !t.isUser);
+
+  it("honors an explicit strategy count as a floor (random fill may add more)", () => {
+    // 12 teams, user in slot 1 → 11 bot seats. Explicit 3 is guaranteed; the
+    // random fill draws from all ready strategies and may add another.
+    const t = bots(makeTeamIdentities(12, 1, 5, true, { prospector: 3 }));
+    expect(
+      t.filter((x) => x.strategy === "prospector").length,
+    ).toBeGreaterThanOrEqual(3);
+  });
+
+  it("maps a 'normal' count to personality-free bots", () => {
+    const t = bots(makeTeamIdentities(12, 1, 5, true, { normal: 4 }));
+    expect(t.filter((x) => x.strategy === null)).toHaveLength(4);
+  });
+
+  it("fills the remaining seats randomly from ready strategies", () => {
+    const t = bots(makeTeamIdentities(12, 1, 5, true, { prospector: 2 }));
+    // no null seats (none requested normal), and every non-prospector is ready
+    for (const b of t) {
+      expect(b.strategy).not.toBeNull();
+      expect(READY_STRATEGY_IDS).toContain(b.strategy);
+    }
+    expect(
+      t.filter((x) => x.strategy === "prospector").length,
+    ).toBeGreaterThanOrEqual(2);
+  });
+
+  it("caps counts that exceed the available bot seats", () => {
+    const t = bots(makeTeamIdentities(12, 1, 5, true, { normal: 100 }));
+    expect(t).toHaveLength(11);
+    expect(t.every((x) => x.strategy === null)).toBe(true);
+  });
+
+  it("is deterministic for the same seed and mix", () => {
+    const mix = { prospector: 2, graybeard: 1, normal: 2 };
+    expect(makeTeamIdentities(12, 1, 9, true, mix)).toEqual(
+      makeTeamIdentities(12, 1, 9, true, mix),
+    );
+  });
+
+  it("ignores the mix entirely when personalities are disabled", () => {
+    for (const t of bots(
+      makeTeamIdentities(12, 1, 5, false, { prospector: 5 }),
+    )) {
+      expect(t.strategy).toBeNull();
+    }
+  });
+
+  it("treats an empty mix like the random default (no null bots)", () => {
+    for (const t of bots(makeTeamIdentities(12, 1, 5, true, {}))) {
+      expect(t.strategy).not.toBeNull();
+    }
+  });
+});
