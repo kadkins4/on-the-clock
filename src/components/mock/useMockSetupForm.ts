@@ -44,6 +44,8 @@ export interface MockSetupForm {
   setThirdRoundReversal: (b: boolean) => void;
   autoDraft: boolean;
   setAutoDraft: (b: boolean) => void;
+  botPersonalities: boolean;
+  setBotPersonalities: (b: boolean) => void;
   vfEnabled: boolean;
   setVfEnabled: (b: boolean) => void;
   vfThreshold: number | null;
@@ -73,6 +75,7 @@ export function useMockSetupForm(league: League): MockSetupForm {
   const [userSlot, setUserSlot] = useState(1);
   const [thirdRoundReversal, setThirdRoundReversal] = useState(false);
   const [autoDraft, setAutoDraft] = useState(false);
+  const [botPersonalities, setBotPersonalities] = useState(true);
   const [vfEnabled, setVfEnabled] = useState(valueFlagsEnabled(defaultList));
   const [vfThreshold, setVfThreshold] = useState<number | null>(
     defaultList.valueFlags?.threshold ?? null,
@@ -98,6 +101,7 @@ export function useMockSetupForm(league: League): MockSetupForm {
     // 3RR is a snake-only concept; linear ignores it in the engine anyway.
     thirdRoundReversal: format === "linear" ? false : thirdRoundReversal,
     autoDraft,
+    botPersonalities,
     valueThreshold: vfThreshold ?? defaultValueThreshold(teams),
     valueFlagsEnabled: vfEnabled,
     scoring,
@@ -121,6 +125,8 @@ export function useMockSetupForm(league: League): MockSetupForm {
     setThirdRoundReversal,
     autoDraft,
     setAutoDraft,
+    botPersonalities,
+    setBotPersonalities,
     vfEnabled,
     setVfEnabled,
     vfThreshold,

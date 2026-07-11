@@ -277,6 +277,21 @@ export function MockSetup({
 
           <div className="ms-switch-row">
             <div className="ms-row-meta">
+              <div className="ms-row-title">Bot personalities</div>
+              <div className="ms-row-desc">
+                Bots draft with distinct strategies (Zero RB, Hero RB…). Off =
+                straight best-available.
+              </div>
+            </div>
+            <Switch
+              label="Bot personalities"
+              on={f.botPersonalities}
+              onToggle={() => f.setBotPersonalities(!f.botPersonalities)}
+            />
+          </div>
+
+          <div className="ms-switch-row">
+            <div className="ms-row-meta">
               <div className="ms-row-title">Highlight reaches &amp; values</div>
               <div className="ms-row-desc">
                 Flag picks that beat or miss ADP.
