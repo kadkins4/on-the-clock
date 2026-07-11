@@ -1496,55 +1496,6 @@ table.players th.sorted {
   color: var(--text-primary);
 }
 
-/* Bot-personalities teaser (coming soon) */
-.ms-soon {
-  position: relative;
-  margin-top: 18px;
-  border: 1px dashed var(--border-5);
-  border-radius: 13px;
-  background:
-    repeating-linear-gradient(
-      -45deg,
-      rgba(255, 255, 255, 0.014) 0 10px,
-      transparent 10px 20px
-    ),
-    var(--raised);
-  padding: 16px 17px;
-}
-.ms-soon-head {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.ms-soon-ic {
-  font-size: 16px;
-}
-.ms-soon-t {
-  font-family: var(--font-condensed);
-  font-weight: 700;
-  font-size: var(--fs-15);
-  color: var(--text-secondary-2);
-}
-.ms-soon-badge {
-  margin-left: auto;
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--your-gold);
-  background: rgba(217, 165, 63, 0.1);
-  border: 1px solid rgba(217, 165, 63, 0.4);
-  border-radius: 999px;
-  padding: 3px 9px;
-}
-.ms-soon-note {
-  margin: 11px 0 0;
-  font-size: var(--fs-13-5);
-  color: var(--text-tertiary);
-  line-height: 1.45;
-}
-
 /* Actions */
 .ms-actions {
   display: flex;

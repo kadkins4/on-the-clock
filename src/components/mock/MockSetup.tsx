@@ -477,20 +477,6 @@ export function MockSetup({
               ))}
             </div>
           </div>
-
-          {/* Bot personalities teaser */}
-          <div className="ms-soon">
-            <div className="ms-soon-head">
-              <span className="ms-soon-ic">🤖</span>
-              <span className="ms-soon-t">Bot Personalities</span>
-              <span className="ms-soon-badge">Coming soon</span>
-            </div>
-            <p className="ms-soon-note">
-              Give each bot a drafting archetype &mdash; Zero-RB, Hero-RB,
-              Homer, Value Hawk &mdash; randomized across seats or assigned per
-              seat.
-            </p>
-          </div>
         </div>
       )}
 
