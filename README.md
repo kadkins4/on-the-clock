@@ -47,6 +47,12 @@ One click blends **average draft position** from FantasyFootballCalculator, Fant
 - **TV mode** — cast the draft to a second window with a split-flap big board
 - **"On the Clock" reveal moment** when it's your pick
 
+<div align="center">
+<img src="docs/img/mock-draft-board.png" alt="A completed 12-team, 15-round mock draft on The Wall" width="900" />
+<br />
+<sub>A completed 12-team snake mock — every pick laid out on The Wall.</sub>
+</div>
+
 ### 🏟️ Multi-league
 
 Separate scoring (PPR / half / standard, with TE-premium), roster settings, columns, and tier lists per league.
@@ -63,44 +69,6 @@ Separate scoring (PPR / half / standard, with TE-premium), roster settings, colu
 | **Fonts**         | Self-hosted Archivo, Barlow Condensed, IBM Plex Mono (works offline)                         |
 | **Hosting**       | Vercel                                                                                       |
 
-## Getting started
-
-**Prerequisites:** Node 20+ and npm.
-
-```bash
-git clone <repo-url>
-cd on-the-clock
-npm install
-npm run dev          # http://localhost:5173
-```
-
-That's it — the app ships with a seeded player board (`src/data/seed.json`), so it works fully offline with zero configuration.
-
-### Scripts
-
-| Command                           | What it does                                                     |
-| --------------------------------- | ---------------------------------------------------------------- |
-| `npm run dev`                     | Start the Vite dev server                                        |
-| `npm run build`                   | Lint, type-check, and build for production                       |
-| `npm run preview`                 | Preview the production build                                     |
-| `npm run test`                    | Run the Vitest suite                                             |
-| `npm run typecheck`               | `tsc --noEmit`                                                   |
-| `npm run lint` / `lint:fix`       | ESLint                                                           |
-| `npm run format` / `format:check` | Prettier                                                         |
-| `npm run fetch-adp`               | Rebuild `src/data/seed.json` from a fresh multi-source ADP blend |
-| `npm run yahoo-auth`              | One-time Yahoo OAuth to enable Yahoo as an ADP source            |
-
-### Environment variables
-
-All optional — the app runs without any of them.
-
-| Variable                                                          | Purpose                                                                                                                           |
-| ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| `VITE_FORMSPREE_ENDPOINT`                                         | Suggestion box → Formspree. Unset → suggestions stash in localStorage.                                                            |
-| `YAHOO_CLIENT_ID` / `YAHOO_CLIENT_SECRET` / `YAHOO_REFRESH_TOKEN` | Enable Yahoo as an ADP source. Populated by `npm run yahoo-auth`; set the same three in Vercel env for the hosted Refresh button. |
-
-Copy `.env.local.example` → `.env.local` to get started.
-
 ## How the numbers work
 
 - **Projections** (`src/lib/projection.ts`) — `scoreStatLine` scores a raw stat line with standard fantasy values (pass/rush/rec yards & TDs, interceptions, PPR / half / standard receptions, TE-premium), tuned to match ESPN projected totals within ~1%.
@@ -108,7 +76,7 @@ Copy `.env.local.example` → `.env.local` to get started.
 
 ## Data pipeline
 
-The board seed and live refresh pull from a weighted blend of public sources:
+The board pulls from a weighted blend of public sources:
 
 | Source                        | Provides                                                  |
 | ----------------------------- | --------------------------------------------------------- |
@@ -121,29 +89,7 @@ The board seed and live refresh pull from a weighted blend of public sources:
 | **DynastyProcess**            | ID crosswalk + draft pedigree                             |
 | **nflverse**                  | Last-season advanced stats (target share, air yards, EPA) |
 
-`npm run fetch-adp` bakes a fresh blend into `src/data/seed.json` at build time; the in-app **Refresh** button re-blends live ADP through the `/api/adp` Edge function. See [`scripts/adp/README.md`](scripts/adp/README.md) for the full source table, weights, and the yearly preseason checklist.
-
-## Architecture
-
-```
-on-the-clock/
-├── src/
-│   ├── components/       # UI — board/, mock/, dev/
-│   ├── lib/              # projection, vor, ranking, adpSources/, sources/, mock/
-│   ├── state/            # useRankings (undoable reducer), useSources, hooks
-│   ├── data/             # seed.json + team metadata
-│   └── App.tsx
-├── api/                  # Vercel Edge functions — adp.ts, sources.ts
-├── scripts/              # ADP fetch pipeline, Yahoo OAuth, stat enrichment
-├── public/               # favicon, OG image
-└── docs/                 # design & redesign notes
-```
-
-**State** lives in a plain reducer wrapped in undo history (`src/state/useRankings.ts` → `withHistory`), with everything persisted to `localStorage` — no backend, no accounts.
-
-## Deployment
-
-Hosted on **Vercel**. The `/api` functions deploy as **Edge functions**; the exact same blend logic runs locally through a Vite middleware plugin, so `npm run dev` needs no separate API server. Set the Yahoo env vars in the Vercel project to power the hosted Refresh button.
+The board ships with a baked-in seed, and the in-app **Refresh** button re-blends live ADP on demand through a Vercel Edge function.
 
 ## Privacy
 
