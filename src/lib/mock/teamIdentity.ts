@@ -1,8 +1,13 @@
+import { READY_STRATEGY_IDS, type StrategyId } from "./strategy";
+
 export interface TeamIdentity {
   name: string;
   initials: string;
   color: string;
   isUser: boolean;
+  // The bot's draft personality. `null` for the user's team, and for every bot
+  // when personalities are disabled.
+  strategy: StrategyId | null;
 }
 
 // Curated, license-safe fun manager names.
@@ -65,11 +70,13 @@ function initials(name: string): string {
 }
 
 // Generate identities; userSlot is 1-based. Names/colors shuffled by seed; the
-// user's slot is always "Your Team".
+// user's slot is always "Your Team". When `personalities` is true (default),
+// each bot gets a seeded draft strategy; when false, every bot is neutral.
 export function makeTeamIdentities(
   teams: number,
   userSlot: number,
   seed: number,
+  personalities: boolean = true,
 ): TeamIdentity[] {
   const r = rng(seed);
   const pool = NAMES.slice();
@@ -78,16 +85,27 @@ export function makeTeamIdentities(
     const j = Math.floor(r() * (i + 1));
     [pool[i], pool[j]] = [pool[j], pool[i]];
   }
+  // Seeded shuffle of the ready strategies, cycled across the bots so a draft
+  // gets a varied but reproducible mix.
+  const strat = READY_STRATEGY_IDS.slice();
+  for (let i = strat.length - 1; i > 0; i--) {
+    const j = Math.floor(r() * (i + 1));
+    [strat[i], strat[j]] = [strat[j], strat[i]];
+  }
   const out: TeamIdentity[] = [];
   let n = 0;
+  let s = 0;
   for (let t = 0; t < teams; t++) {
     const isUser = t === userSlot - 1;
     const name = isUser ? "Your Team" : pool[n++ % pool.length];
+    const strategy =
+      isUser || !personalities ? null : strat[s++ % strat.length];
     out.push({
       name,
       initials: isUser ? "YT" : initials(name),
       color: COLORS[t % COLORS.length],
       isUser,
+      strategy,
     });
   }
   return out;

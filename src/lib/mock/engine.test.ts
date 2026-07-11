@@ -395,3 +395,48 @@ describe("createMock autoDraft setting", () => {
     expect(m.settings.autoDraft).toBe(true);
   });
 });
+
+describe("bot personalities", () => {
+  it("assigns bots a strategy by default", () => {
+    const m = createMock(
+      league(board),
+      { teams: 2, userSlot: 1, thirdRoundReversal: false },
+      123,
+    );
+    const bots = m.teams.filter((t) => !t.isUser);
+    expect(bots.some((t) => t.strategy !== null)).toBe(true);
+  });
+
+  it("leaves every team neutral when botPersonalities is false", () => {
+    const m = createMock(
+      league(board),
+      {
+        teams: 2,
+        userSlot: 1,
+        thirdRoundReversal: false,
+        botPersonalities: false,
+      },
+      123,
+    );
+    expect(m.teams.every((t) => t.strategy === null)).toBe(true);
+  });
+
+  it("botPickId follows the on-the-clock team's strategy", () => {
+    const base = createMock(
+      league(board),
+      { teams: 2, userSlot: 1, thirdRoundReversal: false },
+      123,
+    );
+    // Force the whole field to Zero RB, so whoever is picking fades the top RB.
+    const zero = {
+      ...base,
+      teams: base.teams.map((t) => ({ ...t, strategy: "zeroRB" as const })),
+    };
+    const neutral = {
+      ...base,
+      teams: base.teams.map((t) => ({ ...t, strategy: null })),
+    };
+    expect(botPickId(neutral)).toBe("a"); // best RB by ADP
+    expect(botPickId(zero)).toBe("b"); // Zero RB reaches past it for the WR
+  });
+});

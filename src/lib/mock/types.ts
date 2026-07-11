@@ -13,6 +13,9 @@ export interface MockSettings {
   valueThreshold?: number;
   valueFlagsEnabled?: boolean;
   autoDraft?: boolean;
+  // Give bots draft personalities (default true). When false, every bot drafts
+  // by consensus ADP with no positional bias — the pre-personality behavior.
+  botPersonalities?: boolean;
   // Per-mock overrides chosen on the setup screen. Absent => inherit the
   // league's value. The mock snapshots these so the live league is untouched.
   scoring?: Scoring;

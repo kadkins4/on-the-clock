@@ -27,9 +27,9 @@ function makeState(overrides: Partial<MockState> = {}): MockState {
       thirdRoundReversal: false,
     },
     teams: [
-      { name: "Team Alpha", initials: "TA", color: "#ff0000", isUser: true },
-      { name: "Team Beta", initials: "TB", color: "#00ff00", isUser: false },
-      { name: "Team Gamma", initials: "TG", color: "#0000ff", isUser: false },
+      { name: "Team Alpha", initials: "TA", color: "#ff0000", isUser: true, strategy: null },
+      { name: "Team Beta", initials: "TB", color: "#00ff00", isUser: false, strategy: null },
+      { name: "Team Gamma", initials: "TG", color: "#0000ff", isUser: false, strategy: null },
     ],
     order: [],
     picks: [],

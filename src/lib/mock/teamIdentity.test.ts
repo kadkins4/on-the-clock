@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { makeTeamIdentities } from "./teamIdentity";
+import { READY_STRATEGY_IDS } from "./strategy";
 
 describe("makeTeamIdentities", () => {
   it("returns one identity per team", () => {
@@ -25,5 +26,30 @@ describe("makeTeamIdentities", () => {
       .filter((t) => !t.isUser)
       .map((t) => t.name);
     expect(new Set(names).size).toBe(names.length);
+  });
+
+  it("gives the user's team no strategy (they drive)", () => {
+    const t = makeTeamIdentities(10, 3, 42);
+    expect(t[2].strategy).toBeNull();
+  });
+
+  it("assigns every bot a ready strategy by default", () => {
+    for (const t of makeTeamIdentities(12, 1, 5)) {
+      if (t.isUser) continue;
+      expect(READY_STRATEGY_IDS).toContain(t.strategy);
+    }
+  });
+
+  it("varies the strategies across a full draft", () => {
+    const strategies = makeTeamIdentities(12, 1, 5)
+      .filter((t) => !t.isUser)
+      .map((t) => t.strategy);
+    expect(new Set(strategies).size).toBeGreaterThan(1);
+  });
+
+  it("assigns no personality to any bot when disabled", () => {
+    for (const t of makeTeamIdentities(12, 1, 5, false)) {
+      expect(t.strategy).toBeNull();
+    }
   });
 });

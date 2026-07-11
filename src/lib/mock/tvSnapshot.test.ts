@@ -34,7 +34,7 @@ function makeTeam(
   color: string,
   isUser = false,
 ): TeamIdentity {
-  return { name, initials, color, isUser };
+  return { name, initials, color, isUser, strategy: null };
 }
 
 function baseState(

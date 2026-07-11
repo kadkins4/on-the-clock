@@ -141,6 +141,63 @@ describe("botPick K/DST gating", () => {
   });
 });
 
+describe("botPick with a strategy", () => {
+  // best-available by ADP: an RB is the consensus #1.
+  const avail = [
+    p("rb1", "RB", 1),
+    p("wr1", "WR", 2),
+    p("rb2", "RB", 3),
+    p("qb1", "QB", 4),
+  ];
+
+  it("zeroRB fades the round-1 RB and takes the best WR instead", () => {
+    const needs = openNeeds([], roster());
+    // round 1 window is 1, so this is a deterministic reorder assertion
+    expect(botPick(avail, needs, 1, makeRng(1), [], Infinity, "zeroRB")).toBe(
+      "wr1",
+    );
+  });
+
+  it("robustRB keeps the round-1 RB (boosted, still best)", () => {
+    const needs = openNeeds([], roster());
+    expect(botPick(avail, needs, 1, makeRng(1), [], Infinity, "robustRB")).toBe(
+      "rb1",
+    );
+  });
+
+  it("heroRB grabs the elite RB in round 1", () => {
+    const needs = openNeeds([], roster());
+    expect(botPick(avail, needs, 1, makeRng(1), [], Infinity, "heroRB")).toBe(
+      "rb1",
+    );
+  });
+
+  it("streamer skips a round-1 QB for a startable skill player", () => {
+    const qbFirst = [p("qb1", "QB", 1), p("wr1", "WR", 2)];
+    const needs = openNeeds([], roster());
+    expect(
+      botPick(qbFirst, needs, 1, makeRng(1), [], Infinity, "streamer"),
+    ).toBe("wr1");
+  });
+
+  it("no strategy is identical to omitting the argument (no regression)", () => {
+    const needs = openNeeds([], roster());
+    for (let seed = 1; seed <= 25; seed++) {
+      const withUndef = botPick(
+        avail,
+        needs,
+        6,
+        makeRng(seed),
+        [],
+        Infinity,
+        undefined,
+      );
+      const without = botPick(avail, needs, 6, makeRng(seed), [], Infinity);
+      expect(withUndef).toBe(without);
+    }
+  });
+});
+
 describe("botPick run-chasing", () => {
   function shareOfWr(recent: Player["position"][]): number {
     const avail = [mk("wr", "WR", 1), mk("rb", "RB", 2)];

@@ -42,7 +42,12 @@ export function createMock(
     tePremium: league.tePremium,
     roster,
     settings: { ...settings, rounds },
-    teams: makeTeamIdentities(settings.teams, settings.userSlot, seed),
+    teams: makeTeamIdentities(
+      settings.teams,
+      settings.userSlot,
+      seed,
+      settings.botPersonalities ?? true,
+    ),
     order: buildDraftOrder(
       settings.teams,
       rounds,
@@ -123,7 +128,16 @@ export function botPickId(m: MockState): string {
     .map((pk) => byId.get(pk.playerId)!.position);
   // this team's remaining picks, counting the one on the clock
   const picksLeft = m.settings.rounds - round + 1;
-  return botPick(available(m), needs, round, rng, recentPositions, picksLeft);
+  const strategy = m.teams[teamIndex]?.strategy ?? undefined;
+  return botPick(
+    available(m),
+    needs,
+    round,
+    rng,
+    recentPositions,
+    picksLeft,
+    strategy,
+  );
 }
 
 // Swap the player drafted at pick `overall` (1-based). Frees the old player

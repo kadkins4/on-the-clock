@@ -1,9 +1,34 @@
 import type { Player, Position } from "../../types";
 import { servesNeed, type Needs } from "./roster";
+import { strategyMultiplier, type StrategyId } from "./strategy";
 
 const MAX_WINDOW = 12;
 const RUN_BONUS = 1.5; // extra weight per recent pick at a player's position
 const SPECIAL: Position[] = ["K", "DST"];
+// How many best-available players a strategy reorders before the pick window is
+// sliced. Bounds how far a personality can reach past raw ADP value.
+const STRATEGY_CANDIDATE_CAP = 16;
+
+// Reorder the best-available players by desirability × the strategy's position
+// multiplier, so a personality can reshape *which* players fill the pick window
+// — even in round 1, where the window is a single player. Desirability is a
+// linear, ADP-based rank score (best-first); the multiplier bends it. Ties keep
+// ADP order. Returns a new array; the input is untouched.
+function applyStrategy(
+  ranked: Player[],
+  strategy: StrategyId,
+  round: number,
+  needs: Needs,
+): Player[] {
+  const cap = Math.min(ranked.length, STRATEGY_CANDIDATE_CAP);
+  const scored = ranked.slice(0, cap).map((pl, i) => ({
+    pl,
+    i,
+    score: (cap - i) * strategyMultiplier(strategy, pl.position, round, needs),
+  }));
+  scored.sort((a, b) => b.score - a.score || a.i - b.i);
+  return [...scored.map((s) => s.pl), ...ranked.slice(cap)];
+}
 
 // Round 1 → window of 1 (near-deterministic); widens by 1 per round, capped.
 export function pickWindowSize(round: number): number {
@@ -32,6 +57,7 @@ export function botPick(
   rng: () => number,
   recentPositions: Position[] = [],
   picksLeft: number = Infinity,
+  strategy?: StrategyId,
 ): string {
   if (available.length === 0) throw new Error("botPick: no players available");
 
@@ -42,7 +68,12 @@ export function botPick(
       : available;
 
   const needed = candidates.filter((pl) => servesNeed(pl.position, needs));
-  const ranked = needed.length > 0 ? needed : candidates;
+  const byAdp = needed.length > 0 ? needed : candidates;
+  // A personality reorders the best-available set before the window is sliced;
+  // absent a strategy the order is untouched, so behavior is unchanged.
+  const ranked = strategy
+    ? applyStrategy(byAdp, strategy, round, needs)
+    : byAdp;
 
   const w = Math.min(pickWindowSize(round), ranked.length);
   const window = ranked.slice(0, w);

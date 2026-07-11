@@ -24,8 +24,8 @@ function makeState(over: Partial<MockState> = {}): MockState {
     },
     settings: { teams: 2, userSlot: 1, rounds: 3, thirdRoundReversal: false },
     teams: [
-      { name: "Team Alpha", initials: "TA", color: "#f00", isUser: true },
-      { name: "Team Beta", initials: "TB", color: "#0f0", isUser: false },
+      { name: "Team Alpha", initials: "TA", color: "#f00", isUser: true, strategy: null },
+      { name: "Team Beta", initials: "TB", color: "#0f0", isUser: false, strategy: null },
     ],
     order: [0, 1, 1, 0, 0, 1], // 2 teams, snake, 3 rounds
     picks: [],
