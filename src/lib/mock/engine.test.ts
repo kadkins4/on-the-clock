@@ -477,3 +477,19 @@ describe("simulateToEnd", () => {
     );
   });
 });
+
+describe("simulateToEnd — pool exhaustion", () => {
+  it("stops cleanly when the pool runs dry instead of throwing", () => {
+    const tiny = [p("a", "RB", 1), p("b", "WR", 2), p("c", "QB", 3)];
+    const m = createMock(
+      league(tiny),
+      { teams: 2, userSlot: 1, thirdRoundReversal: false },
+      1,
+    );
+    // order length is 6 (2 teams × 3 rounds) but only 3 players exist
+    expect(() => simulateToEnd(m)).not.toThrow();
+    const done = simulateToEnd(m);
+    expect(done.picks.length).toBe(3);
+    expect(isComplete(done)).toBe(false);
+  });
+});

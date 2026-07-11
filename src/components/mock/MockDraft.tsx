@@ -96,14 +96,18 @@ export function MockDraft({
   const round = Math.floor((overall - 1) / state.settings.teams) + 1;
   const picksAway = picksUntilUser(state, userTeamIndex);
 
-  // Suggester: infer the user's strategy from their picks so far and, once
-  // there's a read they haven't dismissed, surface a nudge with target hints.
+  // Suggester: infer the user's strategy from their picks so far. Only surface
+  // the nudge once the read is confident (4th pick) and not dismissed — the
+  // tentative 3-pick read is intentionally kept silent to avoid a noisy guess.
   const detected = useMemo(
     () => detectStrategy(teamRosterPositions(state, userTeamIndex)),
     [state, userTeamIndex],
   );
-  const nudge = nudgeCopy(detected);
-  const showNudge = nudge != null && detected.strategy !== dismissedStrat;
+  const nudge = nudgeCopy(detected.strategy);
+  const showNudge =
+    nudge != null &&
+    detected.confidence === "high" &&
+    detected.strategy !== dismissedStrat;
 
   // The live draft clock (reveal hold, countdown + auto-pick, bot progression,
   // auto-draft, missed-pick modal, mute) lives in useDraftTimer.

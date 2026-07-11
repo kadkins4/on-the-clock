@@ -5,11 +5,11 @@ interface Props {
   onDismiss: () => void;
 }
 
-// The suggester banner: tells the user which strategy they're trending into and
-// what to target next. Tone follows confidence (tentative vs committed).
+// The suggester banner: tells the user which strategy they're running and what
+// to target next. Only rendered once the detector is confident.
 export function StrategyNudge({ copy, onDismiss }: Props) {
   return (
-    <div className={`strat-nudge${copy.tentative ? " tentative" : ""}`}>
+    <div className="strat-nudge">
       <span className="sn-icon" aria-hidden="true">
         {copy.icon}
       </span>
