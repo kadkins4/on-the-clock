@@ -16,6 +16,7 @@ describe("botStrategyReveal", () => {
     ]);
     expect(rows).toEqual([
       {
+        id: "zeroRB",
         name: "Team Beta",
         icon: "0️⃣",
         label: "Volume Hunter",

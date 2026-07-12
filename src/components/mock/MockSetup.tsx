@@ -8,6 +8,7 @@ import {
   type BotMixKey,
 } from "../../lib/mock/strategy";
 import { StopwatchMark } from "./StopwatchMark";
+import { BotIcon } from "./BotIcon";
 import {
   useMockSetupForm,
   type LobbyFormat,
@@ -116,7 +117,6 @@ function Switch({
 
 // The "no personality" pseudo-row: a best-available bot with no strategy.
 const NORMAL_ROW = {
-  icon: "🤖",
   name: "Normal",
   blurb: "No personality — drafts straight best-available.",
 };
@@ -134,16 +134,14 @@ function BotMixPicker({
   setCount: (key: BotMixKey, n: number) => void;
   onReset: () => void;
 }) {
-  const rows: { key: BotMixKey; icon: string; name: string; blurb: string }[] =
-    [
-      ...READY_STRATEGY_IDS.map((id) => ({
-        key: id,
-        icon: STRATEGIES[id].icon,
-        name: STRATEGIES[id].name,
-        blurb: STRATEGIES[id].blurb,
-      })),
-      { key: "normal", ...NORMAL_ROW },
-    ];
+  const rows: { key: BotMixKey; name: string; blurb: string }[] = [
+    ...READY_STRATEGY_IDS.map((id) => ({
+      key: id,
+      name: STRATEGIES[id].name,
+      blurb: STRATEGIES[id].blurb,
+    })),
+    { key: "normal", ...NORMAL_ROW },
+  ];
   const assigned = Object.values(botMix).reduce(
     (sum, n) => sum + Math.max(0, n ?? 0),
     0,
@@ -163,8 +161,8 @@ function BotMixPicker({
       <div className="ms-botmix-list">
         {rows.map((row) => (
           <div className="ms-botmix-row" key={row.key}>
-            <span className="ms-botmix-ic" aria-hidden>
-              {row.icon}
+            <span className="ms-botmix-ic">
+              <BotIcon id={row.key} />
             </span>
             <div className="ms-botmix-meta">
               <div className="ms-botmix-name">{row.name}</div>

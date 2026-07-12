@@ -1,4 +1,5 @@
 import type { NudgeCopy } from "../../lib/mock/nudge";
+import { BotIcon } from "./BotIcon";
 
 interface Props {
   copy: NudgeCopy;
@@ -10,8 +11,8 @@ interface Props {
 export function StrategyNudge({ copy, onDismiss }: Props) {
   return (
     <div className="strat-nudge">
-      <span className="sn-icon" aria-hidden="true">
-        {copy.icon}
+      <span className="sn-icon">
+        <BotIcon id={copy.id} size={22} />
       </span>
       <div className="sn-body">
         <div className="sn-head">

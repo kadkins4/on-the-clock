@@ -2,6 +2,7 @@ import { STRATEGIES, type StrategyId } from "./strategy";
 import type { DetectedStrategy } from "./detect";
 
 export interface NudgeCopy {
+  id: StrategyId; // which glyph to draw
   icon: string;
   name: string; // plain strategy name, e.g. "Zero RB"
   headline: string;
@@ -39,6 +40,7 @@ export function nudgeCopy(strategy: StrategyId | null): NudgeCopy | null {
   if (strategy == null) return null;
   const s = STRATEGIES[strategy];
   return {
+    id: strategy,
     icon: s.icon,
     name: s.name,
     headline: "You're running",

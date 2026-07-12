@@ -1,7 +1,8 @@
 import type { TeamIdentity } from "./teamIdentity";
-import { STRATEGIES } from "./strategy";
+import { STRATEGIES, type StrategyId } from "./strategy";
 
 export interface RevealRow {
+  id: StrategyId; // which glyph to draw
   name: string;
   icon: string;
   label: string;
@@ -15,7 +16,13 @@ export function botStrategyReveal(teams: TeamIdentity[]): RevealRow[] {
   for (const t of teams) {
     if (t.isUser || t.strategy == null) continue;
     const s = STRATEGIES[t.strategy];
-    rows.push({ name: t.name, icon: s.icon, label: s.label, blurb: s.blurb });
+    rows.push({
+      id: t.strategy,
+      name: t.name,
+      icon: s.icon,
+      label: s.label,
+      blurb: s.blurb,
+    });
   }
   return rows;
 }

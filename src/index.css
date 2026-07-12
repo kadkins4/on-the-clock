@@ -1332,9 +1332,10 @@ table.players th.sorted {
 }
 .ms-botmix-ic {
   flex: none;
-  font-size: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 22px;
-  text-align: center;
 }
 .ms-botmix-meta {
   flex: 1 1 auto;
@@ -1897,7 +1898,9 @@ table.players th.sorted {
   background: #e3a24a1a;
 }
 .sn-icon {
-  font-size: 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   line-height: 1;
 }
 .sn-body {
@@ -1952,8 +1955,9 @@ table.players th.sorted {
   font-size: 0.85rem;
 }
 .reveal-icon {
-  font-size: 1rem;
-  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 .reveal-team {
   overflow: hidden;

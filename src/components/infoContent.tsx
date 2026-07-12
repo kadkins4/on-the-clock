@@ -46,6 +46,13 @@ export function LogContent() {
         <h2 className="otc-log-h">Change Log</h2>
         <ul className="otc-changelog">
           <li>
+            <span className="otc-log-date">Jul 12, 2026</span>
+            Custom bot-strategy icons — each draft strategy now has its own
+            hand-drawn glyph, color-coded per strategy, replacing the old emoji
+            in the bot mix picker, the strategy coach, and the end-of-draft
+            reveal.
+          </li>
+          <li>
             <span className="otc-log-date">Jul 11, 2026</span>
             More bot personalities &amp; a custom bot mix — four new draft
             strategies join the pool: Prospector (chases youth &amp; rookies),

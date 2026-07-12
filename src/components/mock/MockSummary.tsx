@@ -1,6 +1,7 @@
 import type { MockSummaryResult } from "../../lib/mock/summary";
 import { formatPick } from "../../lib/mock/board";
 import { botStrategyReveal } from "../../lib/mock/reveal";
+import { BotIcon } from "./BotIcon";
 import type { TeamIdentity } from "../../lib/mock/teamIdentity";
 
 interface Props {
@@ -59,8 +60,8 @@ export function MockSummary({
           <div className="reveal-list">
             {field.map((b) => (
               <div key={b.name} className="reveal-row" title={b.blurb}>
-                <span className="reveal-icon" aria-hidden="true">
-                  {b.icon}
+                <span className="reveal-icon">
+                  <BotIcon id={b.id} size={20} />
                 </span>
                 <span className="reveal-team">{b.name}</span>
                 <span className="reveal-strat">{b.label}</span>
