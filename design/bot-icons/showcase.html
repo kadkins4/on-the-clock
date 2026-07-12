@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>On The Clock — Custom Bot Icons</title>
+    <style>
+      :root {
+        --raised: #0e1218;
+        --card: #161b23;
+        --card-high: #1a2029;
+        --border: #222933;
+        --ink: #eceef1;
+        --ink-dim: #9aa3ae;
+        --ink-faint: #6b7580;
+        --accent: #fb5a2d;
+        --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
+        --sans: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+        /* per-strategy tints */
+        --heroRB: #e0b252;
+        --zeroRB: #4fb6d6;
+        --robustRB: #e0796f;
+        --balanced: #9aa7b4;
+        --streamer: #4ec8a8;
+        --prospector: #6fce6f;
+        --graybeard: #c79a5b;
+        --valueSniper: #e06f9c;
+        --stacker: #9b8cf0;
+        --normal: #7a8694;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      body {
+        background:
+          radial-gradient(1100px 520px at 82% -12%, #17202c 0%, var(--raised) 58%);
+        color: var(--ink);
+        font-family: var(--sans);
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+      }
+      .wrap { max-width: 1040px; margin: 0 auto; padding: 44px 26px 120px; }
+      .eyebrow { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+      h1 { font-size: 29px; margin: 9px 0 12px; letter-spacing: -0.01em; }
+      .lead { color: var(--ink-dim); font-size: 15px; max-width: 760px; }
+      .lead strong { color: var(--ink); }
+
+      h2 { font-size: 19px; margin: 0; letter-spacing: -0.01em; }
+      .sec { margin-top: 46px; }
+      .sec-h { display: flex; align-items: center; gap: 11px; margin-bottom: 6px; }
+      .pill { font-size: 11px; font-weight: 700; letter-spacing: 0.05em; padding: 3px 10px; border-radius: 999px; text-transform: uppercase; }
+      .pill.rec { background: rgba(78,200,143,0.14); color: #4ec88f; border: 1px solid rgba(78,200,143,0.4); }
+      .pill.alt { background: #1c232c; color: var(--ink-dim); border: 1px solid var(--border); }
+      .sec-note { color: var(--ink-dim); font-size: 14px; margin: 0 0 20px; max-width: 760px; }
+
+      /* big icon grid */
+      .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(184px, 1fr)); gap: 12px; }
+      .tile {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 18px 16px 14px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        text-align: center;
+      }
+      .badge {
+        width: 56px; height: 56px;
+        border-radius: 15px;
+        display: grid; place-items: center;
+        background: var(--card-high);
+        border: 1px solid var(--border);
+      }
+      .tile .nm { font-size: 14px; font-weight: 650; }
+      .tile .lb { font-size: 11.5px; color: var(--ink-faint); font-family: var(--mono); }
+      .ic { width: 30px; height: 30px; }
+      .ic path, .ic circle, .ic line, .ic rect, .ic polyline { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+      .ic .fill { fill: currentColor; stroke: none; }
+
+      /* tint mode: monoline glyph carries its own colour, soft matching wash behind */
+      .tint .badge { color: var(--c); background: color-mix(in srgb, var(--c) 13%, var(--card-high)); border-color: color-mix(in srgb, var(--c) 34%, var(--border)); }
+
+      /* in-app row preview: how it reads at 18px in the picker/reveal list */
+      .rows { background: var(--card); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; max-width: 460px; }
+      .row { display: flex; align-items: center; gap: 12px; padding: 11px 15px; }
+      .row + .row { border-top: 1px solid var(--border); }
+      .row .ic { width: 18px; height: 18px; flex: none; }
+      .row.tint .ic { color: var(--c); }
+      .row .rnm { font-size: 13.5px; font-weight: 600; }
+      .row .rdesc { font-size: 11.5px; color: var(--ink-faint); margin-top: 1px; }
+      .row .meta { min-width: 0; }
+      .caption { font-size: 12.5px; color: var(--ink-faint); margin: 14px 0 8px; font-family: var(--mono); }
+
+      /* uniform mono variant */
+      .uniform .badge { color: var(--accent); }
+      /* emblem variant: solid tinted chip, white glyph */
+      .emblem .badge { background: var(--c); border-color: transparent; color: #0e1218; box-shadow: 0 4px 14px -6px var(--c); }
+      .emblem .ic path, .emblem .ic circle, .emblem .ic line, .emblem .ic rect, .emblem .ic polyline { stroke-width: 2.2; }
+
+      .two { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+      @media (max-width: 720px) { .two { grid-template-columns: 1fr; } }
+
+      .impl { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 12px; padding: 16px 20px; color: var(--ink-dim); font-size: 14px; }
+      .impl code { font-family: var(--mono); font-size: 12.5px; background: #0b0e13; padding: 1px 6px; border-radius: 5px; color: var(--ink); }
+      .footer { margin-top: 52px; padding-top: 18px; border-top: 1px solid var(--border); color: var(--ink-faint); font-size: 12.5px; }
+    </style>
+  </head>
+  <body>
+    <!-- ===== SPRITE: every glyph defined once, referenced by <use> ===== -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+      <!-- Hero RB — anchor (one stud to build around) -->
+      <symbol id="g-heroRB" viewBox="0 0 24 24">
+        <circle cx="12" cy="4.5" r="2" />
+        <line x1="12" y1="6.5" x2="12" y2="20" />
+        <line x1="7.5" y1="10" x2="16.5" y2="10" />
+        <path d="M6 13.5 a6 6 0 0 0 12 0" />
+        <line x1="6" y1="13.5" x2="4.4" y2="12.6" />
+        <line x1="18" y1="13.5" x2="19.6" y2="12.6" />
+      </symbol>
+      <!-- Zero RB — slashed zero (punt the position early) -->
+      <symbol id="g-zeroRB" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="7.5" />
+        <line x1="7" y1="17" x2="17" y2="7" />
+      </symbol>
+      <!-- Robust RB — dumbbell (corner the scarce position) -->
+      <symbol id="g-robustRB" viewBox="0 0 24 24">
+        <line x1="7.5" y1="12" x2="16.5" y2="12" />
+        <line x1="5" y1="8.5" x2="5" y2="15.5" />
+        <line x1="8" y1="7" x2="8" y2="17" />
+        <line x1="16" y1="7" x2="16" y2="17" />
+        <line x1="19" y1="8.5" x2="19" y2="15.5" />
+      </symbol>
+      <!-- Balanced — scales -->
+      <symbol id="g-balanced" viewBox="0 0 24 24">
+        <line x1="12" y1="4.5" x2="12" y2="18" />
+        <line x1="5" y1="8" x2="19" y2="8" />
+        <line x1="8.5" y1="19.5" x2="15.5" y2="19.5" />
+        <path d="M3.5 8 a2.6 2 0 0 0 5 0" />
+        <path d="M15.5 8 a2.6 2 0 0 0 5 0" />
+      </symbol>
+      <!-- Streamer — flowing current -->
+      <symbol id="g-streamer" viewBox="0 0 24 24">
+        <path d="M4 8 q3 -2.4 6 0 t6 0 3 0" />
+        <path d="M4 12 q3 -2.4 6 0 t6 0 3 0" />
+        <path d="M4 16 q3 -2.4 6 0 t6 0 3 0" />
+      </symbol>
+      <!-- Prospector — pickaxe (mine for upside) -->
+      <symbol id="g-prospector" viewBox="0 0 24 24">
+        <line x1="7" y1="18.5" x2="16" y2="7.5" />
+        <path d="M6.5 6.5 C 11 4.5, 15 5, 18.5 9" />
+        <path d="M8.2 5.9 C 5.6 8.6, 6.6 12, 9.4 14" />
+      </symbol>
+      <!-- Proven Vet — medal (decorated, established) -->
+      <symbol id="g-graybeard" viewBox="0 0 24 24">
+        <line x1="8" y1="4.5" x2="16" y2="4.5" />
+        <line x1="9.5" y1="5" x2="11.5" y2="11.5" />
+        <line x1="14.5" y1="5" x2="12.5" y2="11.5" />
+        <circle cx="12" cy="15.5" r="4" />
+        <circle cx="12" cy="15.5" r="1" class="fill" />
+      </symbol>
+      <!-- Value Sniper — crosshair with a falling arrow -->
+      <symbol id="g-valueSniper" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="6" />
+        <line x1="12" y1="2.5" x2="12" y2="5.5" />
+        <line x1="12" y1="18.5" x2="12" y2="21.5" />
+        <line x1="2.5" y1="12" x2="5.5" y2="12" />
+        <line x1="18.5" y1="12" x2="21.5" y2="12" />
+        <polyline points="9.6 11, 12 14, 14.4 11" />
+        <line x1="12" y1="9" x2="12" y2="14" />
+      </symbol>
+      <!-- Stacker — stacked layers (QB + his catchers) -->
+      <symbol id="g-stacker" viewBox="0 0 24 24">
+        <rect x="6" y="6.5" width="12" height="3.2" rx="1.4" />
+        <rect x="6" y="10.9" width="12" height="3.2" rx="1.4" />
+        <rect x="6" y="15.3" width="12" height="3.2" rx="1.4" />
+      </symbol>
+      <!-- Normal — neutral token (no personality) -->
+      <symbol id="g-normal" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="7.5" />
+        <line x1="8" y1="12" x2="16" y2="12" />
+      </symbol>
+    </svg>
+
+    <div class="wrap">
+      <div class="eyebrow">On The Clock · Design Exploration</div>
+      <h1>Custom bot icons — three directions</h1>
+      <p class="lead">
+        Replacing the emojis for the 9 bot strategies (plus <strong>Normal</strong>).
+        The choice that matters isn't the individual glyphs — it's the
+        <strong>visual language</strong>. These render at ~18px in the mix picker
+        and the end-of-draft reveal, so they must read instantly at that size.
+        Emoji's one real edge is <strong>colour-coded scanning</strong>, so my lead
+        recommendation keeps a per-strategy tint. Pick a direction; I'll refine the
+        winning set to final art.
+      </p>
+
+      <!-- ===== DIRECTION 1: MONOLINE + TINT (recommended) ===== -->
+      <div class="sec">
+        <div class="sec-h">
+          <h2>Direction 1 — Monoline + per-strategy tint</h2>
+          <span class="pill rec">Recommended</span>
+        </div>
+        <p class="sec-note">
+          One consistent stroke family (2px, rounded), each glyph carrying its own
+          colour with a soft matching wash behind it. Keeps the family cohesive
+          <em>and</em> the list scannable. Full set below.
+        </p>
+        <div class="grid tint">
+          <div class="tile" style="--c:var(--heroRB)"><div class="badge"><svg class="ic"><use href="#g-heroRB"/></svg></div><div class="nm">Hero RB</div><div class="lb">The Anchor</div></div>
+          <div class="tile" style="--c:var(--zeroRB)"><div class="badge"><svg class="ic"><use href="#g-zeroRB"/></svg></div><div class="nm">Zero RB</div><div class="lb">Volume Hunter</div></div>
+          <div class="tile" style="--c:var(--robustRB)"><div class="badge"><svg class="ic"><use href="#g-robustRB"/></svg></div><div class="nm">Robust RB</div><div class="lb">Ground &amp; Pound</div></div>
+          <div class="tile" style="--c:var(--balanced)"><div class="badge"><svg class="ic"><use href="#g-balanced"/></svg></div><div class="nm">Balanced</div><div class="lb">The Balanced</div></div>
+          <div class="tile" style="--c:var(--streamer)"><div class="badge"><svg class="ic"><use href="#g-streamer"/></svg></div><div class="nm">Streamer</div><div class="lb">The Streamer</div></div>
+          <div class="tile" style="--c:var(--prospector)"><div class="badge"><svg class="ic"><use href="#g-prospector"/></svg></div><div class="nm">Prospector</div><div class="lb">Upside Merchant</div></div>
+          <div class="tile" style="--c:var(--graybeard)"><div class="badge"><svg class="ic"><use href="#g-graybeard"/></svg></div><div class="nm">Proven Vet</div><div class="lb">The Graybeard</div></div>
+          <div class="tile" style="--c:var(--valueSniper)"><div class="badge"><svg class="ic"><use href="#g-valueSniper"/></svg></div><div class="nm">Value Sniper</div><div class="lb">Faller Hunter</div></div>
+          <div class="tile" style="--c:var(--stacker)"><div class="badge"><svg class="ic"><use href="#g-stacker"/></svg></div><div class="nm">Stacker</div><div class="lb">Correlation Play</div></div>
+          <div class="tile" style="--c:var(--normal)"><div class="badge"><svg class="ic"><use href="#g-normal"/></svg></div><div class="nm">Normal</div><div class="lb">No personality</div></div>
+        </div>
+
+        <div class="caption">// how it reads at 18px in the picker</div>
+        <div class="rows">
+          <div class="row tint" style="--c:var(--prospector)"><svg class="ic"><use href="#g-prospector"/></svg><div class="meta"><div class="rnm">Prospector</div><div class="rdesc">Hunts young players &amp; rookies with upside.</div></div></div>
+          <div class="row tint" style="--c:var(--graybeard)"><svg class="ic"><use href="#g-graybeard"/></svg><div class="meta"><div class="rnm">Proven Vet</div><div class="rdesc">Trusts established production, fades rookies.</div></div></div>
+          <div class="row tint" style="--c:var(--valueSniper)"><svg class="ic"><use href="#g-valueSniper"/></svg><div class="meta"><div class="rnm">Value Sniper</div><div class="rdesc">Pounces when the board beats ADP.</div></div></div>
+          <div class="row tint" style="--c:var(--stacker)"><svg class="ic"><use href="#g-stacker"/></svg><div class="meta"><div class="rnm">Stacker</div><div class="rdesc">Pairs a QB with his own pass-catchers.</div></div></div>
+        </div>
+      </div>
+
+      <!-- ===== VARIANTS ===== -->
+      <div class="sec">
+        <div class="sec-h"><h2>The same glyphs, two other languages</h2><span class="pill alt">Compare</span></div>
+        <p class="sec-note">Same drawings, different treatment — so you're judging the <em>language</em>, not the art.</p>
+        <div class="two">
+          <div>
+            <div class="caption">// Direction 2 — Uniform monoline (single accent, most minimal)</div>
+            <div class="grid uniform" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">
+              <div class="tile"><div class="badge"><svg class="ic"><use href="#g-heroRB"/></svg></div><div class="nm">Hero RB</div></div>
+              <div class="tile"><div class="badge"><svg class="ic"><use href="#g-prospector"/></svg></div><div class="nm">Prospector</div></div>
+              <div class="tile"><div class="badge"><svg class="ic"><use href="#g-valueSniper"/></svg></div><div class="nm">Value Sniper</div></div>
+              <div class="tile"><div class="badge"><svg class="ic"><use href="#g-stacker"/></svg></div><div class="nm">Stacker</div></div>
+            </div>
+          </div>
+          <div>
+            <div class="caption">// Direction 3 — Solid emblem (filled tinted chip, crest feel)</div>
+            <div class="grid emblem" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">
+              <div class="tile" style="--c:var(--heroRB)"><div class="badge"><svg class="ic"><use href="#g-heroRB"/></svg></div><div class="nm">Hero RB</div></div>
+              <div class="tile" style="--c:var(--prospector)"><div class="badge"><svg class="ic"><use href="#g-prospector"/></svg></div><div class="nm">Prospector</div></div>
+              <div class="tile" style="--c:var(--valueSniper)"><div class="badge"><svg class="ic"><use href="#g-valueSniper"/></svg></div><div class="nm">Value Sniper</div></div>
+              <div class="tile" style="--c:var(--stacker)"><div class="badge"><svg class="ic"><use href="#g-stacker"/></svg></div><div class="nm">Stacker</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== IMPLEMENTATION ===== -->
+      <div class="sec">
+        <div class="sec-h"><h2>How it ships</h2></div>
+        <div class="impl">
+          Today each strategy carries an emoji string in its <code>icon</code> field.
+          The clean swap: keep the field as a stable <code>iconId</code> and add one
+          <code>BotIcon</code> component that maps id → inline SVG (an
+          <code>&lt;svg&gt;&lt;use&gt;</code> sprite, exactly like this page). The
+          per-strategy tint becomes a <code>--c</code> CSS var already available
+          where we render. Nothing about the engine, reveal, or picker logic
+          changes — only the presentational glyph. One-file, fully reversible.
+        </div>
+      </div>
+
+      <div class="footer">Local design exploration · glyphs are directional drafts, not final art · pick a direction and I'll finish the set.</div>
+    </div>
+  </body>
+</html>
