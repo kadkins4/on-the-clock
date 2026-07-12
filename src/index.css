@@ -1341,6 +1341,11 @@ table.players th.sorted {
   flex: 1 1 auto;
   min-width: 0;
 }
+/* Pin every stepper to the same width — otherwise a long unbreakable word in a
+   description steals flex width from the stepper and the columns misalign. */
+.ms-botmix-row .ms-stepper {
+  flex: none;
+}
 .ms-botmix-name {
   font-size: var(--fs-13-5);
   font-weight: 600;
