@@ -11,9 +11,12 @@ export const config = { runtime: "edge" };
 // (verified against elevenlabs.io/pricing). Changing this changes the budget.
 const MODEL_ID = "eleven_multilingual_v2";
 
-// Stock voice, overridable via ELEVENLABS_VOICE_ID once a real key exists and
-// the voice can actually be auditioned.
-const DEFAULT_VOICE_ID = "21m00Tcm4TlvDq8ikWAM";
+// A default premade voice. Verified working on a free-tier key on 2026-07-23;
+// most catalogue voices are NOT — the API answers 402 paid_plan_required with
+// "Free users cannot use library voices via the API". If you change this,
+// re-check it against a free key or the announcer silently falls back to the
+// browser voice in dev. Overridable via ELEVENLABS_VOICE_ID.
+const DEFAULT_VOICE_ID = "JBFqnCBsd6RMkjVDRZzb";
 
 export interface TtsParams {
   text: string;

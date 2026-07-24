@@ -83,6 +83,20 @@ describe("handleTts", () => {
     expect(body.text).toBe("Hello.");
   });
 
+  it("defaults to a voice that free-tier keys can actually use", async () => {
+    // Most catalogue voices answer 402 paid_plan_required on a free key. This
+    // one was verified working; changing it without re-checking silently
+    // demotes the announcer to the browser voice.
+    let seenUrl = "";
+    const fakeFetch = (async (url: string) => {
+      seenUrl = String(url);
+      return audioResponse();
+    }) as unknown as typeof fetch;
+
+    await handleTts({ text: "Hello." }, fakeFetch, KEY);
+    expect(seenUrl).toContain("JBFqnCBsd6RMkjVDRZzb");
+  });
+
   it("honors an overridden voice id from env", async () => {
     let seenUrl = "";
     const fakeFetch = (async (url: string) => {

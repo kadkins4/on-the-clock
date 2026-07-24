@@ -1,6 +1,6 @@
 /// <reference types="vitest/config" />
 import type { IncomingMessage, ServerResponse } from "node:http";
-import { defineConfig, type Plugin } from "vite";
+import { defineConfig, loadEnv, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import { handleAdp } from "./api/adp";
 import { handleTts } from "./api/tts";
@@ -44,7 +44,7 @@ function adpDevApi(): Plugin {
 // Dev-only: serve /api/tts from the Vite dev server so the browser posts to a
 // same-origin proxy and the ElevenLabs key never reaches the client. In
 // production this same handler ships as the api/tts.ts serverless function.
-function ttsDevApi(): Plugin {
+function ttsDevApi(env: Record<string, string | undefined>): Plugin {
   return {
     name: "dev-api-tts",
     apply: "serve",
@@ -63,9 +63,11 @@ function ttsDevApi(): Plugin {
             } catch {
               /* leave text empty → handler 400s */
             }
-            // The dev server reads .env.local via process.env; unprefixed vars
-            // stay server-side, matching the Yahoo/ADP convention.
-            const out = await handleTts({ text }, fetch, process.env);
+            // Vite does NOT copy unprefixed .env.local vars into process.env,
+            // so the key is read via loadEnv below and threaded in explicitly.
+            // On Vercel the real environment supplies it and api/tts.ts reads
+            // process.env directly.
+            const out = await handleTts({ text }, fetch, env);
             res.statusCode = out.status;
             res.setHeader(
               "content-type",
@@ -79,8 +81,14 @@ function ttsDevApi(): Plugin {
   };
 }
 
-export default defineConfig({
-  plugins: [react(), adpDevApi(), ttsDevApi()],
+export default defineConfig(({ mode }) => ({
+  // "" prefix => load every var, including the unprefixed server-only secrets.
+  // These stay in the dev middleware and are never handed to the client bundle.
+  plugins: [
+    react(),
+    adpDevApi(),
+    ttsDevApi(loadEnv(mode, process.cwd(), "")),
+  ],
   build: {
     // The mock-draft engine and ?dev=1 panel are code-split (see App.tsx). What
     // remains in the main chunk is the framework baseline (React-DOM + dnd-kit
@@ -91,4 +99,4 @@ export default defineConfig({
   test: {
     environment: "jsdom",
   },
-});
+}));
