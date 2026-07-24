@@ -111,6 +111,30 @@ describe("createSpeaker fallback chain", () => {
     expect(spoken).toEqual(["Hello."]);
   });
 
+  it("stops calling /api/tts after a 503 — no doomed round-trip per pick", async () => {
+    const fetchImpl = vi.fn(async () => notOk(503)) as unknown as typeof fetch;
+    const { speaker, spoken } = harness(fetchImpl);
+
+    await speaker.speak("One.");
+    await speaker.speak("Two.");
+    await speaker.speak("Three.");
+
+    // A key-less deploy is the standing state, not a transient blip: ask once,
+    // then go straight to the browser voice for the rest of the session.
+    expect(fetchImpl).toHaveBeenCalledTimes(1);
+    expect(spoken).toEqual(["One.", "Two.", "Three."]);
+  });
+
+  it("keeps retrying after a 502 — that one may be transient", async () => {
+    const fetchImpl = vi.fn(async () => notOk(502)) as unknown as typeof fetch;
+    const { speaker } = harness(fetchImpl);
+
+    await speaker.speak("One.");
+    await speaker.speak("Two.");
+
+    expect(fetchImpl).toHaveBeenCalledTimes(2);
+  });
+
   it("does not cache a failed generation", async () => {
     const cache = createAudioCache(memoryStore());
     const fetchImpl = vi.fn(async () => notOk(502)) as unknown as typeof fetch;

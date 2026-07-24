@@ -43,14 +43,25 @@ export function createSpeaker({
   // makes coalescing in useAnnouncer actually silent.
   let generation = 0;
 
+  // /api/tts answers 503 when no key is configured, which is the standing state
+  // of the deployed site. Retrying it once per pick would mean ~180 doomed
+  // round-trips per draft and a console full of red, so the verdict is
+  // remembered and the network is skipped for the rest of the session.
+  // Deliberately only 503: a 502 is a transient upstream failure worth retrying.
+  let unconfigured = false;
+
   async function fromNetwork(text: string): Promise<Blob | null> {
+    if (unconfigured) return null;
     try {
       const res = await fetchImpl("/api/tts", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ text }),
       });
-      // 503 = no key configured, which is expected in production.
+      if (res.status === 503) {
+        unconfigured = true;
+        return null;
+      }
       if (!res.ok) return null;
       return await res.blob();
     } catch {
