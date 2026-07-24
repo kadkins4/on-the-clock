@@ -2,6 +2,11 @@ import type { MockState } from "./types";
 import { isComplete, currentTeamIndex } from "./engine";
 import { formatPick } from "./board";
 import type { CellKind } from "./board";
+import {
+  pickSignal,
+  defaultValueThreshold,
+  type PickSignal,
+} from "../draftValue";
 
 // ── types ─────────────────────────────────────────────────────────────────────
 
@@ -57,9 +62,54 @@ export interface TvSnapshot {
 
 export const TV_CHANNEL = "otc-tv";
 
+// A pick *event*, as opposed to the state mirror TvSnapshot carries. The TV
+// window needs this because snapshots can't distinguish "a pick happened" from
+// undo / rewind / replace / simulate-to-end — see announceFor below.
+export interface TvAnnounce {
+  overall: number;
+  name: string; // full name, never a surname — it is read aloud
+  position: string;
+  signal: PickSignal | null; // reach/value, for the flair line
+}
+
 export type TvMessage =
   | { type: "snapshot"; snapshot: TvSnapshot }
-  | { type: "request" };
+  | { type: "request" }
+  | { type: "announce"; announce: TvAnnounce };
+
+// Should the TV window speak, and what? Pure so every suppression case is
+// cheaply testable — this is the whole correctness story for the announcer.
+//
+// Only *forward progress* announces: exactly one new pick since we last looked.
+// That single rule covers undo and rewind (count drops), replacePick (count
+// unchanged), and simulateToEnd (count jumps by many, and announcing ~180 picks
+// at once would be absurd). Auto-draft is silent by product decision.
+export function announceFor(
+  state: MockState,
+  prevPickCount: number,
+  autoOn: boolean,
+): TvAnnounce | null {
+  if (autoOn) return null;
+  if (state.picks.length !== prevPickCount + 1) return null;
+
+  const pick = state.picks[state.picks.length - 1];
+  const player = state.pool.find((p) => p.id === pick.playerId);
+  if (!player) return null;
+
+  const threshold =
+    state.settings.valueThreshold ??
+    defaultValueThreshold(state.settings.teams);
+  const enabled = state.settings.valueFlagsEnabled !== false;
+
+  return {
+    overall: pick.overall,
+    name: player.name,
+    position: player.position,
+    signal: enabled
+      ? pickSignal(player.adp ?? null, pick.overall, threshold)
+      : null,
+  };
+}
 
 // ── helpers ───────────────────────────────────────────────────────────────────
 

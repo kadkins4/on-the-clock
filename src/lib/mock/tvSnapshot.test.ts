@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { buildTvSnapshot } from "./tvSnapshot";
+import { buildTvSnapshot, announceFor } from "./tvSnapshot";
 import type { MockState } from "./types";
 import type { Player } from "../../types";
 import type { TeamIdentity } from "./teamIdentity";
@@ -309,5 +309,88 @@ describe("buildTvSnapshot — serialisability", () => {
     const parsed = JSON.parse(json);
     expect(parsed.complete).toBe(false);
     expect(parsed.latest).toBeNull();
+  });
+});
+
+// ── announceFor ──────────────────────────────────────────────────────────────
+// The announcer must fire ONLY on forward progress. Undo, rewind, replacePick
+// and simulateToEnd all reach this code path, and none of them should speak.
+
+describe("announceFor", () => {
+  function withPicks(n: number, overrides: Partial<MockState> = {}) {
+    const s = baseState(overrides);
+    const picks = Array.from({ length: n }, (_, i) => ({
+      overall: i + 1,
+      round: Math.floor(i / 4) + 1,
+      teamIndex: s.order[i],
+      playerId: s.pool[i].id,
+    }));
+    return { ...s, picks };
+  }
+
+  it("announces the newest pick on forward progress", () => {
+    const state = withPicks(3);
+    expect(announceFor(state, 2, false)).toEqual({
+      overall: 3,
+      name: "Christian McCaffrey",
+      position: "RB",
+      signal: null,
+    });
+  });
+
+  it("carries the FULL player name, never a surname", () => {
+    const a = announceFor(withPicks(1), 0, false);
+    expect(a?.name).toBe("Josh Allen");
+  });
+
+  it("is silent while auto-draft is on", () => {
+    expect(announceFor(withPicks(3), 2, true)).toBeNull();
+  });
+
+  it("is silent on undo (pick count decreased)", () => {
+    expect(announceFor(withPicks(2), 3, false)).toBeNull();
+  });
+
+  it("is silent on rewind (count dropped by several)", () => {
+    expect(announceFor(withPicks(1), 8, false)).toBeNull();
+  });
+
+  it("is silent on replacePick (count unchanged)", () => {
+    expect(announceFor(withPicks(3), 3, false)).toBeNull();
+  });
+
+  it("is silent on simulateToEnd (count jumped by many)", () => {
+    expect(announceFor(withPicks(12), 2, false)).toBeNull();
+  });
+
+  it("is silent when there are no picks at all", () => {
+    expect(announceFor(baseState(), 0, false)).toBeNull();
+  });
+
+  it("flags a reach when a player goes far above ADP", () => {
+    const s = baseState();
+    const pool = s.pool.map((p) =>
+      p.id === "p1" ? { ...p, adp: 40 } : p,
+    );
+    const state = {
+      ...s,
+      pool,
+      picks: [{ overall: 1, round: 1, teamIndex: 0, playerId: "p1" }],
+      settings: { ...s.settings, valueThreshold: 10 },
+    };
+    expect(announceFor(state, 0, false)?.signal).toEqual({
+      kind: "reach",
+      amount: 39,
+    });
+  });
+
+  it("leaves signal null when the pick is near its ADP", () => {
+    const s = baseState();
+    const state = {
+      ...s,
+      picks: [{ overall: 1, round: 1, teamIndex: 0, playerId: "p1" }],
+      settings: { ...s.settings, valueThreshold: 10 },
+    };
+    expect(announceFor(state, 0, false)?.signal).toBeNull();
   });
 });
