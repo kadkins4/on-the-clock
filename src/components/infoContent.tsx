@@ -46,6 +46,17 @@ export function LogContent() {
         <h2 className="otc-log-h">Change Log</h2>
         <ul className="otc-changelog">
           <li>
+            <span className="otc-log-date">Jul 23, 2026</span>
+            Spoken draft announcer in TV mode — the cast window can now call
+            each pick out loud (&ldquo;With pick 17, running back Jahmyr
+            Gibbs&rdquo;), with an extra line when someone goes well above or
+            below their ADP. It&rsquo;s off by default; the button in the corner
+            of the TV window turns it on. Auto-draft stays silent, and when
+            picks come in faster than they can be read it skips to the most
+            recent one instead of falling behind. Uses the browser&rsquo;s
+            built-in voice unless an ElevenLabs key is configured.
+          </li>
+          <li>
             <span className="otc-log-date">Jul 12, 2026</span>
             Custom bot-strategy icons — each draft strategy now has its own
             hand-drawn glyph, color-coded per strategy, replacing the old emoji
