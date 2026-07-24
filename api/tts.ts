@@ -78,16 +78,20 @@ export async function handleTts(
   }
 }
 
-export default async function (req: Request): Promise<Response> {
-  let text = "";
-  if (req.method === "POST") {
-    try {
-      ({ text } = (await req.json()) as TtsParams);
-    } catch {
-      return json({ error: "bad json" }, 400);
-    }
-  } else {
-    text = new URL(req.url).searchParams.get("text") ?? "";
+async function readText(req: Request): Promise<string | null> {
+  if (req.method !== "POST") {
+    return new URL(req.url).searchParams.get("text") ?? "";
   }
+  try {
+    const { text } = (await req.json()) as TtsParams;
+    return text;
+  } catch {
+    return null; // malformed body
+  }
+}
+
+export default async function (req: Request): Promise<Response> {
+  const text = await readText(req);
+  if (text === null) return json({ error: "bad json" }, 400);
   return handleTts({ text });
 }

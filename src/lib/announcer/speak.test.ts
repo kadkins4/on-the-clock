@@ -80,7 +80,7 @@ describe("createSpeaker fallback chain", () => {
     let body = "";
     const fetchImpl = vi.fn(async (u: string, init: RequestInit) => {
       url = String(u);
-      body = String(init.body);
+      body = init.body as string;
       return okAudio();
     }) as unknown as typeof fetch;
 

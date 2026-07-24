@@ -57,7 +57,8 @@ export function idbStore(
       const req = factory.open(DB_NAME, 1);
       req.onupgradeneeded = () => req.result.createObjectStore(STORE);
       req.onsuccess = () => resolve(req.result);
-      req.onerror = () => reject(req.error);
+      req.onerror = () =>
+        reject(new Error(req.error?.message ?? "indexeddb open failed"));
     });
 
   const tx = <T>(
@@ -69,13 +70,17 @@ export function idbStore(
         new Promise<T>((resolve, reject) => {
           const req = run(db.transaction(STORE, mode).objectStore(STORE));
           req.onsuccess = () => resolve(req.result);
-          req.onerror = () => reject(req.error);
+          req.onerror = () =>
+            reject(new Error(req.error?.message ?? "indexeddb request failed"));
         }),
     );
 
   return {
     get: (k) =>
-      tx<Blob | undefined>("readonly", (s) => s.get(k)).then((v) => v ?? null),
+      tx<Blob | undefined>(
+        "readonly",
+        (s) => s.get(k) as IDBRequest<Blob | undefined>,
+      ).then((v) => v ?? null),
     put: (k, v) => tx("readwrite", (s) => s.put(v, k)).then(() => undefined),
     keys: () =>
       tx<IDBValidKey[]>("readonly", (s) => s.getAllKeys()).then((ks) =>
@@ -122,7 +127,6 @@ export function createAudioCache(
 
 // The cache the app actually uses. Safe to call under jsdom.
 export function defaultAudioCache(): AudioCache {
-  const factory =
-    typeof indexedDB === "undefined" ? undefined : (indexedDB as IDBFactory);
+  const factory = typeof indexedDB === "undefined" ? undefined : indexedDB;
   return createAudioCache(idbStore(factory));
 }

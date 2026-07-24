@@ -74,7 +74,7 @@ describe("handleTts", () => {
   it("requests the model the credit math assumes (1 char = 1 credit)", async () => {
     let body: Record<string, unknown> = {};
     const fakeFetch = (async (_url: string, init: RequestInit) => {
-      body = JSON.parse(String(init.body)) as Record<string, unknown>;
+      body = JSON.parse(init.body as string) as Record<string, unknown>;
       return audioResponse();
     }) as unknown as typeof fetch;
 
