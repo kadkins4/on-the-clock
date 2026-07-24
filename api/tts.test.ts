@@ -94,7 +94,7 @@ describe("handleTts", () => {
     }) as unknown as typeof fetch;
 
     await handleTts({ text: "Hello." }, fakeFetch, KEY);
-    expect(seenUrl).toContain("JBFqnCBsd6RMkjVDRZzb");
+    expect(seenUrl).toContain("onwK4e9ZLuTAKqWW03F9");
   });
 
   it("honors an overridden voice id from env", async () => {
