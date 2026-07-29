@@ -50,6 +50,24 @@ describe("reportErrorRemote", () => {
     expect(f).toHaveBeenCalledTimes(1);
   });
 
+  it("skips the remote report for an opaque cross-origin error", () => {
+    vi.stubEnv("VITE_FORMSPREE_ENDPOINT", "https://formspree.io/f/test");
+    const f = vi.fn().mockResolvedValue({ ok: true });
+    vi.stubGlobal("fetch", f);
+    reportErrorRemote({ ...err, message: "Script error." });
+    reportErrorRemote({ ...err, message: "Script error" });
+    reportErrorRemote({ ...err, message: "  script error.  " });
+    expect(f).not.toHaveBeenCalled();
+  });
+
+  it("still reports a real error that merely mentions a script", () => {
+    vi.stubEnv("VITE_FORMSPREE_ENDPOINT", "https://formspree.io/f/test");
+    const f = vi.fn().mockResolvedValue({ ok: true });
+    vi.stubGlobal("fetch", f);
+    reportErrorRemote({ ...err, message: "Script error. at drafting board" });
+    expect(f).toHaveBeenCalledTimes(1);
+  });
+
   it("swallows a fetch rejection (never throws)", () => {
     vi.stubEnv("VITE_FORMSPREE_ENDPOINT", "https://formspree.io/f/test");
     vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new Error("net")));

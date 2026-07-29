@@ -9,6 +9,18 @@ function sig(e: LoggedError): string {
   return `${e.source}|${e.message}`.slice(0, 200);
 }
 
+// Browsers replace the message/file/line of an exception thrown by a script they
+// won't let us inspect with a bare "Script error." and a null `error` object. Our
+// own bundles are same-origin and CORS-enabled, so they never sanitize this way —
+// an opaque report can only come from something injected into the page (a Safari
+// extension, content blocker, or in-app browser wrapper). It carries no message,
+// no stack, and no line number, so there is nothing to act on. Drop it before it
+// spends the form quota and reads as a real crash in the inbox. Still buffered
+// locally by `captureError` so the /dev panel shows that *something* threw.
+function isOpaqueCrossOriginError(e: LoggedError): boolean {
+  return /^script error\.?$/i.test(e.message.trim());
+}
+
 function alreadySent(s: string): boolean {
   try {
     const arr: unknown = JSON.parse(localStorage.getItem(SIGS_KEY) || "[]");
@@ -38,6 +50,7 @@ function markSent(s: string): void {
 export function reportErrorRemote(e: LoggedError): void {
   const endpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT;
   if (!endpoint) return;
+  if (isOpaqueCrossOriginError(e)) return;
   const s = sig(e);
   if (alreadySent(s)) return;
   markSent(s);
