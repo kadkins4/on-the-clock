@@ -1,42 +1,36 @@
-import { useEffect, useState } from "react";
-import type { TvSnapshot, TvMessage } from "../../lib/mock/tvSnapshot";
-import { TV_CHANNEL } from "../../lib/mock/tvSnapshot";
 import { TVStage } from "./TVStage";
+import { useAnnouncer } from "./useAnnouncer";
 
+// The #tv cast view. useAnnouncer owns the BroadcastChannel subscription
+// (snapshots plus pick events) so this component stays layout-only.
 export function TvWindow() {
-  const [snapshot, setSnapshot] = useState<TvSnapshot | null>(null);
+  const { snapshot, enabled, toggle, speaking } = useAnnouncer();
 
-  useEffect(() => {
-    if (typeof BroadcastChannel === "undefined") return;
-
-    const ch = new BroadcastChannel(TV_CHANNEL);
-
-    ch.onmessage = (e: MessageEvent<TvMessage>) => {
-      if (e.data.type === "snapshot") {
-        setSnapshot(e.data.snapshot);
-      }
-    };
-
-    // Ask the main window for the current snapshot
-    const req: TvMessage = { type: "request" };
-    ch.postMessage(req);
-
-    return () => ch.close();
-  }, []);
-
-  if (!snapshot) {
-    return (
-      <div className="tv-window-waiting">
+  return (
+    <div className={snapshot ? "tv-window" : "tv-window-waiting"}>
+      {snapshot ? (
+        <TVStage snapshot={snapshot} />
+      ) : (
         <span className="tv-window-waiting-text">
           Waiting for the draft&hellip;
         </span>
-      </div>
-    );
-  }
+      )}
 
-  return (
-    <div className="tv-window">
-      <TVStage snapshot={snapshot} />
+      {/* Off by default. This click is also the TV window's first user gesture,
+          which is what unlocks audio here — the main window's unlockAudio()
+          can't reach this document, so a stored preference alone can't satisfy
+          the autoplay policy. */}
+      <button
+        type="button"
+        className={`tv-announcer-toggle${enabled ? " is-on" : ""}`}
+        onClick={toggle}
+        aria-pressed={enabled}
+      >
+        <span className="tv-announcer-dot" aria-hidden="true">
+          {speaking ? "●" : enabled ? "○" : "◌"}
+        </span>
+        {enabled ? "Announcer on" : "Enable announcer"}
+      </button>
     </div>
   );
 }

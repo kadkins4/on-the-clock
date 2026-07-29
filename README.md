@@ -20,7 +20,7 @@ Build tiers, mark targets, and track every pick on a single fast board — no lo
 
 ## Why it exists
 
-Most draft tools want your email, bury the board behind ads, or lag when you're on the clock. On The Clock is the opposite: **open it, and the board is right there.** Every player, every stat, every tier — one screen, instant, offline-capable, and entirely yours. Nothing leaves your browser.
+Most draft tools want your email, bury the board behind ads, or lag when you're on the clock. On The Clock is the opposite: **open it, and the board is right there.** Every player, every stat, every tier — one screen, instant, offline-capable, and entirely yours. Your board never leaves your browser.
 
 ## Features
 

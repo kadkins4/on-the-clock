@@ -116,6 +116,7 @@ export function MockDraft({
     revealing,
     paused,
     setPaused,
+    autoOn,
     setAutoOn,
     missed,
     setMissed,
@@ -134,7 +135,7 @@ export function MockDraft({
   });
 
   // Mirror the draft to any open #tv cast window (read-only BroadcastChannel).
-  useTvBroadcast(state);
+  useTvBroadcast(state, autoOn);
 
   // Scored PROJ + VOR for the pick pool / player card, computed once per mock
   // from the frozen pool at the league's scoring settings.

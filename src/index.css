@@ -5138,6 +5138,45 @@ table.players td.pos {
   color: var(--text-tertiary);
 }
 
+/* Announcer opt-in. Fixed so it sits above the stage in both the waiting and
+   live states without disturbing either layout. Deliberately unobtrusive — the
+   TV is meant to be looked at, not operated. */
+.tv-announcer-toggle {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.16));
+  background: rgba(0, 0, 0, 0.55);
+  color: var(--text-tertiary);
+  font-family: var(--font-condensed);
+  font-size: var(--fs-14, 14px);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  opacity: 0.55;
+  transition:
+    opacity 160ms ease,
+    color 160ms ease;
+}
+.tv-announcer-toggle:hover,
+.tv-announcer-toggle:focus-visible {
+  opacity: 1;
+}
+.tv-announcer-toggle.is-on {
+  opacity: 0.9;
+  color: var(--text-primary, #fff);
+}
+.tv-announcer-dot {
+  font-size: 10px;
+  line-height: 1;
+}
+
 /* ── B10: TV mode motion (all behind prefers-reduced-motion) ─────────────── */
 
 /* Split-flap: each tile flips in; stagger 50ms per tile across the 12 cells.
