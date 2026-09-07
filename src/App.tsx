@@ -59,6 +59,7 @@ import { ColumnScopePrompt } from "./components/board/ColumnScopePrompt";
 import { PlayerTable, type DisplayRow } from "./components/PlayerTable";
 import { buildItems } from "./lib/tierBreaks";
 import { Intro } from "./components/Intro";
+import { Hub, LivePlaceholder } from "./components/Hub";
 
 // Split off the routes a first-time visitor doesn't hit on load: the whole
 // mock-draft engine (only on entering a mock) and the ?dev=1 diagnostics panel.
@@ -210,7 +211,11 @@ export default function App() {
   };
   const [fetching, setFetching] = useState(false);
   const [adpStatus, setAdpStatus] = useState<string | null>(null);
-  const [mockMode, setMockMode] = useState(false);
+  // Deep-link past the hub: ?mode=mock|prep|live jumps straight into a room;
+  // anything else (or no param) lands on the hub. Read once on load, same
+  // pattern as ?dev=1 below.
+  const initialMode = new URLSearchParams(window.location.search).get("mode");
+  const [mockMode, setMockMode] = useState(() => initialMode === "mock");
   // Gated diagnostics (?dev=1) + the refetch guard result + a transient toast.
   const devMode =
     new URLSearchParams(window.location.search).get("dev") === "1";
@@ -219,7 +224,17 @@ export default function App() {
   );
   const { toast, showToast, dismiss: dismissToast } = useToast();
   const { sourcesMeta, sourcesFetchedAt, setSources } = useSources();
-  const [view, setView] = useState<"board" | "about" | "log" | "dst">("board");
+  const [view, setView] = useState<
+    "hub" | "board" | "about" | "log" | "dst" | "live"
+  >(() =>
+    initialMode === "prep"
+      ? "board"
+      : initialMode === "live"
+        ? "live"
+        : initialMode === "mock"
+          ? "board" // mockMode guard takes over; fall back to board on exit
+          : "hub",
+  );
   // Cmd/Ctrl+Z undoes the last board edit — but only when not typing in a field,
   // so the browser's native text undo still works inside the rank/notes inputs.
   useEffect(() => {
@@ -662,6 +677,32 @@ export default function App() {
     );
   }
 
+  // Launcher hub — the home screen. Renders its own Intro splash (which fades
+  // into the hero), so it sits before the main board return.
+  if (view === "hub") {
+    return (
+      <div className="app">
+        <Hub
+          introReplay={introReplay}
+          onEnterMock={() => setMockMode(true)}
+          onEnterLive={() => setView("live")}
+          onEnterPrep={() => setView("board")}
+          onAbout={() => setView("about")}
+          onLog={() => setView("log")}
+        />
+      </div>
+    );
+  }
+
+  // Live Draft room — placeholder until the Sleeper adapter + broadcast ship.
+  if (view === "live") {
+    return (
+      <div className="app">
+        <LivePlaceholder onBack={() => setView("hub")} />
+      </div>
+    );
+  }
+
   return (
     <div className="app">
       <Intro replay={introReplay} />
@@ -669,7 +710,7 @@ export default function App() {
       <Header
         onBrandClick={() => {
           onBrandClick();
-          setView("board");
+          setView("hub");
         }}
         onAbout={() => setView("about")}
         onLog={() => setView("log")}
