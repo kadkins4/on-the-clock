@@ -72,6 +72,7 @@ const DevPanel = lazy(() =>
 import { AlphaBanner } from "./components/AlphaBanner";
 import { Header } from "./components/Header";
 import { InfoPage } from "./components/InfoPage";
+import { DstPage } from "./components/DstPage";
 
 function download(filename: string, text: string, type: string) {
   const blob = new Blob([text], { type });
@@ -218,7 +219,7 @@ export default function App() {
   );
   const { toast, showToast, dismiss: dismissToast } = useToast();
   const { sourcesMeta, sourcesFetchedAt, setSources } = useSources();
-  const [view, setView] = useState<"board" | "about" | "log">("board");
+  const [view, setView] = useState<"board" | "about" | "log" | "dst">("board");
   // Cmd/Ctrl+Z undoes the last board edit — but only when not typing in a field,
   // so the browser's native text undo still works inside the rank/notes inputs.
   useEffect(() => {
@@ -673,7 +674,9 @@ export default function App() {
         onAbout={() => setView("about")}
         onLog={() => setView("log")}
       />
-      {view !== "board" ? (
+      {view === "dst" ? (
+        <DstPage onBack={() => setView("board")} />
+      ) : view !== "board" ? (
         <InfoPage page={view} onBack={() => setView("board")} />
       ) : (
         <>
@@ -710,6 +713,7 @@ export default function App() {
             activePos={posFilter}
             onToggleChip={(p) => setPosFilter((prev) => toggleChip(prev, p))}
             onApplyMacro={(m) => setPosFilter((prev) => applyMacro(prev, m))}
+            onOpenDstBoard={() => setView("dst")}
             hideDrafted={hideDrafted}
             setHideDrafted={setHideDrafted}
             byeFilter={byeFilter}

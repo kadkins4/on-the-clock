@@ -17,6 +17,7 @@ interface Props {
   activePos: ReadonlySet<Position>;
   onToggleChip: (p: Position) => void;
   onApplyMacro: (m: Macro) => void;
+  onOpenDstBoard: () => void;
   hideDrafted: boolean;
   setHideDrafted: (b: boolean) => void;
   byeFilter: number | null;
@@ -110,6 +111,13 @@ export function Toolbar(props: Props) {
             {p}
           </button>
         ))}
+        <button
+          className="chip chip-dst-board"
+          onClick={props.onOpenDstBoard}
+          title="Open the Defenses (DST) strength-of-schedule board"
+        >
+          🛡 DST Board
+        </button>
       </div>
       <button
         className={props.hideDrafted ? "hide-drafted active" : "hide-drafted"}
