@@ -23,6 +23,7 @@ function renderToolbar(
     activePos: new Set<Position>(),
     onToggleChip: vi.fn(),
     onApplyMacro: vi.fn(),
+    onOpenDstBoard: vi.fn(),
     hideDrafted: false,
     setHideDrafted: noop,
     byeFilter: null,
