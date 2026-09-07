@@ -293,6 +293,137 @@ worktree, ff-merged to local main. ⑨ deferred (ships with live-multiplayer).
   switch. Continue the "custom hooks wherever business logic is heavy" pattern
   as these are touched.
 
+## Strategic pivot: mock-first + live display (PROPOSED — pending Kenny's review, 2026-08-19)
+
+Reposition the product around three pillars, keeping every existing feature:
+**(1) Mock drafting = primary. (2) Live display = secondary** (connect to a real
+draft, render it as an interactive/epic broadcast). **(3) Prep/research = tertiary.**
+Thesis: mock engines are commodity (every incumbent gives one free); the market gap
+is the _experience_ — the most epic-feeling draft + a live broadcast layer. The moat
+is experience + live display, not the mock engine.
+
+### P0 — Entry point / repositioning
+
+- **Launcher hub (new entry point).** A mode-select menu so users choose where to
+  go: **Mock draft** / **Live display** / **Prep board**. Lives in `App.tsx`'s
+  existing view/route switch (research board / mock / dev panel today) — add a hub
+  view + a new live view. _Complexity: Moderate (mostly new UI over existing routes)._
+- **Reprioritize IA** so mock is the default/hero path and prep is reachable but
+  not the front door. Keep all prep features intact.
+
+### P1 — Visual upgrades gleaned from BDGE board (2026-08-19 screenshot)
+
+Applies across prep, mock, AND tv — headshots especially make it look broadcast-grade,
+not spreadsheet.
+
+- **Player headshots + team logos inline.** _Highest-impact visual add._ Sleeper
+  serves both free: `sleepercdn.com/content/nfl/players/<id>.jpg` + team logos.
+  Replaces our position-color shapes. _Complexity: Moderate — asset plumbing +
+  fallbacks; spans PlayerRow, mock cards, TVStage._
+- **Positional rank inside the pos badge** ("WR8", "RB12"). Cheap — we have the data.
+- **ADP shown as `25 (3.01)`** (overall + round.pick). Cheap format add.
+- **vs-ADP movement column** — green ▲ / red ▼ + delta (we already compute reach
+  cues; adopt the compact colored-triangle presentation).
+- **Status pill stack under the name** — INJURED / AVOID / **ROOKIE** (add ROOKIE;
+  we have injury + avoid) as stacked colored pills.
+- **Vegas props as inline mini-stat columns** (REC YDS / TD / REC · RUSH YDS…) —
+  the presentation half of the Vegas feature below.
+- **Row multi-select checkbox** + **chevron → player profile** expansion.
+
+### P2 — Live draft connect (read/sync an existing platform's live draft)
+
+Platforms are wildly unequal. Sleeper alone = a real, shippable live product.
+
+- **Sleeper — EASY, ship first.** Public REST, no auth. Resolve
+  username→user_id→leagues→drafts, then poll `/draft/<id>/picks` live
+  (+ `/draft/<id>` for order/slots). Rate limit ~1000/min. _Complexity: Simple._
+- **Yahoo — MEDIUM.** Official OAuth2 Fantasy API; `/league/<key>/draftresults`
+  populates as picks land. Needs a registered Yahoo app + OAuth 3-legged flow +
+  **a backend to hold secrets/tokens** + refresh + polling. _Complexity: Complex
+  (auth + backend)._ [LIKELY] real-time granularity via polling draftresults.
+- **ESPN — HARD, defer.** No official API. Live draft runs over a private websocket
+  in ESPN's draft client the hidden v3 API doesn't expose. Realistic paths:
+  (a) **a browser extension scraping the draft-room DOM** (the FantasyPros model —
+  their "Side Assistant" is _required_ for ESPN), or (b) user pastes
+  `espn_s2`+`SWID` cookies → poll hidden API (fragile, private-league only, techy).
+  A browser extension is a whole separate product surface (per-site scrapers break
+  on reskins). _Complexity: Extreme (own an extension). Gate on proven demand._
+
+### P3 — Live HUMAN multiplayer mock drafts
+
+The big architectural lift. Today we're client-only (React SPA + Vercel edge +
+localStorage); multiplayer breaks that model. **Requirements inventory:**
+
+Backend / realtime infra (new):
+- **Realtime transport (websockets).** Vercel edge won't hold persistent sockets.
+  Best-fit candidate [LIKELY]: **Cloudflare Durable Objects** (one DO per room =
+  authoritative state + socket hub, pairs with our edge lean). Alts: PartyKit /
+  Ably / Pusher / Liveblocks / Supabase Realtime, or self-host Node+ws on Fly/Railway.
+- **Server-authoritative draft state** — room owns order, clock, picks; can't trust
+  clients. Our client reducer logic moves server-side (or server runs the same
+  `engine.ts`/`bot.ts`/`order.ts` libs).
+- **Server-driven pick clock** — authoritative countdown + auto-pick on expiry from
+  queue/best-available (we have the autopick logic; the trigger moves server-side).
+- **Room lifecycle** — create, join-by-code/link, lobby, **seat assignment** (which
+  slot each human takes), **fill empty seats with bots**, start, mid-draft state.
+- **Presence + reconnection** — connected list, drop/rejoin (people lose signal
+  mid-draft), spectators.
+- **Bots server-side** — run on their turn in mixed human+bot rooms (reuse bot lib).
+- **Matchmaking** — public lobby (join a filling room) vs private (invite by link);
+  public needs a room browser/queue.
+- **Persistence** — room state stored server-side so reconnect + results survive.
+- **AFK / abuse handling** — auto-pick AFK humans, kick, rate limits, chat moderation
+  if chat exists.
+
+Client changes:
+- Refactor mock from local-reducer-authoritative → **server-synced** (render server
+  truth, send intents "pick X" / "queue X"). Big `MockDraft.tsx` + reducer refactor.
+- Optimistic UI + reconciliation; lobby/seat/join-link UI; connection status;
+  reconnect handling; clock-jitter smoothing.
+
+Decision needed (positioning, not technical):
+- **Identity / privacy tension.** Our pitch is "no accounts, data stays in your
+  browser." Multiplayer _requires_ server-side identity + state. Min viable =
+  ephemeral guest handles; better (reconnect/history) = real accounts. **Kenny must
+  choose this deliberately.** _Overall complexity: Extreme — new backend + client
+  refactor + a positioning call._
+
+### P4 — tvStage evolution (serve live / multiplayer / cross-device)
+
+Today `buildTvSnapshot(state)` reads _local_ state, fans out via **BroadcastChannel**
+(same-device 2nd window only). Needed:
+
+- **Pluggable data source adapter** — one normalized `{picks, onClock, order, clock,
+  teams}` shape fed by any of: local mock / live Sleeper poll / multiplayer room.
+  TVStage + DraftBoardGrid then render all three identically. _Requires adapters for
+  Sleeper + room; mock shapes already exist._
+- **Cross-device cast** (also in old backlog) — nearly free once a realtime backend
+  exists: the TV becomes just another **read-only room subscriber** (big screen while
+  everyone drafts on phones), no relay needed.
+- **Broadcast-grade assets** — headshots + team logos (P1) turn the split-flap board
+  into a real broadcast. **Repoint the TTS announcer** (already built) at the live
+  feed's pick events.
+
+### P5 — Prep enrichment (originally requested; still in scope)
+
+- **Creator / expert ranking import as a baseline.** CSV / Google-Sheets importer +
+  column mapper; borischen.co tiered CSVs (free, CORS-open) as a first source. Hard
+  part = name→player-ID reconciliation (Sleeper/DynastyProcess crosswalk helps).
+  _Complexity: Moderate (reconciliation is the risk)._
+- **Vegas lines.** Implied team total = (Total ± Spread)/2; player props per-game +
+  seasonal. The Odds API free tier 500 credits/mo (props Sept–Feb only). Presentation
+  = the inline prop columns in P1. _Complexity: Moderate; keyed source._
+- **Player profiles.** Short blurb + stat projections + last-year stats + trending
+  arrows. Trending = Sleeper add/drop API; last-year = nflverse; projections already
+  pulled. No free blurb source — template- or LLM-generate. _Complexity: Moderate._
+
+### Keystone
+
+[LIKELY] **One investment — a realtime room server — unlocks three things at once:**
+live human mocks (P3), cross-device TV cast (P4), and Sleeper/Yahoo live-connect
+rebroadcast (P2, where the "room" is just the platform's API we poll + fan out). That
+backend is the load-bearing decision the whole pivot rests on.
+
 ## Codebase map (verified 2026-06-11)
 
 | Area            | Files                                                                                                                                                                |
