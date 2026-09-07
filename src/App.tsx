@@ -1,4 +1,11 @@
-import { useEffect, useMemo, useState, lazy, Suspense } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  lazy,
+  Suspense,
+} from "react";
 import { useRankings } from "./state/useRankings";
 import { useDelayedHide } from "./state/useDelayedHide";
 import {
@@ -58,7 +65,6 @@ import { ColumnManager } from "./components/board/ColumnManager";
 import { ColumnScopePrompt } from "./components/board/ColumnScopePrompt";
 import { PlayerTable, type DisplayRow } from "./components/PlayerTable";
 import { buildItems } from "./lib/tierBreaks";
-import { Intro } from "./components/Intro";
 import { Hub, LivePlaceholder } from "./components/Hub";
 
 // Split off the routes a first-time visitor doesn't hit on load: the whole
@@ -106,13 +112,6 @@ export default function App() {
     defaultTierListId,
   } = useRankings();
   const activeTierList = tierLists.find((t) => t.id === activeTierListId);
-  const [introReplay, setIntroReplay] = useState(0);
-  // Clicking the brand is a soft "refresh": replay the splash and re-load data
-  // from the source of truth. In-progress mock draft + filters are untouched.
-  const onBrandClick = () => {
-    refresh();
-    setIntroReplay((n) => n + 1);
-  };
   const [search, setSearch] = useState("");
   // Active position chips; empty = ALL (no filter). See lib/posFilter.
   const [posFilter, setPosFilter] = useState<Set<Position>>(() => new Set());
@@ -235,6 +234,29 @@ export default function App() {
           ? "board" // mockMode guard takes over; fall back to board on exit
           : "hub",
   );
+  // Top-level navigation between the hub and its rooms, synced to browser
+  // history so the back/forward buttons work. Each room maps to a ?mode=
+  // value; `go` pushes a history entry, `popstate` restores state from the URL.
+  const applyMode = useCallback((mode: "hub" | "mock" | "prep" | "live") => {
+    setMockMode(mode === "mock");
+    setView(mode === "live" ? "live" : mode === "hub" ? "hub" : "board");
+  }, []);
+  const go = useCallback(
+    (mode: "hub" | "mock" | "prep" | "live") => {
+      const url = mode === "hub" ? window.location.pathname : `?mode=${mode}`;
+      window.history.pushState({ mode }, "", url);
+      applyMode(mode);
+    },
+    [applyMode],
+  );
+  useEffect(() => {
+    const onPop = () => {
+      const m = new URLSearchParams(window.location.search).get("mode");
+      applyMode(m === "mock" || m === "prep" || m === "live" ? m : "hub");
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, [applyMode]);
   // Cmd/Ctrl+Z undoes the last board edit — but only when not typing in a field,
   // so the browser's native text undo still works inside the rank/notes inputs.
   useEffect(() => {
@@ -667,7 +689,7 @@ export default function App() {
         <Suspense fallback={<div className="route-loading">Loading…</div>}>
           <MockMode
             league={currentLeague}
-            onExit={() => setMockMode(false)}
+            onExit={() => go("hub")}
             onSetValueFlags={(listId, valueFlags) =>
               dispatch({ type: "setListValueFlags", listId, valueFlags })
             }
@@ -683,10 +705,9 @@ export default function App() {
     return (
       <div className="app">
         <Hub
-          introReplay={introReplay}
-          onEnterMock={() => setMockMode(true)}
-          onEnterLive={() => setView("live")}
-          onEnterPrep={() => setView("board")}
+          onEnterMock={() => go("mock")}
+          onEnterLive={() => go("live")}
+          onEnterPrep={() => go("prep")}
           onAbout={() => setView("about")}
           onLog={() => setView("log")}
         />
@@ -698,19 +719,18 @@ export default function App() {
   if (view === "live") {
     return (
       <div className="app">
-        <LivePlaceholder onBack={() => setView("hub")} />
+        <LivePlaceholder onBack={() => go("hub")} />
       </div>
     );
   }
 
   return (
     <div className="app">
-      <Intro replay={introReplay} />
       <AlphaBanner />
       <Header
         onBrandClick={() => {
-          onBrandClick();
-          setView("hub");
+          refresh();
+          go("hub");
         }}
         onAbout={() => setView("about")}
         onLog={() => setView("log")}

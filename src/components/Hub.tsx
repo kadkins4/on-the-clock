@@ -40,7 +40,6 @@ function StopwatchMark() {
 }
 
 type HubProps = {
-  introReplay: number;
   onEnterMock: () => void;
   onEnterLive: () => void;
   onEnterPrep: () => void;
@@ -52,7 +51,6 @@ type HubProps = {
 // deep-link skips it). Three rooms in descending weight: Mock (hero banner),
 // Live, Prep. Concept B "Center Marquee". Preview data is illustrative.
 export function Hub({
-  introReplay,
   onEnterMock,
   onEnterLive,
   onEnterPrep,
@@ -61,7 +59,7 @@ export function Hub({
 }: HubProps) {
   return (
     <div className="otc-hub">
-      <Intro replay={introReplay} />
+      <Intro />
 
       <header className="otc-hub-hero">
         <span className="otc-hub-brandmark">
@@ -258,9 +256,9 @@ export function LivePlaceholder({ onBack }: { onBack: () => void }) {
           ESPN and Yahoo follow.
         </p>
         <div className="otc-hub-platforms">
-          <span className="plat on">Sleeper — first</span>
-          <span className="plat soon">ESPN — later</span>
-          <span className="plat soon">Yahoo — later</span>
+          <span className="plat">Sleeper</span>
+          <span className="plat">ESPN</span>
+          <span className="plat">Yahoo</span>
         </div>
         <button type="button" className="otc-hub-cta ghost" onClick={onBack}>
           Back to hub
